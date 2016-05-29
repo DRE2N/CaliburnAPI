@@ -36,20 +36,20 @@ public class UniversalMob {
 
     protected String id;
     protected ConfigurationSection config;
-    protected EntityType type;
+    protected EntityType species;
 
     protected Map<ItemCategory, Double> categoryDamageModifiers = new HashMap<>();
     protected Map<UniversalItem, Double> itemDamageModifiers = new HashMap<>();
 
-    public UniversalMob(CaliburnAPI api, EntityType type) {
-        this(api, String.valueOf(type.getTypeId()), type);
+    public UniversalMob(CaliburnAPI api, EntityType species) {
+        this(api, String.valueOf(species.getTypeId()), species);
     }
 
-    public UniversalMob(CaliburnAPI api, String id, EntityType type) {
+    public UniversalMob(CaliburnAPI api, String id, EntityType species) {
         this.api = api;
 
         this.id = id;
-        this.type = type;
+        this.species = species;
     }
 
     public UniversalMob(CaliburnAPI api, String id, ConfigurationSection config) {
@@ -57,8 +57,8 @@ public class UniversalMob {
 
         this.id = id;
         this.config = config;
-        if (EnumUtil.isValidEnum(EntityType.class, config.getString("type"))) {
-            this.type = EntityType.valueOf(config.getString("type"));
+        if (EnumUtil.isValidEnum(EntityType.class, config.getString("species"))) {
+            this.species = EntityType.valueOf(config.getString("species"));
         }
     }
 
@@ -93,18 +93,18 @@ public class UniversalMob {
     }
 
     /**
-     * @return the mob type
+     * @return the mob species
      */
-    public EntityType getType() {
-        return type;
+    public EntityType getSpecies() {
+        return species;
     }
 
     /**
-     * @param type
-     * the mob type to set
+     * @param species
+     * the mob species to set
      */
-    public void setType(EntityType type) {
-        this.type = type;
+    public void setSpecies(EntityType species) {
+        this.species = species;
     }
 
     /**
@@ -112,7 +112,7 @@ public class UniversalMob {
      * the custom name of the mob
      */
     public String getName() {
-        return type.getName();
+        return species.getName();
     }
 
     /**
@@ -162,7 +162,7 @@ public class UniversalMob {
      * the mob as an org.bukkit.entity.Entity
      */
     public Entity toEntity(Location location) {
-        return location.getWorld().spawnEntity(location, type);
+        return location.getWorld().spawnEntity(location, species);
     }
 
 }

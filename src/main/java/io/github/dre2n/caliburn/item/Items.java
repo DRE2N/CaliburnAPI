@@ -97,7 +97,10 @@ public class Items {
         if (config.contains("type") && EnumUtil.isValidEnum(ItemType.class, config.getString("type"))) {
             type = ItemType.valueOf(config.getString("type"));
         }
-        return type.instantiate(api, id, config);
+
+        UniversalItem item = type.instantiate(api, id, config);
+        items.add(item);
+        return item;
     }
 
     /**

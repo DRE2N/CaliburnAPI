@@ -55,7 +55,7 @@ public class CustomMob extends UniversalMob {
     /* Actions */
     @Override
     public Entity toEntity(Location location) {
-        Entity entity = location.getWorld().spawnEntity(location, type);
+        Entity entity = location.getWorld().spawnEntity(location, species);
 
         if (name != null) {
             entity.setCustomName(name);
