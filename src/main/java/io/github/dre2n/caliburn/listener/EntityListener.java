@@ -37,13 +37,9 @@ import org.bukkit.inventory.ItemStack;
 public class EntityListener implements Listener {
 
     CaliburnAPI api;
-    Items items;
-    Mobs mobs;
 
     public EntityListener(CaliburnAPI api) {
         this.api = api;
-        this.items = api.getItems();
-        this.mobs = api.getMobs();
     }
 
     @EventHandler
@@ -59,8 +55,8 @@ public class EntityListener implements Listener {
             return;
         }
 
-        UniversalItem item = items.getById(items.getCustomItemId(itemStack));
-        UniversalMob mob = mobs.getByEntity(event.getEntity());
+        UniversalItem item = api.getItems().getById(api.getItems().getCustomItemId(itemStack));
+        UniversalMob mob = api.getMobs().getByEntity(event.getEntity());
 
         if (item == null || mob == null) {
             return;

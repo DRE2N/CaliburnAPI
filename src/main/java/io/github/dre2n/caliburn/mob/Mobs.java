@@ -67,7 +67,12 @@ public class Mobs {
      */
     public UniversalMob getByEntity(Entity entity) {
         for (UniversalMob mob : mobs) {
-            if (mob.getName().equals(entity.getCustomName())) {
+            if (entity.getCustomName() != null) {
+                if (mob.getName().equals(entity.getCustomName())) {
+                    return mob;
+                }
+
+            } else if (entity.getType() == mob.getSpecies()) {
                 return mob;
             }
         }

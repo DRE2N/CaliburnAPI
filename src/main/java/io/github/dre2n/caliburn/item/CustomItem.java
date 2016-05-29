@@ -72,7 +72,7 @@ public class CustomItem extends UniversalItem {
         durability = (short) config.getInt("durability");
 
         if (config.contains("name")) {
-            setName(config.getString("name"));
+            name = config.getString("name");
         }
 
         if (config.contains("lores")) {
@@ -160,12 +160,12 @@ public class CustomItem extends UniversalItem {
 
     @Override
     public String getName() {
-        return name;
+        return ChatColor.translateAlternateColorCodes('&', name);
     }
 
     @Override
     public void setName(String name) {
-        this.name = ChatColor.translateAlternateColorCodes('&', name);
+        this.name = name;
     }
 
     /**
@@ -260,7 +260,7 @@ public class CustomItem extends UniversalItem {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (name != null) {
-            itemMeta.setDisplayName(name);
+            itemMeta.setDisplayName(getName());
         }
 
         List<String> lores = new ArrayList<>();
@@ -268,13 +268,13 @@ public class CustomItem extends UniversalItem {
         lores.addAll(getLores());
         itemMeta.setLore(lores);
 
-        for (ItemFlag itemFlag : getItemFlags()) {
+        for (ItemFlag itemFlag : itemFlags) {
             itemMeta.addItemFlags(itemFlag);
         }
 
         itemStack.setItemMeta(itemMeta);
 
-        for (Entry<Enchantment, Integer> enchantment : getEnchantments().entrySet()) {
+        for (Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
             itemStack.addUnsafeEnchantment(enchantment.getKey(), enchantment.getValue());
         }
 
