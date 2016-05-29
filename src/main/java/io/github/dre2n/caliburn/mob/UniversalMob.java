@@ -19,6 +19,7 @@ package io.github.dre2n.caliburn.mob;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.ItemCategory;
 import io.github.dre2n.caliburn.item.UniversalItem;
+import io.github.dre2n.commons.util.EnumUtil;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
@@ -56,6 +57,9 @@ public class UniversalMob {
 
         this.id = id;
         this.config = config;
+        if (EnumUtil.isValidEnum(EntityType.class, config.getString("type"))) {
+            this.type = EntityType.valueOf(config.getString("type"));
+        }
     }
 
     /**

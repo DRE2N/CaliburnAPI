@@ -19,6 +19,7 @@ package io.github.dre2n.caliburn.item;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.mob.MobCategory;
 import io.github.dre2n.caliburn.mob.UniversalMob;
+import io.github.dre2n.commons.util.EnumUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -54,6 +55,9 @@ public class UniversalItem {
 
         this.id = id;
         this.config = config;
+        if (EnumUtil.isValidEnum(Material.class, config.getString("material"))) {
+            this.material = Material.valueOf(config.getString("material"));
+        }
     }
 
     /**
