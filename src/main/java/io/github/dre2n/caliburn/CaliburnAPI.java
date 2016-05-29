@@ -29,7 +29,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class CaliburnAPI {
 
-    public static String IDENTIFIER_PREFIX = "&0&k";
+    public static String IDENTIFIER_PREFIX = "\u00a70\u00a7k";
 
     private Items items;
     private Mobs mobs;

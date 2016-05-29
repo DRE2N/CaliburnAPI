@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.dre2n</groupId>
     <artifactId>caliburn</artifactId>
-    <version>0.1${buildNo}</version>
+    <version>0.1.1${buildNo}</version>
     <packaging>jar</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
