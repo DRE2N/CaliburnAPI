@@ -33,7 +33,7 @@ public class CustomEquipment extends CustomItem {
     public CustomEquipment(CaliburnAPI api, String id, ConfigurationSection config) {
         super(api, id, config);
 
-        if (config.getString("unbreakable") != null) {
+        if (config.contains("unbreakable")) {
             this.unbreakable = config.getBoolean("unbreakable");
         }
     }
@@ -63,7 +63,7 @@ public class CustomEquipment extends CustomItem {
         ItemStack itemStack = super.toItemStack(amount);
 
         if (unbreakable) {
-            ItemUtil.setUnbreakable(itemStack);
+            itemStack = ItemUtil.setUnbreakable(itemStack);
         }
 
         return itemStack;
