@@ -57,12 +57,11 @@ class v1_9_R2 extends InternalsProvider {
             attribute.set("UUIDLeast", new NBTTagInt(NumberUtil.generateRandomInt(1, 50000)));
             attribute.set("UUIDMost", new NBTTagInt(NumberUtil.generateRandomInt(50001, 100000)));
             attribute.set("Slot", new NBTTagString(slot.getInternalName()));
-
             modifiers.add(attribute);
-
-            compound.set("AttributeModifiers", modifiers);
-            nmsStack.setTag(compound);
         }
+
+        compound.set("AttributeModifiers", modifiers);
+        nmsStack.setTag(compound);
 
         return CraftItemStack.asBukkitCopy(nmsStack);
     }

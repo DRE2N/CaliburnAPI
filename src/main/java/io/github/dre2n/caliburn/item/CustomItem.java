@@ -72,7 +72,7 @@ public class CustomItem extends UniversalItem {
         durability = (short) config.getInt("durability");
 
         if (config.contains("name")) {
-            name = config.getString("name");
+            setName(config.getString("name"));
         }
 
         if (config.contains("lores")) {
@@ -160,12 +160,12 @@ public class CustomItem extends UniversalItem {
 
     @Override
     public String getName() {
-        return ChatColor.translateAlternateColorCodes('&', name);
+        return name;
     }
 
     @Override
     public void setName(String name) {
-        this.name = name;
+        this.name = ChatColor.translateAlternateColorCodes('&', name);
     }
 
     /**
@@ -260,7 +260,7 @@ public class CustomItem extends UniversalItem {
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (name != null) {
-            itemMeta.setDisplayName(getName());
+            itemMeta.setDisplayName(name);
         }
 
         List<String> lores = new ArrayList<>();
@@ -279,7 +279,7 @@ public class CustomItem extends UniversalItem {
         }
 
         for (Attribute attribute : attributes) {
-            ItemUtil.setAttribute(itemStack, attribute, getAttributeModifier(attribute), getAttributeSlots(attribute));
+            itemStack = ItemUtil.setAttribute(itemStack, attribute, getAttributeModifier(attribute), getAttributeSlots(attribute));
         }
 
         return itemStack;
