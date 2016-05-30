@@ -94,7 +94,7 @@ public class CustomItem extends UniversalItem {
 
         if (config.contains("itemFlags")) {
             for (String flag : config.getStringList("itemFlags")) {
-                if (EnumUtil.isValidEnum(ItemFlag.class, name)) {
+                if (EnumUtil.isValidEnum(ItemFlag.class, flag)) {
                     itemFlags.add(ItemFlag.valueOf(flag));
                 }
             }
@@ -103,7 +103,7 @@ public class CustomItem extends UniversalItem {
         // Attributes
         if (config.contains("attributes")) {
             for (String name : config.getConfigurationSection("attributes").getValues(false).keySet()) {
-                String prefix = config.getString("attributes." + name + ".");
+                String prefix = "attributes." + name + ".";
 
                 String type = config.getString(prefix + "type");
                 List<String> slots = config.getStringList(prefix + "slots");
@@ -121,9 +121,9 @@ public class CustomItem extends UniversalItem {
                     index = attributes.indexOf(type);
                 }
 
-                attributes.set(index, Attribute.valueOf(type));
-                attributeModifiers.set(index, modifier);
-                attributeSlots.set(index, new HashSet<Slot>());
+                attributes.add(index, Attribute.valueOf(type));
+                attributeModifiers.add(index, modifier);
+                attributeSlots.add(index, new HashSet<Slot>());
                 for (String slot : slots) {
                     if (EnumUtil.isValidEnum(Slot.class, slot)) {
                         attributeSlots.get(index).add(Slot.valueOf(slot));
