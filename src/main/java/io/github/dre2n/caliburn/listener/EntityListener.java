@@ -18,10 +18,8 @@ package io.github.dre2n.caliburn.listener;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.ItemCategory;
-import io.github.dre2n.caliburn.item.Items;
 import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.caliburn.mob.MobCategory;
-import io.github.dre2n.caliburn.mob.Mobs;
 import io.github.dre2n.caliburn.mob.UniversalMob;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
