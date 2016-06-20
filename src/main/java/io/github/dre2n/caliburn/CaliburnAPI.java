@@ -18,10 +18,16 @@ package io.github.dre2n.caliburn;
 
 import io.github.dre2n.caliburn.item.ItemCategories;
 import io.github.dre2n.caliburn.item.Items;
+import io.github.dre2n.caliburn.item.UniversalItem;
 import io.github.dre2n.caliburn.listener.EntityListener;
 import io.github.dre2n.caliburn.mob.MobCategories;
 import io.github.dre2n.caliburn.mob.Mobs;
+import io.github.dre2n.caliburn.mob.UniversalMob;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -87,6 +93,27 @@ public class CaliburnAPI {
         this.mobs.setup();
         this.itemCategories.setup();
         this.mobCategories.setup();
+    }
+
+    /**
+     * Finish initialization of the Object with default values.
+     */
+    @SuppressWarnings("deprecation")
+    public void setupClean() {
+        ConfigurationSection placeholder = new YamlConfiguration();
+
+        items = new Items(this);
+        for (Material material : Material.values()) {
+            items.addItem(new UniversalItem(this, material));
+        }
+
+        mobs = new Mobs(this);
+        for (EntityType mob : EntityType.values()) {
+            mobs.addMob(new UniversalMob(this, mob));
+        }
+
+        itemCategories = new ItemCategories(this, placeholder);
+        mobCategories = new MobCategories(this, placeholder);
     }
 
 }
