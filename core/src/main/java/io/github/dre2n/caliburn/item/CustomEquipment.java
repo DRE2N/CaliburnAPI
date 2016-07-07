@@ -63,7 +63,7 @@ public class CustomEquipment extends CustomItem {
         ItemStack itemStack = super.toItemStack(amount);
 
         if (unbreakable) {
-            itemStack = ItemUtil.setUnbreakable(itemStack);
+            itemStack = ItemUtil.setUnbreakable(itemStack, true);
         }
 
         return itemStack;

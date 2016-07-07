@@ -1,4 +1,8 @@
 /nb-configuration.xml
-/target
-/lib
 /dependency-reduced-pom.xml
+/core/dependency-reduced-pom.xml
+/core/target
+/abstract/target
+/craftbukkit_1_10_R1/target
+/craftbukkit_1_9_R2/target
+/craftbukkit_1_9_R1/target

@@ -24,8 +24,6 @@ import net.minecraft.server.v1_9_R1.NBTTagDouble;
 import net.minecraft.server.v1_9_R1.NBTTagInt;
 import net.minecraft.server.v1_9_R1.NBTTagList;
 import net.minecraft.server.v1_9_R1.NBTTagString;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.craftbukkit.v1_9_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,9 +33,7 @@ import org.bukkit.inventory.ItemStack;
 class v1_9_R1 extends InternalsProvider {
 
     @Override
-    ItemStack setAttribute(ItemStack itemStack, Attribute bukkitAttribute, AttributeModifier modifier, Set<Slot> slots) {
-        String attributeName = ItemUtil.getInternalAttributeName(bukkitAttribute);
-
+    ItemStack setAttribute(ItemStack itemStack, String attributeName, double amount, byte operation, Set<String> slots) {
         net.minecraft.server.v1_9_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
 
         NBTTagCompound compound = nmsStack.getTag();
@@ -48,21 +44,20 @@ class v1_9_R1 extends InternalsProvider {
         }
 
         NBTTagList modifiers = new NBTTagList();
-        for (Slot slot : slots) {
+        for (String slot : slots) {
             NBTTagCompound attribute = new NBTTagCompound();
             attribute.set("AttributeName", new NBTTagString(attributeName));
             attribute.set("Name", new NBTTagString("Caliburn-" + attributeName));
-            attribute.set("Amount", new NBTTagDouble(modifier.getAmount()));
-            attribute.set("Operation", new NBTTagByte((byte) 0));
+            attribute.set("Amount", new NBTTagDouble(amount));
+            attribute.set("Operation", new NBTTagByte(operation));
             attribute.set("UUIDLeast", new NBTTagInt(NumberUtil.generateRandomInt(1, 50000)));
             attribute.set("UUIDMost", new NBTTagInt(NumberUtil.generateRandomInt(50001, 100000)));
-            attribute.set("Slot", new NBTTagString(slot.getInternalName()));
-
+            attribute.set("Slot", new NBTTagString(slot));
             modifiers.add(attribute);
-
-            compound.set("AttributeModifiers", modifiers);
-            nmsStack.setTag(compound);
         }
+
+        compound.set("AttributeModifiers", modifiers);
+        nmsStack.setTag(compound);
 
         return CraftItemStack.asBukkitCopy(nmsStack);
     }
@@ -95,7 +90,7 @@ class v1_9_R1 extends InternalsProvider {
     }
 
     @Override
-    ItemStack setUnbreakable(ItemStack itemStack) {
+    ItemStack setUnbreakable(ItemStack itemStack, byte unbreakable) {
         net.minecraft.server.v1_9_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
 
         NBTTagCompound compound = nmsStack.getTag();
@@ -105,7 +100,7 @@ class v1_9_R1 extends InternalsProvider {
             compound = nmsStack.getTag();
         }
 
-        compound.set("Unbreakable", new NBTTagInt(1));
+        compound.set("Unbreakable", new NBTTagByte(unbreakable));
 
         nmsStack.setTag(compound);
 
@@ -113,7 +108,7 @@ class v1_9_R1 extends InternalsProvider {
     }
 
     @Override
-    ItemStack setHideFlags(ItemStack itemStack, int flags) {
+    ItemStack setHideFlags(ItemStack itemStack, byte flags) {
         net.minecraft.server.v1_9_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
 
         NBTTagCompound compound = nmsStack.getTag();
@@ -123,7 +118,7 @@ class v1_9_R1 extends InternalsProvider {
             compound = nmsStack.getTag();
         }
 
-        compound.set("HideFlags", new NBTTagInt(flags));
+        compound.set("HideFlags", new NBTTagByte(flags));
 
         nmsStack.setTag(compound);
 

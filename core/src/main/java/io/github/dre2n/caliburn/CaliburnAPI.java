@@ -98,7 +98,6 @@ public class CaliburnAPI {
     /**
      * Finish initialization of the Object with default values.
      */
-    @SuppressWarnings("deprecation")
     public void setupClean() {
         ConfigurationSection placeholder = new YamlConfiguration();
 

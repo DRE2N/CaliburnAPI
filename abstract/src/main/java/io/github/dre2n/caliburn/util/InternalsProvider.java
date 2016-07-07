@@ -18,8 +18,6 @@ package io.github.dre2n.caliburn.util;
 
 import io.github.dre2n.commons.compatibility.CompatibilityHandler;
 import java.util.Set;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -27,38 +25,17 @@ import org.bukkit.inventory.ItemStack;
  */
 class InternalsProvider {
 
-    private static InternalsProvider instance;
-
-    static InternalsProvider getInstance() {
-        switch (CompatibilityHandler.getInstance().getInternals()) {
-            case v1_10_R1:
-                instance = new v1_10_R1();
-                break;
-            case v1_9_R2:
-                instance = new v1_9_R2();
-                break;
-            case v1_9_R1:
-                instance = new v1_9_R1();
-                break;
-            default:
-                instance = new InternalsProvider();
-                break;
-        }
-
-        return instance;
-    }
-
-    ItemStack setAttribute(ItemStack itemStack, Attribute attribute, AttributeModifier modifier, Set<Slot> slot) {
+    ItemStack setAttribute(ItemStack itemStack, String attributeName, double amount, byte operation, Set<String> slot) {
         return itemStack;
     }
 
-    ItemStack setHideFlags(ItemStack itemStack, int flags) {
+    ItemStack setHideFlags(ItemStack itemStack, byte flags) {
         return itemStack;
     }
 
-    ItemStack setUnbreakable(ItemStack itemStack) {
+    ItemStack setUnbreakable(ItemStack itemStack, byte unbreakable) {
         if (CompatibilityHandler.getInstance().isSpigot()) {
-            itemStack.getItemMeta().spigot().setUnbreakable(true);
+            itemStack.getItemMeta().spigot().setUnbreakable(unbreakable == 1);
         }
 
         return itemStack;

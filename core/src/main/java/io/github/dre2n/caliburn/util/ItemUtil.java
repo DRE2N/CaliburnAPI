@@ -16,11 +16,14 @@
  */
 package io.github.dre2n.caliburn.util;
 
+import io.github.dre2n.commons.compatibility.CompatibilityHandler;
 import io.github.dre2n.commons.util.NumberUtil;
+import java.util.HashSet;
 import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -28,32 +31,84 @@ import org.bukkit.inventory.ItemStack;
  */
 public class ItemUtil {
 
-    static InternalsProvider internals = InternalsProvider.getInstance();
+    static InternalsProvider internals;
+
+    static {
+        switch (CompatibilityHandler.getInstance().getInternals()) {
+            case v1_10_R1:
+                internals = new v1_10_R1();
+                break;
+            case v1_9_R2:
+                internals = new v1_9_R2();
+                break;
+            case v1_9_R1:
+                internals = new v1_9_R1();
+                break;
+            default:
+                internals = new InternalsProvider();
+        }
+    }
 
     /**
      * @param itemStack
      * a Bukkit ItemStack
      * @param attribute
      * the Attribute to add
-     * @param value
-     * the attribute value
+     * @param modifier
+     * the attribute values
      * @param slots
      * the slot where the attribute affects the player
      * @return
      * a new Bukkit ItemStack with the attribute
      */
     public static ItemStack setAttribute(ItemStack itemStack, Attribute attribute, AttributeModifier modifier, Set<Slot> slots) {
-        return internals.setAttribute(itemStack, attribute, modifier, slots);
+        Set<String> slotStrings = new HashSet<>();
+        for (Slot slot : slots) {
+            slotStrings.add(slot.getInternalName());
+        }
+        return setAttribute(itemStack, getInternalAttributeName(attribute), modifier.getAmount(), getInternalOperationValue(modifier.getOperation()), slotStrings);
     }
 
     /**
      * @param itemStack
      * a Bukkit ItemStack
+     * @param attributeName
+     * the Attribute name
+     * @param amount
+     * the Attribute amount
+     * @param operation
+     * the modifier operation
+     * @param slots
+     * the slot where the attribute affects the player
+     * @return
+     * a new Bukkit ItemStack with the attribute
+     */
+    public static ItemStack setAttribute(ItemStack itemStack, String attributeName, double amount, byte operation, Set<String> slots) {
+        return internals.setAttribute(itemStack, attributeName, amount, operation, slots);
+    }
+
+    /**
+     * @param itemStack
+     * a Bukkit ItemStack
+     * @param unbreakable
+     * set the stack unbreakable or not
      * @return
      * a new Bukkit ItemStack which is unbreakable
      */
-    public static ItemStack setUnbreakable(ItemStack itemStack) {
-        return internals.setUnbreakable(itemStack);
+    public static ItemStack setUnbreakable(ItemStack itemStack, boolean unbreakable) {
+        return internals.setUnbreakable(itemStack, (byte) (unbreakable ? 1 : 0));
+    }
+
+    /**
+     * @param itemStack
+     * a Bukkit ItemStack
+     * @param unbreakable
+     * set the stack unbreakable or not
+     * @return
+     * a new Bukkit ItemStack which is unbreakable
+     */
+    public static ItemStack setUnbreakable(ItemStack itemStack, byte unbreakable) {
+        return internals.setUnbreakable(itemStack, unbreakable);
     }
 
     /**
@@ -64,7 +119,7 @@ public class ItemUtil {
      * @return
      * a new Bukkit ItemStack with the flags
      */
-    public static ItemStack setHideFlags(ItemStack itemStack, int flags) {
+    public static ItemStack setHideFlags(ItemStack itemStack, byte flags) {
         return internals.setHideFlags(itemStack, flags);
     }
 
@@ -87,6 +142,7 @@ public class ItemUtil {
      * @return
      * the proper item ID
      */
+    @SuppressWarnings("deprecation")
     public static int getId(String string) {
         if (NumberUtil.parseInt(string) > 0) {
             return NumberUtil.parseInt(string);
@@ -130,6 +186,25 @@ public class ItemUtil {
         }
 
         return null;
+    }
+
+    /**
+     * @param operation
+     * the attribute operation to "translate"
+     * @return
+     * the internal ID of the operation, useful for NMS.
+     */
+    public static byte getInternalOperationValue(Operation operation) {
+        switch (operation) {
+            case ADD_NUMBER:
+                return 0;
+            case ADD_SCALAR:
+                return 1;
+            case MULTIPLY_SCALAR_1:
+                return 2;
+        }
+
+        return 0;
     }
 
 }

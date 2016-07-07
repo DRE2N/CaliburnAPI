@@ -3,46 +3,32 @@
     <groupId>io.github.dre2n</groupId>
     <artifactId>caliburn</artifactId>
     <version>0.1.8-SNAPSHOT${buildNo}</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
     <description>An API to create and (de-) serialize custom items and mobs.</description>
-    <build>
-        <finalName>caliburn-${project.version}</finalName>
-        <sourceDirectory>src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <targetPath>.</targetPath>
-                <filtering>true</filtering>
-                <directory>${basedir}/src/main/resources/</directory>
-                <includes>
-                    <include>plugin.yml</include>
-                </includes>
-            </resource>
-        </resources>
-        <plugins>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.5.1</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <properties>
+        <buildNo></buildNo>
+    </properties>
+    <modules>
+        <module>core</module>
+        <module>abstract</module>
+        <module>craftbukkit_1_9_R1</module>
+        <module>craftbukkit_1_9_R2</module>
+        <module>craftbukkit_1_10_R1</module>
+    </modules>
     <dependencies>
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>lib</version>
-            <systemPath>${basedir}/lib/craftbukkit.jar</systemPath> 
-            <scope>system</scope>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.10.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>io.github.dre2n</groupId>
             <artifactId>commons</artifactId>
             <version>1.0.1</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
     <repositories>
