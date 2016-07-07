@@ -111,4 +111,22 @@ class v1_10_R1 extends InternalsProvider {
         return CraftItemStack.asBukkitCopy(nmsStack);
     }
 
+    @Override
+    ItemStack setHideFlags(ItemStack itemStack, int flags) {
+        net.minecraft.server.v1_10_R1.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
+
+        NBTTagCompound compound = nmsStack.getTag();
+        if (compound == null) {
+            compound = new NBTTagCompound();
+            nmsStack.setTag(compound);
+            compound = nmsStack.getTag();
+        }
+
+        compound.set("HideFlags", new NBTTagInt(flags));
+
+        nmsStack.setTag(compound);
+
+        return CraftItemStack.asBukkitCopy(nmsStack);
+    }
+
 }

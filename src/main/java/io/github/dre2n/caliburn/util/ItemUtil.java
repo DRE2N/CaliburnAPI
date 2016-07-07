@@ -50,10 +50,22 @@ public class ItemUtil {
      * @param itemStack
      * a Bukkit ItemStack
      * @return
-     * the ItemStack, but unbreakable
+     * a new Bukkit ItemStack which is unbreakable
      */
     public static ItemStack setUnbreakable(ItemStack itemStack) {
         return internals.setUnbreakable(itemStack);
+    }
+
+    /**
+     * @param itemStack
+     * a Bukkit ItemStack
+     * @param flags
+     * the flags number
+     * @return
+     * a new Bukkit ItemStack with the flags
+     */
+    public static ItemStack setHideFlags(ItemStack itemStack, int flags) {
+        return internals.setHideFlags(itemStack, flags);
     }
 
     /**

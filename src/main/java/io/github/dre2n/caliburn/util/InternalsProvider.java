@@ -52,6 +52,10 @@ class InternalsProvider {
         return itemStack;
     }
 
+    ItemStack setHideFlags(ItemStack itemStack, int flags) {
+        return itemStack;
+    }
+
     ItemStack setUnbreakable(ItemStack itemStack) {
         if (CompatibilityHandler.getInstance().isSpigot()) {
             itemStack.getItemMeta().spigot().setUnbreakable(true);
