@@ -46,6 +46,13 @@
         </dependency>
         <dependency>
             <groupId>io.github.dre2n</groupId>
+            <artifactId>caliburn-abstract</artifactId>
+            <version>${parent.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.dre2n</groupId>
             <artifactId>caliburn-craftbukkit_1_10_R1</artifactId>
             <version>${parent.version}</version>
             <type>jar</type>
