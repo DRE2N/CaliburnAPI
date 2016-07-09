@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.dre2n</groupId>
     <artifactId>caliburn</artifactId>
-    <version>0.1.8-SNAPSHOT${buildNo}</version>
+    <version>0.1.8${buildNo}</version>
     <packaging>pom</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
@@ -11,11 +11,12 @@
         <buildNo></buildNo>
     </properties>
     <modules>
+        <module>shade</module>
         <module>core</module>
         <module>abstract</module>
-        <module>craftbukkit_1_9_R1</module>
-        <module>craftbukkit_1_9_R2</module>
         <module>craftbukkit_1_10_R1</module>
+        <module>craftbukkit_1_9_R2</module>
+        <module>craftbukkit_1_9_R1</module>
     </modules>
     <dependencies>
         <dependency>
