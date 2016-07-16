@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Daniel Saukel
+ * Copyright (C) 2015-2016 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,6 +31,7 @@ public enum ItemType {
     CUSTOM_ENCHANTED_BOOK(CustomEnchantedBook.class),
     CUSTOM_EQUIPMENT(CustomEquipment.class),
     CUSTOM_FIREWORK(CustomFirework.class),
+    CUSTOM_HEAD(CustomHead.class),
     UNIVERSAL(UniversalItem.class);
 
     private Class<? extends UniversalItem> handler;
