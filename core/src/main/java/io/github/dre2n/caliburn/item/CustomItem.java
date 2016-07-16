@@ -17,9 +17,11 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliAttribute;
+import io.github.dre2n.caliburn.util.CaliSlot;
 import io.github.dre2n.caliburn.util.ItemUtil;
-import io.github.dre2n.caliburn.util.Slot;
 import io.github.dre2n.commons.util.EnumUtil;
+import io.github.dre2n.commons.util.NumberUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,9 +50,9 @@ public class CustomItem extends UniversalItem {
     private List<String> lores = new ArrayList<>();
     private Set<ItemFlag> itemFlags = new HashSet<>();
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
-    private List<Attribute> attributes = new ArrayList<>();
+    private List<CaliAttribute> attributes = new ArrayList<>();
     private List<AttributeModifier> attributeModifiers = new ArrayList<>();
-    private List<HashSet<Slot>> attributeSlots = new ArrayList<>();
+    private List<HashSet<CaliSlot>> attributeSlots = new ArrayList<>();
 
     public CustomItem(CaliburnAPI api, String id, Material material) {
         super(api, id, material);
@@ -62,11 +64,12 @@ public class CustomItem extends UniversalItem {
         this.durability = durability;
     }
 
+    @SuppressWarnings("deprecation")
     public CustomItem(CaliburnAPI api, String id, ConfigurationSection config) {
         super(api, id, config);
 
-        if (EnumUtil.isValidEnum(Material.class, config.getString("material"))) {
-            material = Material.valueOf(config.getString("material"));
+        if (config.contains("material")) {
+            material = Material.matchMaterial(config.getString("material"));
         }
 
         durability = (short) config.getInt("durability");
@@ -85,6 +88,9 @@ public class CustomItem extends UniversalItem {
             Map<String, Object> enchantments = config.getConfigurationSection("enchantments").getValues(false);
             for (Entry<String, Object> enchantment : enchantments.entrySet()) {
                 Enchantment type = Enchantment.getByName(enchantment.getKey());
+                if (type == null) {
+                    type = Enchantment.getById(NumberUtil.parseInt(enchantment.getKey(), 1));
+                }
                 int level = config.getInt("enchantments." + enchantment.getKey());
                 if (type != null && level != 0) {
                     this.enchantments.put(type, level);
@@ -110,23 +116,27 @@ public class CustomItem extends UniversalItem {
                 String operation = config.getString(prefix + "operation");
                 double amount = config.getDouble(prefix + "amount");
 
-                if (!EnumUtil.isValidEnum(Attribute.class, type) || !EnumUtil.isValidEnum(Operation.class, operation)) {
-                    continue;
+                if (EnumUtil.isValidEnum(Attribute.class, type)) {
+                    type = ItemUtil.getInternalAttributeName(Attribute.valueOf(type));
+                }
+
+                if (EnumUtil.isValidEnum(Operation.class, operation)) {
                 }
 
                 AttributeModifier modifier = new AttributeModifier(name, amount, Operation.valueOf(operation));
 
+                CaliAttribute attribute = new CaliAttribute(type);
                 int index = attributes.size();
-                if (attributes.contains(Attribute.valueOf(type))) {
+                if (attributes.contains(attribute)) {
                     index = attributes.indexOf(type);
                 }
 
-                attributes.add(index, Attribute.valueOf(type));
+                attributes.add(index, attribute);
                 attributeModifiers.add(index, modifier);
-                attributeSlots.add(index, new HashSet<Slot>());
+                attributeSlots.add(index, new HashSet<CaliSlot>());
                 for (String slot : slots) {
-                    if (EnumUtil.isValidEnum(Slot.class, slot)) {
-                        attributeSlots.get(index).add(Slot.valueOf(slot));
+                    if (EnumUtil.isValidEnum(CaliSlot.class, slot)) {
+                        attributeSlots.get(index).add(CaliSlot.valueOf(slot));
                     }
                 }
             }
@@ -227,7 +237,7 @@ public class CustomItem extends UniversalItem {
      * @return
      * the attributes
      */
-    public List<Attribute> getAttributes() {
+    public List<CaliAttribute> getAttributes() {
         return attributes;
     }
 
@@ -237,7 +247,7 @@ public class CustomItem extends UniversalItem {
      * @return
      * the modifier of the attribute
      */
-    public AttributeModifier getAttributeModifier(Attribute attribute) {
+    public AttributeModifier getAttributeModifier(CaliAttribute attribute) {
         return attributeModifiers.get(attributes.indexOf(attribute));
     }
 
@@ -247,7 +257,7 @@ public class CustomItem extends UniversalItem {
      * @return
      * the slots where the attribute affects the player
      */
-    public Set<Slot> getAttributeSlots(Attribute attribute) {
+    public Set<CaliSlot> getAttributeSlots(CaliAttribute attribute) {
         return attributeSlots.get(attributes.indexOf(attribute));
     }
 
@@ -278,8 +288,8 @@ public class CustomItem extends UniversalItem {
             itemStack.addUnsafeEnchantment(enchantment.getKey(), enchantment.getValue());
         }
 
-        for (Attribute attribute : attributes) {
-            itemStack = ItemUtil.setAttribute(itemStack, attribute, getAttributeModifier(attribute), getAttributeSlots(attribute));
+        for (CaliAttribute attribute : attributes) {
+            itemStack = ItemUtil.setAttribute(itemStack, attribute.getName(), getAttributeModifier(attribute), getAttributeSlots(attribute));
         }
 
         return itemStack;
