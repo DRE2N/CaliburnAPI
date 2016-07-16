@@ -39,6 +39,7 @@ public class UniversalItem {
     protected Map<MobCategory, Double> categoryDamageModifiers = new HashMap<>();
     protected Map<UniversalMob, Double> mobDamageModifiers = new HashMap<>();
 
+    @SuppressWarnings("deprecation")
     public UniversalItem(CaliburnAPI api, Material material) {
         this(api, String.valueOf(material.getId()), material);
     }

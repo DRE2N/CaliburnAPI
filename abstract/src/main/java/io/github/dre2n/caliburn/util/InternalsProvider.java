@@ -23,7 +23,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Daniel Saukel
  */
-class InternalsProvider {
+public class InternalsProvider {
 
     ItemStack setAttribute(ItemStack itemStack, String attributeName, double amount, byte operation, Set<String> slot) {
         return itemStack;
