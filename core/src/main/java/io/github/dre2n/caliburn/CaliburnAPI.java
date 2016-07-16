@@ -37,16 +37,31 @@ public class CaliburnAPI {
 
     public static String IDENTIFIER_PREFIX = "\u00a70\u00a7k";
 
+    private static CaliburnAPI instance;
+
     private Items items;
     private Mobs mobs;
     private ItemCategories itemCategories;
     private MobCategories mobCategories;
 
+    private CaliburnAPI() {
+        instance = this;
+    }
+
     public CaliburnAPI(Plugin plugin) {
+        instance = this;
         Bukkit.getServer().getPluginManager().registerEvents(new EntityListener(this), plugin);
     }
 
     /* Getters and setters */
+    public static CaliburnAPI getInstance() {
+        if (instance == null) {
+            new CaliburnAPI().setupClean();
+        }
+
+        return instance;
+    }
+
     /**
      * @return
      * the loaded instance of ItemCategories
