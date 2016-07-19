@@ -24,13 +24,14 @@ import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 /**
  * @author Daniel Saukel
  */
-public class UniversalMob {
+public class UniversalMob implements ConfigurationSerializable {
 
     CaliburnAPI api;
 
@@ -40,6 +41,12 @@ public class UniversalMob {
 
     protected Map<ItemCategory, Double> categoryDamageModifiers = new HashMap<>();
     protected Map<UniversalItem, Double> itemDamageModifiers = new HashMap<>();
+
+    public UniversalMob(Map<String, Object> args) {
+        if (EnumUtil.isValidEnum(EntityType.class, config.getString("species"))) {
+            this.species = EntityType.valueOf(config.getString("species"));
+        }
+    }
 
     public UniversalMob(CaliburnAPI api, EntityType species) {
         this(api, String.valueOf(species.getTypeId()), species);
@@ -53,13 +60,12 @@ public class UniversalMob {
     }
 
     public UniversalMob(CaliburnAPI api, String id, ConfigurationSection config) {
+        this(config.getValues(true));
+
         this.api = api;
 
         this.id = id;
         this.config = config;
-        if (EnumUtil.isValidEnum(EntityType.class, config.getString("species"))) {
-            this.species = EntityType.valueOf(config.getString("species"));
-        }
     }
 
     /**
@@ -155,6 +161,24 @@ public class UniversalMob {
 
     public void addCategoryDamageModifier(ItemCategory itemCategory, double categoryDamageModifier) {
         categoryDamageModifiers.put(itemCategory, categoryDamageModifier);
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = new HashMap<>();
+
+        config.put("species", species.toString());
+
+        for (Map.Entry<ItemCategory, Double> categoryDamageModifier : categoryDamageModifiers.entrySet()) {
+            config.put("categoryDamageModifiers." + categoryDamageModifier.getKey().getId(), categoryDamageModifier.getValue());
+        }
+
+        for (Map.Entry<UniversalItem, Double> mobDamageModifier : itemDamageModifiers.entrySet()) {
+            config.put("mobDamageModifiers." + mobDamageModifier.getKey().getId(), mobDamageModifier.getValue());
+        }
+
+        return config;
     }
 
     /**

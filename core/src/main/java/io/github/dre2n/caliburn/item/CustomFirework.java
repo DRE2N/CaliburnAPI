@@ -19,6 +19,7 @@ package io.github.dre2n.caliburn.item;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
@@ -65,6 +66,7 @@ public class CustomFirework extends CustomItem {
         }
     }
 
+    /* Getters and setters */
     /**
      * @return
      * the power
@@ -103,6 +105,14 @@ public class CustomFirework extends CustomItem {
      */
     public void addEffect(List<FireworkEffect> effects) {
         this.effects.addAll(effects);
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**

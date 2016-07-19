@@ -162,7 +162,6 @@ public class ItemUtil {
      * @return
      * the proper item ID
      */
-    @SuppressWarnings("deprecation")
     public static int getId(String string) {
         if (NumberUtil.parseInt(string) > 0) {
             return NumberUtil.parseInt(string);

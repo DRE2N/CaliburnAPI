@@ -49,6 +49,7 @@ public class CustomEnchantedBook extends CustomItem {
         }
     }
 
+    /* Getters and setters */
     /**
      * @return
      * the storedEnchantments
@@ -65,6 +66,14 @@ public class CustomEnchantedBook extends CustomItem {
      */
     public void addStoredEnchantment(Enchantment type, int level) {
         this.storedEnchantments.put(type, level);
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     @Override

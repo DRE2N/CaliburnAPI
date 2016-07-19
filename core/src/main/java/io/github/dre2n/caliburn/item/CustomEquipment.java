@@ -18,6 +18,7 @@ package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.util.ItemUtil;
+import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -38,6 +39,7 @@ public class CustomEquipment extends CustomItem {
         }
     }
 
+    /* Getters and setters */
     /**
      * @return
      * if the item is unbreakable
@@ -52,6 +54,14 @@ public class CustomEquipment extends CustomItem {
      */
     public void setUnbreakable(boolean unbreakable) {
         this.unbreakable = unbreakable;
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**

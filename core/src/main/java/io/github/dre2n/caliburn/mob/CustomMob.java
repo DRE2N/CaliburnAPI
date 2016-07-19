@@ -17,6 +17,7 @@
 package io.github.dre2n.caliburn.mob;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -28,6 +29,11 @@ import org.bukkit.entity.EntityType;
 public class CustomMob extends UniversalMob {
 
     private String name;
+
+    public CustomMob(Map<String, Object> args) {
+        super(args);
+        name = (String) args.get("name");
+    }
 
     public CustomMob(CaliburnAPI api, String id, EntityType type) {
         super(api, id, type);

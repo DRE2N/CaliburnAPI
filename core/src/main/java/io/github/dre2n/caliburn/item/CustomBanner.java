@@ -56,6 +56,7 @@ public class CustomBanner extends CustomItem {
         }
     }
 
+    /* Getters and setters */
     /**
      * @return
      * the baseColor
@@ -88,6 +89,14 @@ public class CustomBanner extends CustomItem {
      */
     public void addPattern(DyeColor color, PatternType type) {
         this.patterns.add(new Pattern(color, type));
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**

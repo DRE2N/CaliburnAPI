@@ -27,6 +27,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
@@ -50,7 +51,11 @@ public class CaliburnAPI {
 
     public CaliburnAPI(Plugin plugin) {
         instance = this;
+
         Bukkit.getServer().getPluginManager().registerEvents(new EntityListener(this), plugin);
+
+        ConfigurationSerialization.registerClass(UniversalItem.class);
+        ConfigurationSerialization.registerClass(UniversalMob.class);
     }
 
     /* Getters and setters */

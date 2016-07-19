@@ -19,16 +19,15 @@ package io.github.dre2n.caliburn.item;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.mob.MobCategory;
 import io.github.dre2n.caliburn.mob.UniversalMob;
-import io.github.dre2n.commons.util.EnumUtil;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 
-public class UniversalItem {
+public class UniversalItem implements ConfigurationSerializable {
 
     protected CaliburnAPI api;
 
@@ -39,7 +38,10 @@ public class UniversalItem {
     protected Map<MobCategory, Double> categoryDamageModifiers = new HashMap<>();
     protected Map<UniversalMob, Double> mobDamageModifiers = new HashMap<>();
 
-    @SuppressWarnings("deprecation")
+    public UniversalItem(Map<String, Object> args) {
+        material = Material.matchMaterial((String) args.get("material"));
+    }
+
     public UniversalItem(CaliburnAPI api, Material material) {
         this(api, String.valueOf(material.getId()), material);
     }
@@ -52,13 +54,11 @@ public class UniversalItem {
     }
 
     public UniversalItem(CaliburnAPI api, String id, ConfigurationSection config) {
+        this(config.getValues(true));
         this.api = api;
 
         this.id = id;
         this.config = config;
-        if (EnumUtil.isValidEnum(Material.class, config.getString("material"))) {
-            this.material = Material.valueOf(config.getString("material"));
-        }
     }
 
     /**
@@ -104,12 +104,7 @@ public class UniversalItem {
      * the ConfigurationSection that represents the item or a new one
      */
     public ConfigurationSection getConfig() {
-        if (config != null) {
-            return config;
-
-        } else {
-            return toConfig();
-        }
+        return config;
     }
 
     /**
@@ -179,20 +174,18 @@ public class UniversalItem {
     }
 
     /* Actions */
-    /**
-     * Method to serialize the item.
-     */
-    public ConfigurationSection toConfig() {
-        ConfigurationSection config = new YamlConfiguration();
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = new HashMap<>();
 
-        config.set("material", material.toString());
+        config.put("material", material.toString());
 
         for (Entry<MobCategory, Double> categoryDamageModifier : categoryDamageModifiers.entrySet()) {
-            config.set("categoryDamageModifiers." + categoryDamageModifier.getKey().getId(), categoryDamageModifier.getValue());
+            config.put("categoryDamageModifiers." + categoryDamageModifier.getKey().getId(), categoryDamageModifier.getValue());
         }
 
         for (Entry<UniversalMob, Double> mobDamageModifier : mobDamageModifiers.entrySet()) {
-            config.set("mobDamageModifiers." + mobDamageModifier.getKey().getId(), mobDamageModifier.getValue());
+            config.put("mobDamageModifiers." + mobDamageModifier.getKey().getId(), mobDamageModifier.getValue());
         }
 
         return config;

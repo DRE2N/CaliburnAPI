@@ -19,6 +19,7 @@ package io.github.dre2n.caliburn.item;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.util.ItemUtil;
 import io.github.dre2n.commons.util.UUIDUtil;
+import java.util.Map;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -45,6 +46,7 @@ public class CustomHead extends CustomItem {
         }
     }
 
+    /* Getters and setters */
     /**
      * @return
      * the skullOwner
@@ -75,6 +77,14 @@ public class CustomHead extends CustomItem {
      */
     public void setTextureValue(String textureValue) {
         this.textureValue = textureValue;
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**
