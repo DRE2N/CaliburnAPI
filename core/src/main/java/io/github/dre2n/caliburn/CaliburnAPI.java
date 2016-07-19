@@ -16,6 +16,7 @@
  */
 package io.github.dre2n.caliburn;
 
+import io.github.dre2n.caliburn.item.CustomItemStack;
 import io.github.dre2n.caliburn.item.ItemCategories;
 import io.github.dre2n.caliburn.item.Items;
 import io.github.dre2n.caliburn.item.UniversalItem;
@@ -54,6 +55,7 @@ public class CaliburnAPI {
 
         Bukkit.getServer().getPluginManager().registerEvents(new EntityListener(this), plugin);
 
+        ConfigurationSerialization.registerClass(CustomItemStack.class);
         ConfigurationSerialization.registerClass(UniversalItem.class);
         ConfigurationSerialization.registerClass(UniversalMob.class);
     }

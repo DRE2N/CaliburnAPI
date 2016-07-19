@@ -19,6 +19,7 @@ package io.github.dre2n.caliburn.item;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 import org.bukkit.configuration.ConfigurationSection;
 
 /**
@@ -56,6 +57,22 @@ public enum ItemType {
         try {
             Constructor<? extends UniversalItem> constructor = handler.getConstructor(CaliburnAPI.class, String.class, ConfigurationSection.class);
             return constructor.newInstance(api, id, config);
+
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            return null;
+        }
+    }
+
+    /**
+     * Used for deserialization
+     *
+     * @return
+     * a new instance of the handler class
+     */
+    public UniversalItem instantiate(Map<String, Object> args) {
+        try {
+            Constructor<? extends UniversalItem> constructor = handler.getConstructor(Map.class);
+            return constructor.newInstance(args);
 
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
             return null;

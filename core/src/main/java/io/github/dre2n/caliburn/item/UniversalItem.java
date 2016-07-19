@@ -178,6 +178,8 @@ public class UniversalItem implements ConfigurationSerializable {
     public Map<String, Object> serialize() {
         Map<String, Object> config = new HashMap<>();
 
+        config.put("type", ItemType.UNIVERSAL.toString());
+
         config.put("material", material.toString());
 
         for (Entry<MobCategory, Double> categoryDamageModifier : categoryDamageModifiers.entrySet()) {

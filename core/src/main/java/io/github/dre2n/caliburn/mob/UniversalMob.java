@@ -43,8 +43,9 @@ public class UniversalMob implements ConfigurationSerializable {
     protected Map<UniversalItem, Double> itemDamageModifiers = new HashMap<>();
 
     public UniversalMob(Map<String, Object> args) {
-        if (EnumUtil.isValidEnum(EntityType.class, config.getString("species"))) {
-            this.species = EntityType.valueOf(config.getString("species"));
+        String species = (String) args.get("species");
+        if (species != null && EnumUtil.isValidEnum(EntityType.class, species)) {
+            this.species = EntityType.valueOf(species);
         }
     }
 
@@ -167,6 +168,8 @@ public class UniversalMob implements ConfigurationSerializable {
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> config = new HashMap<>();
+
+        config.put("type", MobType.UNIVERSAL.toString());
 
         config.put("species", species.toString());
 
