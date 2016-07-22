@@ -17,6 +17,7 @@
 package io.github.dre2n.caliburn.mob;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import org.bukkit.configuration.ConfigurationSection;
@@ -53,6 +54,7 @@ public enum MobType {
             return constructor.newInstance(api, id, config);
 
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            MessageUtil.log("An error occurred while accessing the handler class of the mob type " + toString() + ": " + exception.getClass().getSimpleName());
             return null;
         }
     }

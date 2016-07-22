@@ -27,16 +27,25 @@ public class CustomEquipment extends CustomItem {
 
     private boolean unbreakable;
 
+    public CustomEquipment(Map<String, Object> args) {
+        super(args);
+
+        Object unbreakable = args.get("unbreakable");
+        if (unbreakable instanceof Boolean) {
+            this.unbreakable = (Boolean) unbreakable;
+        }
+    }
+
     public CustomEquipment(CaliburnAPI api, String id, Material material, short durability) {
         super(api, id, material, durability);
     }
 
     public CustomEquipment(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
+        this(config.getValues(true));
 
-        if (config.contains("unbreakable")) {
-            this.unbreakable = config.getBoolean("unbreakable");
-        }
+        this.api = api;
+        this.id = id;
+        this.config = config;
     }
 
     /* Getters and setters */

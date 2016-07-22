@@ -33,13 +33,25 @@ public class UniversalItem implements ConfigurationSerializable {
 
     protected String id;
     protected ConfigurationSection config;
+
     protected Material material;
+    protected short durability;
 
     protected Map<MobCategory, Double> categoryDamageModifiers = new HashMap<>();
     protected Map<UniversalMob, Double> mobDamageModifiers = new HashMap<>();
 
     public UniversalItem(Map<String, Object> args) {
-        material = Material.matchMaterial((String) args.get("material"));
+        Object material = args.get("material");
+        if (material instanceof String) {
+            this.material = Material.matchMaterial((String) material);
+        } else if (material instanceof Integer) {
+            this.material = Material.getMaterial((int) material);
+        }
+
+        Object durability = args.get("durability");
+        if (durability instanceof Integer) {
+            this.durability = ((Integer) durability).shortValue();
+        }
     }
 
     public UniversalItem(CaliburnAPI api, Material material) {
@@ -51,6 +63,14 @@ public class UniversalItem implements ConfigurationSerializable {
 
         this.id = id;
         this.material = material;
+    }
+
+    public UniversalItem(CaliburnAPI api, String id, Material material, short durability) {
+        this.api = api;
+
+        this.id = id;
+        this.material = material;
+        this.durability = durability;
     }
 
     public UniversalItem(CaliburnAPI api, String id, ConfigurationSection config) {
@@ -65,7 +85,7 @@ public class UniversalItem implements ConfigurationSerializable {
      * Finish initialization of the Object.
      */
     public void setup() {
-        if (getConfig().contains("categoryDamageModifiers")) {
+        if (config.contains("categoryDamageModifiers")) {
             Map<String, Object> categoryDamageModifiers = config.getConfigurationSection("categoryDamageModifiers").getValues(false);
             for (Entry<String, Object> categoryDamageModifier : categoryDamageModifiers.entrySet()) {
                 MobCategory mobCategory = api.getMobCategories().getById(categoryDamageModifier.getKey());
@@ -73,7 +93,7 @@ public class UniversalItem implements ConfigurationSerializable {
             }
         }
 
-        if (getConfig().contains("mobDamageModifiers")) {
+        if (config.contains("mobDamageModifiers")) {
             Map<String, Object> mobDamageModifiers = config.getConfigurationSection("mobDamageModifiers").getValues(false);
             for (Entry<String, Object> mobDamageModifier : mobDamageModifiers.entrySet()) {
                 UniversalMob mob = api.getMobs().getById(mobDamageModifier.getKey());
@@ -121,6 +141,21 @@ public class UniversalItem implements ConfigurationSerializable {
      */
     public void setMaterial(Material material) {
         this.material = material;
+    }
+
+    /**
+     * @return the durability
+     */
+    public short getDurability() {
+        return durability;
+    }
+
+    /**
+     * @param durability
+     * the durability to set
+     */
+    public void setDurability(short durability) {
+        this.durability = durability;
     }
 
     /**
@@ -200,7 +235,7 @@ public class UniversalItem implements ConfigurationSerializable {
      * the item as an org.bukkit.inventory.ItemStack
      */
     public ItemStack toItemStack(int amount) {
-        return new ItemStack(material, amount);
+        return new ItemStack(material, amount, durability);
     }
 
 }

@@ -30,20 +30,30 @@ public class CustomHead extends CustomItem {
     private String skullOwner;
     private String textureValue;
 
+    public CustomHead(Map<String, Object> args) {
+        super(args);
+
+        Object skullOwner = args.get("skullOwner");
+        if (skullOwner instanceof String) {
+            setSkullOwner((String) skullOwner);
+        }
+
+        Object textureValue = args.get("textureValue");
+        if (textureValue instanceof String) {
+            setSkullOwner((String) textureValue);
+        }
+    }
+
     public CustomHead(CaliburnAPI api, String id) {
         super(api, id, Material.SKULL_ITEM, (short) 3);
     }
 
     public CustomHead(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
+        this(config.getValues(true));
 
-        if (config.getString("skullOwner") != null) {
-            setSkullOwner(config.getString("skullOwner"));
-        }
-
-        if (config.getString("textureValue") != null) {
-            setSkullOwner(config.getString("textureValue"));
-        }
+        this.api = api;
+        this.id = id;
+        this.config = config;
     }
 
     /* Getters and setters */

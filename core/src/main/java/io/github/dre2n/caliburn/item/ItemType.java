@@ -17,6 +17,7 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
@@ -59,6 +60,8 @@ public enum ItemType {
             return constructor.newInstance(api, id, config);
 
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            MessageUtil.log("An error occurred while accessing the handler class of the item type " + toString() + ": " + exception.getClass().getSimpleName());
+            exception.printStackTrace();
             return null;
         }
     }
@@ -75,6 +78,8 @@ public enum ItemType {
             return constructor.newInstance(args);
 
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            MessageUtil.log("An error occurred while accessing the handler class of the item type " + toString() + ": " + exception.getClass().getSimpleName());
+            exception.printStackTrace();
             return null;
         }
     }

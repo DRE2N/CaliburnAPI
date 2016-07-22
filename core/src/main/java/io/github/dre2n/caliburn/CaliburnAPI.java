@@ -16,10 +16,10 @@
  */
 package io.github.dre2n.caliburn;
 
-import io.github.dre2n.caliburn.item.CustomItemStack;
 import io.github.dre2n.caliburn.item.ItemCategories;
 import io.github.dre2n.caliburn.item.Items;
 import io.github.dre2n.caliburn.item.UniversalItem;
+import io.github.dre2n.caliburn.item.UniversalItemStack;
 import io.github.dre2n.caliburn.listener.EntityListener;
 import io.github.dre2n.caliburn.mob.MobCategories;
 import io.github.dre2n.caliburn.mob.Mobs;
@@ -48,24 +48,19 @@ public class CaliburnAPI {
 
     private CaliburnAPI() {
         instance = this;
-    }
 
-    public CaliburnAPI(Plugin plugin) {
-        instance = this;
-
-        Bukkit.getServer().getPluginManager().registerEvents(new EntityListener(this), plugin);
-
-        ConfigurationSerialization.registerClass(CustomItemStack.class);
+        ConfigurationSerialization.registerClass(UniversalItemStack.class);
         ConfigurationSerialization.registerClass(UniversalItem.class);
         ConfigurationSerialization.registerClass(UniversalMob.class);
     }
 
+    public CaliburnAPI(Plugin plugin) {
+        this();
+        Bukkit.getServer().getPluginManager().registerEvents(new EntityListener(this), plugin);
+    }
+
     /* Getters and setters */
     public static CaliburnAPI getInstance() {
-        if (instance == null) {
-            new CaliburnAPI().setupClean();
-        }
-
         return instance;
     }
 
