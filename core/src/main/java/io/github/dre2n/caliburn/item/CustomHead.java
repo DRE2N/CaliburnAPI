@@ -17,11 +17,11 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.caliburn.util.ItemUtil;
 import io.github.dre2n.commons.util.UUIDUtil;
 import java.util.Map;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -48,8 +48,8 @@ public class CustomHead extends CustomItem {
         super(api, id, Material.SKULL_ITEM, (short) 3);
     }
 
-    public CustomHead(CaliburnAPI api, String id, ConfigurationSection config) {
-        this(config.getValues(true));
+    public CustomHead(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
         this.api = api;
         this.id = id;

@@ -17,11 +17,10 @@
 package io.github.dre2n.caliburn.mob;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.commons.util.EnumUtil;
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 
 /**
@@ -111,9 +110,9 @@ public class Mobs {
 
     /**
      * @param config
-     * the ConfigurationSection which stores information about the new mob
+     * the CaliConfiguration which stores information about the new mob
      */
-    public UniversalMob addItem(String id, ConfigurationSection config) {
+    public UniversalMob addItem(String id, CaliConfiguration config) {
         MobType type = MobType.CUSTOM_DEFAULT;
         if (config.contains("type") && EnumUtil.isValidEnum(MobType.class, config.getString("type"))) {
             type = MobType.valueOf(config.getString("type"));
@@ -130,54 +129,6 @@ public class Mobs {
      */
     public void removeMob(UniversalMob mob) {
         mobs.remove(mob);
-    }
-
-    /**
-     * @param config
-     * a configuration section
-     * @param location
-     * the location where the entity will spawn
-     * @return
-     * an ItemStack with the values from config
-     */
-    public Entity deserializeEntity(ConfigurationSection config, Location location) {
-        return deserializeEntity("caliburn", config, location);
-    }
-
-    /**
-     * @param id
-     * the ID the mob will use
-     * @param config
-     * a configuration section
-     * @param location
-     * the location where the entity will spawn
-     * @return
-     * an ItemStack with the values from config
-     */
-    public Entity deserializeEntity(String id, ConfigurationSection config, Location location) {
-        return deserializeMob(id, config).toEntity(location);
-    }
-
-    /**
-     * @param config
-     * a configuration section
-     */
-    public UniversalMob deserializeMob(ConfigurationSection config) {
-        return deserializeMob("caliburn", config);
-    }
-
-    /**
-     * @param id
-     * the ID the mob will use
-     * @param config
-     * a configuration section
-     */
-    public UniversalMob deserializeMob(String id, ConfigurationSection config) {
-        MobType type = MobType.CUSTOM_DEFAULT;
-        if (config.contains("type") && EnumUtil.isValidEnum(MobType.class, config.getString("type"))) {
-            type = MobType.valueOf(config.getString("type"));
-        }
-        return type.instantiate(api, id, config);
     }
 
 }

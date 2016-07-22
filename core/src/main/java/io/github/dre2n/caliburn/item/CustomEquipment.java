@@ -17,10 +17,10 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.caliburn.util.ItemUtil;
 import java.util.Map;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 public class CustomEquipment extends CustomItem {
@@ -40,8 +40,8 @@ public class CustomEquipment extends CustomItem {
         super(api, id, material, durability);
     }
 
-    public CustomEquipment(CaliburnAPI api, String id, ConfigurationSection config) {
-        this(config.getValues(true));
+    public CustomEquipment(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
         this.api = api;
         this.id = id;

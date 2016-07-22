@@ -17,11 +17,11 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -49,8 +49,8 @@ public class CustomEnchantedBook extends CustomItem {
         super(api, id, material, durability);
     }
 
-    public CustomEnchantedBook(CaliburnAPI api, String id, ConfigurationSection config) {
-        this(config.getValues(true));
+    public CustomEnchantedBook(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
         this.api = api;
         this.id = id;

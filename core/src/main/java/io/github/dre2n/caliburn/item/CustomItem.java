@@ -18,6 +18,7 @@ package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.util.CaliAttribute;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.caliburn.util.CaliSlot;
 import io.github.dre2n.caliburn.util.ItemUtil;
 import io.github.dre2n.commons.util.EnumUtil;
@@ -34,7 +35,6 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -93,12 +93,12 @@ public class CustomItem extends UniversalItem {
 
         Object attributes = args.get("attributes");
         if (attributes instanceof Map) {
-            for (Object attribute : ((Map) attributes).keySet()) {
+            for (Object attribute : ((Map) attributes).entrySet()) {
                 if (!(attribute instanceof Entry)) {
                     continue;
                 }
 
-                Map<?, ?> attributeMap = (Map<?, ?>) ((Entry) attribute).getValue();
+                Map attributeMap = (Map) ((Entry) attribute).getValue();
 
                 Object type = attributeMap.get("type");
                 Object slots = attributeMap.get("slots");
@@ -140,8 +140,8 @@ public class CustomItem extends UniversalItem {
         }
     }
 
-    public CustomItem(CaliburnAPI api, String id, ConfigurationSection config) {
-        this(config.getValues(true));
+    public CustomItem(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
         this.api = api;
         this.id = id;

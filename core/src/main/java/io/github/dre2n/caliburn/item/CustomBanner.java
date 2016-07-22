@@ -17,6 +17,7 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.commons.util.EnumUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,6 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 
@@ -57,8 +57,8 @@ public class CustomBanner extends CustomItem {
         super(api, id, material, durability);
     }
 
-    public CustomBanner(CaliburnAPI api, String id, ConfigurationSection config) {
-        this(config.getValues(true));
+    public CustomBanner(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
         this.api = api;
         this.id = id;

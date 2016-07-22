@@ -19,11 +19,11 @@ package io.github.dre2n.caliburn.mob;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.ItemCategory;
 import io.github.dre2n.caliburn.item.UniversalItem;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.commons.util.EnumUtil;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -36,7 +36,7 @@ public class UniversalMob implements ConfigurationSerializable {
     CaliburnAPI api;
 
     protected String id;
-    protected ConfigurationSection config;
+    protected CaliConfiguration config;
     protected EntityType species;
 
     protected Map<ItemCategory, Double> categoryDamageModifiers = new HashMap<>();
@@ -60,8 +60,8 @@ public class UniversalMob implements ConfigurationSerializable {
         this.species = species;
     }
 
-    public UniversalMob(CaliburnAPI api, String id, ConfigurationSection config) {
-        this(config.getValues(true));
+    public UniversalMob(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
         this.api = api;
 

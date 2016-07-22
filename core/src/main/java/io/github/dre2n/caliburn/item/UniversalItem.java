@@ -19,11 +19,11 @@ package io.github.dre2n.caliburn.item;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.mob.MobCategory;
 import io.github.dre2n.caliburn.mob.UniversalMob;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 
@@ -32,7 +32,7 @@ public class UniversalItem implements ConfigurationSerializable {
     protected CaliburnAPI api;
 
     protected String id;
-    protected ConfigurationSection config;
+    protected CaliConfiguration config;
 
     protected Material material;
     protected short durability;
@@ -73,8 +73,8 @@ public class UniversalItem implements ConfigurationSerializable {
         this.durability = durability;
     }
 
-    public UniversalItem(CaliburnAPI api, String id, ConfigurationSection config) {
-        this(config.getValues(true));
+    public UniversalItem(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
         this.api = api;
 
         this.id = id;
@@ -121,9 +121,9 @@ public class UniversalItem implements ConfigurationSerializable {
 
     /**
      * @return
-     * the ConfigurationSection that represents the item or a new one
+     * the CaliConfiguration that represents the item or a new one
      */
-    public ConfigurationSection getConfig() {
+    public CaliConfiguration getConfig() {
         return config;
     }
 

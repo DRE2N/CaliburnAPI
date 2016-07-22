@@ -17,10 +17,10 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.commons.util.EnumUtil;
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -89,9 +89,9 @@ public class Items {
 
     /**
      * @param config
-     * the ConfigurationSection which stores information about the new item
+     * the CaliConfiguration which stores information about the new item
      */
-    public UniversalItem addItem(String id, ConfigurationSection config) {
+    public UniversalItem addItem(String id, CaliConfiguration config) {
         ItemType type = ItemType.CUSTOM_DEFAULT;
         if (config.contains("type") && EnumUtil.isValidEnum(ItemType.class, config.getString("type"))) {
             type = ItemType.valueOf(config.getString("type"));

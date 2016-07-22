@@ -17,9 +17,9 @@
 package io.github.dre2n.caliburn.mob;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import java.util.Map;
 import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
@@ -39,12 +39,12 @@ public class CustomMob extends UniversalMob {
         super(api, id, type);
     }
 
-    public CustomMob(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
+    public CustomMob(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
-        if (config.contains("name")) {
-            name = config.getString("name");
-        }
+        this.api = api;
+        this.id = id;
+        this.config = config;
     }
 
     /* Getters and setters */

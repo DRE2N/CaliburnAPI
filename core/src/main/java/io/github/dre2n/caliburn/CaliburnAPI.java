@@ -24,10 +24,10 @@ import io.github.dre2n.caliburn.listener.EntityListener;
 import io.github.dre2n.caliburn.mob.MobCategories;
 import io.github.dre2n.caliburn.mob.Mobs;
 import io.github.dre2n.caliburn.mob.UniversalMob;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
@@ -116,7 +116,7 @@ public class CaliburnAPI {
      * Finish initialization of the Object with default values.
      */
     public void setupClean() {
-        ConfigurationSection placeholder = new YamlConfiguration();
+        ConfigurationSection placeholder = new CaliConfiguration();
 
         items = new Items(this);
         for (Material material : Material.values()) {
