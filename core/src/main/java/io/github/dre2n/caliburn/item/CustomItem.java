@@ -17,9 +17,12 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliAttribute;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
+import io.github.dre2n.caliburn.util.CaliSlot;
 import io.github.dre2n.caliburn.util.ItemUtil;
-import io.github.dre2n.caliburn.util.Slot;
 import io.github.dre2n.commons.util.EnumUtil;
+import io.github.dre2n.commons.util.NumberUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -32,7 +35,6 @@ import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.attribute.AttributeModifier.Operation;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -40,99 +42,121 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class CustomItem extends UniversalItem {
 
-    // ItemStack
-    private short durability;
-
-    // Meta
     private String name;
     private List<String> lores = new ArrayList<>();
     private Set<ItemFlag> itemFlags = new HashSet<>();
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
-    private List<Attribute> attributes = new ArrayList<>();
+    private List<CaliAttribute> attributes = new ArrayList<>();
     private List<AttributeModifier> attributeModifiers = new ArrayList<>();
-    private List<HashSet<Slot>> attributeSlots = new ArrayList<>();
+    private List<HashSet<CaliSlot>> attributeSlots = new ArrayList<>();
 
-    public CustomItem(CaliburnAPI api, String id, Material material) {
-        super(api, id, material);
-    }
+    // TODO: Better exception handling
+    public CustomItem(Map<String, Object> args) {
+        super(args);
 
-    public CustomItem(CaliburnAPI api, String id, Material material, short durability) {
-        super(api, id, material);
-
-        this.durability = durability;
-    }
-
-    public CustomItem(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
-
-        if (EnumUtil.isValidEnum(Material.class, config.getString("material"))) {
-            material = Material.valueOf(config.getString("material"));
+        Object name = args.get("name");
+        if (name instanceof String) {
+            setName((String) name);
         }
 
-        durability = (short) config.getInt("durability");
-
-        if (config.contains("name")) {
-            setName(config.getString("name"));
-        }
-
-        if (config.contains("lores")) {
-            for (String lore : config.getStringList("lores")) {
-                addLore(lore);
+        Object lores = args.get("lores");
+        if (lores instanceof List) {
+            for (Object lore : (List) lores) {
+                if (lore instanceof String) {
+                    addLore((String) lore);
+                }
             }
         }
 
-        if (config.contains("enchantments")) {
-            Map<String, Object> enchantments = config.getConfigurationSection("enchantments").getValues(false);
-            for (Entry<String, Object> enchantment : enchantments.entrySet()) {
-                Enchantment type = Enchantment.getByName(enchantment.getKey());
-                int level = config.getInt("enchantments." + enchantment.getKey());
+        Object enchantments = args.get("enchantments");
+        if (enchantments instanceof Map) {
+            for (Object enchantment : ((Map) enchantments).entrySet()) {
+                Enchantment type = Enchantment.getByName(((Entry) enchantment).getKey().toString());
+                if (type == null) {
+                    type = Enchantment.getById(NumberUtil.parseInt(((Entry) enchantment).getKey().toString(), 1));
+                }
+                int level = (int) ((Entry) enchantment).getValue();
                 if (type != null && level != 0) {
                     this.enchantments.put(type, level);
                 }
             }
         }
 
-        if (config.contains("itemFlags")) {
-            for (String flag : config.getStringList("itemFlags")) {
-                if (EnumUtil.isValidEnum(ItemFlag.class, flag)) {
-                    itemFlags.add(ItemFlag.valueOf(flag));
+        Object itemFlags = args.get("itemFlags");
+        if (itemFlags instanceof List) {
+            for (Object flag : (List) itemFlags) {
+                if (flag instanceof String && EnumUtil.isValidEnum(ItemFlag.class, (String) flag)) {
+                    this.itemFlags.add(ItemFlag.valueOf((String) flag));
                 }
             }
         }
 
-        // Attributes
-        if (config.contains("attributes")) {
-            for (String name : config.getConfigurationSection("attributes").getValues(false).keySet()) {
-                String prefix = "attributes." + name + ".";
-
-                String type = config.getString(prefix + "type");
-                List<String> slots = config.getStringList(prefix + "slots");
-                String operation = config.getString(prefix + "operation");
-                double amount = config.getDouble(prefix + "amount");
-
-                if (!EnumUtil.isValidEnum(Attribute.class, type) || !EnumUtil.isValidEnum(Operation.class, operation)) {
+        Object attributes = args.get("attributes");
+        if (attributes instanceof Map) {
+            for (Object attribute : ((Map) attributes).entrySet()) {
+                if (!(attribute instanceof Entry)) {
                     continue;
                 }
 
-                AttributeModifier modifier = new AttributeModifier(name, amount, Operation.valueOf(operation));
+                Map attributeMap = (Map) ((Entry) attribute).getValue();
 
-                int index = attributes.size();
-                if (attributes.contains(Attribute.valueOf(type))) {
-                    index = attributes.indexOf(type);
+                Object type = attributeMap.get("type");
+                Object slots = attributeMap.get("slots");
+                Object operation = attributeMap.get("operation");
+                Object amount = attributeMap.get("amount");
+
+                if (type instanceof String && EnumUtil.isValidEnum(Attribute.class, (String) type)) {
+                    type = ItemUtil.getInternalAttributeName(Attribute.valueOf((String) type));
                 }
 
-                attributes.add(index, Attribute.valueOf(type));
+                if (operation instanceof String && !EnumUtil.isValidEnum(Operation.class, (String) operation)) {
+                    operation = ItemUtil.getBukkitOperation((byte) NumberUtil.parseInt((String) operation)).toString();
+                }
+
+                if (amount instanceof String) {
+                    amount = NumberUtil.parseDouble((String) amount);
+                }
+
+                AttributeModifier modifier = new AttributeModifier((String) ((Entry) attribute).getKey(), (double) amount, Operation.valueOf((String) operation));
+
+                CaliAttribute caliAttribute = new CaliAttribute((String) type);
+                int index = this.attributes.size();
+                if (this.attributes.contains(caliAttribute)) {
+                    index = this.attributes.indexOf(type);
+                }
+
+                this.attributes.add(index, caliAttribute);
                 attributeModifiers.add(index, modifier);
-                attributeSlots.add(index, new HashSet<Slot>());
-                for (String slot : slots) {
-                    if (EnumUtil.isValidEnum(Slot.class, slot)) {
-                        attributeSlots.get(index).add(Slot.valueOf(slot));
+                attributeSlots.add(index, new HashSet<CaliSlot>());
+
+                if (slots instanceof List) {
+                    for (Object slot : (List) slots) {
+                        if (slot instanceof String && EnumUtil.isValidEnum(CaliSlot.class, (String) slot)) {
+                            attributeSlots.get(index).add(CaliSlot.valueOf((String) slot));
+                        }
                     }
                 }
             }
         }
     }
 
+    public CustomItem(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
+
+        this.api = api;
+        this.id = id;
+        this.config = config;
+    }
+
+    public CustomItem(CaliburnAPI api, String id, Material material) {
+        super(api, id, material);
+    }
+
+    public CustomItem(CaliburnAPI api, String id, Material material, short durability) {
+        super(api, id, material, durability);
+    }
+
+    /* Getters and setters */
     @Override
     public Material getMaterial() {
         return material;
@@ -141,21 +165,6 @@ public class CustomItem extends UniversalItem {
     @Override
     public void setMaterial(Material material) {
         this.material = material;
-    }
-
-    /**
-     * @return the durability
-     */
-    public short getDurability() {
-        return durability;
-    }
-
-    /**
-     * @param durability
-     * the durability to set
-     */
-    public void setDurability(short durability) {
-        this.durability = durability;
     }
 
     @Override
@@ -227,7 +236,7 @@ public class CustomItem extends UniversalItem {
      * @return
      * the attributes
      */
-    public List<Attribute> getAttributes() {
+    public List<CaliAttribute> getAttributes() {
         return attributes;
     }
 
@@ -237,7 +246,7 @@ public class CustomItem extends UniversalItem {
      * @return
      * the modifier of the attribute
      */
-    public AttributeModifier getAttributeModifier(Attribute attribute) {
+    public AttributeModifier getAttributeModifier(CaliAttribute attribute) {
         return attributeModifiers.get(attributes.indexOf(attribute));
     }
 
@@ -247,8 +256,16 @@ public class CustomItem extends UniversalItem {
      * @return
      * the slots where the attribute affects the player
      */
-    public Set<Slot> getAttributeSlots(Attribute attribute) {
+    public Set<CaliSlot> getAttributeSlots(CaliAttribute attribute) {
         return attributeSlots.get(attributes.indexOf(attribute));
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**
@@ -278,8 +295,8 @@ public class CustomItem extends UniversalItem {
             itemStack.addUnsafeEnchantment(enchantment.getKey(), enchantment.getValue());
         }
 
-        for (Attribute attribute : attributes) {
-            itemStack = ItemUtil.setAttribute(itemStack, attribute, getAttributeModifier(attribute), getAttributeSlots(attribute));
+        for (CaliAttribute attribute : attributes) {
+            itemStack = ItemUtil.setAttribute(itemStack, attribute.getName(), getAttributeModifier(attribute), getAttributeSlots(attribute));
         }
 
         return itemStack;

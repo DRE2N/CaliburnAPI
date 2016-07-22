@@ -8,10 +8,10 @@
     <parent>
         <groupId>io.github.dre2n</groupId>
         <artifactId>caliburn</artifactId>
-        <version>0.1.8${buildNo}</version>
+        <version>0.2</version>
     </parent>
     <build>
-        <finalName>caliburn-${project.version}</finalName>
+        <finalName>caliburn-${project.version}${buildNo}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

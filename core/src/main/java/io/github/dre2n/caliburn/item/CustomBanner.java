@@ -17,6 +17,7 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.commons.util.EnumUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,6 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.block.banner.PatternType;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BannerMeta;
 
@@ -35,27 +35,37 @@ public class CustomBanner extends CustomItem {
     private DyeColor baseColor;
     private List<Pattern> patterns = new ArrayList<>();
 
-    public CustomBanner(CaliburnAPI api, String id, Material material, short durability) {
-        super(api, id, material, durability);
-    }
+    public CustomBanner(Map<String, Object> args) {
+        super(args);
 
-    public CustomBanner(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
-
-        if (config.contains("baseColor") && EnumUtil.isValidEnum(DyeColor.class, config.getString("baseColor"))) {
-            baseColor = DyeColor.valueOf(config.getString("baseColor"));
+        Object baseColor = args.get("baseColor");
+        if (baseColor instanceof String && EnumUtil.isValidEnum(DyeColor.class, config.getString("baseColor"))) {
+            this.baseColor = DyeColor.valueOf((String) baseColor);
         }
 
-        if (config.contains("patterns")) {
-            Map<String, Object> patterns = config.getConfigurationSection("patterns").getValues(false);
-            for (Entry<String, Object> pattern : patterns.entrySet()) {
-                DyeColor color = DyeColor.valueOf(pattern.getKey());
-                PatternType type = PatternType.valueOf((String) pattern.getValue());
+        Object patterns = args.get("patterns");
+        if (patterns instanceof Map) {
+            for (Object pattern : ((Map) patterns).entrySet()) {
+                DyeColor color = DyeColor.valueOf((String) ((Entry) pattern).getKey());
+                PatternType type = PatternType.valueOf((String) ((Entry) pattern).getValue());
                 addPattern(color, type);
             }
         }
     }
 
+    public CustomBanner(CaliburnAPI api, String id, Material material, short durability) {
+        super(api, id, material, durability);
+    }
+
+    public CustomBanner(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
+
+        this.api = api;
+        this.id = id;
+        this.config = config;
+    }
+
+    /* Getters and setters */
     /**
      * @return
      * the baseColor
@@ -88,6 +98,14 @@ public class CustomBanner extends CustomItem {
      */
     public void addPattern(DyeColor color, PatternType type) {
         this.patterns.add(new Pattern(color, type));
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**

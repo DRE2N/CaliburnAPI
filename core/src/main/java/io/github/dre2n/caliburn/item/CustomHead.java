@@ -17,10 +17,11 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.caliburn.util.ItemUtil;
 import io.github.dre2n.commons.util.UUIDUtil;
+import java.util.Map;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -29,22 +30,33 @@ public class CustomHead extends CustomItem {
     private String skullOwner;
     private String textureValue;
 
+    public CustomHead(Map<String, Object> args) {
+        super(args);
+
+        Object skullOwner = args.get("skullOwner");
+        if (skullOwner instanceof String) {
+            setSkullOwner((String) skullOwner);
+        }
+
+        Object textureValue = args.get("textureValue");
+        if (textureValue instanceof String) {
+            setSkullOwner((String) textureValue);
+        }
+    }
+
     public CustomHead(CaliburnAPI api, String id) {
         super(api, id, Material.SKULL_ITEM, (short) 3);
     }
 
-    public CustomHead(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
+    public CustomHead(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
-        if (config.getString("skullOwner") != null) {
-            setSkullOwner(config.getString("skullOwner"));
-        }
-
-        if (config.getString("textureValue") != null) {
-            setSkullOwner(config.getString("textureValue"));
-        }
+        this.api = api;
+        this.id = id;
+        this.config = config;
     }
 
+    /* Getters and setters */
     /**
      * @return
      * the skullOwner
@@ -75,6 +87,14 @@ public class CustomHead extends CustomItem {
      */
     public void setTextureValue(String textureValue) {
         this.textureValue = textureValue;
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**

@@ -19,7 +19,7 @@ package io.github.dre2n.caliburn.util;
 /**
  * @author Daniel Saukel
  */
-public enum Slot {
+public enum CaliSlot {
 
     MAIN_HAND("mainhand"),
     OFF_HAND("offhand"),
@@ -30,7 +30,7 @@ public enum Slot {
 
     private String internalName;
 
-    Slot(String internalName) {
+    CaliSlot(String internalName) {
         this.internalName = internalName;
     }
 

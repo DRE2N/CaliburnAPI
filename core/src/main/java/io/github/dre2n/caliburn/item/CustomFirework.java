@@ -17,12 +17,14 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
+import io.github.dre2n.commons.util.EnumUtil;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 
@@ -31,40 +33,84 @@ public class CustomFirework extends CustomItem {
     private int power;
     private List<FireworkEffect> effects = new ArrayList<>();
 
+    public CustomFirework(Map<String, Object> args) {
+        super(args);
+
+        Object power = args.get("power");
+        if (power instanceof Integer) {
+            setPower((Integer) power);
+        }
+
+        Object effects = args.get("effects");
+        if (effects instanceof List) {
+            for (Object object : (List) effects) {
+                if (!(object instanceof Map)) {
+                    return;
+                }
+                Map entry = (Map) object;
+
+                Object typeObj = entry.get("type");
+                FireworkEffect.Type type = null;
+
+                if (typeObj instanceof String && EnumUtil.isValidEnum(FireworkEffect.Type.class, (String) typeObj)) {
+                    type = FireworkEffect.Type.valueOf((String) typeObj);
+                }
+
+                if (type == null) {
+                    continue;
+                }
+
+                Object colorsObj = entry.get("colors");
+                List<Color> colors = new ArrayList<>();
+                if (colorsObj instanceof List) {
+                    for (Object color : (List) colorsObj) {
+                        if (color instanceof Integer) {
+                            colors.add(Color.fromBGR((Integer) color));
+                        }
+                    }
+                }
+
+                Object faceColorsObj = entry.get("fadeColors");
+                List<Color> fadeColors = new ArrayList<>();
+                if (faceColorsObj instanceof List) {
+                    for (Object color : (List) faceColorsObj) {
+                        if (color instanceof Integer) {
+                            fadeColors.add(Color.fromBGR((Integer) color));
+                        }
+                    }
+                }
+
+                Object hasFlickerObj = entry.get("hasFlicker");
+                boolean hasFlicker = false;
+                if (hasFlickerObj instanceof Boolean) {
+                    hasFlicker = (Boolean) hasFlickerObj;
+                }
+
+                Object hasTrailObj = entry.get("hasTrail");
+                boolean hasTrail = false;
+                if (hasTrailObj instanceof Boolean) {
+                    hasTrail = (Boolean) hasTrailObj;
+                }
+
+                FireworkEffect effect = FireworkEffect.builder().flicker(hasFlicker).trail(hasTrail).withFade(fadeColors).withColor(colors).with(type).build();
+                addEffect(effect);
+            }
+        }
+    }
+
     public CustomFirework(CaliburnAPI api, String id, Material material, short durability) {
         super(api, id, material, durability);
     }
 
-    public CustomFirework(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
+    public CustomFirework(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
-        if (config.getString("power") != null) {
-            setPower(config.getInt("power"));
-        }
-
-        for (int index : config.getIntegerList("effects")) {
-            String path = "effetcs." + index;
-            FireworkEffect.Type type = FireworkEffect.Type.valueOf(path + "type");
-            List<Color> colors = new ArrayList<>();
-            if (config.getStringList(path + ".colors") != null) {
-                for (int color : config.getIntegerList(path + ".colors")) {
-                    colors.add(Color.fromBGR(color));
-                }
-            }
-            List<Color> fadeColors = new ArrayList<>();
-            if (config.getString(path + ".fadeColors") != null) {
-                for (int color : config.getIntegerList(path + ".fadeColors")) {
-                    fadeColors.add(Color.fromBGR(color));
-                }
-            }
-            boolean hasFlicker = config.getBoolean(path + ".hasFlicker");
-            boolean hasTrail = config.getBoolean(path + ".hasTrail");
-
-            FireworkEffect effect = FireworkEffect.builder().flicker(hasFlicker).trail(hasTrail).withFade(fadeColors).withColor(colors).with(type).build();
-            addEffect(effect);
-        }
+        this.api = api;
+        this.id = id;
+        this.config = config;
     }
 
+    /* Getters and setters */
     /**
      * @return
      * the power
@@ -103,6 +149,14 @@ public class CustomFirework extends CustomItem {
      */
     public void addEffect(List<FireworkEffect> effects) {
         this.effects.addAll(effects);
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**

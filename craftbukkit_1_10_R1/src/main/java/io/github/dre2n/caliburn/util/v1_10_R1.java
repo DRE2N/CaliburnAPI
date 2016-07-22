@@ -30,7 +30,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Daniel Saukel
  */
-class v1_10_R1 extends InternalsProvider {
+public class v1_10_R1 extends InternalsProvider {
 
     @Override
     ItemStack setAttribute(ItemStack itemStack, String attributeName, double amount, byte operation, Set<String> slots) {

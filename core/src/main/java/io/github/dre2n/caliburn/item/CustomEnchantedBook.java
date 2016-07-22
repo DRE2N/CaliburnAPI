@@ -17,11 +17,11 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.EnchantmentStorageMeta;
@@ -30,18 +30,14 @@ public class CustomEnchantedBook extends CustomItem {
 
     private Map<Enchantment, Integer> storedEnchantments = new HashMap<>();
 
-    public CustomEnchantedBook(CaliburnAPI api, String id, Material material, short durability) {
-        super(api, id, material, durability);
-    }
+    public CustomEnchantedBook(Map<String, Object> args) {
+        super(args);
 
-    public CustomEnchantedBook(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
-
-        if (config.getConfigurationSection("storedEnchantments") != null) {
-            Map<String, Object> enchantments = config.getConfigurationSection("storedEnchantments").getValues(false);
-            for (Entry<String, Object> enchantment : enchantments.entrySet()) {
-                Enchantment type = Enchantment.getByName(enchantment.getKey());
-                int level = config.getInt("enchantments." + enchantment.getKey());
+        Object storedEnchantments = args.get("storedEnchantments");
+        if (storedEnchantments instanceof Map) {
+            for (Object enchantment : ((Map) storedEnchantments).entrySet()) {
+                Enchantment type = Enchantment.getByName((String) ((Entry) enchantment).getKey());
+                int level = (int) ((Entry) enchantment).getValue();
                 if (type != null && level != 0) {
                     this.storedEnchantments.put(type, level);
                 }
@@ -49,6 +45,19 @@ public class CustomEnchantedBook extends CustomItem {
         }
     }
 
+    public CustomEnchantedBook(CaliburnAPI api, String id, Material material, short durability) {
+        super(api, id, material, durability);
+    }
+
+    public CustomEnchantedBook(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
+
+        this.api = api;
+        this.id = id;
+        this.config = config;
+    }
+
+    /* Getters and setters */
     /**
      * @return
      * the storedEnchantments
@@ -65,6 +74,14 @@ public class CustomEnchantedBook extends CustomItem {
      */
     public void addStoredEnchantment(Enchantment type, int level) {
         this.storedEnchantments.put(type, level);
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     @Override

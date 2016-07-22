@@ -19,14 +19,16 @@ package io.github.dre2n.caliburn;
 import io.github.dre2n.caliburn.item.ItemCategories;
 import io.github.dre2n.caliburn.item.Items;
 import io.github.dre2n.caliburn.item.UniversalItem;
+import io.github.dre2n.caliburn.item.UniversalItemStack;
 import io.github.dre2n.caliburn.listener.EntityListener;
 import io.github.dre2n.caliburn.mob.MobCategories;
 import io.github.dre2n.caliburn.mob.Mobs;
 import io.github.dre2n.caliburn.mob.UniversalMob;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.EntityType;
 import org.bukkit.plugin.Plugin;
 
@@ -37,16 +39,31 @@ public class CaliburnAPI {
 
     public static String IDENTIFIER_PREFIX = "\u00a70\u00a7k";
 
+    private static CaliburnAPI instance;
+
     private Items items;
     private Mobs mobs;
     private ItemCategories itemCategories;
     private MobCategories mobCategories;
 
+    private CaliburnAPI() {
+        instance = this;
+
+        ConfigurationSerialization.registerClass(UniversalItemStack.class);
+        ConfigurationSerialization.registerClass(UniversalItem.class);
+        ConfigurationSerialization.registerClass(UniversalMob.class);
+    }
+
     public CaliburnAPI(Plugin plugin) {
+        this();
         Bukkit.getServer().getPluginManager().registerEvents(new EntityListener(this), plugin);
     }
 
     /* Getters and setters */
+    public static CaliburnAPI getInstance() {
+        return instance;
+    }
+
     /**
      * @return
      * the loaded instance of ItemCategories
@@ -99,7 +116,7 @@ public class CaliburnAPI {
      * Finish initialization of the Object with default values.
      */
     public void setupClean() {
-        ConfigurationSection placeholder = new YamlConfiguration();
+        ConfigurationSection placeholder = new CaliConfiguration();
 
         items = new Items(this);
         for (Material material : Material.values()) {

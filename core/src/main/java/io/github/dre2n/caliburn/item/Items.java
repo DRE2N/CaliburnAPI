@@ -17,11 +17,10 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.commons.util.EnumUtil;
-import io.github.dre2n.commons.util.NumberUtil;
 import java.util.ArrayList;
 import java.util.List;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -90,9 +89,9 @@ public class Items {
 
     /**
      * @param config
-     * the ConfigurationSection which stores information about the new item
+     * the CaliConfiguration which stores information about the new item
      */
-    public UniversalItem addItem(String id, ConfigurationSection config) {
+    public UniversalItem addItem(String id, CaliConfiguration config) {
         ItemType type = ItemType.CUSTOM_DEFAULT;
         if (config.contains("type") && EnumUtil.isValidEnum(ItemType.class, config.getString("type"))) {
             type = ItemType.valueOf(config.getString("type"));
@@ -125,99 +124,6 @@ public class Items {
         }
 
         return String.valueOf(itemStack.getType().getId());
-    }
-
-    /**
-     * @param config
-     * a configuration section
-     * @param amount
-     * the item stack size
-     * @return
-     * an ItemStack with the values from config
-     */
-    public ItemStack deserializeStack(ConfigurationSection config, int amount) {
-        return deserializeStack("caliburn", config, amount);
-    }
-
-    /**
-     * @param id
-     * the ID the item will use
-     * @param config
-     * a configuration section
-     * @param amount
-     * the item stack size
-     * @return
-     * an ItemStack with the values from config
-     */
-    public ItemStack deserializeStack(String id, ConfigurationSection config, int amount) {
-        return deserializeItem(id, config).toItemStack(amount);
-    }
-
-    /**
-     * Method to get an ItemStack from an ID String.
-     * The format is "identifier,amount".
-     *
-     * @param data
-     * the data String
-     * @return
-     * the List<ItemStack> with the values from config
-     */
-    public ItemStack deserializeStack(String data) {
-        String[] values = data.split(",");
-        String id = values[0];
-        int amount = values.length >= 1 ? NumberUtil.parseInt(values[1]) : 1;
-
-        if (getById(id) != null) {
-            return getById(id).toItemStack(amount);
-
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Method to get a List of ItemStacks from a List of ID Strings.
-     * The format is "identifier,amount".
-     *
-     * @param dataList
-     * the String List
-     * @return
-     * the List<ItemStack> with the values from config
-     */
-    public List<ItemStack> deserializeStackList(List<String> dataList) {
-        List<ItemStack> items = new ArrayList<>();
-        for (String data : dataList) {
-            items.add(deserializeStack(data));
-        }
-        return items;
-    }
-
-    /**
-     * @param config
-     * a configuration section
-     * @return
-     * a UniversalItem with the values from config
-     */
-    public UniversalItem deserializeItem(ConfigurationSection config) {
-        return deserializeItem("caliburn", config);
-    }
-
-    /**
-     * @param id
-     * the ID the item will use
-     * @param config
-     * a configuration section
-     * @param amount
-     * the item stack size
-     * @return
-     * a UniversalItem with the values from config
-     */
-    public UniversalItem deserializeItem(String id, ConfigurationSection config) {
-        ItemType type = ItemType.CUSTOM_DEFAULT;
-        if (config.contains("type") && EnumUtil.isValidEnum(ItemType.class, config.getString("type"))) {
-            type = ItemType.valueOf(config.getString("type"));
-        }
-        return type.instantiate(api, id, config);
     }
 
 }

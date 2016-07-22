@@ -17,27 +17,38 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.caliburn.util.ItemUtil;
+import java.util.Map;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 public class CustomEquipment extends CustomItem {
 
     private boolean unbreakable;
 
+    public CustomEquipment(Map<String, Object> args) {
+        super(args);
+
+        Object unbreakable = args.get("unbreakable");
+        if (unbreakable instanceof Boolean) {
+            this.unbreakable = (Boolean) unbreakable;
+        }
+    }
+
     public CustomEquipment(CaliburnAPI api, String id, Material material, short durability) {
         super(api, id, material, durability);
     }
 
-    public CustomEquipment(CaliburnAPI api, String id, ConfigurationSection config) {
-        super(api, id, config);
+    public CustomEquipment(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
 
-        if (config.contains("unbreakable")) {
-            this.unbreakable = config.getBoolean("unbreakable");
-        }
+        this.api = api;
+        this.id = id;
+        this.config = config;
     }
 
+    /* Getters and setters */
     /**
      * @return
      * if the item is unbreakable
@@ -52,6 +63,14 @@ public class CustomEquipment extends CustomItem {
      */
     public void setUnbreakable(boolean unbreakable) {
         this.unbreakable = unbreakable;
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = super.serialize();
+        // TO DO
+        return config;
     }
 
     /**

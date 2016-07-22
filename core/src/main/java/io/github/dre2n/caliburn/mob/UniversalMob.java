@@ -19,27 +19,35 @@ package io.github.dre2n.caliburn.mob;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.item.ItemCategory;
 import io.github.dre2n.caliburn.item.UniversalItem;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import io.github.dre2n.commons.util.EnumUtil;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 /**
  * @author Daniel Saukel
  */
-public class UniversalMob {
+public class UniversalMob implements ConfigurationSerializable {
 
     CaliburnAPI api;
 
     protected String id;
-    protected ConfigurationSection config;
+    protected CaliConfiguration config;
     protected EntityType species;
 
     protected Map<ItemCategory, Double> categoryDamageModifiers = new HashMap<>();
     protected Map<UniversalItem, Double> itemDamageModifiers = new HashMap<>();
+
+    public UniversalMob(Map<String, Object> args) {
+        String species = (String) args.get("species");
+        if (species != null && EnumUtil.isValidEnum(EntityType.class, species)) {
+            this.species = EntityType.valueOf(species);
+        }
+    }
 
     public UniversalMob(CaliburnAPI api, EntityType species) {
         this(api, String.valueOf(species.getTypeId()), species);
@@ -52,14 +60,13 @@ public class UniversalMob {
         this.species = species;
     }
 
-    public UniversalMob(CaliburnAPI api, String id, ConfigurationSection config) {
+    public UniversalMob(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
+
         this.api = api;
 
         this.id = id;
         this.config = config;
-        if (EnumUtil.isValidEnum(EntityType.class, config.getString("species"))) {
-            this.species = EntityType.valueOf(config.getString("species"));
-        }
     }
 
     /**
@@ -155,6 +162,26 @@ public class UniversalMob {
 
     public void addCategoryDamageModifier(ItemCategory itemCategory, double categoryDamageModifier) {
         categoryDamageModifiers.put(itemCategory, categoryDamageModifier);
+    }
+
+    /* Actions */
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = new HashMap<>();
+
+        config.put("type", MobType.UNIVERSAL.toString());
+
+        config.put("species", species.toString());
+
+        for (Map.Entry<ItemCategory, Double> categoryDamageModifier : categoryDamageModifiers.entrySet()) {
+            config.put("categoryDamageModifiers." + categoryDamageModifier.getKey().getId(), categoryDamageModifier.getValue());
+        }
+
+        for (Map.Entry<UniversalItem, Double> mobDamageModifier : itemDamageModifiers.entrySet()) {
+            config.put("mobDamageModifiers." + mobDamageModifier.getKey().getId(), mobDamageModifier.getValue());
+        }
+
+        return config;
     }
 
     /**

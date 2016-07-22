@@ -19,25 +19,40 @@ package io.github.dre2n.caliburn.item;
 import io.github.dre2n.caliburn.CaliburnAPI;
 import io.github.dre2n.caliburn.mob.MobCategory;
 import io.github.dre2n.caliburn.mob.UniversalMob;
-import io.github.dre2n.commons.util.EnumUtil;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 
-public class UniversalItem {
+public class UniversalItem implements ConfigurationSerializable {
 
     protected CaliburnAPI api;
 
     protected String id;
-    protected ConfigurationSection config;
+    protected CaliConfiguration config;
+
     protected Material material;
+    protected short durability;
 
     protected Map<MobCategory, Double> categoryDamageModifiers = new HashMap<>();
     protected Map<UniversalMob, Double> mobDamageModifiers = new HashMap<>();
+
+    public UniversalItem(Map<String, Object> args) {
+        Object material = args.get("material");
+        if (material instanceof String) {
+            this.material = Material.matchMaterial((String) material);
+        } else if (material instanceof Integer) {
+            this.material = Material.getMaterial((int) material);
+        }
+
+        Object durability = args.get("durability");
+        if (durability instanceof Integer) {
+            this.durability = ((Integer) durability).shortValue();
+        }
+    }
 
     public UniversalItem(CaliburnAPI api, Material material) {
         this(api, String.valueOf(material.getId()), material);
@@ -50,21 +65,27 @@ public class UniversalItem {
         this.material = material;
     }
 
-    public UniversalItem(CaliburnAPI api, String id, ConfigurationSection config) {
+    public UniversalItem(CaliburnAPI api, String id, Material material, short durability) {
+        this.api = api;
+
+        this.id = id;
+        this.material = material;
+        this.durability = durability;
+    }
+
+    public UniversalItem(CaliburnAPI api, String id, CaliConfiguration config) {
+        this(config.getArgs());
         this.api = api;
 
         this.id = id;
         this.config = config;
-        if (EnumUtil.isValidEnum(Material.class, config.getString("material"))) {
-            this.material = Material.valueOf(config.getString("material"));
-        }
     }
 
     /**
      * Finish initialization of the Object.
      */
     public void setup() {
-        if (getConfig().contains("categoryDamageModifiers")) {
+        if (config.contains("categoryDamageModifiers")) {
             Map<String, Object> categoryDamageModifiers = config.getConfigurationSection("categoryDamageModifiers").getValues(false);
             for (Entry<String, Object> categoryDamageModifier : categoryDamageModifiers.entrySet()) {
                 MobCategory mobCategory = api.getMobCategories().getById(categoryDamageModifier.getKey());
@@ -72,7 +93,7 @@ public class UniversalItem {
             }
         }
 
-        if (getConfig().contains("mobDamageModifiers")) {
+        if (config.contains("mobDamageModifiers")) {
             Map<String, Object> mobDamageModifiers = config.getConfigurationSection("mobDamageModifiers").getValues(false);
             for (Entry<String, Object> mobDamageModifier : mobDamageModifiers.entrySet()) {
                 UniversalMob mob = api.getMobs().getById(mobDamageModifier.getKey());
@@ -100,15 +121,10 @@ public class UniversalItem {
 
     /**
      * @return
-     * the ConfigurationSection that represents the item or a new one
+     * the CaliConfiguration that represents the item or a new one
      */
-    public ConfigurationSection getConfig() {
-        if (config != null) {
-            return config;
-
-        } else {
-            return toConfig();
-        }
+    public CaliConfiguration getConfig() {
+        return config;
     }
 
     /**
@@ -125,6 +141,21 @@ public class UniversalItem {
      */
     public void setMaterial(Material material) {
         this.material = material;
+    }
+
+    /**
+     * @return the durability
+     */
+    public short getDurability() {
+        return durability;
+    }
+
+    /**
+     * @param durability
+     * the durability to set
+     */
+    public void setDurability(short durability) {
+        this.durability = durability;
     }
 
     /**
@@ -178,20 +209,20 @@ public class UniversalItem {
     }
 
     /* Actions */
-    /**
-     * Method to serialize the item.
-     */
-    public ConfigurationSection toConfig() {
-        ConfigurationSection config = new YamlConfiguration();
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = new HashMap<>();
 
-        config.set("material", material.toString());
+        config.put("type", ItemType.UNIVERSAL.toString());
+
+        config.put("material", material.toString());
 
         for (Entry<MobCategory, Double> categoryDamageModifier : categoryDamageModifiers.entrySet()) {
-            config.set("categoryDamageModifiers." + categoryDamageModifier.getKey().getId(), categoryDamageModifier.getValue());
+            config.put("categoryDamageModifiers." + categoryDamageModifier.getKey().getId(), categoryDamageModifier.getValue());
         }
 
         for (Entry<UniversalMob, Double> mobDamageModifier : mobDamageModifiers.entrySet()) {
-            config.set("mobDamageModifiers." + mobDamageModifier.getKey().getId(), mobDamageModifier.getValue());
+            config.put("mobDamageModifiers." + mobDamageModifier.getKey().getId(), mobDamageModifier.getValue());
         }
 
         return config;
@@ -204,7 +235,7 @@ public class UniversalItem {
      * the item as an org.bukkit.inventory.ItemStack
      */
     public ItemStack toItemStack(int amount) {
-        return new ItemStack(material, amount);
+        return new ItemStack(material, amount, durability);
     }
 
 }

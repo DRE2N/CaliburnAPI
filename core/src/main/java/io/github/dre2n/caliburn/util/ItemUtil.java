@@ -61,12 +61,32 @@ public class ItemUtil {
      * @return
      * a new Bukkit ItemStack with the attribute
      */
-    public static ItemStack setAttribute(ItemStack itemStack, Attribute attribute, AttributeModifier modifier, Set<Slot> slots) {
+    public static ItemStack setAttribute(ItemStack itemStack, Attribute attribute, AttributeModifier modifier, Set<CaliSlot> slots) {
         Set<String> slotStrings = new HashSet<>();
-        for (Slot slot : slots) {
+        for (CaliSlot slot : slots) {
             slotStrings.add(slot.getInternalName());
         }
         return setAttribute(itemStack, getInternalAttributeName(attribute), modifier.getAmount(), getInternalOperationValue(modifier.getOperation()), slotStrings);
+    }
+
+    /**
+     * @param itemStack
+     * a Bukkit ItemStack
+     * @param attribute
+     * the Attribute to add
+     * @param modifier
+     * the attribute values
+     * @param slots
+     * the slot where the attribute affects the player
+     * @return
+     * a new Bukkit ItemStack with the attribute
+     */
+    public static ItemStack setAttribute(ItemStack itemStack, String attribute, AttributeModifier modifier, Set<CaliSlot> slots) {
+        Set<String> slotStrings = new HashSet<>();
+        for (CaliSlot slot : slots) {
+            slotStrings.add(slot.getInternalName());
+        }
+        return setAttribute(itemStack, attribute, modifier.getAmount(), getInternalOperationValue(modifier.getOperation()), slotStrings);
     }
 
     /**
@@ -142,7 +162,6 @@ public class ItemUtil {
      * @return
      * the proper item ID
      */
-    @SuppressWarnings("deprecation")
     public static int getId(String string) {
         if (NumberUtil.parseInt(string) > 0) {
             return NumberUtil.parseInt(string);
@@ -189,6 +208,39 @@ public class ItemUtil {
     }
 
     /**
+     * @param name
+     * the name to "translate"
+     * @return
+     * the Bukkit attribute
+     */
+    public static Attribute getBukkitAttribute(String name) {
+        switch (name) {
+            case "generic.armor":
+                return Attribute.GENERIC_ARMOR;
+            case "generic.attackDamage":
+                return Attribute.GENERIC_ATTACK_DAMAGE;
+            case "generic.attackSpeed":
+                return Attribute.GENERIC_ATTACK_SPEED;
+            case "generic.followRange":
+                return Attribute.GENERIC_FOLLOW_RANGE;
+            case "generic.knockbackResistance":
+                return Attribute.GENERIC_KNOCKBACK_RESISTANCE;
+            case "generic.luck":
+                return Attribute.GENERIC_LUCK;
+            case "generic.maxHealth":
+                return Attribute.GENERIC_MAX_HEALTH;
+            case "generic.movementSpeed":
+                return Attribute.GENERIC_MOVEMENT_SPEED;
+            case "horse.jumpStrength":
+                return Attribute.HORSE_JUMP_STRENGTH;
+            case "zombie.spawnReinforcements":
+                return Attribute.ZOMBIE_SPAWN_REINFORCEMENTS;
+        }
+
+        return null;
+    }
+
+    /**
      * @param operation
      * the attribute operation to "translate"
      * @return
@@ -205,6 +257,25 @@ public class ItemUtil {
         }
 
         return 0;
+    }
+
+    /**
+     * @param id
+     * the id to "translate"
+     * @return
+     * the Bukkit Operation
+     */
+    public static Operation getBukkitOperation(byte id) {
+        switch (id) {
+            case 0:
+                return Operation.ADD_NUMBER;
+            case 1:
+                return Operation.ADD_SCALAR;
+            case 2:
+                return Operation.MULTIPLY_SCALAR_1;
+        }
+
+        return null;
     }
 
 }

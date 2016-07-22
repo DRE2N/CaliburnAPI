@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Daniel Saukel
+ * Copyright (C) 2015-2016 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,9 +17,11 @@
 package io.github.dre2n.caliburn.item;
 
 import io.github.dre2n.caliburn.CaliburnAPI;
+import io.github.dre2n.caliburn.util.CaliConfiguration;
+import io.github.dre2n.commons.util.messageutil.MessageUtil;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import org.bukkit.configuration.ConfigurationSection;
+import java.util.Map;
 
 /**
  * @author Daniel Saukel
@@ -31,6 +33,7 @@ public enum ItemType {
     CUSTOM_ENCHANTED_BOOK(CustomEnchantedBook.class),
     CUSTOM_EQUIPMENT(CustomEquipment.class),
     CUSTOM_FIREWORK(CustomFirework.class),
+    CUSTOM_HEAD(CustomHead.class),
     UNIVERSAL(UniversalItem.class);
 
     private Class<? extends UniversalItem> handler;
@@ -51,12 +54,32 @@ public enum ItemType {
      * @return
      * a new instance of the handler class
      */
-    public UniversalItem instantiate(CaliburnAPI api, String id, ConfigurationSection config) {
+    public UniversalItem instantiate(CaliburnAPI api, String id, CaliConfiguration config) {
         try {
-            Constructor<? extends UniversalItem> constructor = handler.getConstructor(CaliburnAPI.class, String.class, ConfigurationSection.class);
+            Constructor<? extends UniversalItem> constructor = handler.getConstructor(CaliburnAPI.class, String.class, CaliConfiguration.class);
             return constructor.newInstance(api, id, config);
 
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            MessageUtil.log("An error occurred while accessing the handler class of the item type " + toString() + ": " + exception.getClass().getSimpleName());
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
+    /**
+     * Used for deserialization
+     *
+     * @return
+     * a new instance of the handler class
+     */
+    public UniversalItem instantiate(Map<String, Object> args) {
+        try {
+            Constructor<? extends UniversalItem> constructor = handler.getConstructor(Map.class);
+            return constructor.newInstance(args);
+
+        } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
+            MessageUtil.log("An error occurred while accessing the handler class of the item type " + toString() + ": " + exception.getClass().getSimpleName());
+            exception.printStackTrace();
             return null;
         }
     }
