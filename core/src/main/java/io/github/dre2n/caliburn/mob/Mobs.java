@@ -112,14 +112,16 @@ public class Mobs {
      * @param config
      * the CaliConfiguration which stores information about the new mob
      */
-    public UniversalMob addItem(String id, CaliConfiguration config) {
+    public UniversalMob addMob(String id, CaliConfiguration config) {
         MobType type = MobType.CUSTOM_DEFAULT;
         if (config.contains("type") && EnumUtil.isValidEnum(MobType.class, config.getString("type"))) {
             type = MobType.valueOf(config.getString("type"));
         }
 
         UniversalMob mob = type.instantiate(api, id, config);
-        mobs.add(mob);
+        if (isValid(mob)) {
+            mobs.add(mob);
+        }
         return mob;
     }
 
@@ -129,6 +131,26 @@ public class Mobs {
      */
     public void removeMob(UniversalMob mob) {
         mobs.remove(mob);
+    }
+
+    /**
+     * Checks if the mob fulfills minimum requirements to be useable without throwing exceptions.
+     *
+     * @param mob
+     * the mob to check
+     *
+     * @return
+     * if the mob fulfills the requirements
+     */
+    public boolean isValid(UniversalMob mob) {
+        if (mob == null) {
+            return false;
+        }
+        if (mob.getSpecies() == null) {
+            return false;
+        }
+
+        return true;
     }
 
 }

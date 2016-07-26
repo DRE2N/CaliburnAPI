@@ -98,7 +98,9 @@ public class Items {
         }
 
         UniversalItem item = type.instantiate(api, id, config);
-        items.add(item);
+        if (isValid(item)) {
+            items.add(item);
+        }
         return item;
     }
 
@@ -124,6 +126,26 @@ public class Items {
         }
 
         return String.valueOf(itemStack.getType().getId());
+    }
+
+    /**
+     * Checks if the item fulfills minimum requirements to be useable without throwing exceptions.
+     *
+     * @param item
+     * the iem to check
+     *
+     * @return
+     * if the mob fulfills the requirements
+     */
+    public boolean isValid(UniversalItem item) {
+        if (item == null) {
+            return false;
+        }
+        if (item.getMaterial() == null) {
+            return false;
+        }
+
+        return true;
     }
 
 }
