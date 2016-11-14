@@ -8,7 +8,7 @@
     <parent>
         <groupId>io.github.dre2n</groupId>
         <artifactId>caliburn</artifactId>
-        <version>0.2.1</version>
+        <version>0.2.2</version>
     </parent>
     <build>
         <plugins>
@@ -26,6 +26,13 @@
         <dependency>
             <groupId>io.github.dre2n</groupId>
             <artifactId>caliburn-abstract</artifactId>
+            <version>${parent.version}</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.dre2n</groupId>
+            <artifactId>caliburn-craftbukkit_1_11_R1</artifactId>
             <version>${parent.version}</version>
             <type>jar</type>
             <scope>compile</scope>
