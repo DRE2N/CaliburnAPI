@@ -63,7 +63,7 @@ public class EntityListener implements Listener {
         if (item.getMobDamageModifier(mob) == 1) {
 
             for (MobCategory mobCategory : item.getCategoryDamageModifiers().keySet()) {
-                if (mobCategory.getMobs().contains(mob)) {
+                if (mobCategory != null && mobCategory.getMobs().contains(mob)) {
                     event.setDamage(event.getDamage() * item.getCategoryDamageModifier(mobCategory));
                 }
             }
