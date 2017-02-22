@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Daniel Saukel
+ * Copyright (C) 2015-2017 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ public class v1_9_R1 extends InternalsProvider {
             compound = nmsStack.getTag();
         }
 
-        NBTTagList modifiers = new NBTTagList();
+        NBTTagList modifiers = compound.getList("AttributeModifiers", 10);
         for (String slot : slots) {
             NBTTagCompound attribute = new NBTTagCompound();
             attribute.set("AttributeName", new NBTTagString(attributeName));

@@ -8,6 +8,6 @@
     <parent>
         <groupId>io.github.dre2n</groupId>
         <artifactId>caliburn</artifactId>
-        <version>0.2.3</version>
+        <version>0.2.4</version>
     </parent>
 </project>

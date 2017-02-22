@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2016 Daniel Saukel
+ * Copyright (C) 2015-2017 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -295,8 +295,10 @@ public class CustomItem extends UniversalItem {
             itemStack.addUnsafeEnchantment(enchantment.getKey(), enchantment.getValue());
         }
 
+        int i = 0;
         for (CaliAttribute attribute : attributes) {
-            itemStack = ItemUtil.setAttribute(itemStack, attribute.getName(), getAttributeModifier(attribute), getAttributeSlots(attribute));
+            itemStack = ItemUtil.setAttribute(itemStack, attribute.getName(), attributeModifiers.get(i), attributeSlots.get(i));
+            i++;
         }
 
         return itemStack;
