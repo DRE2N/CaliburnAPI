@@ -1,28 +1,26 @@
 /*
- * Copyright (C) 2015-2017 Daniel Saukel
+ * Copyright (C) 2015-2018 Daniel Saukel.
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * This library is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later version.
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNULesser General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * You should have received a copy of the GNU Lesser General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.dre2n.caliburn.item;
+package de.erethon.caliburn.item;
 
-import io.github.dre2n.caliburn.CaliburnAPI;
-import io.github.dre2n.caliburn.util.CaliAttribute;
-import io.github.dre2n.caliburn.util.CaliConfiguration;
-import io.github.dre2n.commons.item.ArmorSlot;
-import io.github.dre2n.commons.item.ItemUtil;
-import io.github.dre2n.commons.misc.EnumUtil;
-import io.github.dre2n.commons.misc.NumberUtil;
+import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.commons.item.AttributeWrapper;
+import de.erethon.commons.item.InternalAttribute;
+import de.erethon.commons.item.InternalOperation;
+import de.erethon.commons.item.InternalSlot;
+import de.erethon.commons.misc.EnumUtil;
+import de.erethon.commons.misc.NumberUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,28 +29,32 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.attribute.AttributeModifier.Operation;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class CustomItem extends UniversalItem {
+public class CustomItem extends ExItem {
 
+    private VanillaItem base;
     private String name;
     private List<String> lores = new ArrayList<>();
     private Set<ItemFlag> itemFlags = new HashSet<>();
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
-    private List<CaliAttribute> attributes = new ArrayList<>();
-    private List<AttributeModifier> attributeModifiers = new ArrayList<>();
-    private List<HashSet<ArmorSlot>> attributeSlots = new ArrayList<>();
+    private List<AttributeWrapper> attributes = new ArrayList<>();
 
     // TODO: Better exception handling
     public CustomItem(Map<String, Object> args) {
-        super(args);
+        raw = args;
+
+        Object material = args.get("material");
+        if (material instanceof String) {
+            ExItem base = CaliburnAPI.getInstance().getExItem((String) material);
+            if (base instanceof VanillaItem) {
+                setBase((VanillaItem) base);
+                this.material = base.getMaterial();
+            }
+        }
 
         Object name = args.get("name");
         if (name instanceof String) {
@@ -101,70 +103,63 @@ public class CustomItem extends UniversalItem {
                 Map attributeMap = (Map) ((Entry) attribute).getValue();
 
                 Object type = attributeMap.get("type");
+                InternalAttribute intType = null;
                 Object slots = attributeMap.get("slots");
+                ArrayList<InternalSlot> intSlots = new ArrayList<>();
                 Object operation = attributeMap.get("operation");
+                InternalOperation intOp = null;
                 Object amount = attributeMap.get("amount");
+                Double intAmount = Double.NaN;
 
-                if (type instanceof String && EnumUtil.isValidEnum(Attribute.class, (String) type)) {
-                    type = ItemUtil.getInternalAttributeName(Attribute.valueOf((String) type));
+                if (type instanceof String) {
+                    intType = EnumUtil.getEnumIgnoreCase(InternalAttribute.class, (String) type);
                 }
-
-                if (operation instanceof String && !EnumUtil.isValidEnum(Operation.class, (String) operation)) {
-                    operation = ItemUtil.getBukkitOperation((byte) NumberUtil.parseInt((String) operation)).toString();
-                }
-
-                if (amount instanceof String) {
-                    amount = NumberUtil.parseDouble((String) amount);
-                }
-
-                AttributeModifier modifier = new AttributeModifier((String) ((Entry) attribute).getKey(), (double) amount, Operation.valueOf((String) operation));
-
-                CaliAttribute caliAttribute = new CaliAttribute((String) type);
-                int index = this.attributes.size();
-                if (this.attributes.contains(caliAttribute)) {
-                    index = this.attributes.indexOf(type);
-                }
-
-                this.attributes.add(index, caliAttribute);
-                attributeModifiers.add(index, modifier);
-                attributeSlots.add(index, new HashSet<ArmorSlot>());
-
                 if (slots instanceof List) {
                     for (Object slot : (List) slots) {
-                        if (slot instanceof String && EnumUtil.isValidEnum(ArmorSlot.class, (String) slot)) {
-                            attributeSlots.get(index).add(ArmorSlot.valueOf((String) slot));
+                        if (slot instanceof String) {
+                            InternalSlot iSlot = EnumUtil.getEnumIgnoreCase(InternalSlot.class, (String) slot);
+                            if (iSlot != null) {
+                                intSlots.add(iSlot);
+                            }
                         }
                     }
+                }
+                if (operation instanceof String) {
+                    intOp = EnumUtil.getEnumIgnoreCase(InternalOperation.class, (String) operation);
+                }
+                if (amount instanceof String) {
+                    intAmount = NumberUtil.parseDouble((String) amount);
+                } else if (amount instanceof Double) {
+                    intAmount = (Double) amount;
+                }
+
+                if (intType != null && intOp != null && intAmount != Double.NaN) {
+                    this.attributes.add(new AttributeWrapper(intType, intAmount, intOp, intSlots.toArray(new InternalSlot[intSlots.size()])));
                 }
             }
         }
     }
 
-    public CustomItem(CaliburnAPI api, String id, CaliConfiguration config) {
-        this(config.getArgs());
-
-        this.api = api;
+    public CustomItem(String id) {
         this.id = id;
-        this.config = config;
-    }
-
-    public CustomItem(CaliburnAPI api, String id, Material material) {
-        super(api, id, material);
-    }
-
-    public CustomItem(CaliburnAPI api, String id, Material material, short durability) {
-        super(api, id, material, durability);
+        raw = serialize();
     }
 
     /* Getters and setters */
-    @Override
-    public Material getMaterial() {
-        return material;
+    /**
+     * @return
+     * the item that this one is based on
+     */
+    public VanillaItem getBase() {
+        return base;
     }
 
-    @Override
-    public void setMaterial(Material material) {
-        this.material = material;
+    /**
+     * @param base
+     * set the item that this one is based on
+     */
+    public void setBase(VanillaItem base) {
+        this.base = base;
     }
 
     @Override
@@ -172,13 +167,17 @@ public class CustomItem extends UniversalItem {
         return name;
     }
 
-    @Override
+    /**
+     * @param name
+     * the display name to set
+     */
     public void setName(String name) {
         this.name = ChatColor.translateAlternateColorCodes('&', name);
     }
 
     /**
-     * @return the lore
+     * @return
+     * the lore
      */
     public List<String> getLores() {
         return lores;
@@ -210,7 +209,8 @@ public class CustomItem extends UniversalItem {
     }
 
     /**
-     * @return the ItemFlags as a List<ItemFlag>
+     * @return
+     * the ItemFlags as a List<ItemFlag>
      */
     public Set<ItemFlag> getItemFlags() {
         return itemFlags;
@@ -236,33 +236,16 @@ public class CustomItem extends UniversalItem {
      * @return
      * the attributes
      */
-    public List<CaliAttribute> getAttributes() {
+    public List<AttributeWrapper> getAttributes() {
         return attributes;
-    }
-
-    /**
-     * @param attribute
-     * the attribute
-     * @return
-     * the modifier of the attribute
-     */
-    public AttributeModifier getAttributeModifier(CaliAttribute attribute) {
-        return attributeModifiers.get(attributes.indexOf(attribute));
-    }
-
-    /**
-     * @param attribute
-     * the attribute
-     * @return
-     * the slots where the attribute affects the player
-     */
-    public Set<ArmorSlot> getAttributeSlots(CaliAttribute attribute) {
-        return attributeSlots.get(attributes.indexOf(attribute));
     }
 
     /* Actions */
     @Override
     public Map<String, Object> serialize() {
+        if (raw != null) {
+            return new HashMap<>(raw);
+        }
         Map<String, Object> config = super.serialize();
         // TO DO
         return config;
@@ -273,7 +256,7 @@ public class CustomItem extends UniversalItem {
      */
     @Override
     public ItemStack toItemStack(int amount) {
-        ItemStack itemStack = new ItemStack(material, amount, durability);
+        ItemStack itemStack = base.toItemStack(amount);
         ItemMeta itemMeta = itemStack.getItemMeta();
 
         if (name != null) {
@@ -295,10 +278,8 @@ public class CustomItem extends UniversalItem {
             itemStack.addUnsafeEnchantment(enchantment.getKey(), enchantment.getValue());
         }
 
-        int i = 0;
-        for (CaliAttribute attribute : attributes) {
-            itemStack = ItemUtil.setAttribute(itemStack, attribute.getName(), attributeModifiers.get(i), attributeSlots.get(i));
-            i++;
+        for (AttributeWrapper attribute : attributes) {
+            itemStack = attribute.applyTo(itemStack);
         }
 
         return itemStack;
