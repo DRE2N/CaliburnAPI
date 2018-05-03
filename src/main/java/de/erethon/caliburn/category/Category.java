@@ -15,10 +15,14 @@
 package de.erethon.caliburn.category;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import static de.erethon.caliburn.item.VanillaItem.*;
 import java.util.ArrayList;
 import java.util.List;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Daniel Saukel
@@ -106,6 +110,58 @@ public class Category<T extends Categorizable> extends Categorizable {
      */
     public List<T> getElements() {
         return elements;
+    }
+
+    /**
+     * @param item
+     * an item
+     * @return
+     * if this category contains the item
+     */
+    public boolean contains(ExItem item) {
+        if (item == null) {
+            return false;
+        }
+        return elements.contains(item);
+    }
+
+    /**
+     * @param material
+     * a material
+     * @return
+     * if this category contains an item that wraps the material
+     */
+    public boolean containsMaterial(Material material) {
+        if (material == null) {
+            return false;
+        }
+        return contains(VanillaItem.get(material));
+    }
+
+    /**
+     * @param block
+     * a block
+     * @return
+     * if this category contains an item that wraps the material of this item
+     */
+    public boolean containsBlock(Block block) {
+        if (block == null) {
+            return false;
+        }
+        return containsMaterial(block.getType());
+    }
+
+    /**
+     * @param item
+     * an item stack
+     * @return
+     * if this category contains an item that wraps the material of this item
+     */
+    public boolean containsItem(ItemStack item) {
+        if (item == null) {
+            return false;
+        }
+        return containsMaterial(item.getType());
     }
 
 }

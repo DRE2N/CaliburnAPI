@@ -204,6 +204,14 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
         return new ItemStack(getMaterial(), amount);
     }
 
+    /**
+     * @return
+     * the item as an org.bukkit.inventory.ItemStack with the amount 1
+     */
+    public ItemStack toItemStack() {
+        return toItemStack(1);
+    }
+
     /* Statics */
     public static ExItem deserialize(Map<String, Object> args) {
         ItemType type = ItemType.REGISTERED.get((String) args.get("type"));
