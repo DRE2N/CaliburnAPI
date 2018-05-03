@@ -77,6 +77,11 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category LOGS = new Category("logs", OAK_LOGS, SPRUCE_LOGS, BIRCH_LOGS, JUNGLE_LOGS, ACACIA_LOGS, DARK_OAK_LOGS);
     public static final Category DOORS = new Category("doors", WOODEN_DOORS, IRON_DOOR);
 
+    // Caliburn
+    public static final Category BEDS = new Category("beds", WHITE_BED, ORANGE_BED, MAGENTA_BED, LIGHT_BLUE_BED, YELLOW_BED, LIME_BED, PINK_BED, GRAY_BED,
+            LIGHT_GRAY_BED, CYAN_BED, PURPLE_BED, BLUE_BED, BROWN_BED, GREEN_BED, RED_BED, BLACK_BED);
+    public static final Category SIGNS = new Category("signs", SIGN, WALL_SIGN, SIGN_POST);
+
     private String id;
     private List<T> elements = new ArrayList<>();
 
