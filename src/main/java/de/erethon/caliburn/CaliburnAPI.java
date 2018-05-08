@@ -27,7 +27,9 @@ import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.caliburn.listener.EntityListener;
 import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
+import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
+import de.erethon.commons.config.ConfigUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -48,6 +50,7 @@ public class CaliburnAPI {
     private String identifierPrefix;
 
     private SimpleSerialization simpleSerialization = new SimpleSerialization(this);
+    private ExSerialization exSerialization = new ExSerialization(this);
 
     private List<Category<ExItem>> itemCategories = new ArrayList<>();
     private List<ExItem> items = new ArrayList<>();
@@ -109,6 +112,14 @@ public class CaliburnAPI {
         return simpleSerialization;
     }
 
+    /**
+     * @return
+     * the loaded instance of ExSerialization
+     */
+    public ExSerialization getExSerialization() {
+        return exSerialization;
+    }
+
     public Categorizable getExObject(String id) {
         ExItem item = getExItem(id);
         if (item != null) {
@@ -145,24 +156,36 @@ public class CaliburnAPI {
     }
 
     /**
+     * @param id
+     * a CustomItem or VanillaItem ID
      * @return
      * the item that has the ID
      */
-    public ExItem getExItem(String id) {
-        // This only returns something if the ID exclusively refers to the item
-        for (ExItem item : items) {
-            ExItem idMatch = (ExItem) item.idMatch(id);
-            if (idMatch != null) {
-                return idMatch;
+    public ExItem getExItem(Object id) {
+        if (id instanceof String) {
+            // This only returns something if the ID exclusively refers to the item
+            for (ExItem item : items) {
+                ExItem idMatch = (ExItem) item.idMatch((String) id);
+                if (idMatch != null) {
+                    return idMatch;
+                }
+            }
+            // This also allows ambiguous matches
+            for (ExItem item : items) {
+                ExItem idMatch = item.idMatch2nd((String) id);
+                if (idMatch != null) {
+                    return idMatch;
+                }
+            }
+
+        } else if (id instanceof Integer) {
+            for (VanillaItem item : VanillaItem.getLoaded()) {
+                if (item.getNumericId() == (int) id) {
+                    return item;
+                }
             }
         }
-        // This also allows ambiguous matches
-        for (ExItem item : items) {
-            ExItem idMatch = item.idMatch2nd(id);
-            if (idMatch != null) {
-                return idMatch;
-            }
-        }
+
         return null;
     }
 
@@ -232,17 +255,27 @@ public class CaliburnAPI {
 
     /**
      * @param id
-     * a CustomMob or ExMob ID
+     * a CustomMob or VanillaMob ID
      * @return
      * the mob that has the ID
      */
-    public ExMob getExMob(String id) {
-        for (ExMob mob : mobs) {
-            ExMob idMatch = (ExMob) mob.idMatch(id);
-            if (idMatch != null) {
-                return idMatch;
+    public ExMob getExMob(Object id) {
+        if (id instanceof String) {
+            for (ExMob mob : mobs) {
+                ExMob idMatch = (ExMob) mob.idMatch((String) id);
+                if (idMatch != null) {
+                    return idMatch;
+                }
+            }
+
+        } else if (id instanceof Integer) {
+            for (VanillaMob mob : VanillaMob.getLoaded()) {
+                if (mob.getNumericId() == (int) id) {
+                    return mob;
+                }
             }
         }
+
         return null;
     }
 
@@ -287,14 +320,94 @@ public class CaliburnAPI {
      * @return
      * the deserialized ItemStack
      */
-    public ItemStack deserialize(ConfigurationSection config, String path) {
-        if (config.get(path) instanceof ItemStack) {
-            return (ItemStack) config.get(path);
-        } else if (config.get(path) instanceof String) {
-            return simpleSerialization.deserialize(path);
+    public ItemStack deserializeStack(ConfigurationSection config, String path) {
+        Object object = config.get(path);
+        if (object instanceof ItemStack) {
+            return (ItemStack) object;
+        } else if (object instanceof String) {
+            return simpleSerialization.deserialize((String) object);
+        } else if (object instanceof ExItem) {
+            return exSerialization.deserialize(ConfigUtil.getMap(config, path, true));
         } else {
             return null;
         }
+    }
+
+    /**
+     * Universal deserialization method to deserialize lists of Bukkit ItemStacks
+     *
+     * @param config
+     * a ConfigurationSection
+     * @param path
+     * the path in the config where the item to deserialize is found
+     * @return
+     * the deserialized list of ItemStacks
+     */
+    public List<ItemStack> deserializeStackList(ConfigurationSection config, String path) {
+        List<ItemStack> deserialized = new ArrayList<>();
+
+        List<?> list = config.getList(path);
+        if (list == null) {
+            return deserialized;
+        }
+        for (Object obj : list) {
+            if (obj instanceof ItemStack) {
+                deserialized.add((ItemStack) obj);
+            } else if (obj instanceof String) {
+                deserialized.add(simpleSerialization.deserialize((String) obj));
+            } else if (obj instanceof ExItem) {
+                deserialized.add(exSerialization.deserialize(((ExItem) obj).getRaw()));
+            }
+            return deserialized;
+        }
+
+        return null;
+    }
+
+    /**
+     * Universal deserialization method to deserialize an ExItem
+     *
+     * @param config
+     * a ConfigurationSection
+     * @param path
+     * the path in the config where the item to deserialize is found
+     * @return
+     * the deserialized ExItem
+     */
+    public ExItem deserializeExItem(ConfigurationSection config, String path) {
+        Object obj = config.get(path);
+        if (obj instanceof String) {
+            return getExItem((String) obj);
+        } else if (config.get(path) instanceof ExItem) {
+            return (ExItem) obj;
+        }
+        return null;
+    }
+
+    /**
+     * Universal deserialization method to deserialize lists of ExItems
+     *
+     * @param config
+     * a ConfigurationSection
+     * @param path
+     * the path in the config where the item to deserialize is found
+     * @return
+     * the deserialized list of ItemStacks
+     */
+    public List<ExItem> deserializeExItemList(ConfigurationSection config, String path) {
+        List<ExItem> deserialized = new ArrayList<>();
+        List<?> list = config.getList(path);
+        if (list == null) {
+            return deserialized;
+        }
+        for (Object obj : list) {
+            if (obj instanceof String || obj instanceof Integer) {
+                deserialized.add(getExItem(obj));
+            } else if (obj instanceof ExItem) {
+                deserialized.add((ExItem) obj);
+            }
+        }
+        return deserialized;
     }
 
 }

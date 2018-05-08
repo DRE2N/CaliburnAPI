@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -131,7 +130,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem BROWN_MUSHROOM = new VanillaItem(MC1_8, "BROWN_MUSHROOM", "BROWN_MUSHROOM", 39);
     public static final VanillaItem RED_MUSHROOM = new VanillaItem(MC1_8, "RED_MUSHROOM", "RED_MUSHROOM", 40);
     public static final VanillaItem GOLD_BLOCK = new VanillaItem(MC1_8, "GOLD_BLOCK", "GOLD_BLOCK", 41);
-    public static final VanillaItem AIIRON_BLOCKR = new VanillaItem(MC1_8, "IRON_BLOCK", "IRON_BLOCK", 42);
+    public static final VanillaItem IRON_BLOCK = new VanillaItem(MC1_8, "IRON_BLOCK", "IRON_BLOCK", 42);
     public static final VanillaItem STONE_SLAB = new VanillaItem(MC1_8, "STEP", "STONE_SLAB", 44);
     public static final VanillaItem SANDSTONE_SLAB = new VanillaItem(MC1_8, "STEP", "SANDSTONE_SLAB", 44, (short) 1);
     public static final VanillaItem PETRIFIED_OAK_SLAB = new VanillaItem(MC1_8, "STEP", "PETRIFIED_OAK_SLAB", 44, (short) 2);
@@ -904,7 +903,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(BROWN_MUSHROOM);
         VALUES.add(RED_MUSHROOM);
         VALUES.add(GOLD_BLOCK);
-        VALUES.add(AIIRON_BLOCKR);
+        VALUES.add(IRON_BLOCK);
         VALUES.add(STONE_SLAB);
         VALUES.add(SANDSTONE_SLAB);
         VALUES.add(PETRIFIED_OAK_SLAB);
