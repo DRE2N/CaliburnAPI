@@ -80,6 +80,9 @@ public class Category<T extends Categorizable> extends Categorizable {
     // Caliburn
     public static final Category BEDS = new Category("beds", WHITE_BED, ORANGE_BED, MAGENTA_BED, LIGHT_BLUE_BED, YELLOW_BED, LIME_BED, PINK_BED, GRAY_BED,
             LIGHT_GRAY_BED, CYAN_BED, PURPLE_BED, BLUE_BED, BROWN_BED, GREEN_BED, RED_BED, BLACK_BED);
+    public static final Category SHULKER_BOXES = new Category("shulker_boxes", WHITE_SHULKER_BOX, ORANGE_SHULKER_BOX, MAGENTA_SHULKER_BOX, LIGHT_BLUE_SHULKER_BOX, YELLOW_SHULKER_BOX, LIME_SHULKER_BOX, PINK_SHULKER_BOX, GRAY_SHULKER_BOX,
+            SILVER_SHULKER_BOX, CYAN_SHULKER_BOX, PURPLE_SHULKER_BOX, BLUE_SHULKER_BOX, BROWN_SHULKER_BOX, GREEN_SHULKER_BOX, RED_SHULKER_BOX, BLACK_SHULKER_BOX);
+    public static final Category CHESTS = new Category("chests", CHEST, TRAPPED_CHEST, ENDER_CHEST, SHULKER_BOXES);
     public static final Category SIGNS = new Category("signs", SIGN, WALL_SIGN, SIGN_POST);
 
     private String id;
