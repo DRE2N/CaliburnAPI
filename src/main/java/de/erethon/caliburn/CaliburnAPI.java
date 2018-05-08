@@ -25,6 +25,7 @@ import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.caliburn.listener.EntityListener;
+import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.caliburn.util.ExSerialization;
@@ -56,6 +57,7 @@ public class CaliburnAPI {
     private List<ExItem> items = new ArrayList<>();
     private List<Category<ExMob>> mobCategories = new ArrayList<>();
     private List<ExMob> mobs = new ArrayList<>();
+    private List<LootTable> lootTables = new ArrayList<>();
 
     public CaliburnAPI(Plugin plugin) {
         this(plugin, ChatColor.GRAY.toString());
@@ -306,6 +308,29 @@ public class CaliburnAPI {
                 return mobCategory;
             }
         }
+        return null;
+    }
+
+    /* Loot tables */
+    /**
+     * @return
+     * the loaded loot tables
+     */
+    public List<LootTable> getLootTables() {
+        return lootTables;
+    }
+
+    /**
+     * @return
+     * the loot table that has the name
+     */
+    public LootTable getLootTable(String name) {
+        for (LootTable lootTable : lootTables) {
+            if (lootTable.getName().equalsIgnoreCase(name)) {
+                return lootTable;
+            }
+        }
+
         return null;
     }
 
