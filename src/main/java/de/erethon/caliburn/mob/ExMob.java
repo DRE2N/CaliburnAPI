@@ -182,4 +182,12 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
         return location.getWorld().spawnEntity(location, getSpecies());
     }
 
+    /* Statics */
+    public static ExMob deserialize(Map<String, Object> args) {
+        /*MobType type = MobType.REGISTERED.get((String) args.get("type"));
+        ExMob mob = type.instantiate(args);
+        return mob;*/
+        return new CustomMob(args);
+    }
+
 }

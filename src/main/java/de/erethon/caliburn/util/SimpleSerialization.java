@@ -116,7 +116,7 @@ public class SimpleSerialization {
         if (meta.hasDisplayName()) {
             serialized += "," + NAME.getPrefixes()[0] + unuseCC(meta.getDisplayName());
         }
-        if (meta.isUnbreakable()) {
+        if (meta.spigot().isUnbreakable()) {
             serialized += "," + UNBREAKABLE.getPrefixes()[0];
         }
         return serialized;
@@ -173,7 +173,7 @@ public class SimpleSerialization {
             } else if (mod == NAME) {
                 meta.setDisplayName(useCC(NAME.stripPrefix(arg)));
             } else if (mod == UNBREAKABLE) {
-                meta.setUnbreakable(true);
+                meta.spigot().setUnbreakable(true);
             }
         }
         item.setItemMeta(meta);
