@@ -264,7 +264,9 @@ public class CustomItem extends ExItem {
         }
 
         List<String> lores = new ArrayList<>();
-        lores.add(getIdLore());
+        if (id != null) {
+            lores.add(getIdLore());
+        }
         lores.addAll(getLores());
         itemMeta.setLore(lores);
 

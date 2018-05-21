@@ -25,14 +25,14 @@ import java.util.Map;
  */
 public class ItemType<T extends CustomItem> {
 
+    public static final Map<String, ItemType> REGISTERED = new HashMap<>();
+
     public static final ItemType DEFAULT = new ItemType<CustomItem>("DEFAULT", CustomItem.class);
     public static final ItemType BANNER = new ItemType<CustomBanner>("BANNER", CustomBanner.class);
     public static final ItemType ENCHANTED_BOOK = new ItemType<CustomEnchantedBook>("ENCHANTED_BOOK", CustomEnchantedBook.class);
     public static final ItemType EQUIPMENT = new ItemType<CustomEquipment>("EQUIPMENT", CustomEquipment.class);
     public static final ItemType FIREWORK = new ItemType<CustomFirework>("FIREWORK", CustomFirework.class);
     public static final ItemType HEAD = new ItemType<CustomHead>("HEAD", CustomHead.class);
-
-    public static final Map<String, ItemType> REGISTERED = new HashMap<>();
 
     private Class<? extends ExItem> handler;
 

@@ -31,6 +31,8 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
 
     protected CaliburnAPI api;
 
+    private boolean loaded = false;
+
     protected Map<String, Object> raw;
 
     protected Material material;
@@ -44,6 +46,10 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
      * the API instance to inject
      */
     public void load(CaliburnAPI api) {
+        if (loaded) {
+            return;
+        }
+        loaded = true;
         this.api = api;
 
         for (Category<ExItem> category : api.getItemCategories()) {
@@ -215,6 +221,9 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     /* Statics */
     public static ExItem deserialize(Map<String, Object> args) {
         ItemType type = ItemType.REGISTERED.get((String) args.get("type"));
+        if (type == null) {
+            return null;
+        }
         ExItem item = type.instantiate(args);
         return item;
     }

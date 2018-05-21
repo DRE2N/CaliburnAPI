@@ -92,8 +92,6 @@ public class LootTable {
 
     }
 
-    private CaliburnAPI api;
-
     private String name;
     private List<Entry> entries = new ArrayList<>();
 
@@ -112,13 +110,15 @@ public class LootTable {
      * the config that stores the information
      */
     public LootTable(CaliburnAPI api, String name, FileConfiguration config) {
-        this.api = api;
         api.getLootTables().add(this);
 
         this.name = name;
 
-        for (String id : config.getKeys(true)) {
+        for (String id : config.getKeys(false)) {
             ItemStack item = api.deserializeStack(config, id + ".item");
+            if (item == null) {
+                continue;
+            }
 
             double chance = config.getDouble(id + ".chance");
             entries.add(new Entry(id, item, chance));
@@ -132,7 +132,6 @@ public class LootTable {
      * the name of the loot table
      */
     public LootTable(CaliburnAPI api, String name) {
-        this.api = api;
         api.getLootTables().add(this);
         this.name = name;
     }

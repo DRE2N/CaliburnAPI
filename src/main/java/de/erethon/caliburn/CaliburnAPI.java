@@ -30,7 +30,6 @@ import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
-import de.erethon.commons.config.ConfigUtil;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -352,7 +351,7 @@ public class CaliburnAPI {
         } else if (object instanceof String) {
             return simpleSerialization.deserialize((String) object);
         } else if (object instanceof ExItem) {
-            return exSerialization.deserialize(ConfigUtil.getMap(config, path, true));
+            return exSerialization.deserialize(((ExItem) object).getRaw());
         } else {
             return null;
         }
