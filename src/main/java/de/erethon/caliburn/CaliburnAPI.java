@@ -369,7 +369,6 @@ public class CaliburnAPI {
      */
     public List<ItemStack> deserializeStackList(ConfigurationSection config, String path) {
         List<ItemStack> deserialized = new ArrayList<>();
-
         List<?> list = config.getList(path);
         if (list == null) {
             return deserialized;
@@ -382,10 +381,8 @@ public class CaliburnAPI {
             } else if (obj instanceof ExItem) {
                 deserialized.add(exSerialization.deserialize(((ExItem) obj).getRaw()));
             }
-            return deserialized;
         }
-
-        return null;
+        return deserialized;
     }
 
     /**
