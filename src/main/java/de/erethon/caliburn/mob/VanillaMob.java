@@ -14,9 +14,11 @@
  */
 package de.erethon.caliburn.mob;
 
+import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
 import static de.erethon.commons.compatibility.Version.*;
+import de.erethon.commons.misc.EnumUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import org.bukkit.Location;
@@ -27,9 +29,6 @@ import org.bukkit.entity.EntityType;
  * @author Daniel Saukel
  */
 public class VanillaMob extends ExMob {
-
-    private static Collection<VanillaMob> values = new ArrayList<>();
-    private static Collection<VanillaMob> loaded = new ArrayList<>();
 
     public static final VanillaMob ITEM = new VanillaMob(MC1_8, "Item", "item", "DROPPED_ITEM", 1);
     public static final VanillaMob XP_ORB = new VanillaMob(MC1_8, "XPOrb", "xp_orb", "EXPERIENCE_ORB", 2);
@@ -105,6 +104,21 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob PARROT = new VanillaMob(MC1_12, "parrot", "PARROT", 105);
     public static final VanillaMob VILLAGER = new VanillaMob(MC1_8, "Villager", "villager", "VILLAGER", 120);
     public static final VanillaMob ENDER_CRYSTAL = new VanillaMob(MC1_8, "EnderCrystal", "ender_crystal", "ENDER_CRYSTAL", 200);
+    public static final VanillaMob DOLPHIN = new VanillaMob(MC1_13, "DOLPHIN");
+    public static final VanillaMob DROWNED = new VanillaMob(MC1_13, "DROWNED");
+    public static final VanillaMob COD = new VanillaMob(MC1_13, "COD");
+    public static final VanillaMob SALMON = new VanillaMob(MC1_13, "SALMON");
+    public static final VanillaMob PUFFERFISH = new VanillaMob(MC1_13, "PUFFERFISH");
+    public static final VanillaMob PHANTOM = new VanillaMob(MC1_13, "PHANTOM");
+    public static final VanillaMob TURTLE = new VanillaMob(MC1_13, "TURTLE");
+
+    public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, "LINGERING_POTION");
+    public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");
+    public static final VanillaMob LIGHTNING = new VanillaMob(MC1_8, "LightningBolt", "lightning_bolt", "LIGHTNING", -1);
+    public static final VanillaMob WEATHER = new VanillaMob(MC1_8, "WEATHER");
+    public static final VanillaMob PLAYER = new VanillaMob(MC1_8, "Player", "player", "PLAYER", -1);
+    public static final VanillaMob COMPLEX_PART = new VanillaMob(MC1_8, "COMPLEX_PART");
+    public static final VanillaMob TIPPED_ARROW = new VanillaMob(MC1_8, "TIPPED_ARROW");
 
     public static final SplitMob ELDER_GUARDIAN = new SplitMob(MC1_8, GUARDIAN, "elder_guardian", "ELDER_GUARDIAN", 4);
     public static final SplitMob WITHER_SKELETON = new SplitMob(MC1_8, SKELETON, "wither_skeleton", "WITHER_SKELETON", 5);
@@ -116,103 +130,140 @@ public class VanillaMob extends ExMob {
     public static final SplitMob DONKEY = new SplitMob(MC1_8, HORSE, "donkey", "DONKEY", 31);
     public static final SplitMob MULE = new SplitMob(MC1_8, HORSE, "mule", "MULE", 32);
 
+    private static Collection<VanillaMob> VALUES = new ArrayList<>();
+    private static Collection<VanillaMob> LOADED = new ArrayList<>();
+
     static {
-        values.add(ITEM);
-        values.add(XP_ORB);
-        values.add(AREA_EFFECT_CLOUD);
-        values.add(EGG);
-        values.add(LEASH_KNOT);
-        values.add(PAINTING);
-        values.add(ARROW);
-        values.add(SNOWBALL);
-        values.add(FIREBALL);
-        values.add(SMALL_FIREBALL);
-        values.add(ENDER_PEARL);
-        values.add(EYE_OF_ENDER_SIGNAL);
-        values.add(POTION);
-        values.add(XP_BOTTLE);
-        values.add(ITEM_FRAME);
-        values.add(WITHER_SKULL);
-        values.add(TNT);
-        values.add(FALLING_BLOCK);
-        values.add(FIREWORKS_ROCKET);
-        values.add(SPECTRAL_ARROW);
-        values.add(SHULKER_BULLET);
-        values.add(DRAGON_FIREBALL);
-        values.add(ARMOR_STAND);
-        values.add(EVOCATION_FANGS);
-        values.add(EVOCATION_ILLAGER);
-        values.add(VEX);
-        values.add(VINDICATION_ILLAGER);
-        values.add(ILLUSION_ILLAGER);
-        values.add(COMMANDBLOCK_MINECART);
-        values.add(BOAT);
-        values.add(MINECART);
-        values.add(CHEST_MINECART);
-        values.add(FURNACE_MINECART);
-        values.add(TNT_MINECART);
-        values.add(HOPPER_MINECART);
-        values.add(SPAWNER_MINECART);
-        values.add(CREEPER);
-        values.add(SKELETON);
-        values.add(SPIDER);
-        values.add(GIANT);
-        values.add(ZOMBIE);
-        values.add(SLIME);
-        values.add(GHAST);
-        values.add(ZOMBIE_PIGMAN);
-        values.add(ENDERMAN);
-        values.add(CAVE_SPIDER);
-        values.add(SILVERFISH);
-        values.add(BLAZE);
-        values.add(MAGMA_CUBE);
-        values.add(ENDER_DRAGON);
-        values.add(WITHER);
-        values.add(BAT);
-        values.add(WITCH);
-        values.add(ENDERMITE);
-        values.add(GUARDIAN);
-        values.add(SHULKER);
-        values.add(PIG);
-        values.add(SHEEP);
-        values.add(COW);
-        values.add(CHICKEN);
-        values.add(SQUID);
-        values.add(WOLF);
-        values.add(MOOSHROOM);
-        values.add(SNOWMAN);
-        values.add(OCELOT);
-        values.add(VILLAGER_GOLEM);
-        values.add(HORSE);
-        values.add(RABBIT);
-        values.add(POLAR_BEAR);
-        values.add(LLAMA);
-        values.add(LLAMA_SPIT);
-        values.add(PARROT);
-        values.add(VILLAGER);
-        values.add(ENDER_CRYSTAL);
-        values.add(ELDER_GUARDIAN);
-        values.add(WITHER_SKELETON);
-        values.add(STRAY);
-        values.add(HUSK);
-        values.add(ZOMBIE_VILLAGER);
-        values.add(SKELETON_HORSE);
-        values.add(ZOMBIE_HORSE);
-        values.add(DONKEY);
-        values.add(MULE);
-        for (VanillaMob vm : values) {
+        VALUES.add(ITEM);
+        VALUES.add(XP_ORB);
+        VALUES.add(AREA_EFFECT_CLOUD);
+        VALUES.add(EGG);
+        VALUES.add(LEASH_KNOT);
+        VALUES.add(PAINTING);
+        VALUES.add(ARROW);
+        VALUES.add(SNOWBALL);
+        VALUES.add(FIREBALL);
+        VALUES.add(SMALL_FIREBALL);
+        VALUES.add(ENDER_PEARL);
+        VALUES.add(EYE_OF_ENDER_SIGNAL);
+        VALUES.add(POTION);
+        VALUES.add(XP_BOTTLE);
+        VALUES.add(ITEM_FRAME);
+        VALUES.add(WITHER_SKULL);
+        VALUES.add(TNT);
+        VALUES.add(FALLING_BLOCK);
+        VALUES.add(FIREWORKS_ROCKET);
+        VALUES.add(SPECTRAL_ARROW);
+        VALUES.add(SHULKER_BULLET);
+        VALUES.add(DRAGON_FIREBALL);
+        VALUES.add(ARMOR_STAND);
+        VALUES.add(EVOCATION_FANGS);
+        VALUES.add(EVOCATION_ILLAGER);
+        VALUES.add(VEX);
+        VALUES.add(VINDICATION_ILLAGER);
+        VALUES.add(ILLUSION_ILLAGER);
+        VALUES.add(COMMANDBLOCK_MINECART);
+        VALUES.add(BOAT);
+        VALUES.add(MINECART);
+        VALUES.add(CHEST_MINECART);
+        VALUES.add(FURNACE_MINECART);
+        VALUES.add(TNT_MINECART);
+        VALUES.add(HOPPER_MINECART);
+        VALUES.add(SPAWNER_MINECART);
+        VALUES.add(CREEPER);
+        VALUES.add(SKELETON);
+        VALUES.add(SPIDER);
+        VALUES.add(GIANT);
+        VALUES.add(ZOMBIE);
+        VALUES.add(SLIME);
+        VALUES.add(GHAST);
+        VALUES.add(ZOMBIE_PIGMAN);
+        VALUES.add(ENDERMAN);
+        VALUES.add(CAVE_SPIDER);
+        VALUES.add(SILVERFISH);
+        VALUES.add(BLAZE);
+        VALUES.add(MAGMA_CUBE);
+        VALUES.add(ENDER_DRAGON);
+        VALUES.add(WITHER);
+        VALUES.add(BAT);
+        VALUES.add(WITCH);
+        VALUES.add(ENDERMITE);
+        VALUES.add(GUARDIAN);
+        VALUES.add(SHULKER);
+        VALUES.add(PIG);
+        VALUES.add(SHEEP);
+        VALUES.add(COW);
+        VALUES.add(CHICKEN);
+        VALUES.add(SQUID);
+        VALUES.add(WOLF);
+        VALUES.add(MOOSHROOM);
+        VALUES.add(SNOWMAN);
+        VALUES.add(OCELOT);
+        VALUES.add(VILLAGER_GOLEM);
+        VALUES.add(HORSE);
+        VALUES.add(RABBIT);
+        VALUES.add(POLAR_BEAR);
+        VALUES.add(LLAMA);
+        VALUES.add(LLAMA_SPIT);
+        VALUES.add(PARROT);
+        VALUES.add(VILLAGER);
+        VALUES.add(ENDER_CRYSTAL);
+        VALUES.add(ELDER_GUARDIAN);
+        VALUES.add(WITHER_SKELETON);
+        VALUES.add(STRAY);
+        VALUES.add(HUSK);
+        VALUES.add(ZOMBIE_VILLAGER);
+        VALUES.add(SKELETON_HORSE);
+        VALUES.add(ZOMBIE_HORSE);
+        VALUES.add(DONKEY);
+        VALUES.add(MULE);
+        VALUES.add(DOLPHIN);
+        VALUES.add(DROWNED);
+        VALUES.add(COD);
+        VALUES.add(SALMON);
+        VALUES.add(PUFFERFISH);
+        VALUES.add(PHANTOM);
+        VALUES.add(TURTLE);
+        VALUES.add(LINGERING_POTION);
+        VALUES.add(FISHING_HOOK);
+        VALUES.add(LIGHTNING);
+        VALUES.add(WEATHER);
+        VALUES.add(PLAYER);
+        VALUES.add(COMPLEX_PART);
+        VALUES.add(TIPPED_ARROW);
+
+        bukkitMobs:
+        for (EntityType bukkit : EntityType.values()) {
+            if (bukkit == EntityType.UNKNOWN) {
+                continue;
+            }
+            for (VanillaMob caliburn : VALUES) {
+                if (caliburn.getBukkitName().equals(bukkit.name())) {
+                    continue bukkitMobs;
+                }
+            }
+
+            MessageUtil.log("&c[WARNING] Caliburn lacks a built-in representation of the entity " + bukkit.name() + ". Please update your implementation if possible!");
+            VALUES.add(new VanillaMob(UNKNOWN, bukkit.name()));
+        }
+
+        for (VanillaMob vm : VALUES) {
+            if (EnumUtil.isValidEnum(EntityType.class, vm.getName()) && vm.isAvailable()) {
+                MessageUtil.log("&c[WARNING] Caliburn has a representation of the entity " + vm.getName() + " that does not exist in Bukkit.");
+                continue;
+            }
             if (vm.isAvailable()) {
-                loaded.add(vm);
+                LOADED.add(vm);
             }
         }
     }
 
-    public static Collection<VanillaMob> values() {
-        return values;
+    public static Collection<VanillaMob> VALUES() {
+        return VALUES;
     }
 
     public static Collection<VanillaMob> getLoaded() {
-        return loaded;
+        return LOADED;
     }
 
     private Version firstVersion;
@@ -228,6 +279,10 @@ public class VanillaMob extends ExMob {
 
     protected VanillaMob(Version firstVersion, String oldId, String newId, String bukkit, int numeric) {
         this(firstVersion, null, oldId, newId, bukkit, numeric);
+    }
+
+    protected VanillaMob(Version firstVersion, String bukkit) {
+        this(firstVersion, bukkit.toLowerCase(), bukkit, -1);
     }
 
     protected VanillaMob(Version firstVersion, String newId, String bukkit) {

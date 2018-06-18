@@ -14,6 +14,7 @@
  */
 package de.erethon.caliburn.item;
 
+import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
 import static de.erethon.commons.compatibility.Version.*;
@@ -88,7 +89,6 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem SANDSTONE = new VanillaItem(MC1_8, "SANDSTONE", "SANDSTONE", 24);
     public static final VanillaItem CHISELED_SANDSTONE = new VanillaItem(MC1_8, "SANDSTONE", "CHISELED_SANDSTONE", 24, (short) 1);
     public static final VanillaItem CUT_SANDSTONE = new VanillaItem(MC1_8, "SANDSTONE", "CUT_SANDSTONE", 24, (short) 2);
-    // public static final VanillaItem SMOOTH_SANDSTONE = new VanillaItem(MC1_13, "SMOOTH_SANDSTONE");
     public static final VanillaItem NOTE_BLOCK = new VanillaItem(MC1_8, "NOTE_BLOCK", "NOTE_BLOCK", 25);
     public static final VanillaItem POWERED_RAIL = new VanillaItem(MC1_8, "POWERED_RAIL", "POWERED_RAIL", 27);
     public static final VanillaItem DETECTOR_RAIL = new VanillaItem(MC1_8, "DETECTOR_RAIL", "DETECTOR_RAIL", 28);
@@ -139,8 +139,6 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem STONE_BRICK_SLAB = new VanillaItem(MC1_8, "STEP", "STONE_BRICK_SLAB", 44, (short) 5);
     public static final VanillaItem NETHER_BRICK_SLAB = new VanillaItem(MC1_8, "STEP", "NETHER_BRICK_SLAB", 44, (short) 6);
     public static final VanillaItem QUARTZ_SLAB = new VanillaItem(MC1_8, "STEP", "QUARTZ_SLAB", 44, (short) 7);
-    // PRISMARINE SLABS
-    // SMOOTH BLOCKS
     public static final VanillaItem BRICKS = new VanillaItem(MC1_8, "BRICK", "BRICKS", 45);
     public static final VanillaItem TNT = new VanillaItem(MC1_8, "TNT", "TNT", 46);
     public static final VanillaItem BOOKSHELF = new VanillaItem(MC1_8, "BOOKSHELF", "BOOKSHELF", 47);
@@ -166,7 +164,6 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem OAK_PRESSURE_PLATE = new VanillaItem(MC1_8, "WOOD_PLATE", "OAK_PRESSURE_PLATE", 72);
     public static final VanillaItem REDSTONE_ORE = new VanillaItem(MC1_8, "REDSTONE_ORE", "REDSTONE_ORE", 73);
     public static final VanillaItem REDSTONE_TORCH = new VanillaItem(MC1_8, "REDSTONE_TORCH_ON", "REDSTONE_TORCH", 76);
-    // public static final VanillaItem REDSTONE_WALL_TORCH = new VanillaItem(MC1_13, "REDSTONE_TORCH_ON", "REDSTONE_WALL_TORCH", 76);
     public static final VanillaItem STONE_BUTTON = new VanillaItem(MC1_8, "STONE_BUTTON", "STONE_BUTTON", 77);
     public static final VanillaItem SNOW = new VanillaItem(MC1_8, "SNOW", "SNOW", 78);
     public static final VanillaItem ICE = new VanillaItem(MC1_8, "ICE", "ICE", 79);
@@ -198,25 +195,23 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem RED_STAINED_GLASS = new VanillaItem(MC1_8, "STAINED_GLASS", "RED_STAINED_GLASS", 95, (short) 14);
     public static final VanillaItem BLACK_STAINED_GLASS = new VanillaItem(MC1_8, "STAINED_GLASS", "BLACK_STAINED_GLASS", 95, (short) 15);
     public static final VanillaItem OAK_TRAPDOOR = new VanillaItem(MC1_8, "TRAP_DOOR", "OAK_TRAPDOOR", 96);
-    public static final VanillaItem INFESTED_STONE = new VanillaItem(MC1_8, "MONSTER_EGG", "INFESTED_STONE", 97);
-    public static final VanillaItem INFESTED_COBBLESTONE = new VanillaItem(MC1_8, "MONSTER_EGG", "INFESTED_COBBLESTONE", 97, (short) 1);
-    public static final VanillaItem INFESTED_STONE_BRICKS = new VanillaItem(MC1_8, "MONSTER_EGG", "INFESTED_STONE_BRICKS", 97, (short) 2);
-    public static final VanillaItem INFESTED_MOSSY_STONE_BRICKS = new VanillaItem(MC1_8, "MONSTER_EGG", "INFESTED_MOSSY_STONE_BRICKS", 97, (short) 3);
-    public static final VanillaItem INFESTED_CRACKED_STONE_BRICKS = new VanillaItem(MC1_8, "MONSTER_EGG", "INFESTED_CRACKED_STONE_BRICKS", 97, (short) 4);
-    public static final VanillaItem INFESTED_CHISELED_STONE_BRICKS = new VanillaItem(MC1_8, "MONSTER_EGG", "INFESTED_CHISELED_STONE_BRICKS", 97, (short) 5);
+    public static final VanillaItem INFESTED_STONE = new VanillaItem(MC1_8, "MONSTER_EGGS", "INFESTED_STONE", 97);
+    public static final VanillaItem INFESTED_COBBLESTONE = new VanillaItem(MC1_8, "MONSTER_EGGS", "INFESTED_COBBLESTONE", 97, (short) 1);
+    public static final VanillaItem INFESTED_STONE_BRICKS = new VanillaItem(MC1_8, "MONSTER_EGGS", "INFESTED_STONE_BRICKS", 97, (short) 2);
+    public static final VanillaItem INFESTED_MOSSY_STONE_BRICKS = new VanillaItem(MC1_8, "MONSTER_EGGS", "INFESTED_MOSSY_STONE_BRICKS", 97, (short) 3);
+    public static final VanillaItem INFESTED_CRACKED_STONE_BRICKS = new VanillaItem(MC1_8, "MONSTER_EGGS", "INFESTED_CRACKED_STONE_BRICKS", 97, (short) 4);
+    public static final VanillaItem INFESTED_CHISELED_STONE_BRICKS = new VanillaItem(MC1_8, "MONSTER_EGGS", "INFESTED_CHISELED_STONE_BRICKS", 97, (short) 5);
     public static final VanillaItem STONE_BRICKS = new VanillaItem(MC1_8, "SMOOTH_BRICK", "STONE_BRICKS", 98);
     public static final VanillaItem MOSSY_STONE_BRICKS = new VanillaItem(MC1_8, "SMOOTH_BRICK", "MOSSY_STONE_BRICKS", 98, (short) 1);
     public static final VanillaItem CRACKED_STONE_BRICKS = new VanillaItem(MC1_8, "SMOOTH_BRICK", "CRACKED_STONE_BRICKS", 98, (short) 2);
     public static final VanillaItem CHISELED_STONE_BRICKS = new VanillaItem(MC1_8, "SMOOTH_BRICK", "CHISELED_STONE_BRICKS", 98, (short) 3);
     public static final VanillaItem BROWN_MUSHROOM_BLOCK = new VanillaItem(MC1_8, "HUGE_MUSHROOM_1", "BROWN_MUSHROOM_BLOCK", 99);
-    // public static final VanillaItem MUSHROOM_STEM = new VanillaItem(MC1_13, "MUSHROOM_STEM");
     public static final VanillaItem RED_MUSHROOM_BLOCK = new VanillaItem(MC1_8, "HUGE_MUSHROOM_2", "RED_MUSHROOM_BLOCK", 100);
     public static final VanillaItem IRON_BARS = new VanillaItem(MC1_8, "IRON_FENCE", "IRON_BARS", 101);
     public static final VanillaItem GLASS_PANE = new VanillaItem(MC1_8, "THIN_GLASS", "GLASS_PANE", 102);
-    public static final VanillaItem MELON_BLOCK = new VanillaItem(MC1_8, "MELON_BLOCK", "MELON_BLOCK", 103);
+    public static final VanillaItem MELON = new VanillaItem(MC1_8, "MELON_BLOCK", "MELON", 103);
     public static final VanillaItem PUMPKIN_STEM = new VanillaItem(MC1_8, "PUMPKIN_STEM", "PUMPKIN_STEM", 104);
     public static final VanillaItem MELON_STEM = new VanillaItem(MC1_8, "MELON_STEM", "MELON_STEM", 105);
-    // 1.13: Attached stems
     public static final VanillaItem VINE = new VanillaItem(MC1_8, "VINE", "VINE", 106);
     public static final VanillaItem OAK_FENCE_GATE = new VanillaItem(MC1_8, "FENCE_GATE", "OAK_FENCE_GATE", 107);
     public static final VanillaItem BRICK_STAIRS = new VanillaItem(MC1_8, "BRICK_STAIRS", "BRICK_STAIRS", 108);
@@ -255,11 +250,6 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem CARROTS = new VanillaItem(MC1_8, "CARROT", "CARROTS", 141);
     public static final VanillaItem POTATOES = new VanillaItem(MC1_8, "POTATO", "POTATOES", 142);
     public static final VanillaItem OAK_BUTTON = new VanillaItem(MC1_8, "WOOD_BUTTON", "OAK_BUTTON", 143);
-    // public static final VanillaItem SPRUCE_BUTTON = new VanillaItem(MC1_13, "SPRUCE_BUTTON");
-    // public static final VanillaItem BIRCH_BUTTON = new VanillaItem(MC1_13, "BIRCH_BUTTON");
-    // public static final VanillaItem JUNGLE_BUTTON = new VanillaItem(MC1_13, "JUNGLE_BUTTON");
-    // public static final VanillaItem ACACIA_BUTTON = new VanillaItem(MC1_13, "ACACIA_BUTTON");
-    // public static final VanillaItem DARK_OAK_BUTTON = new VanillaItem(MC1_13, "DARK_OAK_BUTTON");
     public static final VanillaItem ANVIL = new VanillaItem(MC1_8, "ANVIL", "ANVIL", 145);
     public static final VanillaItem CHIPPED_ANVIL = new VanillaItem(MC1_8, "ANVIL", "CHIPPED_ANVIL", 145, (short) 1);
     public static final VanillaItem DAMAGED_ANVIL = new VanillaItem(MC1_8, "ANVIL", "DAMAGED_ANVIL", 145, (short) 2);
@@ -312,8 +302,6 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem DARK_OAK_LEAVES = new VanillaItem(MC1_8, "LEAVES_2", "DARK_OAK_LEAVES", 161, (short) 1);
     public static final VanillaItem ACACIA_LOG = new VanillaItem(MC1_8, "LOG_2", "ACACIA_LOG", 162);
     public static final VanillaItem DARK_OAK_LOG = new VanillaItem(MC1_8, "LOG_2", "DARK_OAK_LOG", 162, (short) 1);
-    // public static final VanillaItem ACACIA_BARK = new VanillaItem(MC1_13, "ACACIA_BARK");
-    // public static final VanillaItem DARK_OAK_BARK = new VanillaItem(MC1_13, "DARK_OAK_BARK");
     public static final VanillaItem ACACIA_STAIRS = new VanillaItem(MC1_8, "ACACIA_STAIRS", "ACACIA_STAIRS", 163);
     public static final VanillaItem DARK_OAK_STAIRS = new VanillaItem(MC1_8, "DARK_OAK_STAIRS", "DARK_OAK_STAIRS", 164);
     public static final VanillaItem SLIME_BLOCK = new VanillaItem(MC1_8, "SLIME_BLOCK", "SLIME_BLOCK", 165);
@@ -370,7 +358,6 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem CUT_RED_SANDSTONE = new VanillaItem(MC1_8, "RED_SANDSTONE", "CUT_RED_SANDSTONE", 179, (short) 2);
     public static final VanillaItem RED_SANDSTONE_STAIRS = new VanillaItem(MC1_8, "RED_SANDSTONE_STAIRS", "RED_SANDSTONE_STAIRS", 180);
     public static final VanillaItem RED_SANDSTONE_SLAB = new VanillaItem(MC1_8, "STONE_SLAB2", "RED_SANDSTONE_SLAB", 182);
-    // 1.13: SMOOTH
     public static final VanillaItem SPRUCE_FENCE_GATE = new VanillaItem(MC1_8, "SPRUCE_FENCE_GATE", "SPRUCE_FENCE_GATE", 183);
     public static final VanillaItem BIRCH_FENCE_GATE = new VanillaItem(MC1_8, "BIRCH_FENCE_GATE", "BIRCH_FENCE_GATE", 184);
     public static final VanillaItem JUNGLE_FENCE_GATE = new VanillaItem(MC1_8, "JUNGLE_FENCE_GATE", "JUNGLE_FENCE_GATE", 185);
@@ -389,7 +376,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem PURPUR_STAIRS = new VanillaItem(MC1_9, "PURPUR_STAIRS", "PURPUR_STAIRS", 203);
     public static final VanillaItem PURPUR_DOUBLE_SLAB = new VanillaItem(MC1_9, "PURPUR_DOUBLE_SLAB", "PURPUR_DOUBLE_SLAB", 204);
     public static final VanillaItem PURPUR_SLAB = new VanillaItem(MC1_9, "PURPUR_SLAB", "PURPUR_SLAB", 205);
-    public static final VanillaItem END_BRICKS = new VanillaItem(MC1_9, "END_BRICKS", "END_BRICKS", 206);
+    public static final VanillaItem END_STONE_BRICKS = new VanillaItem(MC1_9, "END_BRICKS", "END_STONE_BRICKS", 206);
     public static final VanillaItem BEETROOT_BLOCK = new VanillaItem(MC1_9, "BEETROOT_BLOCK", "BEETROOT_BLOCK", 207);
     public static final VanillaItem GRASS_PATH = new VanillaItem(MC1_9, "GRASS_PATH", "GRASS_PATH", 208);
     public static final VanillaItem END_GATEWAY = new VanillaItem(MC1_9, "END_GATEWAY", "END_GATEWAY", 209);
@@ -468,7 +455,102 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem BLACK_CONCRETE_POWDER = new VanillaItem(MC1_12, "CONCRETE_POWDER", "BLACK_CONCRETE_POWDER", 252, (short) 15);
     public static final VanillaItem STRUCTURE_BLOCK = new VanillaItem(MC1_9, "STRUCTURE_BLOCK", "STRUCTURE_BLOCK", 255);
 
-    // IITEMS
+    // 1.13 BLOCKS
+    public static final VanillaItem CAVE_AIR = new VanillaItem(MC1_13, "CAVE_AIR");
+    public static final VanillaItem VOID_AIR = new VanillaItem(MC1_13, "VOID_AIR");
+    public static final VanillaItem BLUE_ICE = new VanillaItem(MC1_13, "BLUE_ICE");
+    public static final VanillaItem BUBBLE_COLUMN = new VanillaItem(MC1_13, "BUBBLE_COLUMN");
+    public static final VanillaItem CONDUIT = new VanillaItem(MC1_13, "CONDUIT");
+    public static final VanillaItem TUBE_CORAL = new VanillaItem(MC1_13, "TUBE_CORAL");
+    public static final VanillaItem BRAIN_CORAL = new VanillaItem(MC1_13, "BRAIN_CORAL");
+    public static final VanillaItem BUBBLE_CORAL = new VanillaItem(MC1_13, "BUBBLE_CORAL");
+    public static final VanillaItem FIRE_CORAL = new VanillaItem(MC1_13, "FIRE_CORAL");
+    public static final VanillaItem HORN_CORAL = new VanillaItem(MC1_13, "HORN_CORAL");
+    public static final VanillaItem TUBE_CORAL_BLOCK = new VanillaItem(MC1_13, "TUBE_CORAL_BLOCK");
+    public static final VanillaItem BRAIN_CORAL_BLOCK = new VanillaItem(MC1_13, "BRAIN_CORAL_BLOCK");
+    public static final VanillaItem BUBBLE_CORAL_BLOCK = new VanillaItem(MC1_13, "BUBBLE_CORAL_BLOCK");
+    public static final VanillaItem FIRE_CORAL_BLOCK = new VanillaItem(MC1_13, "FIRE_CORAL_BLOCK");
+    public static final VanillaItem HORN_CORAL_BLOCK = new VanillaItem(MC1_13, "HORN_CORAL_BLOCK");
+    public static final VanillaItem DEAD_TUBE_CORAL_BLOCK = new VanillaItem(MC1_13, "DEAD_TUBE_CORAL_BLOCK");
+    public static final VanillaItem DEAD_BRAIN_CORAL_BLOCK = new VanillaItem(MC1_13, "DEAD_BRAIN_CORAL_BLOCK");
+    public static final VanillaItem DEAD_BUBBLE_CORAL_BLOCK = new VanillaItem(MC1_13, "DEAD_BUBBLE_CORAL_BLOCK");
+    public static final VanillaItem DEAD_FIRE_CORAL_BLOCK = new VanillaItem(MC1_13, "DEAD_FIRE_CORAL_BLOCK");
+    public static final VanillaItem DEAD_HORN_CORAL_BLOCK = new VanillaItem(MC1_13, "DEAD_HORN_CORAL_BLOCK");
+    public static final VanillaItem TUBE_CORAL_FAN = new VanillaItem(MC1_13, "TUBE_CORAL_FAN");
+    public static final VanillaItem BRAIN_CORAL_FAN = new VanillaItem(MC1_13, "BRAIN_CORAL_FAN");
+    public static final VanillaItem BUBBLE_CORAL_FAN = new VanillaItem(MC1_13, "BUBBLE_CORAL_FAN");
+    public static final VanillaItem FIRE_CORAL_FAN = new VanillaItem(MC1_13, "FIRE_CORAL_FAN");
+    public static final VanillaItem HORN_CORAL_FAN = new VanillaItem(MC1_13, "HORN_CORAL_FAN");
+    public static final VanillaItem DRIED_KELP_BLOCK = new VanillaItem(MC1_13, "DRIED_KELP_BLOCK");
+    public static final VanillaItem KELP_PLANT = new VanillaItem(MC1_13, "KELP_PLANT");
+    public static final VanillaItem PRISMARINE_STAIRS = new VanillaItem(MC1_13, "PRISMARINE_STAIRS");
+    public static final VanillaItem PRISMARINE_BRICK_STAIRS = new VanillaItem(MC1_13, "PRISMARINE_BRICK_STAIRS");
+    public static final VanillaItem DARK_PRISMARINE_STAIRS = new VanillaItem(MC1_13, "DARK_PRISMARINE_STAIRS");
+    public static final VanillaItem PRISMARINE_SLAB = new VanillaItem(MC1_13, "PRISMARINE_SLAB");
+    public static final VanillaItem PRISMARINE_BRICK_SLAB = new VanillaItem(MC1_13, "PRISMARINE_BRICK_SLAB");
+    public static final VanillaItem DARK_PRISMARINE_SLAB = new VanillaItem(MC1_13, "DARK_PRISMARINE_SLAB");
+    public static final VanillaItem SEAGRASS = new VanillaItem(MC1_13, "SEAGRASS");
+    public static final VanillaItem TALL_SEAGRASS = new VanillaItem(MC1_13, "TALL_SEAGRASS");
+    public static final VanillaItem SEA_PICKLE = new VanillaItem(MC1_13, "SEA_PICKLE");
+    public static final VanillaItem SHULKER_BOX = new VanillaItem(MC1_13, "SHULKER_BOX");
+    public static final VanillaItem OAK_BARK = new VanillaItem(MC1_13, "OAK_BARK");
+    public static final VanillaItem SPRUCE_BARK = new VanillaItem(MC1_13, "SPRUCE_BARK");
+    public static final VanillaItem BIRCH_BARK = new VanillaItem(MC1_13, "BIRCH_BARK");
+    public static final VanillaItem JUNGLE_BARK = new VanillaItem(MC1_13, "JUNGLE_BARK");
+    public static final VanillaItem ACACIA_BARK = new VanillaItem(MC1_13, "ACACIA_BARK");
+    public static final VanillaItem DARK_OAK_BARK = new VanillaItem(MC1_13, "DARK_OAK_BARK");
+    public static final VanillaItem SPRUCE_BUTTON = new VanillaItem(MC1_13, "SPRUCE_BUTTON");
+    public static final VanillaItem BIRCH_BUTTON = new VanillaItem(MC1_13, "BIRCH_BUTTON");
+    public static final VanillaItem JUNGLE_BUTTON = new VanillaItem(MC1_13, "JUNGLE_BUTTON");
+    public static final VanillaItem ACACIA_BUTTON = new VanillaItem(MC1_13, "ACACIA_BUTTON");
+    public static final VanillaItem DARK_OAK_BUTTON = new VanillaItem(MC1_13, "DARK_OAK_BUTTON");
+    public static final VanillaItem SPRUCE_PRESSURE_PLATE = new VanillaItem(MC1_13, "SPRUCE_PRESSURE_PLATE");
+    public static final VanillaItem BIRCH_PRESSURE_PLATE = new VanillaItem(MC1_13, "BIRCH_PRESSURE_PLATE");
+    public static final VanillaItem JUNGLE_PRESSURE_PLATE = new VanillaItem(MC1_13, "JUNGLE_PRESSURE_PLATE");
+    public static final VanillaItem ACACIA_PRESSURE_PLATE = new VanillaItem(MC1_13, "ACACIA_PRESSURE_PLATE");
+    public static final VanillaItem DARK_OAK_PRESSURE_PLATE = new VanillaItem(MC1_13, "DARK_OAK_PRESSURE_PLATE");
+    public static final VanillaItem CARVED_PUMPKIN = new VanillaItem(MC1_13, "CARVED_PUMPKIN");
+    public static final VanillaItem SPRUCE_TRAPDOOR = new VanillaItem(MC1_13, "SPRUCE_TRAPDOOR");
+    public static final VanillaItem BIRCH_TRAPDOOR = new VanillaItem(MC1_13, "BIRCH_TRAPDOOR");
+    public static final VanillaItem JUNGLE_TRAPDOOR = new VanillaItem(MC1_13, "JUNGLE_TRAPDOOR");
+    public static final VanillaItem ACACIA_TRAPDOOR = new VanillaItem(MC1_13, "ACACIA_TRAPDOOR");
+    public static final VanillaItem DARK_OAK_TRAPDOOR = new VanillaItem(MC1_13, "DARK_OAK_TRAPDOOR");
+    public static final VanillaItem MUSHROOM_STEM = new VanillaItem(MC1_13, "MUSHROOM_STEM");
+    public static final VanillaItem STRIPPED_OAK_LOG = new VanillaItem(MC1_13, "STRIPPED_OAK_LOG");
+    public static final VanillaItem STRIPPED_SPRUCE_LOG = new VanillaItem(MC1_13, "STRIPPED_SPRUCE_LOG");
+    public static final VanillaItem STRIPPED_BIRCH_LOG = new VanillaItem(MC1_13, "STRIPPED_BIRCH_LOG");
+    public static final VanillaItem STRIPPED_JUNGLE_LOG = new VanillaItem(MC1_13, "STRIPPED_JUNGLE_LOG");
+    public static final VanillaItem STRIPPED_ACACIA_LOG = new VanillaItem(MC1_13, "STRIPPED_ACACIA_LOG");
+    public static final VanillaItem STRIPPED_DARK_OAK_LOG = new VanillaItem(MC1_13, "STRIPPED_DARK_OAK_LOG");
+    public static final VanillaItem SMOOTH_SANDSTONE = new VanillaItem(MC1_13, "SMOOTH_SANDSTONE");
+    public static final VanillaItem SMOOTH_RED_SANDSTONE = new VanillaItem(MC1_13, "SMOOTH_RED_SANDSTONE");
+    public static final VanillaItem SMOOTH_QUARTZ = new VanillaItem(MC1_13, "SMOOTH_QUARTZ");
+    public static final VanillaItem SMOOTH_STONE = new VanillaItem(MC1_13, "SMOOTH_STONE");
+    public static final VanillaItem TURTLE_EGG = new VanillaItem(MC1_13, "TURTLE_EGG");
+    public static final VanillaItem REDSTONE_WALL_TORCH = new VanillaItem(MC1_13, "REDSTONE_TORCH_ON", "REDSTONE_WALL_TORCH", 76);
+    public static final VanillaItem POTTED_POPPY = new VanillaItem(MC1_13, "POTTED_POPPY");
+    public static final VanillaItem POTTED_DANDELION = new VanillaItem(MC1_13, "POTTED_DANDELION");
+    public static final VanillaItem POTTED_OAK_SAPLING = new VanillaItem(MC1_13, "POTTED_OAK_SAPLING");
+    public static final VanillaItem POTTED_SPRUCE_SAPLING = new VanillaItem(MC1_13, "POTTED_SPRUCE_SAPLING");
+    public static final VanillaItem POTTED_BIRCH_SAPLING = new VanillaItem(MC1_13, "POTTED_BIRCH_SAPLING");
+    public static final VanillaItem POTTED_JUNGLE_SAPLING = new VanillaItem(MC1_13, "POTTED_JUNGLE_SAPLING");
+    public static final VanillaItem POTTED_RED_MUSHROOM = new VanillaItem(MC1_13, "POTTED_RED_MUSHROOM");
+    public static final VanillaItem POTTED_BROWN_MUSHROOM = new VanillaItem(MC1_13, "POTTED_BROWN_MUSHROOM");
+    public static final VanillaItem POTTED_CACTUS = new VanillaItem(MC1_13, "POTTED_CACTUS");
+    public static final VanillaItem POTTED_DEAD_BUSH = new VanillaItem(MC1_13, "POTTED_DEAD_BUSH");
+    public static final VanillaItem POTTED_FERN = new VanillaItem(MC1_13, "POTTED_FERN");
+    public static final VanillaItem POTTED_ACACIA_SAPLING = new VanillaItem(MC1_13, "POTTED_ACACIA_SAPLING");
+    public static final VanillaItem POTTED_DARK_OAK_SAPLING = new VanillaItem(MC1_13, "POTTED_DARK_OAK_SAPLING");
+    public static final VanillaItem POTTED_BLUE_ORCHID = new VanillaItem(MC1_13, "POTTED_BLUE_ORCHID");
+    public static final VanillaItem POTTED_ALLIUM = new VanillaItem(MC1_13, "POTTED_ALLIUM");
+    public static final VanillaItem POTTED_AZURE_BLUET = new VanillaItem(MC1_13, "POTTED_AZURE_BLUET");
+    public static final VanillaItem POTTED_RED_TULIP = new VanillaItem(MC1_13, "POTTED_RED_TULIP");
+    public static final VanillaItem POTTED_ORANGE_TULIP = new VanillaItem(MC1_13, "POTTED_ORANGE_TULIP");
+    public static final VanillaItem POTTED_WHITE_TULIP = new VanillaItem(MC1_13, "POTTED_WHITE_TULIP");
+    public static final VanillaItem POTTED_PINK_TULIP = new VanillaItem(MC1_13, "POTTED_PINK_TULIP");
+    public static final VanillaItem POTTED_OXEYE_TULIP = new VanillaItem(MC1_13, "POTTED_OXEYE_TULIP");
+
+    // ITEMS
     public static final VanillaItem IRON_SHOVEL = new VanillaItem(MC1_8, "IRON_SPADE", "IRON_SHOVEL", 256);
     public static final VanillaItem IRON_PICKAXE = new VanillaItem(MC1_8, "IRON_PICKAXE", "IRON_PICKAXE", 257);
     public static final VanillaItem IRON_AXE = new VanillaItem(MC1_8, "IRON_AXE", "IRON_AXE", 258);
@@ -609,7 +691,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem COOKIE = new VanillaItem(MC1_8, "COOKIE", "COOKIE", 357);
     public static final VanillaItem FILLED_MAP = new VanillaItem(MC1_8, "MAP", "FILLED_MAP", 358);
     public static final VanillaItem SHEARS = new VanillaItem(MC1_8, "SHEARS", "SHEARS", 359);
-    public static final VanillaItem MELON = new VanillaItem(MC1_8, "MELON", "MELON", 360);
+    public static final VanillaItem MELON_SLICE = new VanillaItem(MC1_8, "MELON", "MELON_SLICE", 360);
     public static final VanillaItem PUMPKIN_SEEDS = new VanillaItem(MC1_8, "PUMPKIN_SEEDS", "PUMPKIN_SEEDS", 361);
     public static final VanillaItem MELON_SEEDS = new VanillaItem(MC1_8, "MELON_SEEDS", "MELON_SEEDS", 362);
     public static final VanillaItem BEEF = new VanillaItem(MC1_8, "RAW_BEEF", "BEEF", 363);
@@ -639,7 +721,6 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem EMERALD = new VanillaItem(MC1_8, "EMERALD", "EMERALD", 388);
     public static final VanillaItem ITEM_FRAME = new VanillaItem(MC1_8, "ITEM_FRAME", "ITEM_FRAME", 389);
     public static final VanillaItem FLOWER_POT = new VanillaItem(MC1_8, "FLOWER_POT_ITEM", "FLOWER_POT", 390);
-    // 1.13: Filled flower pots
     public static final VanillaItem CARROT = new VanillaItem(MC1_8, "CARROT_ITEM", "CARROT", 391);
     public static final VanillaItem POTATO = new VanillaItem(MC1_8, "POTATO_ITEM", "POTATO", 392);
     public static final VanillaItem BAKED_POTATO = new VanillaItem(MC1_8, "BAKED_POTATO", "BAKED_POTATO", 393);
@@ -734,7 +815,21 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem MUSIC_DISC_WARD = new VanillaItem(MC1_8, "RECORD_10", "MUSIC_DISC_WARD", 2265);
     public static final VanillaItem MUSIC_DISC_11 = new VanillaItem(MC1_8, "RECORD_11", "MUSIC_DISC_11", 2266);
     public static final VanillaItem MUSIC_DISC_WAIT = new VanillaItem(MC1_8, "RECORD_12", "MUSIC_DISC_WAIT", 2267);
-    // NEW SPAWN EGGS
+
+    // 1.13 ITEMS
+    public static final VanillaItem DEBUG_STICK = new VanillaItem(MC1_13, "DEBUG_STICK");
+    public static final VanillaItem DRIED_KELP = new VanillaItem(MC1_13, "DRIED_KELP");
+    public static final VanillaItem COD_BUCKET = new VanillaItem(MC1_13, "COD_BUCKET");
+    public static final VanillaItem SALMON_BUCKET = new VanillaItem(MC1_13, "SALMON_BUCKET");
+    public static final VanillaItem PUFFERFISH_BUCKET = new VanillaItem(MC1_13, "PUFFERFISH_BUCKET");
+    public static final VanillaItem CLOWNFISH_BUCKET = new VanillaItem(MC1_13, "CLOWNFISH_BUCKET");
+    public static final VanillaItem HEART_OF_THE_SEA = new VanillaItem(MC1_13, "HEART_OF_THE_SEA");
+    public static final VanillaItem KELP = new VanillaItem(MC1_13, "KELP");
+    public static final VanillaItem NAUTILUS_SHELL = new VanillaItem(MC1_13, "NAUTILUS_SHELL");
+    public static final VanillaItem PHANTOM_MEMBRANE = new VanillaItem(MC1_13, "PHANTOM_MEMBRANE");
+    public static final VanillaItem SCUTE = new VanillaItem(MC1_13, "SCUTE");
+    public static final VanillaItem TRIDENT = new VanillaItem(MC1_13, "TRIDENT");
+    public static final VanillaItem TURTLE_HELMET = new VanillaItem(MC1_13, "TURTLE_HELMET");
 
     // OLD / MERGED BLOCKS
     public static final OldBlockItem WHITE_BED_BLOCK = new OldBlockItem(MC1_8, "BED_BLOCK", WHITE_BED, 26);
@@ -801,14 +896,12 @@ public class VanillaItem extends ExItem {
     public static final OldBlockItem ACACIA_DOOR_BLOCK = new OldBlockItem(MC1_8, "ACACIA_DOOR", ACACIA_DOOR, 196);
     public static final OldBlockItem DARK_OAK_DOOR_BLOCK = new OldBlockItem(MC1_8, "DARK_OAK_DOOR", DARK_OAK_DOOR, 197);
 
-    // REMOVED ITEMS
-    public static final VanillaItem MONSTER_EGG = new VanillaItem(MC1_8, MC1_12_2, "MONSTER_EGG", "BAT_SPAWN_EGG", 383);
-
     private static Collection<VanillaItem> VALUES = new ArrayList<>();
     private static Collection<VanillaItem> LOADED = new ArrayList<>();
     private static Map<Material, VanillaItem> BY_MATERIAL = new HashMap<>();
 
     static {
+        // BLOCKS
         VALUES.add(AIR);
         VALUES.add(STONE);
         VALUES.add(GRANITE);
@@ -982,7 +1075,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(RED_MUSHROOM_BLOCK);
         VALUES.add(IRON_BARS);
         VALUES.add(GLASS_PANE);
-        VALUES.add(MELON_BLOCK);
+        VALUES.add(MELON);
         VALUES.add(PUMPKIN_STEM);
         VALUES.add(MELON_STEM);
         VALUES.add(VINE);
@@ -1149,7 +1242,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(PURPUR_STAIRS);
         VALUES.add(PURPUR_DOUBLE_SLAB);
         VALUES.add(PURPUR_SLAB);
-        VALUES.add(END_BRICKS);
+        VALUES.add(END_STONE_BRICKS);
         VALUES.add(BEETROOT_BLOCK);
         VALUES.add(GRASS_PATH);
         VALUES.add(END_GATEWAY);
@@ -1227,6 +1320,82 @@ public class VanillaItem extends ExItem {
         VALUES.add(RED_CONCRETE_POWDER);
         VALUES.add(BLACK_CONCRETE_POWDER);
         VALUES.add(STRUCTURE_BLOCK);
+
+        // 1.13 BLOCKS
+        VALUES.add(CAVE_AIR);
+        VALUES.add(VOID_AIR);
+        VALUES.add(BLUE_ICE);
+        VALUES.add(BUBBLE_COLUMN);
+        VALUES.add(CONDUIT);
+        VALUES.add(TUBE_CORAL);
+        VALUES.add(BRAIN_CORAL);
+        VALUES.add(BUBBLE_CORAL);
+        VALUES.add(FIRE_CORAL);
+        VALUES.add(HORN_CORAL);
+        VALUES.add(TUBE_CORAL_BLOCK);
+        VALUES.add(BRAIN_CORAL_BLOCK);
+        VALUES.add(BUBBLE_CORAL_BLOCK);
+        VALUES.add(FIRE_CORAL_BLOCK);
+        VALUES.add(HORN_CORAL_BLOCK);
+        VALUES.add(DEAD_TUBE_CORAL_BLOCK);
+        VALUES.add(DEAD_BRAIN_CORAL_BLOCK);
+        VALUES.add(DEAD_BUBBLE_CORAL_BLOCK);
+        VALUES.add(DEAD_FIRE_CORAL_BLOCK);
+        VALUES.add(DEAD_HORN_CORAL_BLOCK);
+        VALUES.add(TUBE_CORAL_FAN);
+        VALUES.add(BRAIN_CORAL_FAN);
+        VALUES.add(BUBBLE_CORAL_FAN);
+        VALUES.add(FIRE_CORAL_FAN);
+        VALUES.add(HORN_CORAL_FAN);
+        VALUES.add(DRIED_KELP_BLOCK);
+        VALUES.add(KELP_PLANT);
+        VALUES.add(PRISMARINE_STAIRS);
+        VALUES.add(PRISMARINE_BRICK_STAIRS);
+        VALUES.add(DARK_PRISMARINE_STAIRS);
+        VALUES.add(PRISMARINE_SLAB);
+        VALUES.add(PRISMARINE_BRICK_SLAB);
+        VALUES.add(DARK_PRISMARINE_SLAB);
+        VALUES.add(SEAGRASS);
+        VALUES.add(TALL_SEAGRASS);
+        VALUES.add(SEA_PICKLE);
+        VALUES.add(SHULKER_BOX);
+        VALUES.add(OAK_BARK);
+        VALUES.add(SPRUCE_BARK);
+        VALUES.add(BIRCH_BARK);
+        VALUES.add(JUNGLE_BARK);
+        VALUES.add(ACACIA_BARK);
+        VALUES.add(DARK_OAK_BARK);
+        VALUES.add(SPRUCE_BUTTON);
+        VALUES.add(BIRCH_BUTTON);
+        VALUES.add(JUNGLE_BUTTON);
+        VALUES.add(ACACIA_BUTTON);
+        VALUES.add(DARK_OAK_BUTTON);
+        VALUES.add(SPRUCE_PRESSURE_PLATE);
+        VALUES.add(BIRCH_PRESSURE_PLATE);
+        VALUES.add(JUNGLE_PRESSURE_PLATE);
+        VALUES.add(ACACIA_PRESSURE_PLATE);
+        VALUES.add(DARK_OAK_PRESSURE_PLATE);
+        VALUES.add(CARVED_PUMPKIN);
+        VALUES.add(SPRUCE_TRAPDOOR);
+        VALUES.add(BIRCH_TRAPDOOR);
+        VALUES.add(JUNGLE_TRAPDOOR);
+        VALUES.add(ACACIA_TRAPDOOR);
+        VALUES.add(DARK_OAK_TRAPDOOR);
+        VALUES.add(MUSHROOM_STEM);
+        VALUES.add(STRIPPED_OAK_LOG);
+        VALUES.add(STRIPPED_SPRUCE_LOG);
+        VALUES.add(STRIPPED_BIRCH_LOG);
+        VALUES.add(STRIPPED_JUNGLE_LOG);
+        VALUES.add(STRIPPED_ACACIA_LOG);
+        VALUES.add(STRIPPED_DARK_OAK_LOG);
+        VALUES.add(SMOOTH_SANDSTONE);
+        VALUES.add(SMOOTH_RED_SANDSTONE);
+        VALUES.add(SMOOTH_QUARTZ);
+        VALUES.add(SMOOTH_STONE);
+        VALUES.add(TURTLE_EGG);
+        VALUES.add(REDSTONE_WALL_TORCH);
+
+        // ITEMS
         VALUES.add(IRON_SHOVEL);
         VALUES.add(IRON_PICKAXE);
         VALUES.add(IRON_AXE);
@@ -1367,7 +1536,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(COOKIE);
         VALUES.add(FILLED_MAP);
         VALUES.add(SHEARS);
-        VALUES.add(MELON);
+        VALUES.add(MELON_SLICE);
         VALUES.add(PUMPKIN_SEEDS);
         VALUES.add(MELON_SEEDS);
         VALUES.add(BEEF);
@@ -1397,6 +1566,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(EMERALD);
         VALUES.add(ITEM_FRAME);
         VALUES.add(FLOWER_POT);
+        // 1.13: Filled flower pots
         VALUES.add(CARROT);
         VALUES.add(POTATO);
         VALUES.add(BAKED_POTATO);
@@ -1491,6 +1661,23 @@ public class VanillaItem extends ExItem {
         VALUES.add(MUSIC_DISC_WARD);
         VALUES.add(MUSIC_DISC_11);
         VALUES.add(MUSIC_DISC_WAIT);
+
+        // 1.13 ITEMS
+        VALUES.add(DEBUG_STICK);
+        VALUES.add(DRIED_KELP);
+        VALUES.add(COD_BUCKET);
+        VALUES.add(SALMON_BUCKET);
+        VALUES.add(PUFFERFISH_BUCKET);
+        VALUES.add(CLOWNFISH_BUCKET);
+        VALUES.add(HEART_OF_THE_SEA);
+        VALUES.add(KELP);
+        VALUES.add(NAUTILUS_SHELL);
+        VALUES.add(PHANTOM_MEMBRANE);
+        VALUES.add(SCUTE);
+        VALUES.add(TRIDENT);
+        VALUES.add(TURTLE_HELMET);
+
+        // OLD / MERGED BLOCKS
         VALUES.add(WHITE_BED_BLOCK);
         VALUES.add(ORANGE_BED_BLOCK);
         VALUES.add(DOUBLE_STONE_SLAB);
@@ -1554,9 +1741,24 @@ public class VanillaItem extends ExItem {
         VALUES.add(JUNGLE_DOOR_BLOCK);
         VALUES.add(ACACIA_DOOR_BLOCK);
         VALUES.add(DARK_OAK_DOOR_BLOCK);
-        VALUES.add(MONSTER_EGG);
+
+        bukkitMats:
+        for (Material bukkit : Material.values()) {
+            for (VanillaItem caliburn : VALUES) {
+                if (caliburn.getName().equals(bukkit.name())) {
+                    continue bukkitMats;
+                }
+            }
+
+            MessageUtil.log("&c[WARNING] Caliburn lacks a built-in representation of the material " + bukkit.name() + ". Please update your implementation if possible.");
+            VALUES.add(new VanillaItem(UNKNOWN, bukkit.name()));
+        }
 
         for (VanillaItem vi : VALUES) {
+            if (Material.getMaterial(vi.getName()) == null && vi.isAvailable()) {
+                MessageUtil.log("&c[WARNING] Caliburn has a representation of the material " + vi.getName() + " that does not exist in Bukkit.");
+                continue;
+            }
             if (vi.isAvailable()) {
                 LOADED.add(vi);
                 BY_MATERIAL.put(vi.getMaterial(), vi);
@@ -1738,7 +1940,7 @@ public class VanillaItem extends ExItem {
 
     @Override
     public String getName() {
-        return getNewName();
+        return CompatibilityHandler.getInstance().getVersion().useNewMaterials() ? newName : oldName;
     }
 
     /**
@@ -1775,7 +1977,7 @@ public class VanillaItem extends ExItem {
             if (!isAvailable()) {
                 material = Material.AIR;
             }
-            material = Material.valueOf(CompatibilityHandler.getInstance().getVersion().useNewMaterials() ? newName : oldName);
+            material = Material.valueOf(getName());
         }
         return material;
     }

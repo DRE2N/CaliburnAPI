@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>caliburn</artifactId>
-    <version>0.4</version>
+    <version>0.4.1</version>
     <packaging>jar</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
@@ -61,7 +61,7 @@
         <dependency>
             <groupId>de.erethon</groupId>
             <artifactId>commons</artifactId>
-            <version>4.1.1</version>
+            <version>4.2</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

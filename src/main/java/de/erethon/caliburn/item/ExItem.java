@@ -134,7 +134,7 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
 
     /**
      * @return
-     * the display name of the item
+     * the unique name of the item
      */
     public String getName() {
         return getMaterial().name();
