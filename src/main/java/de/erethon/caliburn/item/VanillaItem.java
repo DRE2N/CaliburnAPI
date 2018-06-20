@@ -831,6 +831,59 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem TRIDENT = new VanillaItem(MC1_13, "TRIDENT");
     public static final VanillaItem TURTLE_HELMET = new VanillaItem(MC1_13, "TURTLE_HELMET");
 
+    // SPAWN EGGS
+    public static final VanillaItem BAT_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "BAT_SPAWN_EGG", 383);
+    public static final VanillaItem BLAZE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "BLAZE_SPAWN_EGG", 383);
+    public static final VanillaItem CAVE_SPIDER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "CAVE_SPIDER_SPAWN_EGG", 383);
+    public static final VanillaItem CHICKEN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "CHICKEN_SPAWN_EGG", 383);
+    public static final VanillaItem COD_SPAWN_EGG = new VanillaItem(MC1_13, "COD_SPAWN_EGG");
+    public static final VanillaItem COW_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "COW_SPAWN_EGG", 383);
+    public static final VanillaItem CREEPER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "CREEPER_SPAWN_EGG", 383);
+    public static final VanillaItem DOLPHIN_SPAWN_EGG = new VanillaItem(MC1_13, "DOLPHIN_SPAWN_EGG");
+    public static final VanillaItem DONKEY_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "DONKEY_SPAWN_EGG", 383);
+    public static final VanillaItem DROWNED_SPAWN_EGG = new VanillaItem(MC1_13, "DROWNED_SPAWN_EGG");
+    public static final VanillaItem ELDER_GUARDIAN_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "ELDER_GUARDIAN_SPAWN_EGG", 383);
+    public static final VanillaItem ENDERMAN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ENDERMAN_SPAWN_EGG", 383);
+    public static final VanillaItem ENDERMITE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ENDERMITE_SPAWN_EGG", 383);
+    public static final VanillaItem EVOCATION_ILLAGER_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "EVOCATION_ILLAGER_SPAWN_EGG", 383);
+    public static final VanillaItem GHAST_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "GHAST_SPAWN_EGG", 383);
+    public static final VanillaItem GUARDIAN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "GUARDIAN_SPAWN_EGG", 383);
+    public static final VanillaItem HORSE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "HORSE_SPAWN_EGG", 383);
+    public static final VanillaItem HUSK_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "HUSK_SPAWN_EGG", 383);
+    public static final VanillaItem LLAMA_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "LLAMA_SPAWN_EGG", 383);
+    public static final VanillaItem MAGMA_CUBE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "MAGMA_CUBE_SPAWN_EGG", 383);
+    public static final VanillaItem MOOSHROOM_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "MOOSHROOM_SPAWN_EGG", 383);
+    public static final VanillaItem MULE_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "MULE_SPAWN_EGG", 383);
+    public static final VanillaItem OCELOT_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "OCELOT_SPAWN_EGG", 383);
+    public static final VanillaItem PARROT_SPAWN_EGG = new VanillaItem(MC1_12, "MONSTER_EGG", "PARROT_SPAWN_EGG", 383);
+    public static final VanillaItem PIG_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "PIG_SPAWN_EGG", 383);
+    public static final VanillaItem PHANTOM_SPAWN_EGG = new VanillaItem(MC1_13, "PHANTOM_SPAWN_EGG");
+    public static final VanillaItem POLAR_BEAR_SPAWN_EGG = new VanillaItem(MC1_10, "MONSTER_EGG", "POLAR_BEAR_SPAWN_EGG", 383);
+    public static final VanillaItem PUFFERFISH_SPAWN_EGG = new VanillaItem(MC1_13, "PUFFERFISH_SPAWN_EGG");
+    public static final VanillaItem RABBIT_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "RABBIT_SPAWN_EGG", 383);
+    public static final VanillaItem SALMON_SPAWN_EGG = new VanillaItem(MC1_13, "SALMON_SPAWN_EGG");
+    public static final VanillaItem SHEEP_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "SHEEP_SPAWN_EGG", 383);
+    public static final VanillaItem SHULKER_SPAWN_EGG = new VanillaItem(MC1_9, "MONSTER_EGG", "SHULKER_SPAWN_EGG", 383);
+    public static final VanillaItem SILVERFISH_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "SILVERFISH_SPAWN_EGG", 383);
+    public static final VanillaItem SKELETON_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "SKELETON_SPAWN_EGG", 383);
+    public static final VanillaItem SKELETON_HORSE_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "SKELETON_HORSE_SPAWN_EGG", 383);
+    public static final VanillaItem SLIME_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "SLIME_SPAWN_EGG", 383);
+    public static final VanillaItem SPIDER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "SPIDER_SPAWN_EGG", 383);
+    public static final VanillaItem SQUID_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "SQUID_SPAWN_EGG", 383);
+    public static final VanillaItem STRAY_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "STRAY_SPAWN_EGG", 383);
+    public static final VanillaItem TROPICAL_FISH_SPAWN_EGG = new VanillaItem(MC1_13, "TROPICAL_FISH_SPAWN_EGG");
+    public static final VanillaItem TURTLE_SPAWN_EGG = new VanillaItem(MC1_13, "TURTLE_SPAWN_EGG");
+    public static final VanillaItem VEX_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "VEX_SPAWN_EGG", 383);
+    public static final VanillaItem VILLAGER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "VILLAGER_SPAWN_EGG", 383);
+    public static final VanillaItem VINDICATION_ILLAGER_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "VINDICATION_ILLAGER_SPAWN_EGG", 383);
+    public static final VanillaItem WITCH_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "WITCH_SPAWN_EGG", 383);
+    public static final VanillaItem WITHER_SKELETON_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "WITHER_SKELETON_SPAWN_EGG", 383);
+    public static final VanillaItem WOLF_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "WOLF_SPAWN_EGG", 383);
+    public static final VanillaItem ZOMBIE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIE_SPAWN_EGG", 383);
+    public static final VanillaItem ZOMBIE_HORSE_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "ZOMBIE_HORSE_SPAWN_EGG", 383);
+    public static final VanillaItem ZOMBIE_PIGMAN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIE_PIGMAN_SPAWN_EGG", 383);
+    public static final VanillaItem ZOMBIE_VILLAGER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIE_VILLAGER_SPAWN_EGG", 383);
+
     // OLD / MERGED BLOCKS
     public static final OldBlockItem WHITE_BED_BLOCK = new OldBlockItem(MC1_8, "BED_BLOCK", WHITE_BED, 26);
     public static final OldBlockItem ORANGE_BED_BLOCK = new OldBlockItem(MC1_8, "BED_BLOCK", ORANGE_BED, 26, (short) 1);
@@ -1394,6 +1447,27 @@ public class VanillaItem extends ExItem {
         VALUES.add(SMOOTH_STONE);
         VALUES.add(TURTLE_EGG);
         VALUES.add(REDSTONE_WALL_TORCH);
+        VALUES.add(POTTED_POPPY);
+        VALUES.add(POTTED_DANDELION);
+        VALUES.add(POTTED_OAK_SAPLING);
+        VALUES.add(POTTED_SPRUCE_SAPLING);
+        VALUES.add(POTTED_BIRCH_SAPLING);
+        VALUES.add(POTTED_JUNGLE_SAPLING);
+        VALUES.add(POTTED_RED_MUSHROOM);
+        VALUES.add(POTTED_BROWN_MUSHROOM);
+        VALUES.add(POTTED_CACTUS);
+        VALUES.add(POTTED_DEAD_BUSH);
+        VALUES.add(POTTED_FERN);
+        VALUES.add(POTTED_ACACIA_SAPLING);
+        VALUES.add(POTTED_DARK_OAK_SAPLING);
+        VALUES.add(POTTED_BLUE_ORCHID);
+        VALUES.add(POTTED_ALLIUM);
+        VALUES.add(POTTED_AZURE_BLUET);
+        VALUES.add(POTTED_RED_TULIP);
+        VALUES.add(POTTED_ORANGE_TULIP);
+        VALUES.add(POTTED_WHITE_TULIP);
+        VALUES.add(POTTED_PINK_TULIP);
+        VALUES.add(POTTED_OXEYE_TULIP);
 
         // ITEMS
         VALUES.add(IRON_SHOVEL);
@@ -1566,7 +1640,6 @@ public class VanillaItem extends ExItem {
         VALUES.add(EMERALD);
         VALUES.add(ITEM_FRAME);
         VALUES.add(FLOWER_POT);
-        // 1.13: Filled flower pots
         VALUES.add(CARROT);
         VALUES.add(POTATO);
         VALUES.add(BAKED_POTATO);
@@ -1676,6 +1749,59 @@ public class VanillaItem extends ExItem {
         VALUES.add(SCUTE);
         VALUES.add(TRIDENT);
         VALUES.add(TURTLE_HELMET);
+
+        // SPAWN EGGS
+        VALUES.add(BAT_SPAWN_EGG);
+        VALUES.add(BLAZE_SPAWN_EGG);
+        VALUES.add(CAVE_SPIDER_SPAWN_EGG);
+        VALUES.add(CHICKEN_SPAWN_EGG);
+        VALUES.add(COD_SPAWN_EGG);
+        VALUES.add(COW_SPAWN_EGG);
+        VALUES.add(CREEPER_SPAWN_EGG);
+        VALUES.add(DOLPHIN_SPAWN_EGG);
+        VALUES.add(DONKEY_SPAWN_EGG);
+        VALUES.add(DROWNED_SPAWN_EGG);
+        VALUES.add(ELDER_GUARDIAN_SPAWN_EGG);
+        VALUES.add(ENDERMAN_SPAWN_EGG);
+        VALUES.add(ENDERMITE_SPAWN_EGG);
+        VALUES.add(EVOCATION_ILLAGER_SPAWN_EGG);
+        VALUES.add(GHAST_SPAWN_EGG);
+        VALUES.add(GUARDIAN_SPAWN_EGG);
+        VALUES.add(HORSE_SPAWN_EGG);
+        VALUES.add(HUSK_SPAWN_EGG);
+        VALUES.add(LLAMA_SPAWN_EGG);
+        VALUES.add(MAGMA_CUBE_SPAWN_EGG);
+        VALUES.add(MOOSHROOM_SPAWN_EGG);
+        VALUES.add(MULE_SPAWN_EGG);
+        VALUES.add(OCELOT_SPAWN_EGG);
+        VALUES.add(PARROT_SPAWN_EGG);
+        VALUES.add(PIG_SPAWN_EGG);
+        VALUES.add(PHANTOM_SPAWN_EGG);
+        VALUES.add(POLAR_BEAR_SPAWN_EGG);
+        VALUES.add(PUFFERFISH_SPAWN_EGG);
+        VALUES.add(RABBIT_SPAWN_EGG);
+        VALUES.add(SALMON_SPAWN_EGG);
+        VALUES.add(SHEEP_SPAWN_EGG);
+        VALUES.add(SHULKER_SPAWN_EGG);
+        VALUES.add(SILVERFISH_SPAWN_EGG);
+        VALUES.add(SKELETON_SPAWN_EGG);
+        VALUES.add(SKELETON_HORSE_SPAWN_EGG);
+        VALUES.add(SLIME_SPAWN_EGG);
+        VALUES.add(SPIDER_SPAWN_EGG);
+        VALUES.add(SQUID_SPAWN_EGG);
+        VALUES.add(STRAY_SPAWN_EGG);
+        VALUES.add(TROPICAL_FISH_SPAWN_EGG);
+        VALUES.add(TURTLE_SPAWN_EGG);
+        VALUES.add(VEX_SPAWN_EGG);
+        VALUES.add(VILLAGER_SPAWN_EGG);
+        VALUES.add(VINDICATION_ILLAGER_SPAWN_EGG);
+        VALUES.add(WITCH_SPAWN_EGG);
+        VALUES.add(WITHER_SKELETON_SPAWN_EGG);
+        VALUES.add(WOLF_SPAWN_EGG);
+        VALUES.add(ZOMBIE_SPAWN_EGG);
+        VALUES.add(ZOMBIE_HORSE_SPAWN_EGG);
+        VALUES.add(ZOMBIE_PIGMAN_SPAWN_EGG);
+        VALUES.add(ZOMBIE_VILLAGER_SPAWN_EGG);
 
         // OLD / MERGED BLOCKS
         VALUES.add(WHITE_BED_BLOCK);
