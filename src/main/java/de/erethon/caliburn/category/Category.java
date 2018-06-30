@@ -29,19 +29,19 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Category<T extends Categorizable> extends Categorizable {
 
-    public static final Category ACACIA_LOGS = new Category("acacia_logs", ACACIA_BARK, ACACIA_LOG, STRIPPED_ACACIA_LOG);
+    public static final Category ACACIA_LOGS = new Category("acacia_logs", ACACIA_WOOD, ACACIA_LOG, STRIPPED_ACACIA_LOG);
     public static final Category ANVIL = new Category("anvil", VanillaItem.ANVIL, CHIPPED_ANVIL, DAMAGED_ANVIL);
     public static final Category BANNERS = new Category("banners", WHITE_BANNER, ORANGE_BANNER, MAGENTA_BANNER, LIGHT_BLUE_BANNER, YELLOW_BANNER, LIME_BANNER,
             PINK_BANNER, GRAY_BANNER, LIGHT_GRAY_BANNER, CYAN_BANNER, PURPLE_BANNER, BLUE_BANNER, BROWN_BANNER, GREEN_BANNER, RED_BANNER, BLACK_BANNER,
             WHITE_WALL_BANNER, ORANGE_WALL_BANNER, MAGENTA_WALL_BANNER, LIGHT_BLUE_WALL_BANNER, YELLOW_WALL_BANNER, LIME_WALL_BANNER, PINK_WALL_BANNER, GRAY_WALL_BANNER,
             LIGHT_GRAY_WALL_BANNER, CYAN_WALL_BANNER, PURPLE_WALL_BANNER, BLUE_WALL_BANNER, BROWN_WALL_BANNER, GREEN_WALL_BANNER, RED_WALL_BANNER, BLACK_WALL_BANNER);
-    public static final Category BIRCH_LOGS = new Category("birch_logs", BIRCH_BARK, BIRCH_LOG, STRIPPED_BIRCH_LOG);
+    public static final Category BIRCH_LOGS = new Category("birch_logs", BIRCH_WOOD, BIRCH_LOG, STRIPPED_BIRCH_LOG);
     public static final Category BOATS = new Category("boats", OAK_BOAT, SPRUCE_BOAT, BIRCH_BOAT, JUNGLE_BOAT, ACACIA_BOAT, DARK_OAK_BOAT);
     public static final Category CARPETS = new Category("carpets", WHITE_CARPET, ORANGE_CARPET, MAGENTA_CARPET, LIGHT_BLUE_CARPET, YELLOW_CARPET, LIME_CARPET,
             PINK_CARPET, GRAY_CARPET, LIGHT_GRAY_CARPET, CYAN_CARPET, PURPLE_CARPET, BLUE_CARPET, BROWN_CARPET, GREEN_CARPET, RED_CARPET, BLACK_CARPET);
     public static final Category CORAL_FANS = new Category("coral_fans", TUBE_CORAL_FAN, BRAIN_CORAL_FAN, BUBBLE_CORAL_FAN, FIRE_CORAL_FAN, HORN_CORAL_FAN);
     public static final Category CORALS = new Category("coral", TUBE_CORAL, BRAIN_CORAL, BUBBLE_CORAL, FIRE_CORAL, HORN_CORAL);
-    public static final Category DARK_OAK_LOGS = new Category("dark_oak_logs", DARK_OAK_BARK, DARK_OAK_LOG, STRIPPED_DARK_OAK_LOG);
+    public static final Category DARK_OAK_LOGS = new Category("dark_oak_logs", DARK_OAK_WOOD, DARK_OAK_LOG, STRIPPED_DARK_OAK_LOG);
     public static final Category DEAD_CORAL_BLOCKS = new Category("dead_coral_blocks", DEAD_TUBE_CORAL_BLOCK, DEAD_BRAIN_CORAL_BLOCK, DEAD_BUBBLE_CORAL_BLOCK, DEAD_FIRE_CORAL_BLOCK, DEAD_HORN_CORAL_BLOCK);
     public static final Category ENDERMAN_HOLDABLE = new Category("enderman_holdable", GRASS_BLOCK, DIRT, COARSE_DIRT, PODZOL, VanillaItem.SAND, RED_SAND, GRAVEL, DANDELION,
             POPPY, BLUE_ORCHID, ALLIUM, AZURE_BLUET, RED_TULIP, ORANGE_TULIP, WHITE_TULIP, PINK_TULIP, OXEYE_DAISY, BROWN_MUSHROOM, RED_MUSHROOM, TNT, CACTUS,
@@ -50,10 +50,10 @@ public class Category<T extends Categorizable> extends Categorizable {
             POTTED_BIRCH_SAPLING, POTTED_JUNGLE_SAPLING, POTTED_RED_MUSHROOM, POTTED_BROWN_MUSHROOM, POTTED_CACTUS, POTTED_DEAD_BUSH, POTTED_FERN, POTTED_ACACIA_SAPLING,
             POTTED_DARK_OAK_SAPLING, POTTED_BLUE_ORCHID, POTTED_ALLIUM, POTTED_AZURE_BLUET, POTTED_RED_TULIP, POTTED_ORANGE_TULIP, POTTED_WHITE_TULIP, POTTED_PINK_TULIP, POTTED_OXEYE_TULIP);
     public static final Category ICE = new Category("ice", VanillaItem.ICE, FROSTED_ICE, PACKED_ICE, BLUE_ICE);
-    public static final Category JUNGLE_LOGS = new Category("jungle_logs", JUNGLE_BARK, JUNGLE_LOG, STRIPPED_JUNGLE_LOG);
+    public static final Category JUNGLE_LOGS = new Category("jungle_logs", JUNGLE_WOOD, JUNGLE_LOG, STRIPPED_JUNGLE_LOG);
     public static final Category LAVA = new Category("lava", VanillaItem.LAVA, FLOWING_LAVA);
     public static final Category LIVE_CORAL_BLOCKS = new Category("live_coral_blocks", TUBE_CORAL_BLOCK, BRAIN_CORAL_BLOCK, BUBBLE_CORAL_BLOCK, FIRE_CORAL_BLOCK, HORN_CORAL_BLOCK);
-    public static final Category OAK_LOGS = new Category("oak_logs", OAK_BARK, OAK_LOG, STRIPPED_OAK_LOG);
+    public static final Category OAK_LOGS = new Category("oak_logs", OAK_WOOD, OAK_LOG, STRIPPED_OAK_LOG);
     public static final Category PLANKS = new Category("planks", OAK_PLANKS, SPRUCE_PLANKS, BIRCH_PLANKS, JUNGLE_PLANKS, ACACIA_PLANKS, DARK_OAK_PLANKS);
     public static final Category RAILS = new Category("rails", RAIL, POWERED_RAIL, DETECTOR_RAIL, ACTIVATOR_RAIL);
     public static final Category SAND = new Category("sand", VanillaItem.SAND, RED_SAND);
@@ -61,7 +61,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category SLABS = new Category("slabs", STONE_SLAB, STONE_BRICK_SLAB, SANDSTONE_SLAB, ACACIA_SLAB, BIRCH_SLAB, DARK_OAK_SLAB, JUNGLE_SLAB,
             OAK_SLAB, SPRUCE_SLAB, PURPUR_SLAB, QUARTZ_SLAB, RED_SANDSTONE_SLAB, BRICK_SLAB, COBBLESTONE_SLAB, NETHER_BRICK_SLAB, PETRIFIED_OAK_SLAB,
             PRISMARINE_SLAB, PRISMARINE_BRICK_SLAB, DARK_PRISMARINE_SLAB);
-    public static final Category SPRUCE_LOGS = new Category("spruce_logs", SPRUCE_BARK, SPRUCE_LOG, STRIPPED_SPRUCE_LOG);
+    public static final Category SPRUCE_LOGS = new Category("spruce_logs", SPRUCE_WOOD, SPRUCE_LOG, STRIPPED_SPRUCE_LOG);
     public static final Category STAIRS = new Category("stairs", STONE_BRICK_STAIRS, SANDSTONE_STAIRS, ACACIA_STAIRS, BIRCH_STAIRS, DARK_OAK_STAIRS,
             JUNGLE_STAIRS, OAK_STAIRS, SPRUCE_STAIRS, PURPUR_STAIRS, QUARTZ_STAIRS, RED_SANDSTONE_STAIRS, BRICK_STAIRS, COBBLESTONE_STAIRS, NETHER_BRICK_STAIRS,
             PRISMARINE_STAIRS, PRISMARINE_BRICK_STAIRS, DARK_PRISMARINE_STAIRS);

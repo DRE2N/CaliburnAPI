@@ -36,12 +36,12 @@ public class SplitMob extends VanillaMob {
 
     private VanillaMob oldSuperType;
 
-    protected SplitMob(Version firstVersion, VanillaMob oldSuperType, String newId, String bukkit, int numeric) {
-        this(firstVersion, null, oldSuperType, newId, bukkit, numeric);
+    protected SplitMob(Version firstVersion, VanillaMob oldSuperType, String id1_13, String bukkit, int numeric) {
+        this(firstVersion, null, oldSuperType, id1_13, bukkit, numeric);
     }
 
-    protected SplitMob(Version firstVersion, Version lastVersion, VanillaMob oldSuperType, String newId, String bukkit, int numeric) {
-        super(firstVersion, lastVersion, oldSuperType.getOldId(), newId, bukkit, numeric);
+    protected SplitMob(Version firstVersion, Version lastVersion, VanillaMob oldSuperType, String id1_13, String bukkit, int numeric) {
+        super(firstVersion, lastVersion, oldSuperType.getId1_8(), id1_13, id1_13, bukkit, numeric);
         this.oldSuperType = oldSuperType;
     }
 
@@ -62,23 +62,23 @@ public class SplitMob extends VanillaMob {
     public Entity toEntity(Location location) {
         Entity entity = super.toEntity(location);
         if (!CompatibilityHandler.getInstance().getVersion().useNewMobNames()) {
-            if (ELDER_GUARDIAN.getNewId().equals(getNewId())) {
+            if (ELDER_GUARDIAN.getId1_13().equals(getId1_13())) {
                 ((Guardian) entity).setElder(true);
-            } else if (WITHER_SKELETON.getNewId().equals(getNewId())) {
+            } else if (WITHER_SKELETON.getId1_13().equals(getId1_13())) {
                 ((Skeleton) entity).setSkeletonType(SkeletonType.WITHER);
-            } else if (STRAY.getNewId().equals(getNewId())) {
+            } else if (STRAY.getId1_13().equals(getId1_13())) {
                 ((Skeleton) entity).setSkeletonType(SkeletonType.STRAY);
-            } else if (HUSK.getNewId().equals(getNewId())) {
+            } else if (HUSK.getId1_13().equals(getId1_13())) {
                 ((Zombie) entity).setVillagerProfession(Villager.Profession.HUSK);
-            } else if (ZOMBIE_VILLAGER.getNewId().equals(getNewId())) {
+            } else if (ZOMBIE_VILLAGER.getId1_13().equals(getId1_13())) {
                 ((Zombie) entity).setVillager(true);
-            } else if (SKELETON_HORSE.getNewId().equals(getNewId())) {
+            } else if (SKELETON_HORSE.getId1_13().equals(getId1_13())) {
                 ((Horse) entity).setVariant(Horse.Variant.SKELETON_HORSE);
-            } else if (ZOMBIE_HORSE.getNewId().equals(getNewId())) {
+            } else if (ZOMBIE_HORSE.getId1_13().equals(getId1_13())) {
                 ((Horse) entity).setVariant(Horse.Variant.UNDEAD_HORSE);
-            } else if (DONKEY.getNewId().equals(getNewId())) {
+            } else if (DONKEY.getId1_13().equals(getId1_13())) {
                 ((Horse) entity).setVariant(Horse.Variant.DONKEY);
-            } else if (MULE.getNewId().equals(getNewId())) {
+            } else if (MULE.getId1_13().equals(getId1_13())) {
                 ((Horse) entity).setVariant(Horse.Variant.MULE);
             }
         }

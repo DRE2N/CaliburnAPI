@@ -268,38 +268,38 @@ public class VanillaMob extends ExMob {
 
     private Version firstVersion;
     private Version lastVersion;
-    private String id_1_8;
-    private String id_1_11;
-    private String id_1_13;
+    private String id1_8;
+    private String id1_11;
+    private String id1_13;
     private int numeric;
     private String bukkit;
 
-    protected VanillaMob(Version firstVersion, String id_1_13, String bukkit) {
-        this(firstVersion, new String(), id_1_13, bukkit, -1);
+    protected VanillaMob(Version firstVersion, String id1_13, String bukkit) {
+        this(firstVersion, new String(), id1_13, bukkit, -1);
     }
 
-    protected VanillaMob(Version firstVersion, String id_1_18, String id_1_13, String bukkit, int numeric) {
-        this(firstVersion, null, id_1_18, id_1_13, id_1_13, bukkit, numeric);
+    protected VanillaMob(Version firstVersion, String id1_18, String id1_13, String bukkit, int numeric) {
+        this(firstVersion, null, id1_18, id1_13, id1_13, bukkit, numeric);
     }
 
-    protected VanillaMob(Version firstVersion, String id_1_8, String id_1_11, String id_1_13, String bukkit, int numeric) {
-        this(firstVersion, null, id_1_8, id_1_11, id_1_13, bukkit, numeric);
+    protected VanillaMob(Version firstVersion, String id1_8, String id1_11, String id1_13, String bukkit, int numeric) {
+        this(firstVersion, null, id1_8, id1_11, id1_13, bukkit, numeric);
     }
 
-    protected VanillaMob(Version firstVersion, Version lastVersion, String id_1_13, String bukkit) {
-        this(firstVersion, lastVersion, new String(), new String(), id_1_13, bukkit, -1);
+    protected VanillaMob(Version firstVersion, Version lastVersion, String id1_13, String bukkit) {
+        this(firstVersion, lastVersion, new String(), new String(), id1_13, bukkit, -1);
     }
 
-    protected VanillaMob(Version firstVersion, Version lastVersion, String id_1_11, String id_1_13, String bukkit) {
-        this(firstVersion, lastVersion, new String(), id_1_11, id_1_13, bukkit, -1);
+    protected VanillaMob(Version firstVersion, Version lastVersion, String id1_11, String id1_13, String bukkit) {
+        this(firstVersion, lastVersion, new String(), id1_11, id1_13, bukkit, -1);
     }
 
-    protected VanillaMob(Version firstVersion, Version lastVersion, String id_1_8, String id_1_11, String id_1_13, String bukkit, int numeric) {
+    protected VanillaMob(Version firstVersion, Version lastVersion, String id1_8, String id1_11, String id1_13, String bukkit, int numeric) {
         this.firstVersion = firstVersion;
         this.lastVersion = lastVersion;
-        this.id_1_8 = id_1_8;
-        this.id_1_11 = id_1_11;
-        this.id_1_13 = id_1_13;
+        this.id1_8 = id1_8;
+        this.id1_11 = id1_11;
+        this.id1_13 = id1_13;
         this.bukkit = bukkit;
         this.numeric = numeric;
     }
@@ -325,24 +325,24 @@ public class VanillaMob extends ExMob {
      * @return
      * the old String ID used before Minecraft 1.11
      */
-    public String getId_1_8() {
-        return id_1_8;
+    public String getId1_8() {
+        return id1_8;
     }
 
     /**
      * @return
      * the new String ID used since Minecraft 1.11
      */
-    public String getId_1_11() {
-        return id_1_11;
+    public String getId1_11() {
+        return id1_11;
     }
 
     /**
      * @return
      * the new String ID used since Minecraft 1.13
      */
-    public String getId_1_13() {
-        return id_1_13;
+    public String getId1_13() {
+        return id1_13;
     }
 
     /**
@@ -364,7 +364,7 @@ public class VanillaMob extends ExMob {
 
     @Override
     public String getName() {
-        return getId_1_13();
+        return getId1_13();
     }
 
     /**
@@ -378,7 +378,7 @@ public class VanillaMob extends ExMob {
 
     @Override
     public ExMob idMatch(String id) {
-        if (id.toUpperCase().equals(bukkit) || id.equals(id_1_13) || id.equals(id_1_11) || id.equals(id_1_8)) {
+        if (id.toUpperCase().equals(bukkit) || id.equals(id1_13) || id.equals(id1_11) || id.equals(id1_8)) {
             return this;
         } else {
             return null;
