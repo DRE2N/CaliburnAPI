@@ -24,6 +24,7 @@ import de.erethon.caliburn.item.CustomHead;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.caliburn.listener.BlockListener;
 import de.erethon.caliburn.listener.EntityListener;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.ExMob;
@@ -32,8 +33,10 @@ import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
 import java.util.ArrayList;
 import java.util.List;
+import net.sothatsit.blockstore.BlockStoreApi;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
@@ -45,7 +48,12 @@ import org.bukkit.plugin.Plugin;
  */
 public class CaliburnAPI {
 
+    public static final String META_KEY = "caliburn";
+
     private static CaliburnAPI instance;
+
+    private Plugin implementation;
+    private boolean blockStore;
 
     private String identifierPrefix;
 
@@ -65,12 +73,18 @@ public class CaliburnAPI {
     public CaliburnAPI(Plugin plugin, String identifierPrefix) {
         instance = this;
 
+        implementation = plugin;
+        blockStore = Bukkit.getPluginManager().getPlugin("BlockStore") != null;
+
         this.identifierPrefix = identifierPrefix;
 
         items.addAll(VanillaItem.getLoaded());
         mobs.addAll(VanillaMob.getLoaded());
 
         Bukkit.getPluginManager().registerEvents(new EntityListener(this), plugin);
+        if (blockStore) {
+            Bukkit.getPluginManager().registerEvents(new BlockListener(this), plugin);
+        }
 
         ConfigurationSerialization.registerClass(CustomItem.class);
         ConfigurationSerialization.registerClass(CustomBanner.class);
@@ -86,6 +100,14 @@ public class CaliburnAPI {
      */
     public static CaliburnAPI getInstance() {
         return instance;
+    }
+
+    /**
+     * @return
+     * the plugin that implements Caliburn
+     */
+    public Plugin getImplementation() {
+        return implementation;
     }
 
     /**
@@ -196,6 +218,16 @@ public class CaliburnAPI {
         } else {
             return getExItem(item.getType().name());
         }
+    }
+
+    public ExItem getExItem(Block block) {
+        if (blockStore) {
+            String meta = (String) BlockStoreApi.getBlockMeta(block, implementation, META_KEY);
+            if (meta != null) {
+                return getExItem(simpleSerialization.deserialize(meta));
+            }
+        }
+        return VanillaItem.get(block.getType());
     }
 
     public String getExItemId(ItemStack item) {

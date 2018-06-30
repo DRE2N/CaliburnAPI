@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 
@@ -216,6 +217,17 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
      */
     public ItemStack toItemStack() {
         return toItemStack(1);
+    }
+
+    /**
+     * @param block
+     * the block to change
+     * @return
+     * the block
+     */
+    public Block toBlock(Block block) {
+        block.setType(getMaterial());
+        return block;
     }
 
     /* Statics */
