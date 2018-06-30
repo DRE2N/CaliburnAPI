@@ -31,7 +31,7 @@ import org.bukkit.entity.EntityType;
 public class VanillaMob extends ExMob {
 
     public static final VanillaMob ITEM = new VanillaMob(MC1_8, "Item", "item", "DROPPED_ITEM", 1);
-    public static final VanillaMob XP_ORB = new VanillaMob(MC1_8, "XPOrb", "xp_orb", "EXPERIENCE_ORB", 2);
+    public static final VanillaMob EXPERIENCE_ORB = new VanillaMob(MC1_8, "XPOrb", "xp_orb", "experience_orb", "EXPERIENCE_ORB", 2);
     public static final VanillaMob AREA_EFFECT_CLOUD = new VanillaMob(MC1_9, "AreaEffectCloud", "area_effect_cloud", "AREA_EFFECT_CLOUD", 3);
     public static final VanillaMob EGG = new VanillaMob(MC1_8, "ThrownEgg", "egg", "EGG", 7);
     public static final VanillaMob LEASH_KNOT = new VanillaMob(MC1_8, "LeashKnot", "leash_knot", "LEASH_HITCH", 8);
@@ -41,24 +41,25 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob FIREBALL = new VanillaMob(MC1_8, "Fireball", "fireball", "FIREBALL", 12);
     public static final VanillaMob SMALL_FIREBALL = new VanillaMob(MC1_8, "SmallFireball", "small_fireball", "SMALL_FIREBALL", 13);
     public static final VanillaMob ENDER_PEARL = new VanillaMob(MC1_8, "ThrownEnderpearl", "ender_pearl", "ENDER_PEARL", 14);
-    public static final VanillaMob EYE_OF_ENDER_SIGNAL = new VanillaMob(MC1_8, "EyeOfEnderSignal", "eye_of_ender_signal", "ENDER_SIGNAL", 15);
+    public static final VanillaMob EYE_OF_ENDER = new VanillaMob(MC1_8, "EyeOfEnderSignal", "eye_of_ender_signal", "eye_of_ender", "ENDER_SIGNAL", 15);
     public static final VanillaMob POTION = new VanillaMob(MC1_8, "ThrownPotion", "potion", "SPLASH_POTION", 16);
-    public static final VanillaMob XP_BOTTLE = new VanillaMob(MC1_8, "ThrownExpBottle", "xp_bottle", "THROWN_EXP_BOTTLE", 17);
+    public static final VanillaMob EXPERIENCE_BOTTLE = new VanillaMob(MC1_8, "ThrownExpBottle", "xp_bottle", "experience_bottle", "THROWN_EXP_BOTTLE", 17);
     public static final VanillaMob ITEM_FRAME = new VanillaMob(MC1_8, "ItemFrame", "item_frame", "ITEM_FRAME", 18);
     public static final VanillaMob WITHER_SKULL = new VanillaMob(MC1_8, "WitherSkull", "wither_skull", "WITHER_SKULL", 19);
     public static final VanillaMob TNT = new VanillaMob(MC1_8, "PrimedTNT", "tnt", "PRIMED_TNT", 20);
     public static final VanillaMob FALLING_BLOCK = new VanillaMob(MC1_8, "FallingSand", "falling_block", "FALLING_BLOCK", 21);
-    public static final VanillaMob FIREWORKS_ROCKET = new VanillaMob(MC1_8, "FireworksRocketEntity", "fireworks_rocket", "FIREWORK", 22);
+    public static final VanillaMob FIREWORK_ROCKET = new VanillaMob(MC1_8, "FireworksRocketEntity", "fireworks_rocket", "firework_rocket", "FIREWORK", 22);
+    public static final VanillaMob TIPPED_ARROW = new VanillaMob(MC1_8, "TippedArrow", "tipped_arrow", "TIPPED_ARROW", 23);
     public static final VanillaMob SPECTRAL_ARROW = new VanillaMob(MC1_9, "SpectralArrow", "spectral_arrow", "SPECTRAL_ARROW", 24);
     public static final VanillaMob SHULKER_BULLET = new VanillaMob(MC1_9, "ShulkerBullet", "shulker_bullet", "SHULKER_BULLET", 25);
     public static final VanillaMob DRAGON_FIREBALL = new VanillaMob(MC1_9, "DragonFireball", "dragon_fireball", "DRAGON_FIREBALL", 26);
     public static final VanillaMob ARMOR_STAND = new VanillaMob(MC1_8, "ArmorStand", "armor_stand", "ARMOR_STAND", 30);
-    public static final VanillaMob EVOCATION_FANGS = new VanillaMob(MC1_11, "evocation_fangs", "EVOKER_FANGS", 33);
-    public static final VanillaMob EVOCATION_ILLAGER = new VanillaMob(MC1_11, "evocation_illager", "EVOKER", 34);
-    public static final VanillaMob VEX = new VanillaMob(MC1_11, "vex", "VEX", 35);
-    public static final VanillaMob VINDICATION_ILLAGER = new VanillaMob(MC1_11, "vindication_illager", "VINDICATOR", 36);
-    public static final VanillaMob ILLUSION_ILLAGER = new VanillaMob(MC1_12, "illusion_illager", "ILLUSIONER", 37);
-    public static final VanillaMob COMMANDBLOCK_MINECART = new VanillaMob(MC1_8, "MinecartCommandBlock", "commandblock_minecart", "MINECART_COMMAND", 40);
+    public static final VanillaMob EVOKER_FANGS = new VanillaMob(MC1_11, null, "evocation_fangs", "evoker_fangs", "EVOKER_FANGS", 33);
+    public static final VanillaMob EVOKER = new VanillaMob(MC1_11, null, "evocation_illager", "evoker", "EVOKER", 34);
+    public static final VanillaMob VEX = new VanillaMob(MC1_11, null, "vex", "VEX", 35);
+    public static final VanillaMob VINDICATOR = new VanillaMob(MC1_11, null, "vindication_illager", "vindicator", "VINDICATOR", 36);
+    public static final VanillaMob ILLUSIONER = new VanillaMob(MC1_12, null, "illusion_illager", "illusioner", "ILLUSIONER", 37);
+    public static final VanillaMob COMMAND_BLOCK_MINECART = new VanillaMob(MC1_8, "MinecartCommandBlock", "commandblock_minecart", "command_block_minecart", "MINECART_COMMAND", 40);
     public static final VanillaMob BOAT = new VanillaMob(MC1_8, "Boat", "boat", "BOAT", 41);
     public static final VanillaMob MINECART = new VanillaMob(MC1_8, "MinecartRideable", "minecart", "MINECART", 42);
     public static final VanillaMob CHEST_MINECART = new VanillaMob(MC1_8, "MinecartChest", "chest_minecart", "MINECART_CHEST", 43);
@@ -93,32 +94,31 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob SQUID = new VanillaMob(MC1_8, "Squid", "squid", "SQUID", 94);
     public static final VanillaMob WOLF = new VanillaMob(MC1_8, "Wolf", "wolf", "WOLF", 95);
     public static final VanillaMob MOOSHROOM = new VanillaMob(MC1_8, "MushroomCow", "mooshroom", "MUSHROOM_COW", 96);
-    public static final VanillaMob SNOWMAN = new VanillaMob(MC1_8, "SnowMan", "snowman", "SNOWMAN", 97);
+    public static final VanillaMob SNOW_GOLEM = new VanillaMob(MC1_8, "SnowMan", "snowman", "snow_golem", "SNOWMAN", 97);
     public static final VanillaMob OCELOT = new VanillaMob(MC1_8, "Ozelot", "ocelot", "OCELOT", 98);
-    public static final VanillaMob VILLAGER_GOLEM = new VanillaMob(MC1_8, "VillagerGolem", "villager_golem", "IRON_GOLEM", 99);
+    public static final VanillaMob IRON_GOLEM = new VanillaMob(MC1_8, "VillagerGolem", "villager_golem", "iron_golem", "IRON_GOLEM", 99);
     public static final VanillaMob HORSE = new VanillaMob(MC1_8, "EntityHorse", "horse", "HORSE", 100);
     public static final VanillaMob RABBIT = new VanillaMob(MC1_8, "Rabbit", "rabbit", "RABBIT", 101);
     public static final VanillaMob POLAR_BEAR = new VanillaMob(MC1_10, "PolarBear", "polar_bear", "POLAR_BEAR", 102);
-    public static final VanillaMob LLAMA = new VanillaMob(MC1_11, "llama", "LLAMA", 103);
-    public static final VanillaMob LLAMA_SPIT = new VanillaMob(MC1_11, "llama_spit", "LLAMA_SPIT", 104);
-    public static final VanillaMob PARROT = new VanillaMob(MC1_12, "parrot", "PARROT", 105);
+    public static final VanillaMob LLAMA = new VanillaMob(MC1_11, null, "llama", "LLAMA", 103);
+    public static final VanillaMob LLAMA_SPIT = new VanillaMob(MC1_11, null, "llama_spit", "LLAMA_SPIT", 104);
+    public static final VanillaMob PARROT = new VanillaMob(MC1_12, null, "parrot", "PARROT", 105);
     public static final VanillaMob VILLAGER = new VanillaMob(MC1_8, "Villager", "villager", "VILLAGER", 120);
-    public static final VanillaMob ENDER_CRYSTAL = new VanillaMob(MC1_8, "EnderCrystal", "ender_crystal", "ENDER_CRYSTAL", 200);
-    public static final VanillaMob DOLPHIN = new VanillaMob(MC1_13, "DOLPHIN");
-    public static final VanillaMob DROWNED = new VanillaMob(MC1_13, "DROWNED");
-    public static final VanillaMob COD = new VanillaMob(MC1_13, "COD");
-    public static final VanillaMob SALMON = new VanillaMob(MC1_13, "SALMON");
-    public static final VanillaMob PUFFERFISH = new VanillaMob(MC1_13, "PUFFERFISH");
-    public static final VanillaMob PHANTOM = new VanillaMob(MC1_13, "PHANTOM");
-    public static final VanillaMob TURTLE = new VanillaMob(MC1_13, "TURTLE");
+    public static final VanillaMob END_CRYSTAL = new VanillaMob(MC1_8, "EnderCrystal", "ender_crystal", "end_crystal", "ENDER_CRYSTAL", 200);
+    public static final VanillaMob DOLPHIN = new VanillaMob(MC1_13, "dolphin", "DOLPHIN");
+    public static final VanillaMob DROWNED = new VanillaMob(MC1_13, "drowned", "DROWNED");
+    public static final VanillaMob COD = new VanillaMob(MC1_13, "cod", "COD");
+    public static final VanillaMob SALMON = new VanillaMob(MC1_13, "salmon", "SALMON");
+    public static final VanillaMob PUFFERFISH = new VanillaMob(MC1_13, "pufferfish", "PUFFERFISH");
+    public static final VanillaMob PHANTOM = new VanillaMob(MC1_13, "phantom", "PHANTOM");
+    public static final VanillaMob TURTLE = new VanillaMob(MC1_13, "turtle", "TURTLE");
 
-    public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, "LINGERING_POTION");
+    public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, "lingering_potion", "LINGERING_POTION");
     public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");
     public static final VanillaMob LIGHTNING = new VanillaMob(MC1_8, "LightningBolt", "lightning_bolt", "LIGHTNING", -1);
-    public static final VanillaMob WEATHER = new VanillaMob(MC1_8, "WEATHER");
+    public static final VanillaMob WEATHER = new VanillaMob(MC1_8, "weather", "WEATHER");
     public static final VanillaMob PLAYER = new VanillaMob(MC1_8, "Player", "player", "PLAYER", -1);
-    public static final VanillaMob COMPLEX_PART = new VanillaMob(MC1_8, "COMPLEX_PART");
-    public static final VanillaMob TIPPED_ARROW = new VanillaMob(MC1_8, "TIPPED_ARROW");
+    public static final VanillaMob COMPLEX_PART = new VanillaMob(MC1_8, "complex_part", "COMPLEX_PART");
 
     public static final SplitMob ELDER_GUARDIAN = new SplitMob(MC1_8, GUARDIAN, "elder_guardian", "ELDER_GUARDIAN", 4);
     public static final SplitMob WITHER_SKELETON = new SplitMob(MC1_8, SKELETON, "wither_skeleton", "WITHER_SKELETON", 5);
@@ -135,7 +135,7 @@ public class VanillaMob extends ExMob {
 
     static {
         VALUES.add(ITEM);
-        VALUES.add(XP_ORB);
+        VALUES.add(EXPERIENCE_ORB);
         VALUES.add(AREA_EFFECT_CLOUD);
         VALUES.add(EGG);
         VALUES.add(LEASH_KNOT);
@@ -145,24 +145,24 @@ public class VanillaMob extends ExMob {
         VALUES.add(FIREBALL);
         VALUES.add(SMALL_FIREBALL);
         VALUES.add(ENDER_PEARL);
-        VALUES.add(EYE_OF_ENDER_SIGNAL);
+        VALUES.add(EYE_OF_ENDER);
         VALUES.add(POTION);
-        VALUES.add(XP_BOTTLE);
+        VALUES.add(EXPERIENCE_BOTTLE);
         VALUES.add(ITEM_FRAME);
         VALUES.add(WITHER_SKULL);
         VALUES.add(TNT);
         VALUES.add(FALLING_BLOCK);
-        VALUES.add(FIREWORKS_ROCKET);
+        VALUES.add(FIREWORK_ROCKET);
         VALUES.add(SPECTRAL_ARROW);
         VALUES.add(SHULKER_BULLET);
         VALUES.add(DRAGON_FIREBALL);
         VALUES.add(ARMOR_STAND);
-        VALUES.add(EVOCATION_FANGS);
-        VALUES.add(EVOCATION_ILLAGER);
+        VALUES.add(EVOKER_FANGS);
+        VALUES.add(EVOKER);
         VALUES.add(VEX);
-        VALUES.add(VINDICATION_ILLAGER);
-        VALUES.add(ILLUSION_ILLAGER);
-        VALUES.add(COMMANDBLOCK_MINECART);
+        VALUES.add(VINDICATOR);
+        VALUES.add(ILLUSIONER);
+        VALUES.add(COMMAND_BLOCK_MINECART);
         VALUES.add(BOAT);
         VALUES.add(MINECART);
         VALUES.add(CHEST_MINECART);
@@ -197,9 +197,9 @@ public class VanillaMob extends ExMob {
         VALUES.add(SQUID);
         VALUES.add(WOLF);
         VALUES.add(MOOSHROOM);
-        VALUES.add(SNOWMAN);
+        VALUES.add(SNOW_GOLEM);
         VALUES.add(OCELOT);
-        VALUES.add(VILLAGER_GOLEM);
+        VALUES.add(IRON_GOLEM);
         VALUES.add(HORSE);
         VALUES.add(RABBIT);
         VALUES.add(POLAR_BEAR);
@@ -207,7 +207,7 @@ public class VanillaMob extends ExMob {
         VALUES.add(LLAMA_SPIT);
         VALUES.add(PARROT);
         VALUES.add(VILLAGER);
-        VALUES.add(ENDER_CRYSTAL);
+        VALUES.add(END_CRYSTAL);
         VALUES.add(ELDER_GUARDIAN);
         VALUES.add(WITHER_SKELETON);
         VALUES.add(STRAY);
@@ -244,7 +244,7 @@ public class VanillaMob extends ExMob {
             }
 
             MessageUtil.log("&c[WARNING] Caliburn lacks a built-in representation of the entity " + bukkit.name() + ". Please update your implementation if possible!");
-            VALUES.add(new VanillaMob(UNKNOWN, bukkit.name()));
+            VALUES.add(new VanillaMob(UNKNOWN, bukkit.name().toLowerCase(), bukkit.name()));
         }
 
         for (VanillaMob vm : VALUES) {
@@ -268,40 +268,38 @@ public class VanillaMob extends ExMob {
 
     private Version firstVersion;
     private Version lastVersion;
-    private String oldId;
-    private String newId;
+    private String id_1_8;
+    private String id_1_11;
+    private String id_1_13;
     private int numeric;
     private String bukkit;
 
-    protected VanillaMob(String oldId, String newId, String bukkit, int numeric) {
-        this(MC1_8, oldId, newId, bukkit, numeric);
+    protected VanillaMob(Version firstVersion, String id_1_13, String bukkit) {
+        this(firstVersion, new String(), id_1_13, bukkit, -1);
     }
 
-    protected VanillaMob(Version firstVersion, String oldId, String newId, String bukkit, int numeric) {
-        this(firstVersion, null, oldId, newId, bukkit, numeric);
+    protected VanillaMob(Version firstVersion, String id_1_18, String id_1_13, String bukkit, int numeric) {
+        this(firstVersion, null, id_1_18, id_1_13, id_1_13, bukkit, numeric);
     }
 
-    protected VanillaMob(Version firstVersion, String bukkit) {
-        this(firstVersion, bukkit.toLowerCase(), bukkit, -1);
+    protected VanillaMob(Version firstVersion, String id_1_8, String id_1_11, String id_1_13, String bukkit, int numeric) {
+        this(firstVersion, null, id_1_8, id_1_11, id_1_13, bukkit, numeric);
     }
 
-    protected VanillaMob(Version firstVersion, String newId, String bukkit) {
-        this(firstVersion, newId, bukkit, -1);
+    protected VanillaMob(Version firstVersion, Version lastVersion, String id_1_13, String bukkit) {
+        this(firstVersion, lastVersion, new String(), new String(), id_1_13, bukkit, -1);
     }
 
-    protected VanillaMob(Version firstVersion, String newId, String bukkit, int numeric) {
-        this(firstVersion, null, newId, bukkit);
+    protected VanillaMob(Version firstVersion, Version lastVersion, String id_1_11, String id_1_13, String bukkit) {
+        this(firstVersion, lastVersion, new String(), id_1_11, id_1_13, bukkit, -1);
     }
 
-    protected VanillaMob(Version firstVersion, Version lastVersion, String newId, String bukkit) {
-        this(firstVersion, lastVersion, new String(), newId, bukkit, -1);
-    }
-
-    protected VanillaMob(Version firstVersion, Version lastVersion, String oldId, String newId, String bukkit, int numeric) {
+    protected VanillaMob(Version firstVersion, Version lastVersion, String id_1_8, String id_1_11, String id_1_13, String bukkit, int numeric) {
         this.firstVersion = firstVersion;
         this.lastVersion = lastVersion;
-        this.oldId = oldId;
-        this.newId = newId;
+        this.id_1_8 = id_1_8;
+        this.id_1_11 = id_1_11;
+        this.id_1_13 = id_1_13;
         this.bukkit = bukkit;
         this.numeric = numeric;
     }
@@ -327,16 +325,24 @@ public class VanillaMob extends ExMob {
      * @return
      * the old String ID used before Minecraft 1.11
      */
-    public String getOldId() {
-        return oldId;
+    public String getId_1_8() {
+        return id_1_8;
     }
 
     /**
      * @return
      * the new String ID used since Minecraft 1.11
      */
-    public String getNewId() {
-        return newId;
+    public String getId_1_11() {
+        return id_1_11;
+    }
+
+    /**
+     * @return
+     * the new String ID used since Minecraft 1.13
+     */
+    public String getId_1_13() {
+        return id_1_13;
     }
 
     /**
@@ -358,7 +364,7 @@ public class VanillaMob extends ExMob {
 
     @Override
     public String getName() {
-        return getNewId();
+        return getId_1_13();
     }
 
     /**
@@ -372,7 +378,7 @@ public class VanillaMob extends ExMob {
 
     @Override
     public ExMob idMatch(String id) {
-        if (id.toUpperCase().equals(bukkit) || id.equals(newId) || id.equals(oldId)) {
+        if (id.toUpperCase().equals(bukkit) || id.equals(id_1_13) || id.equals(id_1_11) || id.equals(id_1_8)) {
             return this;
         } else {
             return null;

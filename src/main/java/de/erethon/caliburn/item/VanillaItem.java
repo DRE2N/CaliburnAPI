@@ -146,7 +146,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem OBSIDIAN = new VanillaItem(MC1_8, "OBSIDIAN", "OBSIDIAN", 49);
     public static final VanillaItem TORCH = new VanillaItem(MC1_8, "TORCH", "TORCH", 50);
     public static final VanillaItem FIRE = new VanillaItem(MC1_8, "FIRE", "FIRE", 51);
-    public static final VanillaItem MOB_SPAWNER = new VanillaItem(MC1_8, "MOB_SPAWNER", "MOB_SPAWNER", 52);
+    public static final VanillaItem SPAWNER = new VanillaItem(MC1_8, "MOB_SPAWNER", "SPAWNER", 52);
     public static final VanillaItem OAK_STAIRS = new VanillaItem(MC1_8, "WOOD_STAIRS", "OAK_STAIRS", 53);
     public static final VanillaItem CHEST = new VanillaItem(MC1_8, "CHEST", "CHEST", 54);
     public static final VanillaItem REDSTONE_WIRE = new VanillaItem(MC1_8, "REDSTONE_WIRE", "REDSTONE_WIRE", 55);
@@ -176,7 +176,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem NETHERRACK = new VanillaItem(MC1_8, "NETHERRACK", "NETHERRACK", 87);
     public static final VanillaItem SOUL_SAND = new VanillaItem(MC1_8, "SOUL_SAND", "SOUL_SAND", 88);
     public static final VanillaItem GLOWSTONE = new VanillaItem(MC1_8, "GLOWSTONE", "GLOWSTONE", 89);
-    public static final VanillaItem PORTAL = new VanillaItem(MC1_8, "PORTAL", "PORTAL", 90);
+    public static final VanillaItem NETHER_PORTAL = new VanillaItem(MC1_8, "PORTAL", "NETHER_PORTAL", 90);
     public static final VanillaItem JACK_O_LANTERN = new VanillaItem(MC1_8, "JACK_O_LANTERN", "JACK_O_LANTERN", 91);
     public static final VanillaItem WHITE_STAINED_GLASS = new VanillaItem(MC1_8, "STAINED_GLASS", "WHITE_STAINED_GLASS", 95);
     public static final VanillaItem ORANGE_STAINED_GLASS = new VanillaItem(MC1_8, "STAINED_GLASS", "ORANGE_STAINED_GLASS", 95, (short) 1);
@@ -493,12 +493,12 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem TALL_SEAGRASS = new VanillaItem(MC1_13, "TALL_SEAGRASS");
     public static final VanillaItem SEA_PICKLE = new VanillaItem(MC1_13, "SEA_PICKLE");
     public static final VanillaItem SHULKER_BOX = new VanillaItem(MC1_13, "SHULKER_BOX");
-    public static final VanillaItem OAK_BARK = new VanillaItem(MC1_13, "OAK_BARK");
-    public static final VanillaItem SPRUCE_BARK = new VanillaItem(MC1_13, "SPRUCE_BARK");
-    public static final VanillaItem BIRCH_BARK = new VanillaItem(MC1_13, "BIRCH_BARK");
-    public static final VanillaItem JUNGLE_BARK = new VanillaItem(MC1_13, "JUNGLE_BARK");
-    public static final VanillaItem ACACIA_BARK = new VanillaItem(MC1_13, "ACACIA_BARK");
-    public static final VanillaItem DARK_OAK_BARK = new VanillaItem(MC1_13, "DARK_OAK_BARK");
+    public static final VanillaItem OAK_WOOD = new VanillaItem(MC1_13, "OAK_WOOD");
+    public static final VanillaItem SPRUCE_WOOD = new VanillaItem(MC1_13, "SPRUCE_WOOD");
+    public static final VanillaItem BIRCH_WOOD = new VanillaItem(MC1_13, "BIRCH_WOOD");
+    public static final VanillaItem JUNGLE_WOOD = new VanillaItem(MC1_13, "JUNGLE_WOOD");
+    public static final VanillaItem ACACIA_WOOD = new VanillaItem(MC1_13, "ACACIA_WOOD");
+    public static final VanillaItem DARK_OAK_WOOD = new VanillaItem(MC1_13, "DARK_OAK_WOOD");
     public static final VanillaItem SPRUCE_BUTTON = new VanillaItem(MC1_13, "SPRUCE_BUTTON");
     public static final VanillaItem BIRCH_BUTTON = new VanillaItem(MC1_13, "BIRCH_BUTTON");
     public static final VanillaItem JUNGLE_BUTTON = new VanillaItem(MC1_13, "JUNGLE_BUTTON");
@@ -648,7 +648,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem GLOWSTONE_DUST = new VanillaItem(MC1_8, "GLOWSTONE_DUST", "GLOWSTONE_DUST", 348);
     public static final VanillaItem COD = new VanillaItem(MC1_8, "RAW_FISH", "COD", 349);
     public static final VanillaItem SALMON = new VanillaItem(MC1_8, "RAW_FISH", "SALMON", 349, (short) 1);
-    public static final VanillaItem CLOWNFISH = new VanillaItem(MC1_8, "RAW_FISH", "CLOWNFISH", 349, (short) 2);
+    public static final VanillaItem TROPICAL_FISH = new VanillaItem(MC1_8, "RAW_FISH", "TROPICAL_FISH", 349, (short) 2);
     public static final VanillaItem PUFFERFISH = new VanillaItem(MC1_8, "RAW_FISH", "PUFFERFISH", 349, (short) 3);
     public static final VanillaItem COOKED_COD = new VanillaItem(MC1_8, "COOKED_FISH", "COOKED_COD", 350);
     public static final VanillaItem COOKED_SALMON = new VanillaItem(MC1_8, "COOKED_FISH", "COOKED_SALMON", 350, (short) 1);
@@ -783,7 +783,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem ACACIA_DOOR = new VanillaItem(MC1_8, "ACACIA_DOOR_ITEM", "ACACIA_DOOR", 430);
     public static final VanillaItem DARK_OAK_DOOR = new VanillaItem(MC1_8, "DARK_OAK_DOOR_ITEM", "DARK_OAK_DOOR", 431);
     public static final VanillaItem CHORUS_FRUIT = new VanillaItem(MC1_9, "CHORUS_FRUIT", "CHORUS_FRUIT", 432);
-    public static final VanillaItem CHORUS_FRUIT_POPPED = new VanillaItem(MC1_9, "CHORUS_FRUIT_POPPED", "CHORUS_FRUIT_POPPED", 433);
+    public static final VanillaItem POPPED_CHORUS_FRUIT = new VanillaItem(MC1_9, "CHORUS_FRUIT_POPPED", "POPPED_CHORUS_FRUIT", 433);
     public static final VanillaItem BEETROOT = new VanillaItem(MC1_9, "BEETROOT", "BEETROOT", 434);
     public static final VanillaItem BEETROOT_SEEDS = new VanillaItem(MC1_9, "BEETROOT_SEEDS", "BEETROOT_SEEDS", 435);
     public static final VanillaItem BEETROOT_SOUP = new VanillaItem(MC1_9, "BEETROOT_SOUP", "BEETROOT_SOUP", 436);
@@ -822,7 +822,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem COD_BUCKET = new VanillaItem(MC1_13, "COD_BUCKET");
     public static final VanillaItem SALMON_BUCKET = new VanillaItem(MC1_13, "SALMON_BUCKET");
     public static final VanillaItem PUFFERFISH_BUCKET = new VanillaItem(MC1_13, "PUFFERFISH_BUCKET");
-    public static final VanillaItem CLOWNFISH_BUCKET = new VanillaItem(MC1_13, "CLOWNFISH_BUCKET");
+    public static final VanillaItem TROPICAL_FISH_BUCKET = new VanillaItem(MC1_13, "TROPICAL_FISH_BUCKET");
     public static final VanillaItem HEART_OF_THE_SEA = new VanillaItem(MC1_13, "HEART_OF_THE_SEA");
     public static final VanillaItem KELP = new VanillaItem(MC1_13, "KELP");
     public static final VanillaItem NAUTILUS_SHELL = new VanillaItem(MC1_13, "NAUTILUS_SHELL");
@@ -845,7 +845,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem ELDER_GUARDIAN_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "ELDER_GUARDIAN_SPAWN_EGG", 383);
     public static final VanillaItem ENDERMAN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ENDERMAN_SPAWN_EGG", 383);
     public static final VanillaItem ENDERMITE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ENDERMITE_SPAWN_EGG", 383);
-    public static final VanillaItem EVOCATION_ILLAGER_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "EVOCATION_ILLAGER_SPAWN_EGG", 383);
+    public static final VanillaItem EVOKER_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "EVOKER_SPAWN_EGG", 383);
     public static final VanillaItem GHAST_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "GHAST_SPAWN_EGG", 383);
     public static final VanillaItem GUARDIAN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "GUARDIAN_SPAWN_EGG", 383);
     public static final VanillaItem HORSE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "HORSE_SPAWN_EGG", 383);
@@ -875,7 +875,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem TURTLE_SPAWN_EGG = new VanillaItem(MC1_13, "TURTLE_SPAWN_EGG");
     public static final VanillaItem VEX_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "VEX_SPAWN_EGG", 383);
     public static final VanillaItem VILLAGER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "VILLAGER_SPAWN_EGG", 383);
-    public static final VanillaItem VINDICATION_ILLAGER_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "VINDICATION_ILLAGER_SPAWN_EGG", 383);
+    public static final VanillaItem VINDICATOR_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "VINDICATOR_SPAWN_EGG", 383);
     public static final VanillaItem WITCH_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "WITCH_SPAWN_EGG", 383);
     public static final VanillaItem WITHER_SKELETON_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "WITHER_SKELETON_SPAWN_EGG", 383);
     public static final VanillaItem WOLF_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "WOLF_SPAWN_EGG", 383);
@@ -1065,7 +1065,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(OBSIDIAN);
         VALUES.add(TORCH);
         VALUES.add(FIRE);
-        VALUES.add(MOB_SPAWNER);
+        VALUES.add(SPAWNER);
         VALUES.add(OAK_STAIRS);
         VALUES.add(CHEST);
         VALUES.add(REDSTONE_WIRE);
@@ -1095,7 +1095,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(NETHERRACK);
         VALUES.add(SOUL_SAND);
         VALUES.add(GLOWSTONE);
-        VALUES.add(PORTAL);
+        VALUES.add(NETHER_PORTAL);
         VALUES.add(JACK_O_LANTERN);
         VALUES.add(WHITE_STAINED_GLASS);
         VALUES.add(ORANGE_STAINED_GLASS);
@@ -1412,12 +1412,12 @@ public class VanillaItem extends ExItem {
         VALUES.add(TALL_SEAGRASS);
         VALUES.add(SEA_PICKLE);
         VALUES.add(SHULKER_BOX);
-        VALUES.add(OAK_BARK);
-        VALUES.add(SPRUCE_BARK);
-        VALUES.add(BIRCH_BARK);
-        VALUES.add(JUNGLE_BARK);
-        VALUES.add(ACACIA_BARK);
-        VALUES.add(DARK_OAK_BARK);
+        VALUES.add(OAK_WOOD);
+        VALUES.add(SPRUCE_WOOD);
+        VALUES.add(BIRCH_WOOD);
+        VALUES.add(JUNGLE_WOOD);
+        VALUES.add(ACACIA_WOOD);
+        VALUES.add(DARK_OAK_WOOD);
         VALUES.add(SPRUCE_BUTTON);
         VALUES.add(BIRCH_BUTTON);
         VALUES.add(JUNGLE_BUTTON);
@@ -1567,7 +1567,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(GLOWSTONE_DUST);
         VALUES.add(COD);
         VALUES.add(SALMON);
-        VALUES.add(CLOWNFISH);
+        VALUES.add(TROPICAL_FISH);
         VALUES.add(PUFFERFISH);
         VALUES.add(COOKED_COD);
         VALUES.add(COOKED_SALMON);
@@ -1702,7 +1702,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(ACACIA_DOOR);
         VALUES.add(DARK_OAK_DOOR);
         VALUES.add(CHORUS_FRUIT);
-        VALUES.add(CHORUS_FRUIT_POPPED);
+        VALUES.add(POPPED_CHORUS_FRUIT);
         VALUES.add(BEETROOT);
         VALUES.add(BEETROOT_SEEDS);
         VALUES.add(BEETROOT_SOUP);
@@ -1741,7 +1741,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(COD_BUCKET);
         VALUES.add(SALMON_BUCKET);
         VALUES.add(PUFFERFISH_BUCKET);
-        VALUES.add(CLOWNFISH_BUCKET);
+        VALUES.add(TROPICAL_FISH_BUCKET);
         VALUES.add(HEART_OF_THE_SEA);
         VALUES.add(KELP);
         VALUES.add(NAUTILUS_SHELL);
@@ -1764,7 +1764,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(ELDER_GUARDIAN_SPAWN_EGG);
         VALUES.add(ENDERMAN_SPAWN_EGG);
         VALUES.add(ENDERMITE_SPAWN_EGG);
-        VALUES.add(EVOCATION_ILLAGER_SPAWN_EGG);
+        VALUES.add(EVOKER_SPAWN_EGG);
         VALUES.add(GHAST_SPAWN_EGG);
         VALUES.add(GUARDIAN_SPAWN_EGG);
         VALUES.add(HORSE_SPAWN_EGG);
@@ -1794,7 +1794,7 @@ public class VanillaItem extends ExItem {
         VALUES.add(TURTLE_SPAWN_EGG);
         VALUES.add(VEX_SPAWN_EGG);
         VALUES.add(VILLAGER_SPAWN_EGG);
-        VALUES.add(VINDICATION_ILLAGER_SPAWN_EGG);
+        VALUES.add(VINDICATOR_SPAWN_EGG);
         VALUES.add(WITCH_SPAWN_EGG);
         VALUES.add(WITHER_SKELETON_SPAWN_EGG);
         VALUES.add(WOLF_SPAWN_EGG);
