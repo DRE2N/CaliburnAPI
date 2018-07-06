@@ -36,7 +36,7 @@ public abstract class Categorizable {
      * this object
      */
     public Categorizable id(String id) {
-        if (id == null) {
+        if (this.id == null) {
             this.id = id;
         }
         return this;
