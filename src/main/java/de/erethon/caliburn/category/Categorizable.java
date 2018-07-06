@@ -66,4 +66,9 @@ public abstract class Categorizable {
         return categories;
     }
 
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + "{ID=" + id + "}";
+    }
+
 }

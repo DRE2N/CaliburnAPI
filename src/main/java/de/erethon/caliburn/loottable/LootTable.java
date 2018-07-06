@@ -183,4 +183,9 @@ public class LootTable {
         return lootList;
     }
 
+    @Override
+    public String toString() {
+        return "LootTable{Name=" + name + "}";
+    }
+
 }
