@@ -345,6 +345,11 @@ public class VanillaMob extends ExMob {
         return id1_13;
     }
 
+    @Override
+    public String getId() {
+        return id1_13;
+    }
+
     /**
      * @return
      * the Bukkit enum name
