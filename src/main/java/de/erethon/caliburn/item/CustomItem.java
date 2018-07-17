@@ -15,6 +15,7 @@
 package de.erethon.caliburn.item;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.commons.compatibility.Version;
 import de.erethon.commons.item.AttributeWrapper;
 import de.erethon.commons.item.InternalAttribute;
 import de.erethon.commons.item.InternalOperation;
@@ -29,6 +30,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -73,9 +75,15 @@ public class CustomItem extends ExItem {
         Object enchantments = args.get("enchantments");
         if (enchantments instanceof Map) {
             for (Object enchantment : ((Map) enchantments).entrySet()) {
-                Enchantment type = Enchantment.getByName(((Entry) enchantment).getKey().toString());
+                Enchantment type = null;
+                if (Version.isAtLeast(Version.MC1_13)) {
+                    try {
+                        type = Enchantment.getByKey(NamespacedKey.minecraft(((Entry) enchantment).getKey().toString()));
+                    } catch (IllegalArgumentException exception) {
+                    }
+                }
                 if (type == null) {
-                    type = Enchantment.getById(NumberUtil.parseInt(((Entry) enchantment).getKey().toString(), 1));
+                    type = Enchantment.getByName(((Entry) enchantment).getKey().toString());
                 }
                 int level = (int) ((Entry) enchantment).getValue();
                 if (type != null && level != 0) {

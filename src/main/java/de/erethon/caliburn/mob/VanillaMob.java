@@ -110,8 +110,10 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob COD = new VanillaMob(MC1_13, "cod", "COD");
     public static final VanillaMob SALMON = new VanillaMob(MC1_13, "salmon", "SALMON");
     public static final VanillaMob PUFFERFISH = new VanillaMob(MC1_13, "pufferfish", "PUFFERFISH");
+    public static final VanillaMob TROPICAL_FISH = new VanillaMob(MC1_13, "tropical_fish", "TROPICAL_FISH");
     public static final VanillaMob PHANTOM = new VanillaMob(MC1_13, "phantom", "PHANTOM");
     public static final VanillaMob TURTLE = new VanillaMob(MC1_13, "turtle", "TURTLE");
+    public static final VanillaMob TRIDENT = new VanillaMob(MC1_13, "trident", "TRIDENT");
 
     public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, "lingering_potion", "LINGERING_POTION");
     public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");
@@ -222,8 +224,10 @@ public class VanillaMob extends ExMob {
         VALUES.add(COD);
         VALUES.add(SALMON);
         VALUES.add(PUFFERFISH);
+        VALUES.add(TROPICAL_FISH);
         VALUES.add(PHANTOM);
         VALUES.add(TURTLE);
+        VALUES.add(TRIDENT);
         VALUES.add(LINGERING_POTION);
         VALUES.add(FISHING_HOOK);
         VALUES.add(LIGHTNING);

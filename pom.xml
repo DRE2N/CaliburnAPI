@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>caliburn</artifactId>
-    <version>0.4.4</version>
+    <version>0.4.5</version>
     <packaging>jar</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
@@ -55,20 +55,20 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.12.2-R0.1-SNAPSHOT</version>
+            <version>1.13-pre7-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon</groupId>
             <artifactId>commons</artifactId>
-            <version>4.2.1</version>
+            <version>4.3</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
     <repositories>
         <repository>
             <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus</url>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
             <id>dre-repo</id>
