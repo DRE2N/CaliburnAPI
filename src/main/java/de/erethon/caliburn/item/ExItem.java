@@ -42,8 +42,7 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     protected Map<ExMob, Double> mobDamageModifiers = new HashMap<>();
 
     /**
-     * @param api
-     * the API instance to inject
+     * @param api the API instance to inject
      */
     public void load(CaliburnAPI api) {
         if (loaded) {
@@ -81,13 +80,10 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
 
     /* Getters and setters */
     /**
-     * Returns the raw data Map that has been used to deserialize this object.
-     * Doing any changes to this will not immediately result in changes to the item,
-     * but changes will be kept upon serialization.
-     * While {@link #serialize() serialize()} returns a copy of the data Map, this returns the original.
+     * Returns the raw data Map that has been used to deserialize this object. Doing any changes to this will not immediately result in changes to the item, but
+     * changes will be kept upon serialization. While {@link #serialize() serialize()} returns a copy of the data Map, this returns the original.
      *
-     * @return
-     * the raw data Map that has been used to deserialize this object
+     * @return the raw data Map that has been used to deserialize this object
      */
     public Map<String, Object> getRaw() {
         return raw;
@@ -96,8 +92,7 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     /**
      * Sets the Map that will be used for serialization.
      *
-     * @param raw
-     * the raw data Map to set
+     * @param raw the raw data Map to set
      */
     public void setRaw(Map<String, Object> raw) {
         this.raw = raw;
@@ -106,8 +101,7 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     /**
      * Modifies a value of the raw data Map.
      *
-     * @param raw
-     * the raw data Map to set
+     * @param raw the raw data Map to set
      */
     public void setRaw(String key, Object value) {
         if (raw == null) {
@@ -117,35 +111,29 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @return
-     * the material
+     * @return the material
      */
     public Material getMaterial() {
         return material;
     }
 
     /**
-     * @param material
-     * the Material to set
+     * @param material the Material to set
      */
     public void setMaterial(Material material) {
         this.material = material;
     }
 
     /**
-     * @return
-     * the unique name of the item
+     * @return the unique name of the item
      */
     public String getName() {
         return getMaterial().name();
     }
 
     /**
-     * @param id
-     * an ID to compare to the one of this item
-     * @return
-     * this object if the ID String refers to this item not necessarily exclusively;
-     * null if not
+     * @param id an ID to compare to the one of this item
+     * @return this object if the ID String refers to this item not necessarily exclusively; null if not
      */
     public ExItem idMatch2nd(String id) {
         return null;
@@ -177,8 +165,7 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @return
-     * the text of the lore line to use as an identifier
+     * @return the text of the lore line to use as an identifier
      */
     public String getIdLore() {
         return api.getIdentifierPrefix() + id;
@@ -201,18 +188,15 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @param amount
-     * the stack size
-     * @return
-     * the item as an org.bukkit.inventory.ItemStack
+     * @param amount the stack size
+     * @return the item as an org.bukkit.inventory.ItemStack
      */
     public ItemStack toItemStack(int amount) {
         return new ItemStack(getMaterial(), amount);
     }
 
     /**
-     * @return
-     * the item as an org.bukkit.inventory.ItemStack with the amount 1
+     * @return the item as an org.bukkit.inventory.ItemStack with the amount 1
      */
     public ItemStack toItemStack() {
         return toItemStack(1);

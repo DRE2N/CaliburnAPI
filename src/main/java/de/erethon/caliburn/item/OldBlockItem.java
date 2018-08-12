@@ -19,8 +19,7 @@ import de.erethon.commons.compatibility.Version;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * This class represents Materials that used to represent blocks that
- * are merged with others as of Minecraft 1.13.
+ * This class represents Materials that used to represent blocks that are merged with others as of Minecraft 1.13.
  *
  * @author Daniel Saukel
  */
@@ -38,8 +37,7 @@ public class OldBlockItem extends VanillaItem {
     }
 
     /**
-     * @return
-     * the item that represents this block in 1.13+
+     * @return the item that represents this block in 1.13+
      */
     public VanillaItem getReplacement() {
         return replacement;

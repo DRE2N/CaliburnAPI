@@ -129,10 +129,8 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
-     * @param item
-     * an item
-     * @return
-     * if this category contains the item
+     * @param item an item
+     * @return if this category contains the item
      */
     public boolean contains(ExItem item) {
         if (item == null) {
@@ -142,10 +140,8 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
-     * @param material
-     * a material
-     * @return
-     * if this category contains an item that wraps the material
+     * @param material a material
+     * @return if this category contains an item that wraps the material
      */
     public boolean containsMaterial(Material material) {
         if (material == null) {
@@ -155,10 +151,8 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
-     * @param block
-     * a block
-     * @return
-     * if this category contains an item that wraps the material of this item
+     * @param block a block
+     * @return if this category contains an item that wraps the material of this item
      */
     public boolean containsBlock(Block block) {
         if (block == null) {
@@ -168,10 +162,8 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
-     * @param item
-     * an item stack
-     * @return
-     * if this category contains an item that wraps the material of this item
+     * @param item an item stack
+     * @return if this category contains an item that wraps the material of this item
      */
     public boolean containsItem(ItemStack item) {
         if (item == null) {

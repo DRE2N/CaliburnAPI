@@ -73,13 +73,10 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
 
     /* Getters and setters */
     /**
-     * Returns the raw data Map that has been used to deserialize this object.
-     * Doing any changes to this will not immediately result in changes to the mob,
-     * but changes will be kept upon serialization.
-     * While {@link #serialize() serialize()} returns a copy of the data Map, this returns the original.
+     * Returns the raw data Map that has been used to deserialize this object. Doing any changes to this will not immediately result in changes to the mob, but
+     * changes will be kept upon serialization. While {@link #serialize() serialize()} returns a copy of the data Map, this returns the original.
      *
-     * @return
-     * the raw data Map that has been used to deserialize this object
+     * @return the raw data Map that has been used to deserialize this object
      */
     public Map<String, Object> getRaw() {
         return raw;
@@ -88,8 +85,7 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     /**
      * Sets the Map that will be used for serialization.
      *
-     * @param raw
-     * the raw data Map to set
+     * @param raw the raw data Map to set
      */
     public void setRaw(Map<String, Object> raw) {
         this.raw = raw;
@@ -98,8 +94,7 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     /**
      * Modifies a value of the raw data Map.
      *
-     * @param raw
-     * the raw data Map to set
+     * @param raw the raw data Map to set
      */
     public void setRaw(String key, Object value) {
         if (raw == null) {
@@ -116,16 +111,14 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @param species
-     * the mob species to set
+     * @param species the mob species to set
      */
     public void setSpecies(EntityType species) {
         this.species = species;
     }
 
     /**
-     * @return
-     * the display name of the item
+     * @return the display name of the item
      */
     public String getName() {
         return getSpecies().name();
@@ -175,8 +168,7 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @return
-     * the mob as an org.bukkit.entity.Entity
+     * @return the mob as an org.bukkit.entity.Entity
      */
     public Entity toEntity(Location location) {
         return location.getWorld().spawnEntity(location, getSpecies());

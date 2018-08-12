@@ -14,6 +14,7 @@
  */
 package de.erethon.caliburn.item;
 
+import de.erethon.caliburn.CaliburnAPI;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -40,20 +41,21 @@ public class CustomEnchantedBook extends CustomItem {
         }
     }
 
+    public CustomEnchantedBook(CaliburnAPI api, String id) {
+        super(api, id);
+    }
+
     /* Getters and setters */
     /**
-     * @return
-     * the storedEnchantments
+     * @return the storedEnchantments
      */
     public Map<Enchantment, Integer> getStoredEnchantments() {
         return storedEnchantments;
     }
 
     /**
-     * @param type
-     * the type of the enchantment
-     * @param level
-     * the level of the enchantment
+     * @param type  the type of the enchantment
+     * @param level the level of the enchantment
      */
     public void addStoredEnchantment(Enchantment type, int level) {
         this.storedEnchantments.put(type, level);

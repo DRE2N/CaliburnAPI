@@ -24,12 +24,14 @@ import de.erethon.caliburn.item.CustomHead;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.caliburn.listener.ActionHandlerListener;
 import de.erethon.caliburn.listener.EntityListener;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
+import de.erethon.commons.compatibility.CompatibilityHandler;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
@@ -71,6 +73,11 @@ public class CaliburnAPI {
         mobs.addAll(VanillaMob.getLoaded());
 
         Bukkit.getPluginManager().registerEvents(new EntityListener(this), plugin);
+        ActionHandlerListener ahl = new ActionHandlerListener(this);
+        Bukkit.getPluginManager().registerEvents(ahl, plugin);
+        if (CompatibilityHandler.getInstance().isSpigot()) {
+            Bukkit.getPluginManager().registerEvents(ahl.new Spigot(), plugin);
+        }
 
         ConfigurationSerialization.registerClass(CustomItem.class);
         ConfigurationSerialization.registerClass(CustomBanner.class);
@@ -81,16 +88,14 @@ public class CaliburnAPI {
     }
 
     /**
-     * @return
-     * the loaded instance of CaliburnAPI
+     * @return the loaded instance of CaliburnAPI
      */
     public static CaliburnAPI getInstance() {
         return instance;
     }
 
     /**
-     * Supposed to be called after all items, mobs and categories are loaded.
-     * Makes items and mobs load their damage modifiers.
+     * Supposed to be called after all items, mobs and categories are loaded. Makes items and mobs load their damage modifiers.
      */
     public void finishInitialization() {
         items.forEach(i -> i.load(this));
@@ -98,24 +103,21 @@ public class CaliburnAPI {
     }
 
     /**
-     * @return
-     * the prefix of a custom item identifier lore line
+     * @return the prefix of a custom item identifier lore line
      */
     public String getIdentifierPrefix() {
         return identifierPrefix;
     }
 
     /**
-     * @return
-     * the loaded instance of SimpleSerialization
+     * @return the loaded instance of SimpleSerialization
      */
     public SimpleSerialization getSimpleSerialization() {
         return simpleSerialization;
     }
 
     /**
-     * @return
-     * the loaded instance of ExSerialization
+     * @return the loaded instance of ExSerialization
      */
     public ExSerialization getExSerialization() {
         return exSerialization;
@@ -135,16 +137,14 @@ public class CaliburnAPI {
 
     /* Items */
     /**
-     * @return
-     * the registered items
+     * @return the registered items
      */
     public List<ExItem> getExItems() {
         return items;
     }
 
     /**
-     * @return
-     * the registered items
+     * @return the registered items
      */
     public <T extends ExItem> List<T> getExItems(Class<T> type) {
         List<T> itemsOfType = new ArrayList<>();
@@ -157,10 +157,8 @@ public class CaliburnAPI {
     }
 
     /**
-     * @param id
-     * a CustomItem or VanillaItem ID
-     * @return
-     * the item that has the ID
+     * @param id a CustomItem or VanillaItem ID
+     * @return the item that has the ID
      */
     public ExItem getExItem(Object id) {
         if (id instanceof String) {
@@ -212,16 +210,14 @@ public class CaliburnAPI {
 
     /* Item categories */
     /**
-     * @return
-     * the item categories
+     * @return the item categories
      */
     public List<Category<ExItem>> getItemCategories() {
         return itemCategories;
     }
 
     /**
-     * @return
-     * the Category<ExItem> that has the ID
+     * @return the Category<ExItem> that has the ID
      */
     public Category<ExItem> getItemCategory(String id) {
         for (Category<ExItem> itemCategory : itemCategories) {
@@ -241,8 +237,7 @@ public class CaliburnAPI {
     }
 
     /**
-     * @param type
-     * All mobs which are an instance of it will be returned.
+     * @param type All mobs which are an instance of it will be returned.
      */
     public List<ExMob> getExMobs(Class<? extends ExMob> type) {
         List<ExMob> mobsOfType = new ArrayList<>();
@@ -255,10 +250,8 @@ public class CaliburnAPI {
     }
 
     /**
-     * @param id
-     * a CustomMob or VanillaMob ID
-     * @return
-     * the mob that has the ID
+     * @param id a CustomMob or VanillaMob ID
+     * @return the mob that has the ID
      */
     public ExMob getExMob(Object id) {
         if (id instanceof String) {
@@ -290,16 +283,14 @@ public class CaliburnAPI {
 
     /* Mob categories */
     /**
-     * @return
-     * the mob categories
+     * @return the mob categories
      */
     public List<Category<ExMob>> getMobCategories() {
         return mobCategories;
     }
 
     /**
-     * @return
-     * the Category<ExMob> that has the ID
+     * @return the Category<ExMob> that has the ID
      */
     public Category<ExMob> getMobCategory(String id) {
         for (Category<ExMob> mobCategory : mobCategories) {
@@ -312,16 +303,14 @@ public class CaliburnAPI {
 
     /* Loot tables */
     /**
-     * @return
-     * the loaded loot tables
+     * @return the loaded loot tables
      */
     public List<LootTable> getLootTables() {
         return lootTables;
     }
 
     /**
-     * @return
-     * the loot table that has the name
+     * @return the loot table that has the name
      */
     public LootTable getLootTable(String name) {
         for (LootTable lootTable : lootTables) {
@@ -337,12 +326,9 @@ public class CaliburnAPI {
     /**
      * Universal deserialization method to deserialize a Bukkit ItemStack
      *
-     * @param config
-     * a ConfigurationSection
-     * @param path
-     * the path in the config where the item to deserialize is found
-     * @return
-     * the deserialized ItemStack
+     * @param config a ConfigurationSection
+     * @param path the path in the config where the item to deserialize is found
+     * @return the deserialized ItemStack
      */
     public ItemStack deserializeStack(ConfigurationSection config, String path) {
         Object object = config.get(path);
@@ -360,12 +346,9 @@ public class CaliburnAPI {
     /**
      * Universal deserialization method to deserialize lists of Bukkit ItemStacks
      *
-     * @param config
-     * a ConfigurationSection
-     * @param path
-     * the path in the config where the item to deserialize is found
-     * @return
-     * the deserialized list of ItemStacks
+     * @param config a ConfigurationSection
+     * @param path the path in the config where the item to deserialize is found
+     * @return the deserialized list of ItemStacks
      */
     public List<ItemStack> deserializeStackList(ConfigurationSection config, String path) {
         List<ItemStack> deserialized = new ArrayList<>();
@@ -388,12 +371,9 @@ public class CaliburnAPI {
     /**
      * Universal deserialization method to deserialize an ExItem
      *
-     * @param config
-     * a ConfigurationSection
-     * @param path
-     * the path in the config where the item to deserialize is found
-     * @return
-     * the deserialized ExItem
+     * @param config a ConfigurationSection
+     * @param path the path in the config where the item to deserialize is found
+     * @return the deserialized ExItem
      */
     public ExItem deserializeExItem(ConfigurationSection config, String path) {
         Object obj = config.get(path);
@@ -408,12 +388,9 @@ public class CaliburnAPI {
     /**
      * Universal deserialization method to deserialize lists of ExItems
      *
-     * @param config
-     * a ConfigurationSection
-     * @param path
-     * the path in the config where the item to deserialize is found
-     * @return
-     * the deserialized list of ItemStacks
+     * @param config a ConfigurationSection
+     * @param path the path in the config where the item to deserialize is found
+     * @return the deserialized list of ItemStacks
      */
     public List<ExItem> deserializeExItemList(ConfigurationSection config, String path) {
         List<ExItem> deserialized = new ArrayList<>();

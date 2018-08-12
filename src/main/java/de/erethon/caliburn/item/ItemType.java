@@ -44,8 +44,7 @@ public class ItemType<T extends CustomItem> {
     /**
      * Used for deserialization
      *
-     * @return
-     * a new instance of the handler class
+     * @return a new instance of the handler class
      */
     public T instantiate(Map<String, Object> args) {
         try {

@@ -14,6 +14,7 @@
  */
 package de.erethon.caliburn.item;
 
+import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.commons.item.ItemUtil;
 import de.erethon.commons.player.PlayerUtil;
 import java.util.HashMap;
@@ -40,34 +41,34 @@ public class CustomHead extends CustomItem {
         }
     }
 
+    public CustomHead(CaliburnAPI api, String id) {
+        super(api, id);
+    }
+
     /* Getters and setters */
     /**
-     * @return
-     * the skullOwner
+     * @return the skullOwner
      */
     public String getSkullOwner() {
         return skullOwner;
     }
 
     /**
-     * @param skullOwner
-     * the skullOwner to set
+     * @param skullOwner the skullOwner to set
      */
     public void setSkullOwner(String skullOwner) {
         this.skullOwner = skullOwner;
     }
 
     /**
-     * @return
-     * the textureValue
+     * @return the textureValue
      */
     public String getTextureValue() {
         return textureValue;
     }
 
     /**
-     * @param textureValue
-     * the textureValue to set
+     * @param textureValue the textureValue to set
      */
     public void setTextureValue(String textureValue) {
         this.textureValue = textureValue;
@@ -85,8 +86,7 @@ public class CustomHead extends CustomItem {
     }
 
     /**
-     * @return
-     * the CustomHead as org.bukkit.inventory.ItemStack
+     * @return the CustomHead as org.bukkit.inventory.ItemStack
      */
     @Override
     public ItemStack toItemStack(int amount) {

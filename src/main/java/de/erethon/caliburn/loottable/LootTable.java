@@ -53,8 +53,7 @@ public class LootTable {
         }
 
         /**
-         * @param id
-         * the id of the loot table entry to set
+         * @param id the id of the loot table entry to set
          */
         public void setId(String id) {
             this.id = id;
@@ -68,8 +67,7 @@ public class LootTable {
         }
 
         /**
-         * @param item
-         * the loot item to set
+         * @param item the loot item to set
          */
         public void setLootItem(ItemStack item) {
             this.item = item;
@@ -83,8 +81,7 @@ public class LootTable {
         }
 
         /**
-         * @param chance
-         * the loot chance to set
+         * @param chance the loot chance to set
          */
         public void setLootChance(double chance) {
             this.chance = chance;
@@ -96,18 +93,15 @@ public class LootTable {
     private List<Entry> entries = new ArrayList<>();
 
     /**
-     * @param file
-     * the script file
+     * @param file the script file
      */
     public LootTable(CaliburnAPI api, File file) {
         this(api, file.getName().substring(0, file.getName().length() - 4), YamlConfiguration.loadConfiguration(file));
     }
 
     /**
-     * @param name
-     * the name of the loot table
-     * @param config
-     * the config that stores the information
+     * @param name the name of the loot table
+     * @param config the config that stores the information
      */
     public LootTable(CaliburnAPI api, String name, FileConfiguration config) {
         api.getLootTables().add(this);
@@ -126,10 +120,8 @@ public class LootTable {
     }
 
     /**
-     * @param api
-     * the API instance
-     * @param name
-     * the name of the loot table
+     * @param api the API instance
+     * @param name the name of the loot table
      */
     public LootTable(CaliburnAPI api, String name) {
         api.getLootTables().add(this);
@@ -152,16 +144,14 @@ public class LootTable {
     }
 
     /**
-     * @param entry
-     * the entry to add
+     * @param entry the entry to add
      */
     public void addEntry(Entry entry) {
         entries.add(entry);
     }
 
     /**
-     * @param entry
-     * the entry to remove
+     * @param entry the entry to remove
      */
     public void removeEntry(Entry entry) {
         entries.remove(entry);

@@ -27,8 +27,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.entity.Zombie;
 
 /**
- * This class represents a vanilla mob that has been a sub type of a different mob
- * until Minecraft 1.11.
+ * This class represents a vanilla mob that has been a sub type of a different mob until Minecraft 1.11.
  *
  * @author Daniel Saukel
  */
@@ -46,8 +45,7 @@ public class SplitMob extends VanillaMob {
     }
 
     /**
-     * @return
-     * the mob that used to be the super type of this mob
+     * @return the mob that used to be the super type of this mob
      */
     public VanillaMob getOldSuperType() {
         return oldSuperType;

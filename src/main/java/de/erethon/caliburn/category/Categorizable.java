@@ -27,13 +27,10 @@ public abstract class Categorizable {
     protected List<Category<Categorizable>> categories = new ArrayList<>();
 
     /**
-     * Sets the ID of the Categorizable. Fails if an ID has already been set.
-     * Intended to be used with a deserialization constructor
+     * Sets the ID of the Categorizable. Fails if an ID has already been set. Intended to be used with a deserialization constructor
      *
-     * @param id
-     * the ID to set
-     * @return
-     * this object
+     * @param id the ID to set
+     * @return this object
      */
     public Categorizable id(String id) {
         if (this.id == null) {
@@ -44,19 +41,15 @@ public abstract class Categorizable {
 
     /* Getters */
     /**
-     * @return
-     * the ID
+     * @return the ID
      */
     public String getId() {
         return id;
     }
 
     /**
-     * @param id
-     * an ID to compare to the one of this item
-     * @return
-     * this object if the ID String refers to this item exclusively;
-     * null if not
+     * @param id an ID to compare to the one of this item
+     * @return this object if the ID String refers to this item exclusively; null if not
      */
     public Categorizable idMatch(String id) {
         return id.equals(this.id) ? this : null;

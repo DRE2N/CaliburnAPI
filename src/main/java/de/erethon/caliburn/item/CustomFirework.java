@@ -14,6 +14,7 @@
  */
 package de.erethon.caliburn.item;
 
+import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.commons.misc.EnumUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,42 +95,41 @@ public class CustomFirework extends CustomItem {
         }
     }
 
+    public CustomFirework(CaliburnAPI api, String id) {
+        super(api, id);
+    }
+
     /* Getters and setters */
     /**
-     * @return
-     * the power
+     * @return the power
      */
     public int getPower() {
         return power;
     }
 
     /**
-     * @param power
-     * the power to set
+     * @param power the power to set
      */
     public void setPower(int power) {
         this.power = power;
     }
 
     /**
-     * @return
-     * the effects
+     * @return the effects
      */
     public List<FireworkEffect> getEffects() {
         return effects;
     }
 
     /**
-     * @param effects
-     * the effect to add
+     * @param effects the effect to add
      */
     public void addEffect(FireworkEffect effect) {
         this.effects.add(effect);
     }
 
     /**
-     * @param effects
-     * the effects to add
+     * @param effects the effects to add
      */
     public void addEffect(List<FireworkEffect> effects) {
         this.effects.addAll(effects);
@@ -147,8 +147,7 @@ public class CustomFirework extends CustomItem {
     }
 
     /**
-     * @return
-     * the CustomFirework as org.bukkit.inventory.ItemStack
+     * @return the CustomFirework as org.bukkit.inventory.ItemStack
      */
     @Override
     public ItemStack toItemStack(int amount) {

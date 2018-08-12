@@ -14,6 +14,7 @@
  */
 package de.erethon.caliburn.item;
 
+import de.erethon.caliburn.CaliburnAPI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,20 +43,21 @@ public class CustomBanner extends CustomItem {
         }
     }
 
+    public CustomBanner(CaliburnAPI api, String id) {
+        super(api, id);
+    }
+
     /* Getters and setters */
     /**
-     * @return
-     * the banner patterns
+     * @return the banner patterns
      */
     public List<Pattern> getPatterns() {
         return patterns;
     }
 
     /**
-     * @param color
-     * the color
-     * @param type
-     * the PatternType
+     * @param color the color
+     * @param type  the PatternType
      */
     public void addPattern(DyeColor color, PatternType type) {
         this.patterns.add(new Pattern(color, type));
@@ -73,8 +75,7 @@ public class CustomBanner extends CustomItem {
     }
 
     /**
-     * @return
-     * the CustomBanner as org.bukkit.inventory.ItemStack
+     * @return the CustomBanner as org.bukkit.inventory.ItemStack
      */
     @Override
     public ItemStack toItemStack(int amount) {

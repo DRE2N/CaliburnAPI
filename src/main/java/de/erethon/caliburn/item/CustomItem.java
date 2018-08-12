@@ -15,6 +15,9 @@
 package de.erethon.caliburn.item;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.actionhandler.DropHandler;
+import de.erethon.caliburn.item.actionhandler.HitHandler;
+import de.erethon.caliburn.item.actionhandler.RightClickHandler;
 import de.erethon.commons.compatibility.Version;
 import de.erethon.commons.item.AttributeWrapper;
 import de.erethon.commons.item.InternalAttribute;
@@ -44,6 +47,10 @@ public class CustomItem extends ExItem {
     private Set<ItemFlag> itemFlags = new HashSet<>();
     private Map<Enchantment, Integer> enchantments = new HashMap<>();
     private List<AttributeWrapper> attributes = new ArrayList<>();
+
+    private DropHandler dropHandler;
+    private HitHandler hitHandler;
+    private RightClickHandler rightClickHandler;
 
     // TODO: Better exception handling
     public CustomItem(Map<String, Object> args) {
@@ -148,23 +155,22 @@ public class CustomItem extends ExItem {
         }
     }
 
-    public CustomItem(String id) {
+    public CustomItem(CaliburnAPI api, String id) {
+        this.api = api;
         this.id = id;
         raw = serialize();
     }
 
     /* Getters and setters */
     /**
-     * @return
-     * the item that this one is based on
+     * @return the item that this one is based on
      */
     public VanillaItem getBase() {
         return base;
     }
 
     /**
-     * @param base
-     * set the item that this one is based on
+     * @param base set the item that this one is based on
      */
     public void setBase(VanillaItem base) {
         this.base = base;
@@ -176,24 +182,21 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @param name
-     * the display name to set
+     * @param name the display name to set
      */
     public void setName(String name) {
         this.name = ChatColor.translateAlternateColorCodes('&', name);
     }
 
     /**
-     * @return
-     * the lore
+     * @return the lore
      */
     public List<String> getLores() {
         return lores;
     }
 
     /**
-     * @param lore
-     * the lore to add
+     * @param lore the lore to add
      */
     public void addLore(String lore) {
         lores.add(ChatColor.translateAlternateColorCodes('&', lore));
@@ -207,48 +210,136 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @param enchantment
-     * the enchantment to add
-     * @param level
-     * the level of the enchantment
+     * @param enchantment the enchantment to add
+     * @param level       the level of the enchantment
      */
     public void addEnchantment(Enchantment enchantment, int level) {
         enchantments.put(enchantment, level);
     }
 
     /**
-     * @return
-     * the ItemFlags as a List<ItemFlag>
+     * @return the ItemFlags as a List<ItemFlag>
      */
     public Set<ItemFlag> getItemFlags() {
         return itemFlags;
     }
 
     /**
-     * @param itemFlags
-     * the itemFlags to add
+     * @param itemFlags the itemFlags to add
      */
     public void addItemFlag(ItemFlag itemFlag) {
         itemFlags.add(itemFlag);
     }
 
     /**
-     * @param itemFlags
-     * the itemFlags to remove
+     * @param itemFlags the itemFlags to remove
      */
     public void removeItemFlag(ItemFlag itemFlag) {
         itemFlags.remove(itemFlag);
     }
 
     /**
-     * @return
-     * the attributes
+     * @return the attributes
      */
     public List<AttributeWrapper> getAttributes() {
         return attributes;
     }
 
+    /* Events */
+    /**
+     * @return if the custom item has a DropHandler
+     */
+    public boolean hasDropHandler() {
+        return dropHandler != null;
+    }
+
+    /**
+     * @return the DropHandler
+     */
+    public DropHandler getDropHandler() {
+        return dropHandler;
+    }
+
+    /**
+     * @param handler the handler to set
+     */
+    public void setDropHandler(DropHandler handler) {
+        dropHandler = handler;
+    }
+
+    /**
+     * @return if the custom item has a HitHandler
+     */
+    public boolean hasHitHandler() {
+        return hitHandler != null;
+    }
+
+    /**
+     * @return the HitHandler
+     */
+    public HitHandler getHitHandler() {
+        return hitHandler;
+    }
+
+    /**
+     * @param handler the handler to set
+     */
+    public void setHitHandler(HitHandler handler) {
+        hitHandler = handler;
+    }
+
+    /**
+     * @return if the custom item has a RightClickHandler
+     */
+    public boolean hasRightClickHandler() {
+        return rightClickHandler != null;
+    }
+
+    /**
+     * @return the RightClickHandler
+     */
+    public RightClickHandler getRightClickHandler() {
+        return rightClickHandler;
+    }
+
+    /**
+     * @param handler the handler to set
+     */
+    public void setRightClickHandler(RightClickHandler handler) {
+        rightClickHandler = handler;
+    }
+
     /* Actions */
+    /**
+     * Registers the item sothat it can be fetched through the getter methods
+     *
+     * @return itself
+     */
+    public CustomItem register() {
+        if (api.getExItems().contains(this) || api.getExItem(id) != null) {
+            throw new IllegalStateException("Item already registered");
+        }
+        if (id == null) {
+            throw new IllegalStateException("No ID specified");
+        }
+        api.getExItems().add((ExItem) id(id));
+        return this;
+    }
+
+    /**
+     * Registers the item sothat it can be fetched through the getter methods
+     *
+     * @param id the ID to set
+     * @return itself
+     */
+    public CustomItem register(String id) {
+        if (api.getExItems().contains(this) || api.getExItem(id) != null) {
+            throw new IllegalStateException("Item already registered");
+        }
+        api.getExItems().add((ExItem) id(id));
+        return this;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         if (raw != null) {

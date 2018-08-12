@@ -309,41 +309,35 @@ public class VanillaMob extends ExMob {
     }
 
     /**
-     * @return
-     * the first supported version where this item existed
+     * @return the first supported version where this item existed
      */
     public Version getFirstVersion() {
         return firstVersion;
     }
 
     /**
-     * @return
-     * the last version where this item existed;
-     * null if the item still exists
+     * @return the last version where this item existed; null if the item still exists
      */
     public Version getLastVersion() {
         return lastVersion;
     }
 
     /**
-     * @return
-     * the old String ID used before Minecraft 1.11
+     * @return the old String ID used before Minecraft 1.11
      */
     public String getId1_8() {
         return id1_8;
     }
 
     /**
-     * @return
-     * the new String ID used since Minecraft 1.11
+     * @return the new String ID used since Minecraft 1.11
      */
     public String getId1_11() {
         return id1_11;
     }
 
     /**
-     * @return
-     * the new String ID used since Minecraft 1.13
+     * @return the new String ID used since Minecraft 1.13
      */
     public String getId1_13() {
         return id1_13;
@@ -355,17 +349,14 @@ public class VanillaMob extends ExMob {
     }
 
     /**
-     * @return
-     * the Bukkit enum name
+     * @return the Bukkit enum name
      */
     public String getBukkitName() {
         return bukkit;
     }
 
     /**
-     * @return
-     * the numeric ID used before Minecraft 1.13;
-     * -1 if the item didn't exist before 1.13
+     * @return the numeric ID used before Minecraft 1.13; -1 if the item didn't exist before 1.13
      */
     public int getNumericId() {
         return numeric;
@@ -377,8 +368,7 @@ public class VanillaMob extends ExMob {
     }
 
     /**
-     * @return
-     * if the represented mob is available in the current version
+     * @return if the represented mob is available in the current version
      */
     public boolean isAvailable() {
         Version version = CompatibilityHandler.getInstance().getVersion();

@@ -37,7 +37,7 @@ public class ExSerialization {
     public Map<String, Object> serialize(ItemStack item) {
         ExItem exItem = api.getExItem(item);
         if (exItem == null) {
-            exItem = new CustomItem(UUID.randomUUID().toString());
+            exItem = new CustomItem(api, UUID.randomUUID().toString());
         }
         Map<String, Object> serialized = exItem.serialize();
         serialized.put("amount", item.getAmount());

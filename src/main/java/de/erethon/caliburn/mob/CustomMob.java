@@ -44,14 +44,43 @@ public class CustomMob extends ExMob {
     }
 
     /**
-     * @param name
-     * the custom name to set
+     * @param name the custom name to set
      */
     public void setName(String name) {
         this.name = name;
     }
 
     /* Actions */
+    /**
+     * Registers the mob sothat it can be fetched through the getter methods
+     *
+     * @return itself
+     */
+    public CustomMob register() {
+        if (api.getExMobs().contains(this) || api.getExMob(id) != null) {
+            throw new IllegalStateException("Mob already registered");
+        }
+        if (id == null) {
+            throw new IllegalStateException("No ID specified");
+        }
+        api.getExMobs().add((CustomMob) id(id));
+        return this;
+    }
+
+    /**
+     * Registers the mob sothat it can be fetched through the getter methods
+     *
+     * @param id the ID to set
+     * @return itself
+     */
+    public CustomMob register(String id) {
+        if (api.getExMobs().contains(this) || api.getExMob(id) != null) {
+            throw new IllegalStateException("Mob already registered");
+        }
+        api.getExMobs().add((CustomMob) id(id));
+        return this;
+    }
+
     @Override
     public Map<String, Object> serialize() {
         if (raw != null) {

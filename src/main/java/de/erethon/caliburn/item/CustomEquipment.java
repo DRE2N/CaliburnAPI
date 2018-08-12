@@ -14,6 +14,8 @@
  */
 package de.erethon.caliburn.item;
 
+import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.actionhandler.DamageHandler;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.inventory.ItemStack;
@@ -23,6 +25,8 @@ public class CustomEquipment extends CustomItem {
 
     private short durability;
     private boolean unbreakable;
+
+    private DamageHandler damageHandler;
 
     public CustomEquipment(Map<String, Object> args) {
         super(args);
@@ -38,37 +42,59 @@ public class CustomEquipment extends CustomItem {
         }
     }
 
+    public CustomEquipment(CaliburnAPI api, String id) {
+        super(api, id);
+    }
+
     /* Getters and setters */
     /**
-     * @return
-     * the default durability of this item
+     * @return the default durability of this item
      */
     public short getDurability() {
         return durability;
     }
 
     /**
-     * @param durability
-     * the default durability to set
+     * @param durability the default durability to set
      */
     public void setDurability(short durability) {
         this.durability = durability;
     }
 
     /**
-     * @return
-     * if the item is unbreakable
+     * @return if the item is unbreakable
      */
     public boolean isUnbreakable() {
         return unbreakable;
     }
 
     /**
-     * @param unbreakable
-     * set the item (un-) breakable
+     * @param unbreakable set the item (un-) breakable
      */
     public void setUnbreakable(boolean unbreakable) {
         this.unbreakable = unbreakable;
+    }
+
+    /* Events */
+    /**
+     * @return if the custom item has a DamageHandler
+     */
+    public boolean hasDamageHandler() {
+        return damageHandler != null;
+    }
+
+    /**
+     * @return the DamageHandler
+     */
+    public DamageHandler getDamageHandler() {
+        return damageHandler;
+    }
+
+    /**
+     * @param handler the handler to set
+     */
+    public void setDamageHandler(DamageHandler handler) {
+        damageHandler = handler;
     }
 
     /* Actions */
@@ -83,8 +109,7 @@ public class CustomEquipment extends CustomItem {
     }
 
     /**
-     * @return
-     * the CustomEquipment as org.bukkit.inventory.ItemStack
+     * @return the CustomEquipment as org.bukkit.inventory.ItemStack
      */
     @Override
     public ItemStack toItemStack(int amount) {

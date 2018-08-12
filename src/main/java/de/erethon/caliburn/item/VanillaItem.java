@@ -27,9 +27,8 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Represents a vanilla item.
- * As of 1.13, a Material enum value is considered one vanilla item.
- * Before 1.13, each data value of the same material is considered an item if it is not a damage value.
+ * Represents a vanilla item. As of 1.13, a Material enum value is considered one vanilla item. Before 1.13, each data value of the same material is considered
+ * an item if it is not a damage value.
  *
  * @author Daniel Saukel
  */
@@ -1953,16 +1952,14 @@ public class VanillaItem extends ExItem {
     }
 
     /**
-     * @return
-     * all vanilla items that are known
+     * @return all vanilla items that are known
      */
     public static Collection<VanillaItem> values() {
         return VALUES;
     }
 
     /**
-     * @return
-     * all vanilla items that exist in this runtime environment
+     * @return all vanilla items that exist in this runtime environment
      */
     public static Collection<VanillaItem> getLoaded() {
         return LOADED;
@@ -1971,10 +1968,8 @@ public class VanillaItem extends ExItem {
     /**
      * Returns the VanillaItem that wraps the material.
      *
-     * @param material
-     * a material
-     * @return
-     * the VanillaItem that wraps the material
+     * @param material a material
+     * @return the VanillaItem that wraps the material
      */
     public static VanillaItem get(Material material) {
         if (material == null) {
@@ -2029,17 +2024,14 @@ public class VanillaItem extends ExItem {
     }
 
     /**
-     * @return
-     * the first supported version where this item existed
+     * @return the first supported version where this item existed
      */
     public Version getFirstVersion() {
         return firstVersion;
     }
 
     /**
-     * @return
-     * the last version where this item existed;
-     * null if the item still exists
+     * @return the last version where this item existed; null if the item still exists
      */
     public Version getLastVersion() {
         return lastVersion;
@@ -2048,9 +2040,7 @@ public class VanillaItem extends ExItem {
     /**
      * The old name might be ambiguous.
      *
-     * @return
-     * the Material enum name used before Minecraft 1.13;
-     * null if the item didn't exist before 1.13
+     * @return the Material enum name used before Minecraft 1.13; null if the item didn't exist before 1.13
      */
     public String getOldName() {
         return oldName;
@@ -2059,38 +2049,28 @@ public class VanillaItem extends ExItem {
     /**
      * The new name refers to one VanillaItem exclusively.
      *
-     * @return
-     * the Material enum name used since Minecraft 1.13;
-     * equals the internal String ID but upper case
+     * @return the Material enum name used since Minecraft 1.13; equals the internal String ID but upper case
      */
     public String getNewName() {
         return newName;
     }
 
     /**
-     * @return
-     * the numeric ID used before Minecraft 1.13;
-     * -1 if the item didn't exist before 1.13
+     * @return the numeric ID used before Minecraft 1.13; -1 if the item didn't exist before 1.13
      */
     public int getNumericId() {
         return numeric;
     }
 
     /**
-     * @return
-     * the numeric data value used before Minecraft 1.13;
-     * 0 if the item didn't exist before 1.13;
-     * 0 if the item doesn't need data
+     * @return the numeric data value used before Minecraft 1.13; 0 if the item didn't exist before 1.13; 0 if the item doesn't need data
      */
     public short getData() {
         return data;
     }
 
     /**
-     * @return
-     * the internal ID.
-     * The enum name in 1.13+;
-     * the numeric ID and the data value if it isn't 0 separated with a ":" before 1.13
+     * @return the internal ID. The enum name in 1.13+; the numeric ID and the data value if it isn't 0 separated with a ":" before 1.13
      */
     public String getInternalId() {
         if (CompatibilityHandler.getInstance().getVersion().useNewMaterials()) {
@@ -2101,8 +2081,7 @@ public class VanillaItem extends ExItem {
     }
 
     /**
-     * @return
-     * the numeric ID + the data value if it exists, separated by a ":"
+     * @return the numeric ID + the data value if it exists, separated by a ":"
      */
     public String getNumericIdAndData() {
         if (data != 0) {
@@ -2113,8 +2092,7 @@ public class VanillaItem extends ExItem {
     }
 
     /**
-     * @return
-     * the old name + the data value if it exists, separated by a ":"
+     * @return the old name + the data value if it exists, separated by a ":"
      */
     public String getOldNameAndData() {
         if (data != 0) {
@@ -2130,8 +2108,7 @@ public class VanillaItem extends ExItem {
     }
 
     /**
-     * @return
-     * if the represented mob is available in the current version
+     * @return if the represented mob is available in the current version
      */
     public boolean isAvailable() {
         Version version = CompatibilityHandler.getInstance().getVersion();
@@ -2181,20 +2158,16 @@ public class VanillaItem extends ExItem {
     }
 
     /**
-     * @param material
-     * a material
-     * @return
-     * if this VanillaItem wraps the material
+     * @param material a material
+     * @return if this VanillaItem wraps the material
      */
     public boolean is(Material material) {
         return getMaterial() == material;
     }
 
     /**
-     * @param item
-     * an item stack
-     * @return
-     * if this VanillaItem wraps the material of the item
+     * @param item an item stack
+     * @return if this VanillaItem wraps the material of the item
      */
     public boolean is(ItemStack item) {
         if (item == null) {
@@ -2204,10 +2177,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
-     * @param block
-     * a block
-     * @return
-     * if this VanillaItem wraps the material of the block
+     * @param block a block
+     * @return if this VanillaItem wraps the material of the block
      */
     public boolean is(Block block) {
         if (block == null) {
