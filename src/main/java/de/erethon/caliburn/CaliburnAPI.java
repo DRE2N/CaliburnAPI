@@ -327,7 +327,7 @@ public class CaliburnAPI {
      * Universal deserialization method to deserialize a Bukkit ItemStack
      *
      * @param config a ConfigurationSection
-     * @param path the path in the config where the item to deserialize is found
+     * @param path   the path in the config where the item to deserialize is found
      * @return the deserialized ItemStack
      */
     public ItemStack deserializeStack(ConfigurationSection config, String path) {
@@ -347,7 +347,7 @@ public class CaliburnAPI {
      * Universal deserialization method to deserialize lists of Bukkit ItemStacks
      *
      * @param config a ConfigurationSection
-     * @param path the path in the config where the item to deserialize is found
+     * @param path   the path in the config where the item to deserialize is found
      * @return the deserialized list of ItemStacks
      */
     public List<ItemStack> deserializeStackList(ConfigurationSection config, String path) {
@@ -372,7 +372,7 @@ public class CaliburnAPI {
      * Universal deserialization method to deserialize an ExItem
      *
      * @param config a ConfigurationSection
-     * @param path the path in the config where the item to deserialize is found
+     * @param path   the path in the config where the item to deserialize is found
      * @return the deserialized ExItem
      */
     public ExItem deserializeExItem(ConfigurationSection config, String path) {
@@ -389,7 +389,7 @@ public class CaliburnAPI {
      * Universal deserialization method to deserialize lists of ExItems
      *
      * @param config a ConfigurationSection
-     * @param path the path in the config where the item to deserialize is found
+     * @param path   the path in the config where the item to deserialize is found
      * @return the deserialized list of ItemStacks
      */
     public List<ExItem> deserializeExItemList(ConfigurationSection config, String path) {

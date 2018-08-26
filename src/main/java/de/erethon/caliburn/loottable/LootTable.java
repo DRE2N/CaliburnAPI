@@ -100,7 +100,7 @@ public class LootTable {
     }
 
     /**
-     * @param name the name of the loot table
+     * @param name   the name of the loot table
      * @param config the config that stores the information
      */
     public LootTable(CaliburnAPI api, String name, FileConfiguration config) {
@@ -120,7 +120,7 @@ public class LootTable {
     }
 
     /**
-     * @param api the API instance
+     * @param api  the API instance
      * @param name the name of the loot table
      */
     public LootTable(CaliburnAPI api, String name) {
