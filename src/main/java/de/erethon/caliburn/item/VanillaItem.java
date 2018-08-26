@@ -570,6 +570,13 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem ATTACHED_PUMPKIN_STEM = new VanillaItem(MC1_8, "PUMPKIN_STEM", "ATTACHED_PUMPKIN_STEM", 104);
     public static final VanillaItem ATTACHED_MELON_STEM = new VanillaItem(MC1_8, "PUMPKIN_STEM", "ATTACHED_MELON_STEM", 105);
 
+    // 1.13.1 BLOCKS
+    public static final VanillaItem DEAD_TUBE_CORAL = new VanillaItem(MC1_13_1, "DEAD_TUBE_CORAL");
+    public static final VanillaItem DEAD_BRAIN_CORAL = new VanillaItem(MC1_13_1, "DEAD_BRAIN_CORAL");
+    public static final VanillaItem DEAD_BUBBLE_CORAL = new VanillaItem(MC1_13_1, "DEAD_BUBBLE_CORAL");
+    public static final VanillaItem DEAD_FIRE_CORAL = new VanillaItem(MC1_13_1, "DEAD_FIRE_CORAL");
+    public static final VanillaItem DEAD_HORN_CORAL = new VanillaItem(MC1_13_1, "DEAD_HORN_CORAL");
+
     // ITEMS
     public static final VanillaItem IRON_SHOVEL = new VanillaItem(MC1_8, "IRON_SPADE", "IRON_SHOVEL", 256);
     public static final VanillaItem IRON_PICKAXE = new VanillaItem(MC1_8, "IRON_PICKAXE", "IRON_PICKAXE", 257);
@@ -1518,6 +1525,13 @@ public class VanillaItem extends ExItem {
         VALUES.add(POTTED_OXEYE_DAISY);
         VALUES.add(ATTACHED_PUMPKIN_STEM);
         VALUES.add(ATTACHED_MELON_STEM);
+
+        // 1.13.1 BLOCKS
+        VALUES.add(DEAD_TUBE_CORAL);
+        VALUES.add(DEAD_BRAIN_CORAL);
+        VALUES.add(DEAD_BUBBLE_CORAL);
+        VALUES.add(DEAD_FIRE_CORAL);
+        VALUES.add(DEAD_HORN_CORAL);
 
         // ITEMS
         VALUES.add(IRON_SHOVEL);
