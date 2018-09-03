@@ -53,7 +53,11 @@ public class SplitMob extends VanillaMob {
 
     @Override
     public EntityType getSpecies() {
-        return oldSuperType.getSpecies();
+        if (Version.isAtLeast(Version.MC1_13)) {
+            return super.getSpecies();
+        } else {
+            return oldSuperType.getSpecies();
+        }
     }
 
     @Override
