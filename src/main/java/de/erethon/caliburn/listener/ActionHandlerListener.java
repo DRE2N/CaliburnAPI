@@ -19,6 +19,7 @@ import de.erethon.caliburn.item.CustomEquipment;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
+import de.erethon.commons.compatibility.Version;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -63,8 +64,8 @@ public class ActionHandlerListener implements Listener {
         Player player = (Player) damager;
 
         ItemStack weapon;
-        ItemStack mainHand = player.getInventory().getItemInMainHand();
-        if (!arrow) {
+        ItemStack mainHand = player.getInventory().getItemInHand();
+        if (!arrow || !Version.isAtLeast(Version.MC1_9)) {
             weapon = mainHand;
         } else {
             if (VanillaItem.BOW.is(mainHand)) {
