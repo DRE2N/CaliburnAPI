@@ -115,6 +115,7 @@ public class CustomItem extends ExItem {
                     continue;
                 }
 
+                String attributeName = (String) ((Entry) attribute).getKey();
                 Map attributeMap = (Map) ((Entry) attribute).getValue();
 
                 Object type = attributeMap.get("type");
@@ -149,7 +150,7 @@ public class CustomItem extends ExItem {
                 }
 
                 if (intType != null && intOp != null && intAmount != Double.NaN) {
-                    this.attributes.add(new AttributeWrapper(intType, intAmount, intOp, intSlots.toArray(new InternalSlot[intSlots.size()])));
+                    this.attributes.add(new AttributeWrapper(intType, attributeName, intAmount, intOp, intSlots.toArray(new InternalSlot[intSlots.size()])));
                 }
             }
         }
