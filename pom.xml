@@ -35,8 +35,12 @@
                             </artifactSet>
                             <relocations>
                                 <relocation>
-                                    <pattern>de.erethon.commons</pattern>
-                                    <shadedPattern>de.erethon.caliburn.util</shadedPattern>
+                                    <pattern>de.erethon.commons.item</pattern>
+                                    <shadedPattern>de.erethon.caliburn.util.item</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>de.erethon.commons.compatibility</pattern>
+                                    <shadedPattern>de.erethon.caliburn.util.compatibility</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
