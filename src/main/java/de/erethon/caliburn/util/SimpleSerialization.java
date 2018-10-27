@@ -133,6 +133,9 @@ public class SimpleSerialization {
         }
         String[] args = string.split(",");
         ExItem baseItem = api.getExItem(args[0]);
+        if (baseItem == null) {
+            return null;
+        }
         int amount = args.length >= 2 ? NumberUtil.parseInt(args[1], 1) : 1;
         ItemStack item = baseItem.toItemStack(amount);
 
