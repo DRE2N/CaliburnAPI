@@ -118,7 +118,7 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @return the display name of the item
+     * @return the display name of the mob
      */
     public String getName() {
         return getSpecies().name();

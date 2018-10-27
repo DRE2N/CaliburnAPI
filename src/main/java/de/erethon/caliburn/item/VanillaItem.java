@@ -1950,7 +1950,7 @@ public class VanillaItem extends ExItem {
             }
 
             MessageUtil.log("&c[WARNING] Caliburn lacks a built-in representation of the material " + bukkit.name() + ". Please update your implementation if possible.");
-            VALUES.add(new VanillaItem(UNKNOWN, bukkit.name()));
+            VALUES.add(new VanillaItem(NEW, bukkit.name()));
         }
 
         for (VanillaItem vi : VALUES) {

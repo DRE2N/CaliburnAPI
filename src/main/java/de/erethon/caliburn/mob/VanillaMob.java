@@ -21,6 +21,8 @@ import static de.erethon.commons.compatibility.Version.*;
 import de.erethon.commons.misc.EnumUtil;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -29,6 +31,8 @@ import org.bukkit.entity.EntityType;
  * @author Daniel Saukel
  */
 public class VanillaMob extends ExMob {
+
+    public static final VanillaMob UNKNOWN = new VanillaMob(MC1_8, null, "UNKNOWN");
 
     public static final VanillaMob ITEM = new VanillaMob(MC1_8, "Item", "item", "DROPPED_ITEM", 1);
     public static final VanillaMob EXPERIENCE_ORB = new VanillaMob(MC1_8, "XPOrb", "xp_orb", "experience_orb", "EXPERIENCE_ORB", 2);
@@ -134,8 +138,10 @@ public class VanillaMob extends ExMob {
 
     private static Collection<VanillaMob> VALUES = new ArrayList<>();
     private static Collection<VanillaMob> LOADED = new ArrayList<>();
+    private static Map<EntityType, VanillaMob> BY_ENTITY_TYPE = new HashMap<>();
 
     static {
+        VALUES.add(UNKNOWN);
         VALUES.add(ITEM);
         VALUES.add(EXPERIENCE_ORB);
         VALUES.add(AREA_EFFECT_CLOUD);
@@ -238,9 +244,6 @@ public class VanillaMob extends ExMob {
 
         bukkitMobs:
         for (EntityType bukkit : EntityType.values()) {
-            if (bukkit == EntityType.UNKNOWN) {
-                continue;
-            }
             for (VanillaMob caliburn : VALUES) {
                 if (caliburn.getBukkitName().equals(bukkit.name())) {
                     continue bukkitMobs;
@@ -248,7 +251,7 @@ public class VanillaMob extends ExMob {
             }
 
             MessageUtil.log("&c[WARNING] Caliburn lacks a built-in representation of the entity " + bukkit.name() + ". Please update your implementation if possible!");
-            VALUES.add(new VanillaMob(UNKNOWN, bukkit.name().toLowerCase(), bukkit.name()));
+            VALUES.add(new VanillaMob(NEW, bukkit.name().toLowerCase(), bukkit.name()));
         }
 
         for (VanillaMob vm : VALUES) {
@@ -268,6 +271,19 @@ public class VanillaMob extends ExMob {
 
     public static Collection<VanillaMob> getLoaded() {
         return LOADED;
+    }
+
+    /**
+     * Returns the VanillaMob that wraps the entity type.
+     *
+     * @param entityType an entity type
+     * @return the VanillaItem that wraps the material
+     */
+    public static VanillaMob get(EntityType entityType) {
+        if (entityType == null) {
+            return UNKNOWN;
+        }
+        return BY_ENTITY_TYPE.get(entityType);
     }
 
     private Version firstVersion;
