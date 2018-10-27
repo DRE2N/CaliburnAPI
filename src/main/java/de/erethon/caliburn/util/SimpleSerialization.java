@@ -42,7 +42,6 @@ public class SimpleSerialization {
 
     public enum ItemModifier {
 
-        //ATTRIBUTE("ATTRIBUTE:", "A:"),
         ENCHANTMENT("ENCHANTMENT:", "ENCHANT:", "E:"),
         FLAG("ITEMFLAG:", "FLAG:", "F:"),
         LORE("LORE", "L:"),
@@ -134,7 +133,7 @@ public class SimpleSerialization {
         }
         String[] args = string.split(",");
         ExItem baseItem = api.getExItem(args[0]);
-        int amount = NumberUtil.parseInt(args[1], 1);
+        int amount = args.length >= 2 ? NumberUtil.parseInt(args[1], 1) : 1;
         ItemStack item = baseItem.toItemStack(amount);
 
         ItemMeta meta = item.getItemMeta();
