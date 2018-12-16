@@ -61,7 +61,7 @@ public class SimpleSerialization {
         public String stripPrefix(String string) {
             String stripped = string;
             for (String prefix : prefixes) {
-                stripped = stripped.replace(prefix, new String());
+                stripped = stripped.replace(prefix, "");
             }
             return stripped;
         }
@@ -129,7 +129,7 @@ public class SimpleSerialization {
 
     public ItemStack deserialize(String string) {
         if (string.startsWith(PREFIX)) {
-            string = string.replaceFirst(PREFIX, new String());
+            string = string.replaceFirst(PREFIX, "");
         }
         String[] args = string.split(",");
         ExItem baseItem = api.getExItem(args[0]);

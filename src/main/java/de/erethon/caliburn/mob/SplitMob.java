@@ -36,7 +36,7 @@ public class SplitMob extends VanillaMob {
     private VanillaMob oldSuperType;
 
     protected SplitMob(Version firstVersion, VanillaMob oldSuperType, String id1_13, String bukkit, int numeric) {
-        this(firstVersion, null, oldSuperType, id1_13, bukkit, numeric);
+        this(firstVersion, Version.NEW, oldSuperType, id1_13, bukkit, numeric);
     }
 
     protected SplitMob(Version firstVersion, Version lastVersion, VanillaMob oldSuperType, String id1_13, String bukkit, int numeric) {

@@ -22,6 +22,6 @@ import org.bukkit.inventory.ItemStack;
  */
 public interface DamageHandler {
 
-    public void onDamage(ItemStack itemInstance, Player player, boolean broken);
+    void onDamage(ItemStack itemInstance, Player player, boolean broken);
 
 }

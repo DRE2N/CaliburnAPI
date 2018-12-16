@@ -23,6 +23,6 @@ import org.bukkit.inventory.ItemStack;
  */
 public interface DropHandler {
 
-    public void onDrop(ItemStack itemInstance, Item dropped, Player player);
+    void onDrop(ItemStack itemInstance, Item dropped, Player player);
 
 }

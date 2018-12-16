@@ -190,7 +190,7 @@ public class CaliburnAPI {
 
     public ExItem getExItem(ItemStack item) {
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
-            return getExItem(item.getItemMeta().getLore().get(0).replace(identifierPrefix, new String()));
+            return getExItem(item.getItemMeta().getLore().get(0).replace(identifierPrefix, ""));
         } else {
             return getExItem(item.getType().name());
         }
@@ -201,7 +201,7 @@ public class CaliburnAPI {
             return null;
         }
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
-            return item.getItemMeta().getLore().get(0).replace(identifierPrefix, new String());
+            return item.getItemMeta().getLore().get(0).replace(identifierPrefix, "");
         } else {
             ExItem exItem = getExItem(item.getType().name());
             return exItem.getId();

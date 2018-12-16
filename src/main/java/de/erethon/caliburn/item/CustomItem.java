@@ -226,14 +226,14 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @param itemFlags the itemFlags to add
+     * @param itemFlag the itemFlag to add
      */
     public void addItemFlag(ItemFlag itemFlag) {
         itemFlags.add(itemFlag);
     }
 
     /**
-     * @param itemFlags the itemFlags to remove
+     * @param itemFlag the itemFlags to remove
      */
     public void removeItemFlag(ItemFlag itemFlag) {
         itemFlags.remove(itemFlag);

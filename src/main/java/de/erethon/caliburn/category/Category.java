@@ -18,8 +18,9 @@ import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import static de.erethon.caliburn.item.VanillaItem.*;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -94,7 +95,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category SIGNS = new Category("signs", SIGN, WALL_SIGN, SIGN_POST);
 
     private String id;
-    private List<T> elements = new ArrayList<>();
+    private Set<T> elements = new HashSet<>();
 
     public Category(String id) {
         this.id = id;
@@ -124,7 +125,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     /**
      * @return the objects that belong to this category
      */
-    public List<T> getElements() {
+    public Set<T> getElements() {
         return elements;
     }
 

@@ -23,6 +23,6 @@ import org.bukkit.inventory.ItemStack;
  */
 public interface HitHandler {
 
-    public void onHit(ItemStack itemInstance, Player player, Entity damagee, double damage);
+    void onHit(ItemStack itemInstance, Player player, Entity damagee, double damage);
 
 }

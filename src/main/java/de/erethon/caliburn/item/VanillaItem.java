@@ -2012,15 +2012,15 @@ public class VanillaItem extends ExItem {
     }
 
     protected VanillaItem(Version firstVersion, String oldName, String newName, int numeric, short data) {
-        this(firstVersion, null, oldName, newName, numeric, data);
+        this(firstVersion, Version.NEW, oldName, newName, numeric, data);
     }
 
     protected VanillaItem(Version firstVersion, String newName) {
-        this(firstVersion, null, newName);
+        this(firstVersion, Version.NEW, newName);
     }
 
     protected VanillaItem(Version firstVersion, Version lastVersion, String newName) {
-        this(firstVersion, lastVersion, new String(), newName, -1, (short) 0);
+        this(firstVersion, lastVersion, "", newName, -1, (short) 0);
     }
 
     protected VanillaItem(Version firstVersion, Version lastVersion, String oldName, String newName, int numeric) {
@@ -2045,7 +2045,7 @@ public class VanillaItem extends ExItem {
     }
 
     /**
-     * @return the last version where this item existed; null if the item still exists
+     * @return the last version where this item existed; NEW if the item still exists
      */
     public Version getLastVersion() {
         return lastVersion;
@@ -2125,8 +2125,7 @@ public class VanillaItem extends ExItem {
      * @return if the represented mob is available in the current version
      */
     public boolean isAvailable() {
-        Version version = CompatibilityHandler.getInstance().getVersion();
-        return Version.andHigher(firstVersion).contains(version) && (lastVersion == null || Version.andHigher(version).contains(lastVersion));
+        return Version.isAtLeast(firstVersion) && Version.isAtMost(lastVersion);
     }
 
     @Override

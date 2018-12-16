@@ -15,7 +15,6 @@
 package de.erethon.caliburn.mob;
 
 import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
 import static de.erethon.commons.compatibility.Version.*;
 import de.erethon.commons.misc.EnumUtil;
@@ -295,23 +294,23 @@ public class VanillaMob extends ExMob {
     private String bukkit;
 
     protected VanillaMob(Version firstVersion, String id1_13, String bukkit) {
-        this(firstVersion, new String(), id1_13, bukkit, -1);
+        this(firstVersion, "", id1_13, bukkit, -1);
     }
 
     protected VanillaMob(Version firstVersion, String id1_18, String id1_13, String bukkit, int numeric) {
-        this(firstVersion, null, id1_18, id1_13, id1_13, bukkit, numeric);
+        this(firstVersion, Version.NEW, id1_18, id1_13, id1_13, bukkit, numeric);
     }
 
     protected VanillaMob(Version firstVersion, String id1_8, String id1_11, String id1_13, String bukkit, int numeric) {
-        this(firstVersion, null, id1_8, id1_11, id1_13, bukkit, numeric);
+        this(firstVersion, Version.NEW, id1_8, id1_11, id1_13, bukkit, numeric);
     }
 
     protected VanillaMob(Version firstVersion, Version lastVersion, String id1_13, String bukkit) {
-        this(firstVersion, lastVersion, new String(), new String(), id1_13, bukkit, -1);
+        this(firstVersion, lastVersion, "", "", id1_13, bukkit, -1);
     }
 
     protected VanillaMob(Version firstVersion, Version lastVersion, String id1_11, String id1_13, String bukkit) {
-        this(firstVersion, lastVersion, new String(), id1_11, id1_13, bukkit, -1);
+        this(firstVersion, lastVersion, "", id1_11, id1_13, bukkit, -1);
     }
 
     protected VanillaMob(Version firstVersion, Version lastVersion, String id1_8, String id1_11, String id1_13, String bukkit, int numeric) {
@@ -332,7 +331,7 @@ public class VanillaMob extends ExMob {
     }
 
     /**
-     * @return the last version where this item existed; null if the item still exists
+     * @return the last version where this item existed; NEW if the item still exists
      */
     public Version getLastVersion() {
         return lastVersion;
@@ -387,8 +386,7 @@ public class VanillaMob extends ExMob {
      * @return if the represented mob is available in the current version
      */
     public boolean isAvailable() {
-        Version version = CompatibilityHandler.getInstance().getVersion();
-        return Version.andHigher(firstVersion).contains(version) && (lastVersion == null || Version.andHigher(version).contains(lastVersion));
+        return Version.isAtLeast(firstVersion) && Version.isAtMost(lastVersion);
     }
 
     @Override

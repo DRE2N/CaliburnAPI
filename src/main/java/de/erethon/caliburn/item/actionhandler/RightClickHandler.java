@@ -22,6 +22,6 @@ import org.bukkit.inventory.ItemStack;
  */
 public interface RightClickHandler {
 
-    public void onRightClick(ItemStack itemInstance, Player player);
+    void onRightClick(ItemStack itemInstance, Player player);
 
 }
