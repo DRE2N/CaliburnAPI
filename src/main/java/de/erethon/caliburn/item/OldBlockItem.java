@@ -32,7 +32,7 @@ public class OldBlockItem extends VanillaItem {
     }
 
     protected OldBlockItem(Version firstVersion, String oldName, VanillaItem replacement, int numeric, short data) {
-        super(firstVersion, Version.MC1_12_2, oldName, replacement.getNewName(), numeric, data);
+        super(firstVersion, Version.MC1_12_2, oldName, replacement.get1_13Name(), numeric, data);
         this.replacement = replacement;
     }
 

@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>caliburn</artifactId>
-    <version>0.5.4</version>
+    <version>0.5.5</version>
     <packaging>jar</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
@@ -27,6 +27,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
+                                    <include>de.erethon.commons:compatibility</include>
                                     <include>de.erethon:itemstacklib</include>
                                 </includes>
                             </artifactSet>
@@ -57,8 +58,14 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.13.2-R0.1-SNAPSHOT</version>
+            <version>1.14.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.commons</groupId>
+            <artifactId>compatibility</artifactId>
+            <version>1.5.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon</groupId>
@@ -67,9 +74,9 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>de.erethon</groupId>
-            <artifactId>commons</artifactId>
-            <version>5.1.4</version>
+            <groupId>de.erethon.commons</groupId>
+            <artifactId>commons-dist</artifactId>
+            <version>6.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

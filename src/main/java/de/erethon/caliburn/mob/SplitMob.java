@@ -16,11 +16,13 @@ package de.erethon.caliburn.mob;
 
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
+import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Guardian;
 import org.bukkit.entity.Horse;
+import org.bukkit.entity.Ocelot;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Skeleton.SkeletonType;
 import org.bukkit.entity.Villager;
@@ -71,7 +73,7 @@ public class SplitMob extends VanillaMob {
             } else if (STRAY.getId1_13().equals(getId1_13())) {
                 ((Skeleton) entity).setSkeletonType(SkeletonType.STRAY);
             } else if (HUSK.getId1_13().equals(getId1_13())) {
-                ((Zombie) entity).setVillagerProfession(Villager.Profession.HUSK);
+                ((Zombie) entity).setVillagerProfession(Villager.Profession.valueOf("HUSK"));
             } else if (ZOMBIE_VILLAGER.getId1_13().equals(getId1_13())) {
                 ((Zombie) entity).setVillager(true);
             } else if (SKELETON_HORSE.getId1_13().equals(getId1_13())) {
@@ -82,6 +84,8 @@ public class SplitMob extends VanillaMob {
                 ((Horse) entity).setVariant(Horse.Variant.DONKEY);
             } else if (MULE.getId1_13().equals(getId1_13())) {
                 ((Horse) entity).setVariant(Horse.Variant.MULE);
+            } else if (CAT.getId1_13().equals(getId1_13())) {
+                ((Ocelot) entity).setCatType(Ocelot.Type.values()[new Random().nextInt(3)]);
             }
         }
         return entity;

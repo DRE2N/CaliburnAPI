@@ -117,6 +117,12 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob PHANTOM = new VanillaMob(MC1_13, "phantom", "PHANTOM");
     public static final VanillaMob TURTLE = new VanillaMob(MC1_13, "turtle", "TURTLE");
     public static final VanillaMob TRIDENT = new VanillaMob(MC1_13, "trident", "TRIDENT");
+    public static final VanillaMob PANDA = new VanillaMob(MC1_14, "panda", "PANDA");
+    public static final VanillaMob PILLAGER = new VanillaMob(MC1_14, "pillager", "PILLAGER");
+    public static final VanillaMob RAVAGER = new VanillaMob(MC1_14, "ravager", "RAVAGER");
+    public static final VanillaMob TRADER_LLAMA = new VanillaMob(MC1_14, "trader_llama", "TRADER_LLAMA");
+    public static final VanillaMob WANDERING_TRADER = new VanillaMob(MC1_14, "wandering_trader", "WANDERING_TRADER");
+    public static final VanillaMob FOX = new VanillaMob(MC1_14, "fox", "FOX");
 
     public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, "lingering_potion", "LINGERING_POTION");
     public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");
@@ -134,6 +140,16 @@ public class VanillaMob extends ExMob {
     public static final SplitMob ZOMBIE_HORSE = new SplitMob(MC1_8, HORSE, "zombie_horse", "ZOMBIE_HORSE", 29);
     public static final SplitMob DONKEY = new SplitMob(MC1_8, HORSE, "donkey", "DONKEY", 31);
     public static final SplitMob MULE = new SplitMob(MC1_8, HORSE, "mule", "MULE", 32);
+    public static final SplitMob CAT = new SplitMob(MC1_8, OCELOT, "cat", "CAT", -1) {
+        @Override
+        public EntityType getSpecies() {
+            if (Version.isAtLeast(Version.MC1_14)) {
+                return EntityType.valueOf(CAT.getBukkitName());
+            } else {
+                return OCELOT.getSpecies();
+            }
+        }
+    };
 
     private static Collection<VanillaMob> VALUES = new ArrayList<>();
     private static Collection<VanillaMob> LOADED = new ArrayList<>();
@@ -224,6 +240,7 @@ public class VanillaMob extends ExMob {
         VALUES.add(ZOMBIE_HORSE);
         VALUES.add(DONKEY);
         VALUES.add(MULE);
+        VALUES.add(CAT);
         VALUES.add(DOLPHIN);
         VALUES.add(DROWNED);
         VALUES.add(COD);
@@ -233,6 +250,12 @@ public class VanillaMob extends ExMob {
         VALUES.add(PHANTOM);
         VALUES.add(TURTLE);
         VALUES.add(TRIDENT);
+        VALUES.add(PANDA);
+        VALUES.add(PILLAGER);
+        VALUES.add(RAVAGER);
+        VALUES.add(TRADER_LLAMA);
+        VALUES.add(WANDERING_TRADER);
+        VALUES.add(FOX);
         VALUES.add(LINGERING_POTION);
         VALUES.add(FISHING_HOOK);
         VALUES.add(LIGHTNING);
@@ -264,7 +287,7 @@ public class VanillaMob extends ExMob {
         }
     }
 
-    public static Collection<VanillaMob> VALUES() {
+    public static Collection<VanillaMob> values() {
         return VALUES;
     }
 
