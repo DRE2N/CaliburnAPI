@@ -102,7 +102,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category WITHER_IMMUNE = new Category("wither_immune", BARRIER, BEDROCK, END_PORTAL, END_PORTAL_FRAME, END_GATEWAY, COMMAND_BLOCK,
             REPEATING_COMMAND_BLOCK, CHAIN_COMMAND_BLOCK, STRUCTURE_BLOCK, JIGSAW, MOVING_PISTON, OBSIDIAN, END_STONE, IRON_BARS);
     public static final Category WOODEN_BUTTONS = new Category("wooden_butons", OAK_BUTTON, SPRUCE_BUTTON, BIRCH_BUTTON, JUNGLE_BUTTON, ACACIA_BUTTON, DARK_OAK_BUTTON);
-    public static final Category WOODEN_DOORS = new Category("wooden_doors", OAK_DOOR, SPRUCE_DOOR, BIRCH_DOOR, JUNGLE_DOOR, ACACIA_DOOR, DARK_OAK_DOOR);
+    public static final Category WOODEN_DOORS = new Category("wooden_doors", OAK_DOOR, SPRUCE_DOOR, BIRCH_DOOR, JUNGLE_DOOR, ACACIA_DOOR, DARK_OAK_DOOR, WOODEN_DOOR);
     public static final Category WOODEN_FENCES = new Category("wooden_fences", OAK_FENCE, ACACIA_FENCE, DARK_OAK_FENCE, SPRUCE_FENCE, BIRCH_FENCE, JUNGLE_FENCE);
     public static final Category WOODEN_PRESSURE_PLATES = new Category("wooden_pressure_plates", OAK_PRESSURE_PLATE, SPRUCE_PRESSURE_PLATE, BIRCH_PRESSURE_PLATE,
             JUNGLE_PRESSURE_PLATE, ACACIA_PRESSURE_PLATE, DARK_OAK_PRESSURE_PLATE);
