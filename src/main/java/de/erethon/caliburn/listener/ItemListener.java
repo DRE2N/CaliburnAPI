@@ -36,11 +36,11 @@ import org.bukkit.projectiles.ProjectileSource;
 /**
  * @author Daniel Saukel
  */
-public class ActionHandlerListener implements Listener {
+public class ItemListener implements Listener {
 
     private CaliburnAPI api;
 
-    public ActionHandlerListener(CaliburnAPI api) {
+    public ItemListener(CaliburnAPI api) {
         this.api = api;
     }
 

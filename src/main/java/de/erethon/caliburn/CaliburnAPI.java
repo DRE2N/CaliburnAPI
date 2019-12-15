@@ -19,8 +19,8 @@ import de.erethon.caliburn.category.Category;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.caliburn.listener.ActionHandlerListener;
-import de.erethon.caliburn.listener.EntityListener;
+import de.erethon.caliburn.listener.ItemListener;
+import de.erethon.caliburn.listener.MobListener;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.ExMob;
@@ -68,8 +68,8 @@ public class CaliburnAPI {
         items.addAll(VanillaItem.getLoaded());
         mobs.addAll(VanillaMob.getLoaded());
 
-        Bukkit.getPluginManager().registerEvents(new EntityListener(this), plugin);
-        ActionHandlerListener ahl = new ActionHandlerListener(this);
+        Bukkit.getPluginManager().registerEvents(new MobListener(this), plugin);
+        ItemListener ahl = new ItemListener(this);
         Bukkit.getPluginManager().registerEvents(ahl, plugin);
         if (CompatibilityHandler.getInstance().isSpigot()) {
             Bukkit.getPluginManager().registerEvents(ahl.new Spigot(), plugin);

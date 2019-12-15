@@ -17,28 +17,35 @@ package de.erethon.caliburn.listener;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.Category;
 import de.erethon.caliburn.item.ExItem;
+import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.ExMob;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * TODO: IMPLEMENT ATTACK HANDLER AND INTERACT HANDLER
+ * 
  * @author Daniel Saukel
  */
-public class EntityListener implements Listener {
+public class MobListener implements Listener {
 
     private CaliburnAPI api;
 
-    public EntityListener(CaliburnAPI api) {
+    public MobListener(CaliburnAPI api) {
         this.api = api;
     }
 
     @EventHandler
-    public void onDamageByPlayer(EntityDamageByEntityEvent event) {
+    public void onDamageByEntity(EntityDamageByEntityEvent event) {
         if (!(event.getDamager() instanceof Player) || event.getCause() != DamageCause.ENTITY_ATTACK) {
             return;
         }
@@ -79,6 +86,29 @@ public class EntityListener implements Listener {
 
         } else {
             event.setDamage(event.getDamage() * mob.getItemDamageModifier(item));
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onDamage(EntityDamageEvent event) {
+        Entity entity = event.getEntity();
+        ExMob exMob = api.getExMob(entity);
+        if (!(exMob instanceof CustomMob)) {
+            return;
+        }
+
+        CustomMob cMob = (CustomMob) exMob;
+        Entity attacker = event instanceof EntityDamageByEntityEvent ? ((EntityDamageByEntityEvent) event).getDamager() : null;
+
+        if (cMob.hasDamageHandler()) {
+            cMob.getDamageHandler().onDamage(entity, event.getCause(), event.getDamage(), attacker);
+        }
+
+        if (!cMob.hasDeathHandler() || !(entity instanceof LivingEntity)) {
+            return;
+        }
+        if (event.getDamage() > ((LivingEntity) entity).getHealth()) {
+            cMob.getDeathHandler().onDeath(entity, event.getCause(), attacker);
         }
     }
 
