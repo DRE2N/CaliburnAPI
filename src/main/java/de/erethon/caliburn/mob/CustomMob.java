@@ -14,6 +14,10 @@
  */
 package de.erethon.caliburn.mob;
 
+import de.erethon.caliburn.mob.actionhandler.AttackHandler;
+import de.erethon.caliburn.mob.actionhandler.DamageHandler;
+import de.erethon.caliburn.mob.actionhandler.DeathHandler;
+import de.erethon.caliburn.mob.actionhandler.InteractHandler;
 import java.util.HashMap;
 import java.util.Map;
 import org.bukkit.Location;
@@ -27,9 +31,35 @@ public class CustomMob extends ExMob {
 
     private String name;
 
+    private AttackHandler attackHandler;
+    private DamageHandler damageHandler;
+    private DeathHandler deathHandler;
+    private InteractHandler interactHandler;
+
     public CustomMob(Map<String, Object> args) {
         raw = args;
-        name = (String) args.get("name");
+
+        Object name = args.get("name");
+        if (name instanceof String) {
+            setName((String) name);
+        }
+
+        Object attackHandler = args.get("attackHandler");
+        if (attackHandler instanceof String) {
+            setAttackHandler(AttackHandler.create((String) attackHandler));
+        }
+        Object damageHandler = args.get("damageHandler");
+        if (damageHandler instanceof String) {
+            setDamageHandler(DamageHandler.create((String) damageHandler));
+        }
+        Object deathHandler = args.get("deathHandler");
+        if (deathHandler instanceof String) {
+            setDeathHandler(DeathHandler.create((String) deathHandler));
+        }
+        Object interactHandler = args.get("interactHandler");
+        if (interactHandler instanceof String) {
+            setInteractHandler(InteractHandler.create((String) interactHandler));
+        }
     }
 
     public CustomMob(String id, EntityType type) {
@@ -48,6 +78,90 @@ public class CustomMob extends ExMob {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return if the custom item has an AttackHandler
+     */
+    public boolean hasAttackHandler() {
+        return attackHandler != null;
+    }
+
+    /**
+     * @return the AttackHandler
+     */
+    public AttackHandler getAttackHandler() {
+        return attackHandler;
+    }
+
+    /**
+     * @param attackHandler the handler to set
+     */
+    public void setAttackHandler(AttackHandler attackHandler) {
+        this.attackHandler = attackHandler;
+    }
+
+    /**
+     * @return if the custom mob has a DamageHandler
+     */
+    public boolean hasDamageHandler() {
+        return damageHandler != null;
+    }
+
+    /**
+     * @return the DamageHandler
+     */
+    public DamageHandler getDamageHandler() {
+        return damageHandler;
+    }
+
+    /**
+     * @param damageHandler the handler to set
+     */
+    public void setDamageHandler(DamageHandler damageHandler) {
+        this.damageHandler = damageHandler;
+    }
+
+    /**
+     * @return if the custom mob has a DeathHandler
+     */
+    public boolean hasDeathHandler() {
+        return deathHandler != null;
+    }
+
+    /**
+     * @return the DeathHandler
+     */
+    public DeathHandler getDeathHandler() {
+        return deathHandler;
+    }
+
+    /**
+     * @param deathHandler the handler to set
+     */
+    public void setDeathHandler(DeathHandler deathHandler) {
+        this.deathHandler = deathHandler;
+    }
+
+    /**
+     * @return if the custom mob has a InteractHandler
+     */
+    public boolean hasInteractHandler() {
+        return interactHandler != null;
+    }
+
+    /**
+     * @return the InteractHandler
+     */
+    public InteractHandler getInteractHandler() {
+        return interactHandler;
+    }
+
+    /**
+     * @param interactHandler the handler to set
+     */
+    public void setInteractHandler(InteractHandler interactHandler) {
+        this.interactHandler = interactHandler;
     }
 
     /* Actions */
@@ -87,8 +201,23 @@ public class CustomMob extends ExMob {
             return new HashMap<>(raw);
         }
         Map<String, Object> config = new HashMap<>();
+
         config.put("species", species.name());
         config.put("name", name);
+
+        if (attackHandler != null) {
+            config.put("attackHandler", attackHandler.getClass().getName());
+        }
+        if (damageHandler != null) {
+            config.put("damageHandler", damageHandler.getClass().getName());
+        }
+        if (deathHandler != null) {
+            config.put("deathHandler", deathHandler.getClass().getName());
+        }
+        if (interactHandler != null) {
+            config.put("interactHandler", interactHandler.getClass().getName());
+        }
+
         return config;
     }
 
