@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2019 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -23,13 +23,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 
 public class ExItem extends Categorizable implements ConfigurationSerializable {
 
     protected CaliburnAPI api;
+    protected ItemFactory itemFactory = Bukkit.getItemFactory();
 
     private boolean loaded = false;
 
@@ -200,16 +203,6 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
      */
     public ItemStack toItemStack() {
         return toItemStack(1);
-    }
-
-    /* Statics */
-    public static ExItem deserialize(Map<String, Object> args) {
-        ItemType type = ItemType.REGISTERED.get((String) args.get("type"));
-        if (type == null) {
-            return null;
-        }
-        ExItem item = type.instantiate(args);
-        return item;
     }
 
 }

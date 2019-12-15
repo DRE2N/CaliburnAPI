@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2019 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -15,7 +15,6 @@
 package de.erethon.caliburn.listener;
 
 import de.erethon.caliburn.CaliburnAPI;
-import de.erethon.caliburn.item.CustomEquipment;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
@@ -132,12 +131,12 @@ public class ActionHandlerListener implements Listener {
         public void onPlayerItemDamage(PlayerItemDamageEvent event) {
             ItemStack tool = event.getPlayer().getInventory().getItemInHand();
             ExItem exItem = api.getExItem(tool);
-            if (!(exItem instanceof CustomEquipment)) {
+            if (!(exItem instanceof CustomItem)) {
                 return;
             }
             boolean broken = tool.getDurability() + event.getDamage() >= tool.getType().getMaxDurability();
-            if (((CustomEquipment) exItem).hasDamageHandler()) {
-                ((CustomEquipment) exItem).getDamageHandler().onDamage(tool, event.getPlayer(), broken);
+            if (((CustomItem) exItem).hasDamageHandler()) {
+                ((CustomItem) exItem).getDamageHandler().onDamage(tool, event.getPlayer(), broken);
             }
         }
 

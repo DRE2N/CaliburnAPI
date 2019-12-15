@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2019 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -16,17 +16,13 @@ package de.erethon.caliburn;
 
 import de.erethon.caliburn.category.Categorizable;
 import de.erethon.caliburn.category.Category;
-import de.erethon.caliburn.item.CustomBanner;
-import de.erethon.caliburn.item.CustomEnchantedBook;
-import de.erethon.caliburn.item.CustomEquipment;
-import de.erethon.caliburn.item.CustomFirework;
-import de.erethon.caliburn.item.CustomHead;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.caliburn.listener.ActionHandlerListener;
 import de.erethon.caliburn.listener.EntityListener;
 import de.erethon.caliburn.loottable.LootTable;
+import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.caliburn.util.ExSerialization;
@@ -80,11 +76,6 @@ public class CaliburnAPI {
         }
 
         ConfigurationSerialization.registerClass(CustomItem.class);
-        ConfigurationSerialization.registerClass(CustomBanner.class);
-        ConfigurationSerialization.registerClass(CustomEnchantedBook.class);
-        ConfigurationSerialization.registerClass(CustomEquipment.class);
-        ConfigurationSerialization.registerClass(CustomFirework.class);
-        ConfigurationSerialization.registerClass(CustomHead.class);
     }
 
     /**
@@ -144,16 +135,16 @@ public class CaliburnAPI {
     }
 
     /**
-     * @return the registered items
+     * @return the registered custom items
      */
-    public <T extends ExItem> List<T> getExItems(Class<T> type) {
-        List<T> itemsOfType = new ArrayList<>();
+    public List<CustomItem> getCustomItems() {
+        List<CustomItem> customItems = new ArrayList<>();
         for (ExItem item : items) {
-            if (type.isInstance(item)) {
-                itemsOfType.add((T) item);
+            if (item instanceof CustomItem) {
+                customItems.add((CustomItem) item);
             }
         }
-        return itemsOfType;
+        return customItems;
     }
 
     /**
@@ -237,16 +228,16 @@ public class CaliburnAPI {
     }
 
     /**
-     * @param type All mobs which are an instance of it will be returned.
+     * @return the registered custom mobs
      */
-    public List<ExMob> getExMobs(Class<? extends ExMob> type) {
-        List<ExMob> mobsOfType = new ArrayList<>();
+    public List<CustomMob> getCustomMobs() {
+        List<CustomMob> customMobs = new ArrayList<>();
         for (ExMob mob : mobs) {
-            if (type.isInstance(mob)) {
-                mobsOfType.add(mob);
+            if (mob instanceof CustomMob) {
+                customMobs.add((CustomMob) mob);
             }
         }
-        return mobsOfType;
+        return customMobs;
     }
 
     /**

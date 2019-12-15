@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2019 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -45,10 +45,7 @@ public class ExSerialization {
     }
 
     public ItemStack deserialize(Map<String, Object> objects) {
-        ExItem item = ExItem.deserialize(objects);
-        if (item == null) {
-            return null;
-        }
+        ExItem item = new CustomItem(objects);
         item.load(api);
         Integer amount = (Integer) objects.get("amount");
         return item.toItemStack(amount != null ? amount : 1);

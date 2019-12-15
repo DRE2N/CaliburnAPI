@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>caliburn</artifactId>
-    <version>0.5.5</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
@@ -28,17 +28,17 @@
                             <artifactSet>
                                 <includes>
                                     <include>de.erethon.commons:compatibility</include>
-                                    <include>de.erethon:itemstacklib</include>
+                                    <include>de.erethon:headlib</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
                                 <relocation>
-                                    <pattern>de.erethon.commons.item</pattern>
-                                    <shadedPattern>de.erethon.caliburn.util.item</shadedPattern>
-                                </relocation>
-                                <relocation>
                                     <pattern>de.erethon.commons.compatibility</pattern>
                                     <shadedPattern>de.erethon.caliburn.util.compatibility</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>de.erethon.headlib</pattern>
+                                    <shadedPattern>de.erethon.caliburn.util.headlib</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -58,25 +58,32 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14.2-R0.1-SNAPSHOT</version>
+            <version>1.14.4-R0.1-SNAPSHOT</version><!-- Actually for 1.15, but compatibility... -->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon.commons</groupId>
             <artifactId>compatibility</artifactId>
-            <version>1.5.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon</groupId>
-            <artifactId>itemstacklib</artifactId>
-            <version>2.0.3</version>
+            <version>1.5.3</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon.commons</groupId>
             <artifactId>commons-dist</artifactId>
-            <version>6.0</version>
+            <version>6.1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon</groupId>
+            <artifactId>headlib</artifactId>
+            <version>3.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- From Minecraft -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2019 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -14,26 +14,19 @@
  */
 package de.erethon.caliburn.item;
 
+import com.google.common.collect.Multimap;
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.item.actionhandler.DamageHandler;
 import de.erethon.caliburn.item.actionhandler.DropHandler;
 import de.erethon.caliburn.item.actionhandler.HitHandler;
 import de.erethon.caliburn.item.actionhandler.RightClickHandler;
-import de.erethon.commons.compatibility.Version;
-import de.erethon.commons.item.AttributeWrapper;
-import de.erethon.commons.item.InternalAttribute;
-import de.erethon.commons.item.InternalOperation;
-import de.erethon.commons.item.InternalSlot;
-import de.erethon.commons.misc.EnumUtil;
-import de.erethon.commons.misc.NumberUtil;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -43,14 +36,17 @@ public class CustomItem extends ExItem {
 
     private VanillaItem base;
     private String name;
-    private List<String> lores = new ArrayList<>();
-    private Set<ItemFlag> itemFlags = new HashSet<>();
-    private Map<Enchantment, Integer> enchantments = new HashMap<>();
-    private List<AttributeWrapper> attributes = new ArrayList<>();
+    protected ItemMeta meta;
 
+    private DamageHandler damageHandler;
     private DropHandler dropHandler;
     private HitHandler hitHandler;
     private RightClickHandler rightClickHandler;
+
+    private String skullOwner, textureValue;
+
+    @Deprecated
+    private short data = Short.MIN_VALUE;
 
     // TODO: Better exception handling
     public CustomItem(Map<String, Object> args) {
@@ -65,94 +61,47 @@ public class CustomItem extends ExItem {
             }
         }
 
+        Object meta = args.get("meta");
+        if (meta instanceof ItemMeta) {
+            this.meta = (ItemMeta) meta;
+        } else {
+            this.meta = itemFactory.getItemMeta(this.material);
+        }
+
         Object name = args.get("name");
         if (name instanceof String) {
             setName((String) name);
         }
 
-        Object lores = args.get("lores");
-        if (lores instanceof List) {
-            for (Object lore : (List) lores) {
-                if (lore instanceof String) {
-                    addLore((String) lore);
-                }
-            }
+        Object damageHandler = args.get("damageHandler");
+        if (damageHandler instanceof String) {
+            setDamageHandler(DamageHandler.create((String) damageHandler));
+        }
+        Object dropHandler = args.get("dropHandler");
+        if (dropHandler instanceof String) {
+            setDropHandler(DropHandler.create((String) dropHandler));
+        }
+        Object hitHandler = args.get("hitHandler");
+        if (hitHandler instanceof String) {
+            setHitHandler(HitHandler.create((String) hitHandler));
+        }
+        Object rightClickHandler = args.get("rightClickHandler");
+        if (rightClickHandler instanceof String) {
+            setRightClickHandler(RightClickHandler.create((String) rightClickHandler));
         }
 
-        Object enchantments = args.get("enchantments");
-        if (enchantments instanceof Map) {
-            for (Object enchantment : ((Map) enchantments).entrySet()) {
-                Enchantment type = null;
-                if (Version.isAtLeast(Version.MC1_13)) {
-                    try {
-                        type = Enchantment.getByKey(NamespacedKey.minecraft(((Entry) enchantment).getKey().toString()));
-                    } catch (IllegalArgumentException exception) {
-                    }
-                }
-                if (type == null) {
-                    type = Enchantment.getByName(((Entry) enchantment).getKey().toString());
-                }
-                int level = (int) ((Entry) enchantment).getValue();
-                if (type != null && level != 0) {
-                    this.enchantments.put(type, level);
-                }
-            }
+        Object skullOwner = args.get("skullOwner");
+        if (skullOwner instanceof String) {
+            setSkullOwner((String) skullOwner);
+        }
+        Object textureValue = args.get("textureValue");
+        if (textureValue instanceof String) {
+            setSkullOwner((String) textureValue);
         }
 
-        Object itemFlags = args.get("itemFlags");
-        if (itemFlags instanceof List) {
-            for (Object flag : (List) itemFlags) {
-                if (flag instanceof String && EnumUtil.isValidEnum(ItemFlag.class, (String) flag)) {
-                    this.itemFlags.add(ItemFlag.valueOf((String) flag));
-                }
-            }
-        }
-
-        Object attributes = args.get("attributes");
-        if (attributes instanceof Map) {
-            for (Object attribute : ((Map) attributes).entrySet()) {
-                if (!(attribute instanceof Entry)) {
-                    continue;
-                }
-
-                String attributeName = (String) ((Entry) attribute).getKey();
-                Map attributeMap = (Map) ((Entry) attribute).getValue();
-
-                Object type = attributeMap.get("type");
-                InternalAttribute intType = null;
-                Object slots = attributeMap.get("slots");
-                ArrayList<InternalSlot> intSlots = new ArrayList<>();
-                Object operation = attributeMap.get("operation");
-                InternalOperation intOp = null;
-                Object amount = attributeMap.get("amount");
-                Double intAmount = Double.NaN;
-
-                if (type instanceof String) {
-                    intType = EnumUtil.getEnumIgnoreCase(InternalAttribute.class, (String) type);
-                }
-                if (slots instanceof List) {
-                    for (Object slot : (List) slots) {
-                        if (slot instanceof String) {
-                            InternalSlot iSlot = EnumUtil.getEnumIgnoreCase(InternalSlot.class, (String) slot);
-                            if (iSlot != null) {
-                                intSlots.add(iSlot);
-                            }
-                        }
-                    }
-                }
-                if (operation instanceof String) {
-                    intOp = EnumUtil.getEnumIgnoreCase(InternalOperation.class, (String) operation);
-                }
-                if (amount instanceof String) {
-                    intAmount = NumberUtil.parseDouble((String) amount);
-                } else if (amount instanceof Double) {
-                    intAmount = (Double) amount;
-                }
-
-                if (intType != null && intOp != null && intAmount != Double.NaN) {
-                    this.attributes.add(new AttributeWrapper(intType, attributeName, intAmount, intOp, intSlots.toArray(new InternalSlot[intSlots.size()])));
-                }
-            }
+        Object data = args.get("durability");
+        if (data instanceof Number) {
+            this.data = ((Number) data).shortValue();
         }
     }
 
@@ -177,6 +126,20 @@ public class CustomItem extends ExItem {
         this.base = base;
     }
 
+    /**
+     * @return the item meta
+     */
+    public ItemMeta getMeta() {
+        return meta;
+    }
+
+    /**
+     * @param meta the meta data to set
+     */
+    public void setMeta(ItemMeta meta) {
+        this.meta = meta;
+    }
+
     @Override
     public String getName() {
         return name;
@@ -187,27 +150,28 @@ public class CustomItem extends ExItem {
      */
     public void setName(String name) {
         this.name = ChatColor.translateAlternateColorCodes('&', name);
+        meta.setDisplayName(this.name);
     }
 
     /**
      * @return the lore
      */
-    public List<String> getLores() {
-        return lores;
+    public List<String> getLore() {
+        return meta.getLore();
     }
 
     /**
      * @param lore the lore to add
      */
     public void addLore(String lore) {
-        lores.add(ChatColor.translateAlternateColorCodes('&', lore));
+        meta.getLore().add(ChatColor.translateAlternateColorCodes('&', lore));
     }
 
     /**
      * @return the enchantments as a Map<Enchantment, Integer>
      */
     public Map<Enchantment, Integer> getEnchantments() {
-        return enchantments;
+        return meta.getEnchants();
     }
 
     /**
@@ -215,38 +179,95 @@ public class CustomItem extends ExItem {
      * @param level       the level of the enchantment
      */
     public void addEnchantment(Enchantment enchantment, int level) {
-        enchantments.put(enchantment, level);
+        meta.addEnchant(enchantment, level, true);
     }
 
     /**
      * @return the ItemFlags as a List<ItemFlag>
      */
     public Set<ItemFlag> getItemFlags() {
-        return itemFlags;
+        return meta.getItemFlags();
     }
 
     /**
      * @param itemFlag the itemFlag to add
      */
     public void addItemFlag(ItemFlag itemFlag) {
-        itemFlags.add(itemFlag);
+        meta.addItemFlags(itemFlag);
     }
 
     /**
      * @param itemFlag the itemFlags to remove
      */
     public void removeItemFlag(ItemFlag itemFlag) {
-        itemFlags.remove(itemFlag);
+        meta.removeItemFlags(itemFlag);
     }
 
     /**
      * @return the attributes
      */
-    public List<AttributeWrapper> getAttributes() {
-        return attributes;
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+        return meta.getAttributeModifiers();
+    }
+
+    /**
+     * @param attribute the attribute
+     * @param modifier  the attribute modifier
+     */
+    public void addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+        meta.addAttributeModifier(attribute, modifier);
+    }
+
+    /**
+     * @return the skullOwner
+     */
+    public String getSkullOwner() {
+        return skullOwner;
+    }
+
+    /**
+     * @param skullOwner the skullOwner to set
+     */
+    public void setSkullOwner(String skullOwner) {
+        this.skullOwner = skullOwner;
+    }
+
+    /**
+     * @return the textureValue
+     */
+    public String getTextureValue() {
+        return textureValue;
+    }
+
+    /**
+     * @param textureValue the textureValue to set
+     */
+    public void setTextureValue(String textureValue) {
+        this.textureValue = textureValue;
     }
 
     /* Events */
+    /**
+     * @return if the custom item has a DamageHandler
+     */
+    public boolean hasDamageHandler() {
+        return damageHandler != null;
+    }
+
+    /**
+     * @return the DamageHandler
+     */
+    public DamageHandler getDamageHandler() {
+        return damageHandler;
+    }
+
+    /**
+     * @param handler the handler to set
+     */
+    public void setDamageHandler(DamageHandler handler) {
+        damageHandler = handler;
+    }
+
     /**
      * @return if the custom item has a DropHandler
      */
@@ -347,7 +368,30 @@ public class CustomItem extends ExItem {
             return new HashMap<>(raw);
         }
         Map<String, Object> config = super.serialize();
-        // TO DO
+
+        config.put("meta", meta);
+
+        if (damageHandler != null) {
+            config.put("damageHandler", damageHandler.getClass().getName());
+        }
+        if (dropHandler != null) {
+            config.put("dropHandler", dropHandler.getClass().getName());
+        }
+        if (hitHandler != null) {
+            config.put("hitHandler", hitHandler.getClass().getName());
+        }
+        if (rightClickHandler != null) {
+            config.put("rightClickHandler", rightClickHandler.getClass().getName());
+        }
+        if (skullOwner != null) {
+            config.put("skullOwner", skullOwner);
+        }
+        if (textureValue != null) {
+            config.put("textureValue", textureValue);
+        }
+        if (data != Short.MIN_VALUE) {
+            config.put("durability", data);
+        }
         return config;
     }
 
@@ -357,33 +401,10 @@ public class CustomItem extends ExItem {
     @Override
     public ItemStack toItemStack(int amount) {
         ItemStack itemStack = base.toItemStack(amount);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-
-        if (name != null) {
-            itemMeta.setDisplayName(name);
+        itemStack.setItemMeta(meta.clone());
+        if (data != Short.MIN_VALUE) {
+            itemStack.setDurability(data);
         }
-
-        List<String> lores = new ArrayList<>();
-        if (id != null) {
-            lores.add(getIdLore());
-        }
-        lores.addAll(getLores());
-        itemMeta.setLore(lores);
-
-        for (ItemFlag itemFlag : itemFlags) {
-            itemMeta.addItemFlags(itemFlag);
-        }
-
-        itemStack.setItemMeta(itemMeta);
-
-        for (Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
-            itemStack.addUnsafeEnchantment(enchantment.getKey(), enchantment.getValue());
-        }
-
-        for (AttributeWrapper attribute : attributes) {
-            itemStack = attribute.applyTo(itemStack);
-        }
-
         return itemStack;
     }
 

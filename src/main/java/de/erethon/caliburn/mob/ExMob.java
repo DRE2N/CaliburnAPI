@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2019 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -172,14 +172,6 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
      */
     public Entity toEntity(Location location) {
         return location.getWorld().spawnEntity(location, getSpecies());
-    }
-
-    /* Statics */
-    public static ExMob deserialize(Map<String, Object> args) {
-        /*MobType type = MobType.REGISTERED.get((String) args.get("type"));
-        ExMob mob = type.instantiate(args);
-        return mob;*/
-        return new CustomMob(args);
     }
 
 }
