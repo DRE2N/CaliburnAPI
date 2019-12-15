@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2019 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -115,7 +115,7 @@ public class SimpleSerialization {
         if (meta.hasDisplayName()) {
             serialized += "," + NAME.getPrefixes()[0] + unuseCC(meta.getDisplayName());
         }
-        if (meta.spigot().isUnbreakable()) {
+        if (isUnbreakable(meta)) {
             serialized += "," + UNBREAKABLE.getPrefixes()[0];
         }
         return serialized;
@@ -175,7 +175,7 @@ public class SimpleSerialization {
             } else if (mod == NAME) {
                 meta.setDisplayName(useCC(NAME.stripPrefix(arg)));
             } else if (mod == UNBREAKABLE) {
-                meta.spigot().setUnbreakable(true);
+                setUnbreakable(meta);
             }
         }
         item.setItemMeta(meta);
@@ -192,6 +192,24 @@ public class SimpleSerialization {
 
     private String unuseCC(String string) {
         return string.replace("\u00a7", "&");
+    }
+
+    @Deprecated
+    private boolean isUnbreakable(ItemMeta meta) {
+        if (de.erethon.commons.compatibility.Internals.isAtLeast(de.erethon.commons.compatibility.Internals.v1_11_R1)) {
+            return meta.isUnbreakable();
+        } else {
+            return meta.spigot().isUnbreakable();
+        }
+    }
+
+    @Deprecated
+    private void setUnbreakable(ItemMeta meta) {
+        if (de.erethon.commons.compatibility.Internals.isAtLeast(de.erethon.commons.compatibility.Internals.v1_11_R1)) {
+            meta.setUnbreakable(true);
+        } else {
+            meta.spigot().setUnbreakable(true);
+        }
     }
 
 }
