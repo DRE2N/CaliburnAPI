@@ -48,7 +48,6 @@ public class CustomItem extends ExItem {
     @Deprecated
     private short data = Short.MIN_VALUE;
 
-    // TODO: Better exception handling
     public CustomItem(Map<String, Object> args) {
         raw = args;
 
@@ -368,6 +367,8 @@ public class CustomItem extends ExItem {
             return new HashMap<>(raw);
         }
         Map<String, Object> config = super.serialize();
+
+        config.put("material", base.getId());
 
         config.put("meta", meta);
 

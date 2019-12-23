@@ -17,6 +17,7 @@ package de.erethon.caliburn.listener;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.Category;
 import de.erethon.caliburn.item.ExItem;
+import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.ExMob;
 import org.bukkit.Material;
@@ -29,11 +30,12 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * TODO: IMPLEMENT ATTACK HANDLER AND INTERACT HANDLER
- * 
+ *
  * @author Daniel Saukel
  */
 public class MobListener implements Listener {
@@ -110,6 +112,20 @@ public class MobListener implements Listener {
         if (event.getDamage() > ((LivingEntity) entity).getHealth()) {
             cMob.getDeathHandler().onDeath(entity, event.getCause(), attacker);
         }
+    }
+
+    @EventHandler
+    public void onDeath(EntityDeathEvent event) {
+        ExMob exMob = api.getExMob(event.getEntity());
+        if (!(exMob instanceof CustomMob)) {
+            return;
+        }
+        LootTable drops = ((CustomMob) exMob).getDrops();
+        if (drops == null) {
+            return;
+        }
+        event.getDrops().clear();
+        event.getDrops().addAll(drops.generateLootList());
     }
 
 }

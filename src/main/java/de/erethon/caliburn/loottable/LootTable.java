@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2012-2019 Frank Baumann
+ * Copyright (C) 2015-2019 Daniel Saukel.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,12 +17,20 @@
 package de.erethon.caliburn.loottable;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.commons.chat.MessageUtil;
+import de.erethon.commons.compatibility.Version;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -30,7 +38,14 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Daniel Saukel
  */
-public class LootTable {
+public class LootTable implements ConfigurationSerializable {
+
+    public static final String MAIN_HAND = "mainHand";
+    public static final String OFF_HAND = "offHand";
+    public static final String HELMET = "helmet";
+    public static final String CHESTPLATE = "chestplate";
+    public static final String LEGGINGS = "leggings";
+    public static final String BOOTS = "boots";
 
     public class Entry {
 
@@ -41,7 +56,15 @@ public class LootTable {
         public Entry(String id, ItemStack item, double chance) {
             this.id = id;
             this.item = item;
-            this.chance = chance;
+            setLootChance(chance);
+        }
+
+        public Entry(Map<String, Object> args) {
+            item = CaliburnAPI.getInstance().deserializeStack(args.get("item"));
+            Object chance = args.get("chance");
+            if (chance instanceof Number) {
+                setLootChance(((Number) chance).doubleValue());
+            }
         }
 
         /* Getters and setters */
@@ -84,13 +107,26 @@ public class LootTable {
          * @param chance the loot chance to set
          */
         public void setLootChance(double chance) {
+            if (chance < 0d) {
+                chance = 0d;
+            } else if (chance > 100d) {
+                chance = 100d;
+            }
             this.chance = chance;
+
+        }
+
+        public Map<String, Object> serialize() {
+            Map<String, Object> config = new HashMap<>();
+            config.put("item", item);
+            config.put("chance", chance);
+            return config;
         }
 
     }
 
     private String name;
-    private List<Entry> entries = new ArrayList<>();
+    private Map<String, Entry> entries = new HashMap<>();
 
     /**
      * @param file the script file
@@ -115,7 +151,19 @@ public class LootTable {
             }
 
             double chance = config.getDouble(id + ".chance");
-            entries.add(new Entry(id, item, chance));
+            entries.put(id, new Entry(id, item, chance));
+        }
+    }
+
+    public LootTable(Map<String, Object> args) {
+        for (Map.Entry<String, Object> mapEntry : args.entrySet()) {
+            try {
+                Entry entry = new Entry((Map<String, Object>) mapEntry.getValue());
+                entry.setId(mapEntry.getKey());
+                entries.put(mapEntry.getKey(), entry);
+            } catch (ClassCastException exception) {
+                MessageUtil.log(ChatColor.RED + "Skipping erroneous loot table entry \"" + mapEntry.getKey() + "\".");
+            }
         }
     }
 
@@ -139,22 +187,78 @@ public class LootTable {
     /**
      * @return the entries
      */
-    public List<Entry> getEntries() {
-        return entries;
+    public Collection<Entry> getEntries() {
+        return entries.values();
+    }
+
+    /**
+     * Returns the entry with the given ID.
+     *
+     * @param id the entry ID
+     * @return the entry with the given ID.
+     */
+    public Entry getEntry(String id) {
+        return entries.get(id);
     }
 
     /**
      * @param entry the entry to add
      */
     public void addEntry(Entry entry) {
-        entries.add(entry);
+        entries.put(entry.getId(), entry);
     }
 
     /**
      * @param entry the entry to remove
      */
     public void removeEntry(Entry entry) {
-        entries.remove(entry);
+        entries.remove(entry.getId());
+    }
+
+    /**
+     * Overrides the values of the given instance of EntityEquipment.<p>
+     * Values are taken from the entries with the IDs specified in the constants in this class.<p>
+     * These are: "mainHand", "offHand", "helmet", "chestplate", "leggings" and "boots".
+     *
+     * @param entityEquip the instance of EntityEquipment to override
+     */
+    public void setEntityEquipment(EntityEquipment entityEquip) {
+        boolean off = Version.isAtLeast(Version.MC1_9);
+        Entry mainHand = getEntry(LootTable.MAIN_HAND);
+        Entry offHand = getEntry(LootTable.OFF_HAND);
+        if (off) {
+            entityEquip.setItemInMainHand(mainHand.getLootItem());
+            entityEquip.setItemInMainHandDropChance((float) (mainHand.getLootChance() / 100d));
+            entityEquip.setItemInOffHand(offHand.getLootItem());
+            entityEquip.setItemInOffHandDropChance((float) (mainHand.getLootChance() / 100d));
+        } else {
+            entityEquip.setItemInHand(mainHand.getLootItem());
+            entityEquip.setItemInHandDropChance((float) (mainHand.getLootChance() / 100d));
+        }
+
+        Entry helmet = getEntry(LootTable.HELMET);
+        if (helmet != null) {
+            entityEquip.setHelmet(helmet.getLootItem());
+            entityEquip.setHelmetDropChance((float) (helmet.getLootChance() / 100d));
+        }
+
+        Entry chestplate = getEntry(LootTable.CHESTPLATE);
+        if (chestplate != null) {
+            entityEquip.setHelmet(chestplate.getLootItem());
+            entityEquip.setHelmetDropChance((float) (chestplate.getLootChance() / 100d));
+        }
+
+        Entry leggings = getEntry(LootTable.LEGGINGS);
+        if (leggings != null) {
+            entityEquip.setHelmet(leggings.getLootItem());
+            entityEquip.setHelmetDropChance((float) (leggings.getLootChance() / 100d));
+        }
+
+        Entry boots = getEntry(LootTable.BOOTS);
+        if (boots != null) {
+            entityEquip.setHelmet(boots.getLootItem());
+            entityEquip.setHelmetDropChance((float) (boots.getLootChance() / 100d));
+        }
     }
 
     /* Actions */
@@ -165,12 +269,19 @@ public class LootTable {
      */
     public List<ItemStack> generateLootList() {
         List<ItemStack> lootList = new ArrayList<>();
-        for (Entry entry : entries) {
+        for (Entry entry : entries.values()) {
             if (new Random().nextInt(100) < entry.getLootChance()) {
                 lootList.add(entry.getLootItem());
             }
         }
         return lootList;
+    }
+
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> config = new HashMap<>();
+        entries.values().forEach(e -> config.put(e.getId(), e.serialize()));
+        return config;
     }
 
     @Override

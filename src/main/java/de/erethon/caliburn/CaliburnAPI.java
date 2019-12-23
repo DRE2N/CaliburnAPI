@@ -69,13 +69,15 @@ public class CaliburnAPI {
         mobs.addAll(VanillaMob.getLoaded());
 
         Bukkit.getPluginManager().registerEvents(new MobListener(this), plugin);
-        ItemListener ahl = new ItemListener(this);
-        Bukkit.getPluginManager().registerEvents(ahl, plugin);
+        ItemListener il = new ItemListener(this);
+        Bukkit.getPluginManager().registerEvents(il, plugin);
         if (CompatibilityHandler.getInstance().isSpigot()) {
-            Bukkit.getPluginManager().registerEvents(ahl.new Spigot(), plugin);
+            Bukkit.getPluginManager().registerEvents(il.new Spigot(), plugin);
         }
 
         ConfigurationSerialization.registerClass(CustomItem.class);
+        ConfigurationSerialization.registerClass(CustomMob.class);
+        ConfigurationSerialization.registerClass(LootTable.class);
     }
 
     /**
@@ -322,7 +324,16 @@ public class CaliburnAPI {
      * @return the deserialized ItemStack
      */
     public ItemStack deserializeStack(ConfigurationSection config, String path) {
-        Object object = config.get(path);
+        return deserializeStack(config.get(path));
+    }
+
+    /**
+     * Universal deserialization method to deserialize a Bukkit ItemStack
+     *
+     * @param object ItemStack, ExItem or {@link de.erethon.caliburn.util.SimpleSerialization} String
+     * @return the deserialized ItemStack
+     */
+    public ItemStack deserializeStack(Object object) {
         if (object instanceof ItemStack) {
             return (ItemStack) object;
         } else if (object instanceof String) {
@@ -347,15 +358,7 @@ public class CaliburnAPI {
         if (list == null) {
             return deserialized;
         }
-        for (Object obj : list) {
-            if (obj instanceof ItemStack) {
-                deserialized.add((ItemStack) obj);
-            } else if (obj instanceof String) {
-                deserialized.add(simpleSerialization.deserialize((String) obj));
-            } else if (obj instanceof ExItem) {
-                deserialized.add(exSerialization.deserialize(((ExItem) obj).getRaw()));
-            }
-        }
+        list.forEach(e -> deserialized.add(deserializeStack(e)));
         return deserialized;
     }
 
