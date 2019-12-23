@@ -205,17 +205,17 @@ public class CustomItem extends ExItem {
     /**
      * @return the attributes
      */
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+    /*public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
         return meta.getAttributeModifiers();
-    }
+    }*/
 
     /**
      * @param attribute the attribute
      * @param modifier  the attribute modifier
      */
-    public void addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+    /*public void addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
         meta.addAttributeModifier(attribute, modifier);
-    }
+    }*/
 
     /**
      * @return the skullOwner
