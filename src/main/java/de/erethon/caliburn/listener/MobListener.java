@@ -29,13 +29,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * TODO: IMPLEMENT ATTACK HANDLER AND INTERACT HANDLER
- *
  * @author Daniel Saukel
  */
 public class MobListener implements Listener {
@@ -48,7 +46,12 @@ public class MobListener implements Listener {
 
     @EventHandler
     public void onDamageByEntity(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player) || event.getCause() != DamageCause.ENTITY_ATTACK) {
+        ExMob damager = api.getExMob(event.getDamager());
+        if (damager instanceof CustomMob && ((CustomMob) damager).hasAttackHandler()) {
+            ((CustomMob) damager).getAttackHandler().onAttack(event.getDamager(), event.getEntity());
+        }
+
+        if (!(event.getDamager() instanceof Player)) {
             return;
         }
 
@@ -126,6 +129,14 @@ public class MobListener implements Listener {
         }
         event.getDrops().clear();
         event.getDrops().addAll(drops.generateLootList());
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEntityEvent event) {
+        ExMob mob = api.getExMob(event.getRightClicked());
+        if (mob instanceof CustomMob && ((CustomMob) mob).hasInteractHandler()) {
+            ((CustomMob) mob).getInteractHandler().onInteract(event.getRightClicked(), event.getPlayer());
+        }
     }
 
 }
