@@ -171,14 +171,14 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
-     * @param item an item
+     * @param t an object of the category type
      * @return if this category contains the item
      */
-    public boolean contains(ExItem item) {
-        if (item == null) {
+    public boolean contains(T t) {
+        if (t == null) {
             return false;
         }
-        return elements.contains(item);
+        return elements.contains(t);
     }
 
     /**
@@ -189,7 +189,11 @@ public class Category<T extends Categorizable> extends Categorizable {
         if (material == null) {
             return false;
         }
-        return contains(VanillaItem.get(material));
+        try {
+            return contains((T) VanillaItem.get(material));
+        } catch (ClassCastException exception) {
+            return false;
+        }
     }
 
     /**
