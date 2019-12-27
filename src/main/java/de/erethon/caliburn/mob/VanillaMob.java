@@ -124,6 +124,7 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob TRADER_LLAMA = new VanillaMob(MC1_14, "trader_llama", "TRADER_LLAMA");
     public static final VanillaMob WANDERING_TRADER = new VanillaMob(MC1_14, "wandering_trader", "WANDERING_TRADER");
     public static final VanillaMob FOX = new VanillaMob(MC1_14, "fox", "FOX");
+    public static final VanillaMob BEE = new VanillaMob(MC1_15, "bee", "BEE");
 
     public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, "lingering_potion", "LINGERING_POTION");
     public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");

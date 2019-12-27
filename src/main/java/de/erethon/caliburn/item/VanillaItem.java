@@ -959,8 +959,17 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem WHITE_DYE = new VanillaItem(MC1_14, "WHITE_DYE");
     public static final VanillaItem WITHER_ROSE = new VanillaItem(MC1_14, "WITHER_ROSE");
 
+    // 1.15 ITEMS
+    public static final VanillaItem BEEHIVE = new VanillaItem(MC1_15, "BEEHIVE");
+    public static final VanillaItem BEE_NEST = new VanillaItem(MC1_15, "BEE_NEST");
+    public static final VanillaItem HONEYCOMB = new VanillaItem(MC1_15, "HONEYCOMB");
+    public static final VanillaItem HONEYCOMB_BLOCK = new VanillaItem(MC1_15, "HONEYCOMB_BLOCK");
+    public static final VanillaItem HONEY_BLOCK = new VanillaItem(MC1_15, "HONEY_BLOCK");
+    public static final VanillaItem HONEY_BOTTLE = new VanillaItem(MC1_15, "HONEY_BOTTLE");
+
     // SPAWN EGGS
     public static final VanillaItem BAT_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "BAT_SPAWN_EGG", 383);
+    public static final VanillaItem BEE_SPAWN_EGG = new VanillaItem(MC1_15, "BEE_SPAWN_EGG");
     public static final VanillaItem BLAZE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "BLAZE_SPAWN_EGG", 383);
     public static final VanillaItem CAT_SPAWN_EGG = new VanillaItem(MC1_14, "CAT_SPAWN_EGG");
     public static final VanillaItem CAVE_SPIDER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "CAVE_SPIDER_SPAWN_EGG", 383);
