@@ -18,6 +18,7 @@ import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.Version;
 import static de.erethon.commons.compatibility.Version.*;
 import de.erethon.commons.misc.EnumUtil;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -144,7 +145,7 @@ public class VanillaMob extends ExMob {
         @Override
         public EntityType getSpecies() {
             if (Version.isAtLeast(Version.MC1_14)) {
-                return EntityType.valueOf(CAT.getBukkitName());
+                return EntityType.valueOf(getBukkitName());
             } else {
                 return OCELOT.getSpecies();
             }
@@ -156,113 +157,13 @@ public class VanillaMob extends ExMob {
     private static Map<EntityType, VanillaMob> BY_ENTITY_TYPE = new HashMap<>();
 
     static {
-        VALUES.add(UNKNOWN);
-        VALUES.add(ITEM);
-        VALUES.add(EXPERIENCE_ORB);
-        VALUES.add(AREA_EFFECT_CLOUD);
-        VALUES.add(EGG);
-        VALUES.add(LEASH_KNOT);
-        VALUES.add(PAINTING);
-        VALUES.add(ARROW);
-        VALUES.add(SNOWBALL);
-        VALUES.add(FIREBALL);
-        VALUES.add(SMALL_FIREBALL);
-        VALUES.add(ENDER_PEARL);
-        VALUES.add(EYE_OF_ENDER);
-        VALUES.add(POTION);
-        VALUES.add(EXPERIENCE_BOTTLE);
-        VALUES.add(ITEM_FRAME);
-        VALUES.add(WITHER_SKULL);
-        VALUES.add(TNT);
-        VALUES.add(FALLING_BLOCK);
-        VALUES.add(FIREWORK_ROCKET);
-        VALUES.add(SPECTRAL_ARROW);
-        VALUES.add(SHULKER_BULLET);
-        VALUES.add(DRAGON_FIREBALL);
-        VALUES.add(ARMOR_STAND);
-        VALUES.add(EVOKER_FANGS);
-        VALUES.add(EVOKER);
-        VALUES.add(VEX);
-        VALUES.add(VINDICATOR);
-        VALUES.add(ILLUSIONER);
-        VALUES.add(COMMAND_BLOCK_MINECART);
-        VALUES.add(BOAT);
-        VALUES.add(MINECART);
-        VALUES.add(CHEST_MINECART);
-        VALUES.add(FURNACE_MINECART);
-        VALUES.add(TNT_MINECART);
-        VALUES.add(HOPPER_MINECART);
-        VALUES.add(SPAWNER_MINECART);
-        VALUES.add(CREEPER);
-        VALUES.add(SKELETON);
-        VALUES.add(SPIDER);
-        VALUES.add(GIANT);
-        VALUES.add(ZOMBIE);
-        VALUES.add(SLIME);
-        VALUES.add(GHAST);
-        VALUES.add(ZOMBIE_PIGMAN);
-        VALUES.add(ENDERMAN);
-        VALUES.add(CAVE_SPIDER);
-        VALUES.add(SILVERFISH);
-        VALUES.add(BLAZE);
-        VALUES.add(MAGMA_CUBE);
-        VALUES.add(ENDER_DRAGON);
-        VALUES.add(WITHER);
-        VALUES.add(BAT);
-        VALUES.add(WITCH);
-        VALUES.add(ENDERMITE);
-        VALUES.add(GUARDIAN);
-        VALUES.add(SHULKER);
-        VALUES.add(PIG);
-        VALUES.add(SHEEP);
-        VALUES.add(COW);
-        VALUES.add(CHICKEN);
-        VALUES.add(SQUID);
-        VALUES.add(WOLF);
-        VALUES.add(MOOSHROOM);
-        VALUES.add(SNOW_GOLEM);
-        VALUES.add(OCELOT);
-        VALUES.add(IRON_GOLEM);
-        VALUES.add(HORSE);
-        VALUES.add(RABBIT);
-        VALUES.add(POLAR_BEAR);
-        VALUES.add(LLAMA);
-        VALUES.add(LLAMA_SPIT);
-        VALUES.add(PARROT);
-        VALUES.add(VILLAGER);
-        VALUES.add(END_CRYSTAL);
-        VALUES.add(ELDER_GUARDIAN);
-        VALUES.add(WITHER_SKELETON);
-        VALUES.add(STRAY);
-        VALUES.add(HUSK);
-        VALUES.add(ZOMBIE_VILLAGER);
-        VALUES.add(SKELETON_HORSE);
-        VALUES.add(ZOMBIE_HORSE);
-        VALUES.add(DONKEY);
-        VALUES.add(MULE);
-        VALUES.add(CAT);
-        VALUES.add(DOLPHIN);
-        VALUES.add(DROWNED);
-        VALUES.add(COD);
-        VALUES.add(SALMON);
-        VALUES.add(PUFFERFISH);
-        VALUES.add(TROPICAL_FISH);
-        VALUES.add(PHANTOM);
-        VALUES.add(TURTLE);
-        VALUES.add(TRIDENT);
-        VALUES.add(PANDA);
-        VALUES.add(PILLAGER);
-        VALUES.add(RAVAGER);
-        VALUES.add(TRADER_LLAMA);
-        VALUES.add(WANDERING_TRADER);
-        VALUES.add(FOX);
-        VALUES.add(LINGERING_POTION);
-        VALUES.add(FISHING_HOOK);
-        VALUES.add(LIGHTNING);
-        VALUES.add(WEATHER);
-        VALUES.add(PLAYER);
-        VALUES.add(COMPLEX_PART);
-        VALUES.add(TIPPED_ARROW);
+        for (Field constant : VanillaMob.class.getFields()) {
+            try {
+                VALUES.add((VanillaMob) constant.get(null));
+            } catch (IllegalArgumentException | IllegalAccessException exception) {
+                exception.printStackTrace();
+            }
+        }
 
         bukkitMobs:
         for (EntityType bukkit : EntityType.values()) {
