@@ -31,16 +31,6 @@
                                     <include>de.erethon:headlib</include>
                                 </includes>
                             </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>de.erethon.commons.compatibility</pattern>
-                                    <shadedPattern>de.erethon.caliburn.util.compatibility</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>de.erethon.headlib</pattern>
-                                    <shadedPattern>de.erethon.caliburn.util.headlib</shadedPattern>
-                                </relocation>
-                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
