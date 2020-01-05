@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -29,6 +29,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 /**
+ * Superclass for vanilla and custom mobs.
+ *
  * @author Daniel Saukel
  */
 public class ExMob extends Categorizable implements ConfigurationSerializable {
@@ -43,6 +45,11 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     protected Map<Category<ExItem>, Double> categoryDamageModifiers = new HashMap<>();
     protected Map<ExItem, Double> itemDamageModifiers = new HashMap<>();
 
+    /**
+     * Loads mob properties from the config.
+     *
+     * @param api the API instance to inject
+     */
     public void load(CaliburnAPI api) {
         for (Category<ExMob> category : api.getMobCategories()) {
             if (category.getElements().contains(this)) {
@@ -93,8 +100,11 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
 
     /**
      * Modifies a value of the raw data Map.
+     * <p>
+     * Serializes the raw data if it hasn't been done yet.
      *
-     * @param raw the raw data Map to set
+     * @param key   the key
+     * @param value the value
      */
     public void setRaw(String key, Object value) {
         if (raw == null) {
@@ -104,6 +114,8 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
+     * Returns the mob species.
+     *
      * @return the mob species
      */
     public EntityType getSpecies() {
@@ -111,6 +123,8 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
+     * Sets the mob species.
+     *
      * @param species the mob species to set
      */
     public void setSpecies(EntityType species) {
@@ -118,33 +132,57 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @return the display name of the mob
+     * Returns the name of the mob.
+     *
+     * @return the name of the mob
      */
     public String getName() {
         return getSpecies().name();
     }
 
     /* Damage modifiers */
-    public Map<ExItem, Double> getItemDamageModifiers() {
-        return itemDamageModifiers;
+    /**
+     * Returns a Map of item categories and the modifier damage dealt to them with this item is multiplied with.
+     *
+     * @return a Map of item categories and the modifier damage dealt to them with this item is multiplied with
+     */
+    public Map<Category<ExItem>, Double> getCategoryDamageModifiers() {
+        return categoryDamageModifiers;
     }
 
-    public double getItemDamageModifier(ExItem item) {
-        if (itemDamageModifiers.containsKey(item)) {
-            return itemDamageModifiers.get(item);
+    /**
+     * Returns the damage modifier for the given category.
+     *
+     * @param itemCategory the category
+     * @return the damage modifier for the given category
+     */
+    public double getCategoryDamageModifier(Category<ExItem> itemCategory) {
+        if (categoryDamageModifiers.containsKey(itemCategory)) {
+            return categoryDamageModifiers.get(itemCategory);
 
         } else {
             return 1;
         }
     }
 
-    public Map<Category<ExItem>, Double> getCategoryDamageModifiers() {
-        return categoryDamageModifiers;
+    /**
+     * Returns a Map of items and the modifier damage dealt to them with this item is multiplied with.
+     *
+     * @return a Map of items and the modifier damage dealt to them with this item is multiplied with
+     */
+    public Map<ExItem, Double> getItemDamageModifiers() {
+        return itemDamageModifiers;
     }
 
-    public double getCategoryDamageModifier(Category<ExItem> itemCategory) {
-        if (categoryDamageModifiers.containsKey(itemCategory)) {
-            return categoryDamageModifiers.get(itemCategory);
+    /**
+     * Returns the damage modifier for the given item.
+     *
+     * @param item the item
+     * @return the damage modifier for the given category
+     */
+    public double getItemDamageModifier(ExItem item) {
+        if (itemDamageModifiers.containsKey(item)) {
+            return itemDamageModifiers.get(item);
 
         } else {
             return 1;
@@ -168,7 +206,10 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @return the mob as an org.bukkit.entity.Entity
+     * Returns an Entity representation at the given location.
+     *
+     * @param location the location
+     * @return an Entity representation at the given location
      */
     public Entity toEntity(Location location) {
         return location.getWorld().spawnEntity(location, getSpecies());

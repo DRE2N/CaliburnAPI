@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -31,7 +31,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * A simple but powerful one-line serialization format for ItemStacks
+ * A simple but powerful one-line serialization format for item stacks.
+ * <p>
+ * The format looks like:
+ * <p>
+ * "item:id,amount,damage,data"
+ * <ul>
+ * <li>The "item:" prefix is optional.
+ * <li>The "data" consists of a prefix and a value after it.
+ * </ul><p>
+ * Examples:
+ * <ul>
+ * <li>"golden_sword" - A golden sword.
+ * <li>"apple,4,F:HIDE_UNBREAKABLE,U,L:&amp;4An unbreakable apple&lt;br&gt;&amp;5With two colored lore lines"
+ * </ul>
  *
  * @author Daniel Saukel
  */
@@ -40,6 +53,9 @@ public class SimpleSerialization {
     public static final String PREFIX = "item:";
     private CaliburnAPI api;
 
+    /**
+     * The valid data modifiers.
+     */
     public enum ItemModifier {
 
         ENCHANTMENT("ENCHANTMENT:", "ENCHANT:", "E:"),

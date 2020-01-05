@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -34,10 +34,18 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+/**
+ * An item that has by default changed properties compared to Minecraft's vanilla items.
+ *
+ * @author Daniel Saukel
+ */
 public class CustomItem extends ExItem {
 
     private VanillaItem base;
     private String name;
+    /**
+     * The ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
+     */
     protected ItemMeta meta;
 
     private DamageHandler damageHandler;
@@ -110,6 +118,8 @@ public class CustomItem extends ExItem {
 
     /* Getters and setters */
     /**
+     * Returns the item that this one is based on.
+     *
      * @return the item that this one is based on
      */
     public VanillaItem getBase() {
@@ -117,32 +127,47 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @param base set the item that this one is based on
+     * Sets the item that this one is based on.
+     *
+     * @param base the item that this one is based on
      */
     public void setBase(VanillaItem base) {
         this.base = base;
     }
 
     /**
-     * @return the item meta
+     * Returns the ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
+     *
+     * @return the ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem
      */
     public ItemMeta getMeta() {
         return meta;
     }
 
     /**
+     * Sets the ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem directly.
+     *
      * @param meta the meta data to set
      */
     public void setMeta(ItemMeta meta) {
         this.meta = meta;
     }
 
+    /**
+     * Returns the display name of this item.
+     *
+     * @return the display name of this item
+     */
     @Override
     public String getName() {
         return name;
     }
 
     /**
+     * Sets the display name.
+     * <p>
+     * Supports color codes.
+     *
      * @param name the display name to set
      */
     public void setName(String name) {
@@ -151,6 +176,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the lore.
+     *
      * @return the lore
      */
     public List<String> getLore() {
@@ -158,17 +185,17 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Adds a lore line.
+     *
      * @param lore the lore to add
      */
     public void addLore(String lore) {
-        meta.getLore().add(ChatColor.translateAlternateColorCodes('&', lore));
         List<String> lines = meta.hasLore() ? meta.getLore() : new ArrayList<>();
         lines.add(ChatColor.translateAlternateColorCodes('&', lore));
         meta.setLore(lines);
     }
 
     /**
-     * @return the enchantments as a Map<Enchantment, Integer>
      * Removes a lore line.
      *
      * @param index the lore index number
@@ -185,7 +212,7 @@ public class CustomItem extends ExItem {
     /**
      * Removes a lore line.
      * <p>
-     * Chat colors are translated, so removing "&4Test" will remove {@link org.bukkit.ChatColor}.DARK_RED + "Test".
+     * Chat colors are translated, so removing "&amp;4Test" will remove {@link org.bukkit.ChatColor}.DARK_RED + "Test".
      *
      * @param lore the lore to remove
      */
@@ -198,12 +225,18 @@ public class CustomItem extends ExItem {
         meta.setLore(lines);
     }
 
+    /**
+     * Returns the enchantments as a Map of Enchantment and level integer.
+     *
+     * @return the enchantments as a Map of Enchantment and level integer
      */
     public Map<Enchantment, Integer> getEnchantments() {
         return meta.getEnchants();
     }
 
     /**
+     * Adds an enchantment.
+     *
      * @param enchantment the enchantment to add
      * @param level       the level of the enchantment
      */
@@ -212,7 +245,6 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @return the ItemFlags as a List<ItemFlag>
      * Removes an enchantment.
      *
      * @param enchantment the enchantment
@@ -221,20 +253,28 @@ public class CustomItem extends ExItem {
         meta.removeEnchant(enchantment);
     }
 
+    /**
+     * Returns a List of the item flags.
+     *
+     * @return a List of the item flags
      */
     public Set<ItemFlag> getItemFlags() {
         return meta.getItemFlags();
     }
 
     /**
-     * @param itemFlag the itemFlag to add
+     * Adds an item flag.
+     *
+     * @param itemFlag the item flag to add
      */
     public void addItemFlag(ItemFlag itemFlag) {
         meta.addItemFlags(itemFlag);
     }
 
     /**
-     * @param itemFlag the itemFlags to remove
+     * Removes an item flag.
+     *
+     * @param itemFlag the item flag to remove
      */
     public void removeItemFlag(ItemFlag itemFlag) {
         meta.removeItemFlags(itemFlag);
@@ -246,7 +286,6 @@ public class CustomItem extends ExItem {
     /*public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
         return meta.getAttributeModifiers();
     }*/
-
     /**
      * @param attribute the attribute
      * @param modifier  the attribute modifier
@@ -254,12 +293,11 @@ public class CustomItem extends ExItem {
     /*public void addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
         meta.addAttributeModifier(attribute, modifier);
     }*/
-
     /**
-     * @return the skullOwner
+     * Removes all modifiers of the given attribute.
+     *
+     * @param attribute the attribute
      */
-    public String getSkullOwner() {
-        return skullOwner;
     /*public void removeAttributeModifier(Attribute attribute) {
         meta.removeAttributeModifier(attribute);
     }*/
@@ -291,7 +329,9 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @return the textureValue
+     * Returns the Base64 encoded skull owner texture value.
+     *
+     * @return the Base64 encoded skull owner texture value
      */
     public String getTextureValue() {
         return textureValue;
@@ -310,6 +350,8 @@ public class CustomItem extends ExItem {
 
     /* Events */
     /**
+     * Returns if the custom item has a DamageHandler.
+     *
      * @return if the custom item has a DamageHandler
      */
     public boolean hasDamageHandler() {
@@ -317,6 +359,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the DamageHandler.
+     *
      * @return the DamageHandler
      */
     public DamageHandler getDamageHandler() {
@@ -324,6 +368,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Sets the DamageHandler.
+     *
      * @param handler the handler to set
      */
     public void setDamageHandler(DamageHandler handler) {
@@ -331,6 +377,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns if the custom item has a DropHandler.
+     *
      * @return if the custom item has a DropHandler
      */
     public boolean hasDropHandler() {
@@ -338,6 +386,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the DropHandler.
+     *
      * @return the DropHandler
      */
     public DropHandler getDropHandler() {
@@ -345,6 +395,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Sets the DropHandler.
+     *
      * @param handler the handler to set
      */
     public void setDropHandler(DropHandler handler) {
@@ -352,6 +404,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns if the custom item has a HitHandler.
+     *
      * @return if the custom item has a HitHandler
      */
     public boolean hasHitHandler() {
@@ -359,6 +413,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the HitHandler.
+     *
      * @return the HitHandler
      */
     public HitHandler getHitHandler() {
@@ -366,6 +422,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Sets the HitHandler.
+     *
      * @param handler the handler to set
      */
     public void setHitHandler(HitHandler handler) {
@@ -373,6 +431,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns if the custom item has a RightClickHandler.
+     *
      * @return if the custom item has a RightClickHandler
      */
     public boolean hasRightClickHandler() {
@@ -380,6 +440,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the RightClickHandler.
+     *
      * @return the RightClickHandler
      */
     public RightClickHandler getRightClickHandler() {
@@ -387,6 +449,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Sets the RightClickHandler.
+     *
      * @param handler the handler to set
      */
     public void setRightClickHandler(RightClickHandler handler) {
@@ -395,7 +459,7 @@ public class CustomItem extends ExItem {
 
     /* Actions */
     /**
-     * Registers the item sothat it can be fetched through the getter methods
+     * Registers the item sothat it can be fetched through the getter methods.
      *
      * @return itself
      */
@@ -411,7 +475,7 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * Registers the item sothat it can be fetched through the getter methods
+     * Registers the item sothat it can be fetched through the getter methods.
      *
      * @param id the ID to set
      * @return itself
@@ -459,9 +523,6 @@ public class CustomItem extends ExItem {
         return config;
     }
 
-    /**
-     * @return the custom item as an ItemStack
-     */
     @Override
     public ItemStack toItemStack(int amount) {
         ItemStack itemStack = base.toItemStack(amount);

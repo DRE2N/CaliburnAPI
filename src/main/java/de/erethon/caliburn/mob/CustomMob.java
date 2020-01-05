@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -30,6 +30,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 
 /**
+ * A mob that has by default changed properties compared to Minecraft's vanilla mobs.
  * TODO: META DATA, ATTRIBUTES, PERSISTENT DATA CONTAINER
  *
  * @author Daniel Saukel
@@ -170,148 +171,321 @@ public class CustomMob extends ExMob {
     }
 
     /* Getters and setters */
+    /**
+     * Returns the mob that this one is based on.
+     *
+     * @return the mob that this one is based on
+     */
     public VanillaMob getBase() {
         return base;
     }
 
+    /**
+     * Sets the mob that this one is based on.
+     *
+     * @param base the mob that this one is based on
+     */
     public void setBase(VanillaMob base) {
         this.base = base;
     }
 
+    /**
+     * Returns the display name of this mob.
+     *
+     * @return the display name of this mob
+     */
     @Override
     public String getName() {
         return name;
     }
 
     /**
-     * @param name the custom name to set
+     * Sets the display name.
+     * <p>
+     * Supports color codes.
+     *
+     * @param name the display name to set
      */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Returns if the custom name is visible; null = Minecraft default.
+     *
+     * @return if the custom name is visible; null = Minecraft default
+     */
     public Boolean isCustomNameVisible() {
         return customNameVisible;
     }
 
+    /**
+     * Set if the custom name is visible.
+     *
+     * @param customNameVisible if the custom name is visible
+     */
     public void setCustomNameVisible(boolean customNameVisible) {
         this.customNameVisible = customNameVisible;
     }
 
+    /**
+     * Returns if the mob is glowing; null = Minecraft default.
+     *
+     * @return if the mob is glowing; null = Minecraft default
+     */
     public Boolean isGlowing() {
         return glowing;
     }
 
+    /**
+     * Set if the mob is glowing.
+     *
+     * @param glowing if the mob is glowing
+     */
     public void setGlowing(boolean glowing) {
         this.glowing = glowing;
     }
 
+    /**
+     * Returns if the mob has gravity; null = Minecraft default.
+     *
+     * @return if the mob has gravity; null = Minecraft default
+     */
     public Boolean hasGravity() {
         return gravity;
     }
 
+    /**
+     * Sets if the mob has gravity
+     *
+     * @param gravity if the mob has gravity
+     */
     public void setGravity(boolean gravity) {
         this.gravity = gravity;
     }
 
+    /**
+     * Returns if the mob is invulnerable; null = Minecraft default.
+     *
+     * @return if the mob is invulnerable; null = Minecraft default
+     */
     public Boolean isInvulnerable() {
         return invulnerable;
     }
 
+    /**
+     * Sets if the mob is invulnerable.
+     *
+     * @param invulnerable if the mob is invulnerable
+     */
     public void setInvulnerable(boolean invulnerable) {
         this.invulnerable = invulnerable;
     }
 
+    /**
+     * Returns if the mob is silent; null = Minecraft default.
+     *
+     * @return if the mob is silent; null = Minecraft default
+     */
     public Boolean isSilent() {
         return silent;
     }
 
+    /**
+     * Sets if the mob is silent.
+     *
+     * @param silent if the mob is silent
+     */
     public void setSilent(boolean silent) {
         this.silent = silent;
     }
 
+    /**
+     * Returns if the mob is persistent; null = Minecraft default.
+     *
+     * @return if the mob is persistent; null = Minecraft default
+     * @deprecated the underlying Bukkit API is deprecated.
+     */
     @Deprecated
     public Boolean isPersistent() {
         return persistent;
     }
 
+    /**
+     * Sets if the mob is persistent.
+     *
+     * @param persistent if the mob is persistent
+     * @deprecated the underlying Bukkit API is deprecated.
+     */
     @Deprecated
     public void setPersistent(boolean persistent) {
         this.persistent = persistent;
     }
 
+    /**
+     * Returns a Collection of the potion effects the mob is spawned with.
+     *
+     * @return a Collection of the potion effects the mob is spawned with
+     */
     public Collection<PotionEffect> getPotionEffects() {
         return potionEffects;
     }
 
+    /**
+     * Sets the potion effects the mob is spawned with.
+     *
+     * @param potionEffects the potion effects
+     */
     public void setPotionEffects(Collection<PotionEffect> potionEffects) {
         this.potionEffects = potionEffects;
     }
 
+    /**
+     * Returns the mob's equipment in a loot table where the slot names of the entries define the position of the respective item.
+     * These are taken from the constants in {@link LootTable}, like e.g. {@link LootTable#MAIN_HAND}.
+     * <p>
+     * This value may be null instead if the mob doesn't have any equipment.
+     *
+     * @return the mob's equipment in a loot table; this value may be null instead if the mob doesn't have any equipment
+     */
     public LootTable getEquipment() {
         return equipment;
     }
 
+    /**
+     * Sets the mob's equipment.
+     *
+     * @param equipment the equipment loot table (see explanation in {@link #getEquipment()}
+     */
     public void setEquipment(LootTable equipment) {
         this.equipment = equipment;
     }
 
+    /**
+     * Returns if the mob is removed when it is far awawy; null = Minecraft default.
+     *
+     * @return if the mob is removed when it is far awawy; null = Minecraft default
+     */
     public Boolean getRemoveWhenFarAway() {
         return removeWhenFarAway;
     }
 
+    /**
+     * Sets if the mob is removed when it is far away.
+     *
+     * @param removeWhenFarAway if the mob is removed when it is far away
+     */
     public void setRemoveWhenFarAway(boolean removeWhenFarAway) {
         this.removeWhenFarAway = removeWhenFarAway;
     }
 
+    /**
+     * Returns if the mob has an AI; null = Minecraft default.
+     *
+     * @return if the mob has an AI; null = Minecraft default
+     */
     public Boolean hasAI() {
         return ai;
     }
 
+    /**
+     * Sets if the mob has an AI.
+     *
+     * @param ai if the mob has an AI
+     */
     public void setAI(boolean ai) {
         this.ai = ai;
     }
 
+    /**
+     * Returns if the mob is collidable; null = Minecraft default.
+     * <p>
+     * Mobs that are set not to be collidable still collide with mobs that are collidable.
+     *
+     * @return if the mob is collidable; null = Minecraft default
+     */
     public Boolean isCollidable() {
         return collidable;
     }
 
+    /**
+     * Sets if the mob is collidable.
+     * <p>
+     * Mobs that are set not to be collidable still collide with mobs that are collidable.
+     *
+     * @param collidable if the mob is collidable
+     */
     public void setCollidable(boolean collidable) {
         this.collidable = collidable;
     }
 
+    /**
+     * Returns if the mob can pickup items; null = Minecraft default.
+     *
+     * @return if the mob can pickup items; null = Minecraft default
+     */
     public Boolean canPickupItems() {
         return pickupItems;
     }
 
+    /**
+     * Set if the mob can pickup items.
+     *
+     * @param pickupItems if the mob can pickup items
+     */
     public void setPickupItems(boolean pickupItems) {
         this.pickupItems = pickupItems;
     }
 
+    /**
+     * Returns the maximum amount of air the mob has; null = Minecraft default.
+     *
+     * @return the maximum amount of air the mob has; null = Minecraft default
+     */
     public Integer getMaxAir() {
         return maxAir;
     }
 
+    /**
+     * Sets the maximum amount of air the mob has.
+     *
+     * @param maxAir the maximum amount of air the mob has
+     */
     public void setMaxAir(int maxAir) {
         this.maxAir = maxAir;
     }
 
+    /**
+     * Returns a loot table of the mob's drops; null = Minecraft default.
+     *
+     * @return a loot table of the mob's drops; null = Minecraft default
+     */
     public LootTable getDrops() {
         return drops;
     }
 
+    /**
+     * Sets the drops; null = Minecraft default.
+     *
+     * @param drops the drops or null to use the default values
+     */
     public void setDrops(LootTable drops) {
         this.drops = drops;
     }
 
+    /* Events */
     /**
-     * @return if the custom item has an AttackHandler
+     * Returns if the custom mob has an AttackHandler.
+     *
+     * @return if the custom mob has an AttackHandler
      */
     public boolean hasAttackHandler() {
         return attackHandler != null;
     }
 
     /**
+     * Returns the AttackHandler.
+     *
      * @return the AttackHandler
      */
     public AttackHandler getAttackHandler() {
@@ -319,6 +493,8 @@ public class CustomMob extends ExMob {
     }
 
     /**
+     * Sets the AttackHandler.
+     *
      * @param attackHandler the handler to set
      */
     public void setAttackHandler(AttackHandler attackHandler) {
@@ -326,6 +502,8 @@ public class CustomMob extends ExMob {
     }
 
     /**
+     * Returns if the custom mob has a DamageHandler.
+     *
      * @return if the custom mob has a DamageHandler
      */
     public boolean hasDamageHandler() {
@@ -333,6 +511,8 @@ public class CustomMob extends ExMob {
     }
 
     /**
+     * Returns the DamageHandler.
+     *
      * @return the DamageHandler
      */
     public DamageHandler getDamageHandler() {
@@ -340,6 +520,8 @@ public class CustomMob extends ExMob {
     }
 
     /**
+     * Sets the DamageHandler.
+     *
      * @param damageHandler the handler to set
      */
     public void setDamageHandler(DamageHandler damageHandler) {
@@ -347,6 +529,8 @@ public class CustomMob extends ExMob {
     }
 
     /**
+     * Returns if the custom mob has a DeathHandler.
+     *
      * @return if the custom mob has a DeathHandler
      */
     public boolean hasDeathHandler() {
@@ -354,6 +538,8 @@ public class CustomMob extends ExMob {
     }
 
     /**
+     * Returns the DeathHandler.
+     *
      * @return the DeathHandler
      */
     public DeathHandler getDeathHandler() {
@@ -361,6 +547,8 @@ public class CustomMob extends ExMob {
     }
 
     /**
+     * Sets the DeathHandler.
+     *
      * @param deathHandler the handler to set
      */
     public void setDeathHandler(DeathHandler deathHandler) {
@@ -368,13 +556,17 @@ public class CustomMob extends ExMob {
     }
 
     /**
-     * @return if the custom mob has a InteractHandler
+     * Returns if the custom mob has an InteractHandler.
+     *
+     * @return if the custom mob has an InteractHandler
      */
     public boolean hasInteractHandler() {
         return interactHandler != null;
     }
 
     /**
+     * Returns the InteractHandler.
+     *
      * @return the InteractHandler
      */
     public InteractHandler getInteractHandler() {
@@ -382,6 +574,8 @@ public class CustomMob extends ExMob {
     }
 
     /**
+     * Sets the InteractHandler.
+     *
      * @param interactHandler the handler to set
      */
     public void setInteractHandler(InteractHandler interactHandler) {
@@ -390,7 +584,7 @@ public class CustomMob extends ExMob {
 
     /* Actions */
     /**
-     * Registers the mob sothat it can be fetched through the getter methods
+     * Registers the mob sothat it can be fetched through the getter methods.
      *
      * @return itself
      */
@@ -406,7 +600,7 @@ public class CustomMob extends ExMob {
     }
 
     /**
-     * Registers the mob sothat it can be fetched through the getter methods
+     * Registers the mob sothat it can be fetched through the getter methods.
      *
      * @param id the ID to set
      * @return itself

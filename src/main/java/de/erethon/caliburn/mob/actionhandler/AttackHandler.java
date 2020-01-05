@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -17,13 +17,19 @@ package de.erethon.caliburn.mob.actionhandler;
 import org.bukkit.entity.Entity;
 
 /**
- * When the mob attacks another mob.
+ * Fired when the mob attacks another mob.
  *
  * @author Daniel Saukel
  */
 @FunctionalInterface
 public interface AttackHandler {
 
+    /**
+     * Instantiates a handler through reflection.
+     *
+     * @param className the name of the class
+     * @return the handler instance
+     */
     static AttackHandler create(String className) {
         try {
             Class cl = Class.forName(className);
@@ -35,6 +41,10 @@ public interface AttackHandler {
         return null;
     }
 
+    /**
+     * @param entityInstance the entity involved in this action
+     * @param attacked       the attacked entity
+     */
     void onAttack(Entity entityInstance, Entity attacked);
 
 }

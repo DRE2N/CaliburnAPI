@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -29,6 +29,11 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 /**
+ * This class groups together certain values that can be subsumed under a superterm.
+ * <p>
+ * It is similar to Bukkit's {@link org.bukkit.Tag} class.
+ *
+ * @param <T> the type that can be subsumed under this category
  * @author Daniel Saukel
  */
 public class Category<T extends Categorizable> extends Categorizable {
@@ -178,6 +183,8 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
+     * Returns the objects that belong to this category.
+     *
      * @return the objects that belong to this category
      */
     public Set<T> getElements() {
@@ -185,8 +192,10 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
+     * Returns if this category contains the given value.
+     *
      * @param t an object of the category type
-     * @return if this category contains the item
+     * @return if this category contains the given value
      */
     public boolean contains(T t) {
         if (t == null) {
@@ -196,7 +205,9 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
-     * @param material a material
+     * Returns if this category ontains the {@link VanillaItem} that wraps the given material.
+     *
+     * @param material the material
      * @return if this category contains an item that wraps the material
      */
     public boolean containsMaterial(Material material) {
@@ -211,8 +222,10 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
+     * Returns if this category contains a {@link VanillaItem} that wraps the material of this block.
+     *
      * @param block a block
-     * @return if this category contains an item that wraps the material of this item
+     * @return if this category contains an {@link VanillaItem} that wraps the material of this block
      */
     public boolean containsBlock(Block block) {
         if (block == null) {
@@ -222,8 +235,10 @@ public class Category<T extends Categorizable> extends Categorizable {
     }
 
     /**
+     * Returns if this category contains the {@link ExItem} of the given ItemStack.
+     *
      * @param item an item stack
-     * @return if this category contains an item that wraps the material of this item
+     * @return if this category contains the {@link ExItem} of the given ItemStack
      */
     public boolean containsItem(ItemStack item) {
         if (item == null) {

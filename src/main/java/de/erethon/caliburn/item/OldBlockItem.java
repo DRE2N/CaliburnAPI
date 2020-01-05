@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -37,6 +37,8 @@ public class OldBlockItem extends VanillaItem {
     }
 
     /**
+     * Returns the item that represents this block in 1.13+.
+     *
      * @return the item that represents this block in 1.13+
      */
     public VanillaItem getReplacement() {

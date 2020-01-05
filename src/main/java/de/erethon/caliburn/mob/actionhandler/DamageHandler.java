@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -18,13 +18,19 @@ import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 /**
- * When the mob is damaged.
+ * Fired when the mob is damaged.
  *
  * @author Daniel Saukel
  */
 @FunctionalInterface
 public interface DamageHandler {
 
+    /**
+     * Instantiates a handler through reflection.
+     *
+     * @param className the name of the class
+     * @return the handler instance
+     */
     static DamageHandler create(String className) {
         try {
             Class cl = Class.forName(className);
@@ -36,6 +42,12 @@ public interface DamageHandler {
         return null;
     }
 
+    /**
+     * @param entityInstance the entity involved in this action
+     * @param damageCause    the damage cause
+     * @param damage         the damage
+     * @param attacker       the entity that caused the damage; null if the damage cause is not another entity
+     */
     void onDamage(Entity entityInstance, DamageCause damageCause, double damage, Entity attacker);
 
 }

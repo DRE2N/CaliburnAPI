@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -1133,6 +1133,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns all vanilla items that are known, including those that don't exist in this version.
+     *
      * @return all vanilla items that are known
      */
     public static Collection<VanillaItem> values() {
@@ -1140,6 +1142,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns all vanilla items that exist in this runtime environment.
+     *
      * @return all vanilla items that exist in this runtime environment
      */
     public static Collection<VanillaItem> getLoaded() {
@@ -1227,6 +1231,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns the first supported version where this item existed.
+     *
      * @return the first supported version where this item existed
      */
     public Version getFirstVersion() {
@@ -1234,6 +1240,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns the last version where this item existed; NEW if the item still exists.
+     *
      * @return the last version where this item existed; NEW if the item still exists
      */
     public Version getLastVersion() {
@@ -1268,6 +1276,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns the numeric ID used before Minecraft 1.13; -1 if the item didn't exist before 1.13.
+     *
      * @return the numeric ID used before Minecraft 1.13; -1 if the item didn't exist before 1.13
      */
     public int getNumericId() {
@@ -1275,6 +1285,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns the numeric data value used before Minecraft 1.13; 0 if the item didn't exist before 1.13; 0 if the item doesn't need data.
+     *
      * @return the numeric data value used before Minecraft 1.13; 0 if the item didn't exist before 1.13; 0 if the item doesn't need data
      */
     public short getData() {
@@ -1282,6 +1294,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns the internal ID. The enum name in 1.13+; the numeric ID and the data value if it isn't 0 separated with a ":" before 1.13.
+     *
      * @return the internal ID. The enum name in 1.13+; the numeric ID and the data value if it isn't 0 separated with a ":" before 1.13
      */
     public String getInternalId() {
@@ -1293,6 +1307,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns the numeric ID + the data value if it exists, separated by a ":".
+     *
      * @return the numeric ID + the data value if it exists, separated by a ":"
      */
     public String getNumericIdAndData() {
@@ -1304,6 +1320,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns the old name + the data value if it exists, separated by a ":".
+     *
      * @return the old name + the data value if it exists, separated by a ":"
      */
     public String getOldNameAndData() {
@@ -1320,6 +1338,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns if the represented mob is available in the current version.
+     *
      * @return if the represented mob is available in the current version
      */
     public boolean isAvailable() {
@@ -1369,14 +1389,18 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns if this VanillaItem wraps the given material.
+     *
      * @param material a material
-     * @return if this VanillaItem wraps the material
+     * @return if this VanillaItem wraps the given material
      */
     public boolean is(Material material) {
         return getMaterial() == material;
     }
 
     /**
+     * Returns if this VanillaItem wraps the material of the item.
+     *
      * @param item an item stack
      * @return if this VanillaItem wraps the material of the item
      */
@@ -1388,6 +1412,8 @@ public class VanillaItem extends ExItem {
     }
 
     /**
+     * Returns if this VanillaItem wraps the material of the block.
+     *
      * @param block a block
      * @return if this VanillaItem wraps the material of the block
      */

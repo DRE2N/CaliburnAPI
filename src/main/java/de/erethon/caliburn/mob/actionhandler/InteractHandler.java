@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -18,11 +18,19 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 /**
+ * Fired when a player clicks on the mob.
+ *
  * @author Daniel Saukel
  */
 @FunctionalInterface
 public interface InteractHandler {
 
+    /**
+     * Instantiates a handler through reflection.
+     *
+     * @param className the name of the class
+     * @return the handler instance
+     */
     static InteractHandler create(String className) {
         try {
             Class cl = Class.forName(className);
@@ -34,6 +42,10 @@ public interface InteractHandler {
         return null;
     }
 
+    /**
+     * @param entityInstance the entity involved in this action
+     * @param player         the player who interacted with the mob
+     */
     void onInteract(Entity entityInstance, Player player);
 
 }

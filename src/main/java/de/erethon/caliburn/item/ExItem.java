@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -29,6 +29,11 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Superclass for vanilla and custom items.
+ *
+ * @author Daniel Saukel
+ */
 public class ExItem extends Categorizable implements ConfigurationSerializable {
 
     protected CaliburnAPI api;
@@ -45,6 +50,8 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     protected Map<ExMob, Double> mobDamageModifiers = new HashMap<>();
 
     /**
+     * Loads item properties from the config.
+     *
      * @param api the API instance to inject
      */
     public void load(CaliburnAPI api) {
@@ -103,8 +110,11 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
 
     /**
      * Modifies a value of the raw data Map.
+     * <p>
+     * Serializes the raw data if it hasn't been done yet.
      *
-     * @param raw the raw data Map to set
+     * @param key   the key
+     * @param value the value
      */
     public void setRaw(String key, Object value) {
         if (raw == null) {
@@ -114,6 +124,8 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
+     * Returns the material.
+     *
      * @return the material
      */
     public Material getMaterial() {
@@ -121,20 +133,26 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @param material the Material to set
+     * Sets the material.
+     *
+     * @param material the material to set
      */
     public void setMaterial(Material material) {
         this.material = material;
     }
 
     /**
-     * @return the unique name of the item
+     * Returns the name of the item.
+     *
+     * @return the name of the item
      */
     public String getName() {
         return getMaterial().name();
     }
 
     /**
+     * This object if the ID String refers to this item not necessarily exclusively; null if not.
+     *
      * @param id an ID to compare to the one of this item
      * @return this object if the ID String refers to this item not necessarily exclusively; null if not
      */
@@ -143,10 +161,21 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /* Damage modifiers */
+    /**
+     * Returns a Map of mob categories and the modifier damage dealt to them with this item is multiplied with.
+     *
+     * @return a Map of mob categories and the modifier damage dealt to them with this item is multiplied with
+     */
     public Map<Category<ExMob>, Double> getCategoryDamageModifiers() {
         return categoryDamageModifiers;
     }
 
+    /**
+     * Returns the damage modifier for the given category.
+     *
+     * @param mobCategory the category
+     * @return the damage modifier for the given category
+     */
     public double getCategoryDamageModifier(Category<ExMob> mobCategory) {
         if (categoryDamageModifiers.containsKey(mobCategory)) {
             return categoryDamageModifiers.get(mobCategory);
@@ -155,10 +184,21 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
         }
     }
 
+    /**
+     * Returns a Map of mobs and the modifier damage dealt to them with this item is multiplied with.
+     *
+     * @return a Map of mobs and the modifier damage dealt to them with this item is multiplied with
+     */
     public Map<ExMob, Double> getMobDamageModifiers() {
         return mobDamageModifiers;
     }
 
+    /**
+     * Returns the damage modifier for the given mob.
+     *
+     * @param mob the mob
+     * @return the damage modifier for the given category
+     */
     public double getMobDamageModifier(ExMob mob) {
         if (mobDamageModifiers.containsKey(mob)) {
             return mobDamageModifiers.get(mob);
@@ -168,6 +208,8 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
+     * Returns the text of the lore line to use as an identifier.
+     *
      * @return the text of the lore line to use as an identifier
      */
     public String getIdLore() {
@@ -191,15 +233,19 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * @param amount the stack size
-     * @return the item as an org.bukkit.inventory.ItemStack
+     * Returns an ItemStack representation with the given amount.
+     *
+     * @param amount the amount
+     * @return an ItemStack representation with the given amount
      */
     public ItemStack toItemStack(int amount) {
         return new ItemStack(getMaterial(), amount);
     }
 
     /**
-     * @return the item as an org.bukkit.inventory.ItemStack with the amount 1
+     * Returns an ItemStack representation with the amount 1.
+     *
+     * @return an ItemStack representation with the given amount
      */
     public ItemStack toItemStack() {
         return toItemStack(1);

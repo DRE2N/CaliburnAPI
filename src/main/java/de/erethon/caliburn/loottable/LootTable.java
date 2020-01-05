@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,6 +47,11 @@ public class LootTable implements ConfigurationSerializable {
     public static final String LEGGINGS = "leggings";
     public static final String BOOTS = "boots";
 
+    /**
+     * A loot table entry which consists of an item and a spawn chance.
+     * <p>
+     * The ID might be an implementation specific information about the slot or something similar.
+     */
     public class Entry {
 
         private String id;
@@ -69,20 +74,26 @@ public class LootTable implements ConfigurationSerializable {
 
         /* Getters and setters */
         /**
-         * @return the id of the loot table entry
+         * Returns the ID of the loot table entry.
+         *
+         * @return the ID of the loot table entry
          */
         public String getId() {
             return id;
         }
 
         /**
-         * @param id the id of the loot table entry to set
+         * Sets the ID of the loot table entry to set
+         *
+         * @param id the ID of the loot table entry to set
          */
         public void setId(String id) {
             this.id = id;
         }
 
         /**
+         * Returns the loot item stack.
+         *
          * @return the loot item stack
          */
         public ItemStack getLootItem() {
@@ -90,13 +101,17 @@ public class LootTable implements ConfigurationSerializable {
         }
 
         /**
-         * @param item the loot item to set
+         * Sets the loot item stack.
+         *
+         * @param item the loot item stack to set
          */
         public void setLootItem(ItemStack item) {
             this.item = item;
         }
 
         /**
+         * Returns the loot chance (0-100).
+         *
          * @return the loot chance
          */
         public double getLootChance() {
@@ -104,6 +119,10 @@ public class LootTable implements ConfigurationSerializable {
         }
 
         /**
+         * Sets the loot chance.
+         * <p>
+         * Sets the loot chance to the highest / lowest cap if the value is over 100 / below 0.
+         *
          * @param chance the loot chance to set
          */
         public void setLootChance(double chance) {
@@ -129,6 +148,9 @@ public class LootTable implements ConfigurationSerializable {
     private Map<String, Entry> entries = new HashMap<>();
 
     /**
+     * Initializes the loot table from a configuration YAML file.
+     *
+     * @param api  the Caliburn API instance
      * @param file the script file
      */
     public LootTable(CaliburnAPI api, File file) {
@@ -136,6 +158,7 @@ public class LootTable implements ConfigurationSerializable {
     }
 
     /**
+     * @param api    the Caliburn API instance
      * @param name   the name of the loot table
      * @param config the config that stores the information
      */
@@ -168,6 +191,8 @@ public class LootTable implements ConfigurationSerializable {
     }
 
     /**
+     * Initializes a new loot table with the given name.
+     *
      * @param api  the API instance
      * @param name the name of the loot table
      */
@@ -178,6 +203,8 @@ public class LootTable implements ConfigurationSerializable {
 
     /* Getters and setters */
     /**
+     * Returns the name of the loot table.
+     *
      * @return the name of the loot table
      */
     public String getName() {
@@ -185,6 +212,8 @@ public class LootTable implements ConfigurationSerializable {
     }
 
     /**
+     * Returns a Collection of the loot table entries.
+     *
      * @return the entries
      */
     public Collection<Entry> getEntries() {
@@ -202,6 +231,8 @@ public class LootTable implements ConfigurationSerializable {
     }
 
     /**
+     * Adds an entry.
+     *
      * @param entry the entry to add
      */
     public void addEntry(Entry entry) {
@@ -209,6 +240,8 @@ public class LootTable implements ConfigurationSerializable {
     }
 
     /**
+     * Removes an entry.
+     *
      * @param entry the entry to remove
      */
     public void removeEntry(Entry entry) {
@@ -216,8 +249,10 @@ public class LootTable implements ConfigurationSerializable {
     }
 
     /**
-     * Overrides the values of the given instance of EntityEquipment.<p>
-     * Values are taken from the entries with the IDs specified in the constants in this class.<p>
+     * Overrides the values of the given instance of EntityEquipment.
+     * <p>
+     * Values are taken from the entries with the IDs specified in the constants in this class.
+     * <p>
      * These are: "mainHand", "offHand", "helmet", "chestplate", "leggings" and "boots".
      *
      * @param entityEquip the instance of EntityEquipment to override

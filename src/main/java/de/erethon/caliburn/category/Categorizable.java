@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -18,16 +18,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Superclass for objects that can be subsumed under a {@link Category}.
+ *
  * @author Daniel Saukel
  */
 public abstract class Categorizable {
 
+    /**
+     * The ID String
+     */
     protected String id;
 
+    /**
+     * A List of the categories under that this object can be subsumed.
+     */
     protected List<Category<Categorizable>> categories = new ArrayList<>();
 
     /**
-     * Sets the ID of the Categorizable. Fails if an ID has already been set. Intended to be used with a deserialization constructor
+     * Sets the ID of the Categorizable. Fails if an ID has already been set. Intended to be used with a deserialization constructor.
      *
      * @param id the ID to set
      * @return this object
@@ -41,6 +49,8 @@ public abstract class Categorizable {
 
     /* Getters */
     /**
+     * Returns the ID.
+     *
      * @return the ID
      */
     public String getId() {
@@ -48,6 +58,8 @@ public abstract class Categorizable {
     }
 
     /**
+     * Returns this object if the ID String refers to this item exclusively; null if not.
+     *
      * @param id an ID to compare to the one of this item
      * @return this object if the ID String refers to this item exclusively; null if not
      */
@@ -55,6 +67,11 @@ public abstract class Categorizable {
         return id.equals(this.id) ? this : null;
     }
 
+    /**
+     * Returns a List of the categories under that this object can be subsumed.
+     *
+     * @return a List of the categories under that this object can be subsumed
+     */
     public List<Category<Categorizable>> getCategories() {
         return categories;
     }

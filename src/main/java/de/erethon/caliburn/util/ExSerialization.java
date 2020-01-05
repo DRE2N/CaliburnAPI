@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -22,7 +22,8 @@ import java.util.UUID;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * An ExItem based serialization format
+ * An ExItem based serialization format.
+ * This basically serializes the item as a CustomItem with an addition parameter for the amount.
  *
  * @author Daniel Saukel
  */

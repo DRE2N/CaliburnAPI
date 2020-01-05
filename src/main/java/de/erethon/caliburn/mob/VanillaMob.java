@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -28,6 +28,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 /**
+ * Represents a vanilla mob.
+ *
  * @author Daniel Saukel
  */
 public class VanillaMob extends ExMob {
@@ -189,10 +191,20 @@ public class VanillaMob extends ExMob {
         }
     }
 
+    /**
+     * Returns all vanilla mobs that are known, including those that don't exist in this version.
+     *
+     * @return all vanilla mobs that are known
+     */
     public static Collection<VanillaMob> values() {
         return VALUES;
     }
 
+    /**
+     * Returns all vanilla mobs that exist in this runtime environment.
+     *
+     * @return all vanilla mobs that exist in this runtime environment
+     */
     public static Collection<VanillaMob> getLoaded() {
         return LOADED;
     }
@@ -249,20 +261,26 @@ public class VanillaMob extends ExMob {
     }
 
     /**
-     * @return the first supported version where this item existed
+     * Returns the first supported version where this mob existed.
+     *
+     * @return the first supported version where this mob existed
      */
     public Version getFirstVersion() {
         return firstVersion;
     }
 
     /**
-     * @return the last version where this item existed; NEW if the item still exists
+     * Returns the last version where this mob existed; NEW if the mob still exists.
+     *
+     * @return the last version where this mob existed; NEW if the mob still exists
      */
     public Version getLastVersion() {
         return lastVersion;
     }
 
     /**
+     * Returns the old String ID used before Minecraft 1.11.
+     *
      * @return the old String ID used before Minecraft 1.11
      */
     public String getId1_8() {
@@ -270,6 +288,8 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Returns the new String ID used since Minecraft 1.11.
+     *
      * @return the new String ID used since Minecraft 1.11
      */
     public String getId1_11() {
@@ -277,6 +297,10 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Returns the new String ID used since Minecraft 1.13.
+     * <p>
+     * This is the same as {@link #getId()}.
+     *
      * @return the new String ID used since Minecraft 1.13
      */
     public String getId1_13() {
@@ -289,6 +313,8 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Return the Bukkit enum name
+     *
      * @return the Bukkit enum name
      */
     public String getBukkitName() {
@@ -296,6 +322,8 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Returns the numeric ID used before Minecraft 1.13; -1 if the item didn't exist before 1.13.
+     *
      * @return the numeric ID used before Minecraft 1.13; -1 if the item didn't exist before 1.13
      */
     public int getNumericId() {
@@ -308,6 +336,8 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Returns if the represented mob is available in the current version.
+     *
      * @return if the represented mob is available in the current version
      */
     public boolean isAvailable() {

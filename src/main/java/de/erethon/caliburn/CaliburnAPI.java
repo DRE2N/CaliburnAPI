@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2019 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -39,6 +39,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 
 /**
+ * The main class of the API. It contains methods for initialization and most important getter methods.
+ *
  * @author Daniel Saukel
  */
 public class CaliburnAPI {
@@ -56,10 +58,21 @@ public class CaliburnAPI {
     private List<ExMob> mobs = new ArrayList<>();
     private List<LootTable> lootTables = new ArrayList<>();
 
+    /**
+     * Initializes the singleton instance with the default identifier prefix.
+     *
+     * @param plugin the plugin
+     */
     public CaliburnAPI(Plugin plugin) {
         this(plugin, ChatColor.GRAY.toString());
     }
 
+    /**
+     * Initializes the singleton instance.
+     *
+     * @param plugin           the plugin
+     * @param identifierPrefix the prefix that is put before identifiers in some contexts, e.g. a color code before the first lore line.
+     */
     public CaliburnAPI(Plugin plugin, String identifierPrefix) {
         instance = this;
 
@@ -81,6 +94,8 @@ public class CaliburnAPI {
     }
 
     /**
+     * Returns the loaded instance of CaliburnAPI.
+     *
      * @return the loaded instance of CaliburnAPI
      */
     public static CaliburnAPI getInstance() {
@@ -96,6 +111,8 @@ public class CaliburnAPI {
     }
 
     /**
+     * Returns the prefix of a custom item identifier lore line.
+     *
      * @return the prefix of a custom item identifier lore line
      */
     public String getIdentifierPrefix() {
@@ -103,6 +120,8 @@ public class CaliburnAPI {
     }
 
     /**
+     * Returns the loaded instance of the SimpleSerialization format class.
+     *
      * @return the loaded instance of SimpleSerialization
      */
     public SimpleSerialization getSimpleSerialization() {
@@ -110,12 +129,20 @@ public class CaliburnAPI {
     }
 
     /**
+     * Returns the loaded instance of the ExSerialization format class.
+     *
      * @return the loaded instance of ExSerialization
      */
     public ExSerialization getExSerialization() {
         return exSerialization;
     }
 
+    /**
+     * Returns the {@link ExItem} or {@link ExMob} this the given ID represents.
+     *
+     * @param id the identifier String
+     * @return the {@link ExItem} or {@link ExMob} this the given ID represents
+     */
     public Categorizable getExObject(String id) {
         ExItem item = getExItem(id);
         if (item != null) {
@@ -130,14 +157,18 @@ public class CaliburnAPI {
 
     /* Items */
     /**
-     * @return the registered items
+     * Returns all registered items.
+     *
+     * @return all registered items
      */
     public List<ExItem> getExItems() {
         return items;
     }
 
     /**
-     * @return the registered custom items
+     * Returns all registered custom items.
+     *
+     * @return all registered custom items
      */
     public List<CustomItem> getCustomItems() {
         List<CustomItem> customItems = new ArrayList<>();
@@ -150,8 +181,10 @@ public class CaliburnAPI {
     }
 
     /**
+     * Returns the item that has the given ID.
+     *
      * @param id a CustomItem or VanillaItem ID
-     * @return the item that has the ID
+     * @return the item that has the given ID
      */
     public ExItem getExItem(Object id) {
         if (id instanceof String) {
@@ -181,6 +214,14 @@ public class CaliburnAPI {
         return null;
     }
 
+    /**
+     * Returns the {@link CustomItem} that the given ItemStack is an instance of. If there is no such CustomItem registered, the {@link VanillaItem} of the
+     * stack's material is used.
+     *
+     * @param item the ItemStack
+     * @return the {@link CustomItem} that the given ItemStack is an instance of. If there is no such CustomItem registered, the {@link VanillaItem} of the
+     *         stack's material is used
+     */
     public ExItem getExItem(ItemStack item) {
         if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
             return getExItem(item.getItemMeta().getLore().get(0).replace(identifierPrefix, ""));
@@ -189,6 +230,12 @@ public class CaliburnAPI {
         }
     }
 
+    /**
+     * Returns the ExItem ID of the given ItemStack.
+     *
+     * @param item the ItemStack
+     * @return the ExItem ID of the given ItemStack
+     */
     public String getExItemId(ItemStack item) {
         if (item == null) {
             return null;
@@ -203,14 +250,19 @@ public class CaliburnAPI {
 
     /* Item categories */
     /**
-     * @return the item categories
+     * Returns the registered ExItem categories.
+     *
+     * @return the registered ExItem categories
      */
     public List<Category<ExItem>> getItemCategories() {
         return itemCategories;
     }
 
     /**
-     * @return the Category<ExItem> that has the ID
+     * Returns the ExItem Category that has the given ID.
+     *
+     * @param id the ID
+     * @return the ExItem Category that has the given ID
      */
     public Category<ExItem> getItemCategory(String id) {
         for (Category<ExItem> itemCategory : itemCategories) {
@@ -223,14 +275,18 @@ public class CaliburnAPI {
 
     /* Mobs */
     /**
-     * @return the mobs
+     * Returns all registered mobs.
+     *
+     * @return all registered mobs
      */
     public List<ExMob> getExMobs() {
         return mobs;
     }
 
     /**
-     * @return the registered custom mobs
+     * Returns all registered custom mobs
+     *
+     * @return all registered custom mobs
      */
     public List<CustomMob> getCustomMobs() {
         List<CustomMob> customMobs = new ArrayList<>();
@@ -243,8 +299,10 @@ public class CaliburnAPI {
     }
 
     /**
+     * Returns the mob that has the given ID.
+     *
      * @param id a CustomMob or VanillaMob ID
-     * @return the mob that has the ID
+     * @return the mob that has the given ID
      */
     public ExMob getExMob(Object id) {
         if (id instanceof String) {
@@ -266,24 +324,43 @@ public class CaliburnAPI {
         return null;
     }
 
+    /**
+     * Returns the {@link CustomMob} that the given Entity is an instance of. If there is no such CustomMob registered, the {@link VanillaMob} of the
+     * entity's type is used.
+     *
+     * @param entity the Entity
+     * @return the {@link CustomMob} that the given Entity is an instance of. If there is no such CustomMob registered, the {@link VanillaMob} of the
+     *         entity's type is used
+     */
     public ExMob getExMob(Entity entity) {
         return getExMob(getExMobId(entity));
     }
 
+    /**
+     * Returns the ExMob ID of the given Entity.
+     *
+     * @param entity the Entity
+     * @return the ExMob ID of the given Entity
+     */
     public String getExMobId(Entity entity) {
         return entity.getType().name();
     }
 
     /* Mob categories */
     /**
-     * @return the mob categories
+     * Returns the registered ExMob categories.
+     *
+     * @return the registered ExMob categories
      */
     public List<Category<ExMob>> getMobCategories() {
         return mobCategories;
     }
 
     /**
-     * @return the Category<ExMob> that has the ID
+     * Returns the ExMob Category that has the given ID.
+     *
+     * @param id the ID
+     * @return the ExMob Category that has the given ID
      */
     public Category<ExMob> getMobCategory(String id) {
         for (Category<ExMob> mobCategory : mobCategories) {
@@ -296,14 +373,21 @@ public class CaliburnAPI {
 
     /* Loot tables */
     /**
-     * @return the loaded loot tables
+     * Returns the registered loot tables.
+     *
+     * @return the registered loot tables
      */
     public List<LootTable> getLootTables() {
         return lootTables;
     }
 
     /**
-     * @return the loot table that has the name
+     * Returns the loot table that has the given name.
+     * <p>
+     * LootTable names are not case-sensitive.
+     *
+     * @param name the name String
+     * @return the loot table that has the given name
      */
     public LootTable getLootTable(String name) {
         for (LootTable lootTable : lootTables) {
