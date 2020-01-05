@@ -229,7 +229,6 @@ public class Category<T extends Categorizable> extends Categorizable {
         if (item == null) {
             return false;
         }
-        return containsMaterial(item.getType());
         try {
             return contains((T) CaliburnAPI.getInstance().getExItem(item));
         } catch (ClassCastException exception) {
