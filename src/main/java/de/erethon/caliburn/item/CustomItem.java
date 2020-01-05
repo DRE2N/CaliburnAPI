@@ -20,6 +20,7 @@ import de.erethon.caliburn.item.actionhandler.DamageHandler;
 import de.erethon.caliburn.item.actionhandler.DropHandler;
 import de.erethon.caliburn.item.actionhandler.HitHandler;
 import de.erethon.caliburn.item.actionhandler.RightClickHandler;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -89,13 +91,9 @@ public class CustomItem extends ExItem {
             setRightClickHandler(RightClickHandler.create((String) rightClickHandler));
         }
 
-        Object skullOwner = args.get("skullOwner");
-        if (skullOwner instanceof String) {
-            setSkullOwner((String) skullOwner);
-        }
-        Object textureValue = args.get("textureValue");
-        if (textureValue instanceof String) {
-            setSkullOwner((String) textureValue);
+        Object skullOwner = args.get("skullOwner"), textureValue = args.get("textureValue");
+        if (skullOwner instanceof String && textureValue instanceof String) {
+            setSkullTexture((String) skullOwner, (String) textureValue);
         }
 
         Object data = args.get("durability");
@@ -164,10 +162,42 @@ public class CustomItem extends ExItem {
      */
     public void addLore(String lore) {
         meta.getLore().add(ChatColor.translateAlternateColorCodes('&', lore));
+        List<String> lines = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+        lines.add(ChatColor.translateAlternateColorCodes('&', lore));
+        meta.setLore(lines);
     }
 
     /**
      * @return the enchantments as a Map<Enchantment, Integer>
+     * Removes a lore line.
+     *
+     * @param index the lore index number
+     */
+    public void removeLore(int index) {
+        if (!meta.hasLore()) {
+            return;
+        }
+        List<String> lines = meta.getLore();
+        lines.remove(index);
+        meta.setLore(lines);
+    }
+
+    /**
+     * Removes a lore line.
+     * <p>
+     * Chat colors are translated, so removing "&4Test" will remove {@link org.bukkit.ChatColor}.DARK_RED + "Test".
+     *
+     * @param lore the lore to remove
+     */
+    public void removeLore(String lore) {
+        if (!meta.hasLore()) {
+            return;
+        }
+        List<String> lines = meta.getLore();
+        lines.remove(ChatColor.translateAlternateColorCodes('&', lore));
+        meta.setLore(lines);
+    }
+
      */
     public Map<Enchantment, Integer> getEnchantments() {
         return meta.getEnchants();
@@ -183,6 +213,14 @@ public class CustomItem extends ExItem {
 
     /**
      * @return the ItemFlags as a List<ItemFlag>
+     * Removes an enchantment.
+     *
+     * @param enchantment the enchantment
+     */
+    public void removeEnchantment(Enchantment enchantment) {
+        meta.removeEnchant(enchantment);
+    }
+
      */
     public Set<ItemFlag> getItemFlags() {
         return meta.getItemFlags();
@@ -222,13 +260,34 @@ public class CustomItem extends ExItem {
      */
     public String getSkullOwner() {
         return skullOwner;
+    /*public void removeAttributeModifier(Attribute attribute) {
+        meta.removeAttributeModifier(attribute);
+    }*/
+    /**
+     * Removes a specific modifier of the given attribute.
+     *
+     * @param attribute the attribute
+     * @param modifier  the attribute modifier
+     */
+    /*public void removeAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+        meta.removeAttributeModifier(attribute);
+    }*/
+    /**
+     * Removes a modifier from the given slot.
+     *
+     * @param slot the equipment slot
+     */
+    public void removeAttributeModifier(EquipmentSlot slot) {
+        meta.removeAttributeModifier(slot);
     }
 
     /**
-     * @param skullOwner the skullOwner to set
+     * Returns the skull owner UUID String.
+     *
+     * @return the skull owner UUID String
      */
-    public void setSkullOwner(String skullOwner) {
-        this.skullOwner = skullOwner;
+    public String getSkullOwner() {
+        return skullOwner;
     }
 
     /**
@@ -239,9 +298,13 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @param textureValue the textureValue to set
+     * Sets the skull owner and texture value for player heads.
+     *
+     * @param skullOwner   the skull owner UUID String
+     * @param textureValue the Base64 encoded skull owner texture value
      */
-    public void setTextureValue(String textureValue) {
+    public void setSkullTexture(String skullOwner, String textureValue) {
+        this.skullOwner = skullOwner;
         this.textureValue = textureValue;
     }
 
