@@ -245,7 +245,7 @@ public class Category<T extends Categorizable> extends Categorizable {
             return false;
         }
         try {
-            return contains((T) CaliburnAPI.getInstance().getExItem(item));
+            return contains((T) api.getExItem(item));
         } catch (ClassCastException exception) {
             return false;
         }

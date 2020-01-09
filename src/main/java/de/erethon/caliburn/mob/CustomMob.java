@@ -14,7 +14,6 @@
  */
 package de.erethon.caliburn.mob;
 
-import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.actionhandler.AttackHandler;
 import de.erethon.caliburn.mob.actionhandler.DamageHandler;
@@ -72,7 +71,7 @@ public class CustomMob extends ExMob {
         /* Entity */
         Object species = args.get("species");
         if (species instanceof String) {
-            ExMob base = CaliburnAPI.getInstance().getExMob((String) species);
+            ExMob base = api.getExMob((String) species);
             if (base instanceof VanillaMob) {
                 setBase((VanillaMob) base);
                 this.species = base.getSpecies();
@@ -126,9 +125,9 @@ public class CustomMob extends ExMob {
         }
         Object equipment = args.get("equipment");
         if (equipment instanceof String) {
-            setEquipment(CaliburnAPI.getInstance().getLootTable((String) equipment));
-        } else if (equipment instanceof Map) {
-
+            setEquipment(api.getLootTable((String) equipment));
+        } else if (equipment instanceof LootTable) {
+            setEquipment((LootTable) equipment);
         }
         Object removeWhenFarAway = args.get("removeWhenFarAway");
         if (removeWhenFarAway instanceof Boolean) {
@@ -153,9 +152,9 @@ public class CustomMob extends ExMob {
 
         Object drops = args.get("drops");
         if (drops instanceof String) {
-            setDrops(CaliburnAPI.getInstance().getLootTable((String) drops));
+            setDrops(api.getLootTable((String) drops));
         } else if (equipment instanceof Map) {
-
+            setDrops((LootTable) drops);
         }
 
         Object attackHandler = args.get("attackHandler");

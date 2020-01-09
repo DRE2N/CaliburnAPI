@@ -63,7 +63,7 @@ public class CustomItem extends ExItem {
 
         Object material = args.get("material");
         if (material instanceof String) {
-            ExItem base = CaliburnAPI.getInstance().getExItem((String) material);
+            ExItem base = api.getExItem((String) material);
             if (base instanceof VanillaItem) {
                 setBase((VanillaItem) base);
                 this.material = base.getMaterial();

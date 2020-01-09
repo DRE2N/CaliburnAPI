@@ -35,8 +35,6 @@ import org.bukkit.entity.EntityType;
  */
 public class ExMob extends Categorizable implements ConfigurationSerializable {
 
-    protected CaliburnAPI api;
-
     protected Map<String, Object> raw;
 
     protected EntityType species;

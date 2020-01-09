@@ -14,6 +14,7 @@
  */
 package de.erethon.caliburn.category;
 
+import de.erethon.caliburn.CaliburnAPI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ import java.util.List;
  * @author Daniel Saukel
  */
 public abstract class Categorizable {
+
+    protected CaliburnAPI api = CaliburnAPI.getInstance();
 
     /**
      * The ID String
