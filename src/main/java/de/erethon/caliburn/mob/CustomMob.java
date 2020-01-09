@@ -20,8 +20,10 @@ import de.erethon.caliburn.mob.actionhandler.AttackHandler;
 import de.erethon.caliburn.mob.actionhandler.DamageHandler;
 import de.erethon.caliburn.mob.actionhandler.DeathHandler;
 import de.erethon.caliburn.mob.actionhandler.InteractHandler;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -46,6 +48,7 @@ public class CustomMob extends ExMob {
     private Boolean invulnerable;
     private Boolean silent;
     private Boolean persistent;
+    private List<String> passengers = new ArrayList<>();
 
     /* LivingEntity */
     private Collection<PotionEffect> potionEffects;
@@ -103,6 +106,14 @@ public class CustomMob extends ExMob {
         Object persistent = args.get("isPersistent");
         if (persistent instanceof Boolean) {
             setPersistent((Boolean) persistent);
+        }
+        Object passengers = args.get("passengers");
+        if (passengers instanceof List) {
+            for (Object passenger : (List) passengers) {
+                if (passenger instanceof String) {
+                    getPassengers().add((String) passenger);
+                }
+            }
         }
 
         /* LivingEntity */
@@ -320,6 +331,24 @@ public class CustomMob extends ExMob {
     @Deprecated
     public void setPersistent(boolean persistent) {
         this.persistent = persistent;
+    }
+
+    /**
+     * Returns a List of the IDs of the passengers the mob is spawned with.
+     *
+     * @return a List of the IDs of the passengers the mob is spawned with
+     */
+    public List<String> getPassengers() {
+        return passengers;
+    }
+
+    /**
+     * Sets the IDS of the passengers the mob is spawned with.
+     *
+     * @param passengers the IDS of the passengers the mob is spawned with
+     */
+    public void setPassengers(List<String> passengers) {
+        this.passengers = passengers;
     }
 
     /**
@@ -643,8 +672,11 @@ public class CustomMob extends ExMob {
         if (isPersistent() != null) {
             config.put("isPersistent", isPersistent());
         }
+        if (getPassengers() != null && !getPassengers().isEmpty()) {
+            config.put("passengers", getPassengers());
+        }
 
-        if (getPotionEffects() != null || getPotionEffects().isEmpty()) {
+        if (getPotionEffects() != null && !getPotionEffects().isEmpty()) {
             config.put("potionEffects", getPotionEffects());
         }
         if (getEquipment() != null) {
@@ -711,12 +743,15 @@ public class CustomMob extends ExMob {
         if (isPersistent() != null) {
             entity.setPersistent(isPersistent());
         }
+        if (getPassengers() != null) {
+            getPassengers().forEach(p -> entity.addPassenger(api.getExMob(p).toEntity(location)));
+        }
 
         if (!(entity instanceof LivingEntity)) {
             return entity;
         }
         LivingEntity living = (LivingEntity) entity;
-        if (getPotionEffects() != null || getPotionEffects().isEmpty()) {
+        if (getPotionEffects() != null) {
             getPotionEffects().forEach(living::addPotionEffect);
         }
         if (getEquipment() != null) {
