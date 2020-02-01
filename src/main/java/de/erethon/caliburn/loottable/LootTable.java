@@ -19,7 +19,6 @@ package de.erethon.caliburn.loottable;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.Version;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,8 +26,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import org.bukkit.ChatColor;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -147,39 +144,11 @@ public class LootTable implements ConfigurationSerializable {
     private String name;
     private Map<String, Entry> entries = new HashMap<>();
 
-    /**
-     * Initializes the loot table from a configuration YAML file.
-     *
-     * @param api  the Caliburn API instance
-     * @param file the script file
-     */
-    public LootTable(CaliburnAPI api, File file) {
-        this(api, file.getName().substring(0, file.getName().length() - 4), YamlConfiguration.loadConfiguration(file));
-    }
-
-    /**
-     * @param api    the Caliburn API instance
-     * @param name   the name of the loot table
-     * @param config the config that stores the information
-     */
-    public LootTable(CaliburnAPI api, String name, FileConfiguration config) {
-        api.getLootTables().add(this);
-
-        this.name = name;
-
-        for (String id : config.getKeys(false)) {
-            ItemStack item = api.deserializeStack(config, id + ".item");
-            if (item == null) {
-                continue;
-            }
-
-            double chance = config.getDouble(id + ".chance");
-            entries.put(id, new Entry(id, item, chance));
-        }
-    }
-
     public LootTable(Map<String, Object> args) {
         for (Map.Entry<String, Object> mapEntry : args.entrySet()) {
+            if (mapEntry.getKey().equals("==")) {
+                continue;
+            }
             try {
                 Entry entry = new Entry((Map<String, Object>) mapEntry.getValue());
                 entry.setId(mapEntry.getKey());
@@ -212,6 +181,19 @@ public class LootTable implements ConfigurationSerializable {
     }
 
     /**
+     * Sets the name of the loot table.Fails if an name has already been set. Intended to be used with a deserialization constructor.
+     *
+     * @param name the name to set
+     * @return this object
+     */
+    public LootTable name(String name) {
+        if (this.name == null) {
+            this.name = name;
+        }
+        return this;
+    }
+
+    /**
      * Returns a Collection of the loot table entries.
      *
      * @return the entries
@@ -236,6 +218,9 @@ public class LootTable implements ConfigurationSerializable {
      * @param entry the entry to add
      */
     public void addEntry(Entry entry) {
+        if (entry == null) {
+            return;
+        }
         entries.put(entry.getId(), entry);
     }
 
@@ -245,6 +230,9 @@ public class LootTable implements ConfigurationSerializable {
      * @param entry the entry to remove
      */
     public void removeEntry(Entry entry) {
+        if (entry == null) {
+            return;
+        }
         entries.remove(entry.getId());
     }
 
