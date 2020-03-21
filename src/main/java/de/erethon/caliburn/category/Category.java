@@ -140,7 +140,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> BEE_GROWABLES = new Category<>("bee_growables", CROPS, SWEET_BERRY_BUSH);
     public static final Category<ExItem> BUTTONS = new Category<>("buttons", WOODEN_BUTTONS, STONE_BUTTON);
     public static final Category<ExItem> CORALS = new Category<>("corals", CORAL_PLANTS, TUBE_CORAL_FAN, BRAIN_CORAL_FAN, BUBBLE_CORAL_FAN, FIRE_CORAL_FAN, HORN_CORAL_FAN);
-    public static final Category<ExItem> DOORS = new Category<>("doors", WOODEN_DOORS, IRON_DOOR);
+    public static final Category<ExItem> DOORS = new Category<>("doors", WOODEN_DOORS, IRON_DOOR, IRON_DOOR_BLOCK);
     public static final Category<ExItem> ENDERMAN_HOLDABLE = new Category<>("enderman_holdable", SMALL_FLOWERS, GRASS_BLOCK, DIRT, COARSE_DIRT, PODZOL, VanillaItem.SAND, RED_SAND,
             GRAVEL, BROWN_MUSHROOM, RED_MUSHROOM, VanillaItem.TNT, CACTUS, CLAY, PUMPKIN, CARVED_PUMPKIN, MELON, MYCELIUM, NETHERRACK);
     public static final Category<ExItem> FENCES = new Category<>("fences", WOODEN_FENCES, NETHER_BRICK_FENCE);

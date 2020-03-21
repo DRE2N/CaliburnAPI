@@ -27,7 +27,7 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>de.erethon.commons:compatibility</include>
+                                    <include>de.erethon.commons:commons-dist</include>
                                     <include>de.erethon:headlib</include>
                                 </includes>
                             </artifactSet>
@@ -63,15 +63,9 @@
         </dependency>
         <dependency>
             <groupId>de.erethon.commons</groupId>
-            <artifactId>compatibility</artifactId>
-            <version>1.5.5</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon.commons</groupId>
             <artifactId>commons-dist</artifactId>
-            <version>6.1.1</version>
-            <scope>provided</scope>
+            <version>6.1.3</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon</groupId>
