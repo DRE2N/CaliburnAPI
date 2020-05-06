@@ -115,7 +115,8 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> WITHER_IMMUNE = new Category<>("wither_immune", BARRIER, BEDROCK, END_PORTAL, END_PORTAL_FRAME, END_GATEWAY, COMMAND_BLOCK,
             REPEATING_COMMAND_BLOCK, CHAIN_COMMAND_BLOCK, STRUCTURE_BLOCK, JIGSAW, MOVING_PISTON, OBSIDIAN, END_STONE, IRON_BARS);
     public static final Category<ExItem> WOODEN_BUTTONS = new Category<>("wooden_butons", OAK_BUTTON, SPRUCE_BUTTON, BIRCH_BUTTON, JUNGLE_BUTTON, ACACIA_BUTTON, DARK_OAK_BUTTON);
-    public static final Category<ExItem> WOODEN_DOORS = new Category<>("wooden_doors", OAK_DOOR, SPRUCE_DOOR, BIRCH_DOOR, JUNGLE_DOOR, ACACIA_DOOR, DARK_OAK_DOOR, WOODEN_DOOR);
+    public static final Category<ExItem> WOODEN_DOORS = new Category<>("wooden_doors", OAK_DOOR, SPRUCE_DOOR, BIRCH_DOOR, JUNGLE_DOOR, ACACIA_DOOR, DARK_OAK_DOOR,
+            WOODEN_DOOR, SPRUCE_DOOR_BLOCK, BIRCH_DOOR_BLOCK, BIRCH_DOOR_BLOCK, JUNGLE_DOOR_BLOCK, ACACIA_DOOR_BLOCK, DARK_OAK_DOOR_BLOCK);
     public static final Category<ExItem> WOODEN_FENCE_GATES = new Category<>("wooden_fence_gates", OAK_FENCE_GATE, ACACIA_FENCE_GATE, DARK_OAK_FENCE_GATE,
             SPRUCE_FENCE_GATE, BIRCH_FENCE_GATE, JUNGLE_FENCE_GATE);
     public static final Category<ExItem> WOODEN_FENCES = new Category<>("wooden_fences", OAK_FENCE, ACACIA_FENCE, DARK_OAK_FENCE, SPRUCE_FENCE, BIRCH_FENCE, JUNGLE_FENCE);
