@@ -116,6 +116,8 @@ public class Category<T extends Categorizable> extends Categorizable {
             REPEATING_COMMAND_BLOCK, CHAIN_COMMAND_BLOCK, STRUCTURE_BLOCK, JIGSAW, MOVING_PISTON, OBSIDIAN, END_STONE, IRON_BARS);
     public static final Category<ExItem> WOODEN_BUTTONS = new Category<>("wooden_butons", OAK_BUTTON, SPRUCE_BUTTON, BIRCH_BUTTON, JUNGLE_BUTTON, ACACIA_BUTTON, DARK_OAK_BUTTON);
     public static final Category<ExItem> WOODEN_DOORS = new Category<>("wooden_doors", OAK_DOOR, SPRUCE_DOOR, BIRCH_DOOR, JUNGLE_DOOR, ACACIA_DOOR, DARK_OAK_DOOR, WOODEN_DOOR);
+    public static final Category<ExItem> WOODEN_FENCE_GATES = new Category<>("wooden_fence_gates", OAK_FENCE_GATE, ACACIA_FENCE_GATE, DARK_OAK_FENCE_GATE,
+            SPRUCE_FENCE_GATE, BIRCH_FENCE_GATE, JUNGLE_FENCE_GATE);
     public static final Category<ExItem> WOODEN_FENCES = new Category<>("wooden_fences", OAK_FENCE, ACACIA_FENCE, DARK_OAK_FENCE, SPRUCE_FENCE, BIRCH_FENCE, JUNGLE_FENCE);
     public static final Category<ExItem> WOODEN_PRESSURE_PLATES = new Category<>("wooden_pressure_plates", OAK_PRESSURE_PLATE, SPRUCE_PRESSURE_PLATE, BIRCH_PRESSURE_PLATE,
             JUNGLE_PRESSURE_PLATE, ACACIA_PRESSURE_PLATE, DARK_OAK_PRESSURE_PLATE);
@@ -143,7 +145,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> DOORS = new Category<>("doors", WOODEN_DOORS, IRON_DOOR, IRON_DOOR_BLOCK);
     public static final Category<ExItem> ENDERMAN_HOLDABLE = new Category<>("enderman_holdable", SMALL_FLOWERS, GRASS_BLOCK, DIRT, COARSE_DIRT, PODZOL, VanillaItem.SAND, RED_SAND,
             GRAVEL, BROWN_MUSHROOM, RED_MUSHROOM, VanillaItem.TNT, CACTUS, CLAY, PUMPKIN, CARVED_PUMPKIN, MELON, MYCELIUM, NETHERRACK);
-    public static final Category<ExItem> FENCES = new Category<>("fences", WOODEN_FENCES, NETHER_BRICK_FENCE);
+    public static final Category<ExItem> FENCES = new Category<>("fences", WOODEN_FENCES, WOODEN_FENCE_GATES, NETHER_BRICK_FENCE);
     public static final Category<ExItem> FLOWERS = new Category<>("flowers", SMALL_FLOWERS, TALL_FLOWERS);
     public static final Category<ExItem> LOGS = new Category<>("logs", OAK_LOGS, SPRUCE_LOGS, BIRCH_LOGS, JUNGLE_LOGS, ACACIA_LOGS, DARK_OAK_LOGS);
     public static final Category<ExItem> PLANKS = new Category<>("planks", OAK_PLANKS, SPRUCE_PLANKS, BIRCH_PLANKS, JUNGLE_PLANKS, ACACIA_PLANKS, DARK_OAK_PLANKS);
@@ -153,6 +155,7 @@ public class Category<T extends Categorizable> extends Categorizable {
 
     // Caliburn
     public static final Category<ExItem> CHESTS = new Category<>("chests", CHEST, TRAPPED_CHEST, ENDER_CHEST, SHULKER_BOXES);
+    public static final Category<ExItem> FENCE_GATES = new Category<>("fence_gates", WOODEN_FENCE_GATES);
 
     private String id;
     private Set<T> elements = new HashSet<>();
