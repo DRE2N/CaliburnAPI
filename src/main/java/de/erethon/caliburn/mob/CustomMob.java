@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.potion.PotionEffect;
 
@@ -74,7 +73,6 @@ public class CustomMob extends ExMob {
             ExMob base = api.getExMob((String) species);
             if (base instanceof VanillaMob) {
                 setBase((VanillaMob) base);
-                this.species = base.getSpecies();
             }
         }
 
@@ -197,6 +195,7 @@ public class CustomMob extends ExMob {
      */
     public void setBase(VanillaMob base) {
         this.base = base;
+        this.species = base.getSpecies();
     }
 
     /**

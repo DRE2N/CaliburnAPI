@@ -121,15 +121,6 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * Sets the mob species.
-     *
-     * @param species the mob species to set
-     */
-    public void setSpecies(EntityType species) {
-        this.species = species;
-    }
-
-    /**
      * Returns the name of the mob.
      *
      * @return the name of the mob

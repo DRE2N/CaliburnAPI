@@ -133,15 +133,6 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
-     * Sets the material.
-     *
-     * @param material the material to set
-     */
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    /**
      * Returns the name of the item.
      *
      * @return the name of the item

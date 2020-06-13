@@ -66,7 +66,6 @@ public class CustomItem extends ExItem {
             ExItem base = api.getExItem((String) material);
             if (base instanceof VanillaItem) {
                 setBase((VanillaItem) base);
-                this.material = base.getMaterial();
             }
         }
 
@@ -133,6 +132,7 @@ public class CustomItem extends ExItem {
      */
     public void setBase(VanillaItem base) {
         this.base = base;
+        this.material = base.getMaterial();
     }
 
     /**
