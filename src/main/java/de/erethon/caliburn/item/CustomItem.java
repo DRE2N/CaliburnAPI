@@ -174,7 +174,7 @@ public class CustomItem extends ExItem {
      */
     @Override
     public String getName() {
-        return name;
+        return name != null ? name : super.getName();
     }
 
     /**

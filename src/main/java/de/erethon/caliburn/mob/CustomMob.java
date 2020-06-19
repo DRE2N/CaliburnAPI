@@ -224,7 +224,7 @@ public class CustomMob extends ExMob {
      */
     @Override
     public String getName() {
-        return name;
+        return name != null ? name : super.getName();
     }
 
     /**
