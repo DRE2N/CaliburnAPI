@@ -16,10 +16,12 @@ package de.erethon.caliburn.item;
 
 import com.google.common.collect.Multimap;
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.item.actionhandler.DamageHandler;
 import de.erethon.caliburn.item.actionhandler.DropHandler;
 import de.erethon.caliburn.item.actionhandler.HitHandler;
 import de.erethon.caliburn.item.actionhandler.RightClickHandler;
+import de.erethon.commons.misc.EnumUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,6 +62,16 @@ public class CustomItem extends ExItem {
 
     public CustomItem(Map<String, Object> args) {
         raw = args;
+
+        Object idType = args.get("idType");
+        if (idType instanceof String) {
+            IdentifierType idTypeValue = EnumUtil.getEnumIgnoreCase(IdentifierType.class, (String) idType);
+            if (idTypeValue != null) {
+                this.idType = idTypeValue;
+            }
+        } else {
+            idType = IdentifierType.LORE;
+        }
 
         Object material = args.get("material");
         if (material instanceof String) {
@@ -109,9 +121,11 @@ public class CustomItem extends ExItem {
         }
     }
 
-    public CustomItem(CaliburnAPI api, String id) {
+    public CustomItem(CaliburnAPI api, IdentifierType idType, String id, VanillaItem base) {
         this.api = api;
+        this.idType = idType;
         this.id = id;
+        setBase(base);
         raw = serialize();
     }
 
@@ -494,6 +508,8 @@ public class CustomItem extends ExItem {
             return new HashMap<>(raw);
         }
         Map<String, Object> config = super.serialize();
+
+        config.put("idType", idType.toString());
 
         config.put("material", base.getId());
 

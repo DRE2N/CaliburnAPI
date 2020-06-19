@@ -16,6 +16,7 @@ package de.erethon.caliburn;
 
 import de.erethon.caliburn.category.Categorizable;
 import de.erethon.caliburn.category.Category;
+import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
@@ -28,14 +29,18 @@ import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
 import de.erethon.commons.compatibility.CompatibilityHandler;
+import de.erethon.commons.compatibility.Version;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 /**
@@ -46,6 +51,8 @@ import org.bukkit.plugin.Plugin;
 public class CaliburnAPI {
 
     private static CaliburnAPI instance;
+
+    private boolean isAtLeast1_14 = Version.isAtLeast(Version.MC1_14);
 
     private String identifierPrefix;
 
@@ -181,6 +188,25 @@ public class CaliburnAPI {
     }
 
     /**
+     * Returns the ID of the {@link ExItem} that the given ItemStack is an instance of. If there is no {@link CustomItem} registered, the {@link VanillaItem} of
+     * the ItemStack's material is used.
+     *
+     * @param item the ItemStack
+     * @return the ID of the {@link ExItem} that the given Entity is an instance of. If there is no {@link CustomItem} registered, the {@link VanillaItem} of
+     *         the material's type is used
+     */
+    public ExItem getExItem(ItemStack item) {
+        String id = null;
+        for (IdentifierType idType : IdentifierType.ITEM_PRIORITY) {
+            id = getExItemId(item, idType);
+            if (id != null) {
+                break;
+            }
+        }
+        return getExItem(id);
+    }
+
+    /**
      * Returns the item that has the given ID.
      *
      * @param id a CustomItem or VanillaItem ID
@@ -215,36 +241,43 @@ public class CaliburnAPI {
     }
 
     /**
-     * Returns the {@link CustomItem} that the given ItemStack is an instance of. If there is no such CustomItem registered, the {@link VanillaItem} of the
-     * stack's material is used.
+     * Returns the ID of the {@link ExItem} that the given ItemStack is an instance of. If there is no {@link CustomItem} registered, the {@link VanillaItem} of
+     * the stack's material is used.
      *
-     * @param item the ItemStack
-     * @return the {@link CustomItem} that the given ItemStack is an instance of. If there is no such CustomItem registered, the {@link VanillaItem} of the
-     *         stack's material is used
+     * @param item   the ItemStack
+     * @param idType the ID storage method
+     * @return the ID of the {@link ExItem} that the given ItemStack is an instance of. If there is no {@link CustomItem} registered, the {@link VanillaItem} of
+     *         the stack's material is used
      */
-    public ExItem getExItem(ItemStack item) {
-        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
-            return getExItem(item.getItemMeta().getLore().get(0).replace(identifierPrefix, ""));
-        } else {
-            return getExItem(item.getType().name());
-        }
-    }
-
-    /**
-     * Returns the ExItem ID of the given ItemStack.
-     *
-     * @param item the ItemStack
-     * @return the ExItem ID of the given ItemStack
-     */
-    public String getExItemId(ItemStack item) {
+    public String getExItemId(ItemStack item, IdentifierType idType) {
         if (item == null) {
             return null;
         }
-        if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
-            return item.getItemMeta().getLore().get(0).replace(identifierPrefix, "");
-        } else {
-            ExItem exItem = getExItem(item.getType().name());
-            return exItem.getId();
+        switch (idType) {
+            case DISPLAY_NAME:
+                if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+                    return item.getItemMeta().getDisplayName().replace(identifierPrefix, "");
+                } else {
+                    return null;
+                }
+            case METADATA:
+                return null;
+            case LORE:
+                if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
+                    return item.getItemMeta().getLore().get(0).replace(identifierPrefix, "");
+                } else {
+                    return null;
+                }
+            case PERSISTENT_DATA_CONTAINER:
+                if (isAtLeast1_14 && item.hasItemMeta()) {
+                    return item.getItemMeta().getPersistentDataContainer().getOrDefault(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, null);
+                } else {
+                    return null;
+                }
+            case VANILLA:
+                return item.getType().toString();
+            default:
+                return null;
         }
     }
 
@@ -325,25 +358,59 @@ public class CaliburnAPI {
     }
 
     /**
-     * Returns the {@link CustomMob} that the given Entity is an instance of. If there is no such CustomMob registered, the {@link VanillaMob} of the
-     * entity's type is used.
+     * Returns the ID of the {@link ExMob} that the given Entity is an instance of. If there is no {@link CustomMob} registered, the {@link VanillaMob} of
+     * the entity's type is used.
      *
      * @param entity the Entity
-     * @return the {@link CustomMob} that the given Entity is an instance of. If there is no such CustomMob registered, the {@link VanillaMob} of the
-     *         entity's type is used
+     * @return the ID of the {@link ExMob} that the given Entity is an instance of. If there is no {@link CustomMob} registered, the {@link VanillaMob} of
+     *         the entity's type is used
      */
     public ExMob getExMob(Entity entity) {
-        return getExMob(getExMobId(entity));
+        String id = null;
+        for (IdentifierType idType : IdentifierType.MOB_PRIORITY) {
+            id = getExMobId(entity, idType);
+            if (id != null) {
+                break;
+            }
+        }
+        return getExMob(id);
     }
 
     /**
-     * Returns the ExMob ID of the given Entity.
+     * Returns the ID of the {@link ExMob} that the given Entity is an instance of.If there is no such {@link CustomMob} registered, the {@link VanillaMob} of
+     * the entity's type is used.
      *
      * @param entity the Entity
-     * @return the ExMob ID of the given Entity
+     * @param idType the ID storage method
+     * @return the ID of the {@link ExMob} that the given Entity is an instance of. If there is no such {@link CustomMob} registered, the {@link VanillaMob} of
+     *         the entity's type is used
      */
-    public String getExMobId(Entity entity) {
-        return entity.getType().name();
+    public String getExMobId(Entity entity, IdentifierType idType) {
+        if (entity == null) {
+            return null;
+        }
+        switch (idType) {
+            case DISPLAY_NAME:
+                return entity.getCustomName();
+            case LORE:
+                return null;
+            case METADATA:
+                List<MetadataValue> values = entity.getMetadata("caliburnId");
+                if (!values.isEmpty()) {
+                    return values.get(0).asString();
+                }
+                return null;
+            case PERSISTENT_DATA_CONTAINER:
+                if (isAtLeast1_14) {
+                    return entity.getPersistentDataContainer().getOrDefault(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, null);
+                } else {
+                    return null;
+                }
+            case VANILLA:
+                return entity.getType().toString();
+            default:
+                return null;
+        }
     }
 
     /* Mob categories */

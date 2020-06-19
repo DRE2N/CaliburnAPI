@@ -14,11 +14,14 @@
  */
 package de.erethon.caliburn.mob;
 
+import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.actionhandler.AttackHandler;
 import de.erethon.caliburn.mob.actionhandler.DamageHandler;
 import de.erethon.caliburn.mob.actionhandler.DeathHandler;
 import de.erethon.caliburn.mob.actionhandler.InteractHandler;
+import de.erethon.commons.misc.EnumUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -66,6 +69,16 @@ public class CustomMob extends ExMob {
 
     public CustomMob(Map<String, Object> args) {
         raw = args;
+
+        Object idType = args.get("idType");
+        if (idType instanceof String) {
+            IdentifierType idTypeValue = EnumUtil.getEnumIgnoreCase(IdentifierType.class, (String) idType);
+            if (idTypeValue != null) {
+                this.idType = idTypeValue;
+            }
+        } else {
+            this.idType = IdentifierType.DISPLAY_NAME;
+        }
 
         /* Entity */
         Object species = args.get("species");
@@ -173,9 +186,12 @@ public class CustomMob extends ExMob {
         }
     }
 
-    public CustomMob(String id, EntityType type) {
+    public CustomMob(CaliburnAPI api, IdentifierType idType, String id, VanillaMob base) {
+        this.api = api;
+        this.idType = idType;
         this.id = id;
-        species = type;
+        setBase(base);
+        raw = serialize();
     }
 
     /* Getters and setters */

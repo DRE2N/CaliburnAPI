@@ -28,6 +28,11 @@ public abstract class Categorizable {
     protected CaliburnAPI api = CaliburnAPI.getInstance();
 
     /**
+     * Where the ID is stored in an instance.
+     */
+    protected IdentifierType idType;
+
+    /**
      * The ID String
      */
     protected String id;
@@ -51,6 +56,15 @@ public abstract class Categorizable {
     }
 
     /* Getters */
+    /**
+     * Returns the identification method of the item.
+     *
+     * @return the identififaction method of the item
+     */
+    public IdentifierType getIdentifierType() {
+        return idType;
+    }
+
     /**
      * Returns the ID.
      *

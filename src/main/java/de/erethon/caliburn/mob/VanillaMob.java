@@ -14,6 +14,7 @@
  */
 package de.erethon.caliburn.mob;
 
+import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.Version;
 import static de.erethon.commons.compatibility.Version.*;
@@ -251,6 +252,7 @@ public class VanillaMob extends ExMob {
     }
 
     protected VanillaMob(Version firstVersion, Version lastVersion, String id1_8, String id1_11, String id1_13, String bukkit, int numeric) {
+        this.idType = IdentifierType.VANILLA;
         this.firstVersion = firstVersion;
         this.lastVersion = lastVersion;
         this.id1_8 = id1_8;

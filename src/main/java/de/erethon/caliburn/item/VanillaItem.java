@@ -14,6 +14,7 @@
  */
 package de.erethon.caliburn.item;
 
+import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
@@ -1212,6 +1213,7 @@ public class VanillaItem extends ExItem {
     }
 
     protected VanillaItem(Version firstVersion, Version lastVersion, String id1_8, String id1_13, String id1_14, int numeric, short data) {
+        this.idType = IdentifierType.VANILLA;
         this.firstVersion = firstVersion;
         this.lastVersion = lastVersion;
         this.id1_8 = id1_8;

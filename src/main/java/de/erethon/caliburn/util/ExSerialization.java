@@ -15,8 +15,10 @@
 package de.erethon.caliburn.util;
 
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
+import de.erethon.caliburn.item.VanillaItem;
 import java.util.Map;
 import java.util.UUID;
 import org.bukkit.inventory.ItemStack;
@@ -38,7 +40,7 @@ public class ExSerialization {
     public Map<String, Object> serialize(ItemStack item) {
         ExItem exItem = api.getExItem(item);
         if (exItem == null) {
-            exItem = new CustomItem(api, UUID.randomUUID().toString());
+            exItem = new CustomItem(api, IdentifierType.PERSISTENT_DATA_CONTAINER, UUID.randomUUID().toString(), VanillaItem.get(item.getType()));
         }
         Map<String, Object> serialized = exItem.serialize();
         serialized.put("amount", item.getAmount());
