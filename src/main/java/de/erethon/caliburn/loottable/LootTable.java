@@ -246,10 +246,9 @@ public class LootTable implements ConfigurationSerializable {
      * @param entityEquip the instance of EntityEquipment to override
      */
     public void setEntityEquipment(EntityEquipment entityEquip) {
-        boolean off = Version.isAtLeast(Version.MC1_9);
         Entry mainHand = getEntry(LootTable.MAIN_HAND);
         Entry offHand = getEntry(LootTable.OFF_HAND);
-        if (off) {
+        if (Version.isAtLeast(Version.MC1_9)) {
             entityEquip.setItemInMainHand(mainHand.getLootItem());
             entityEquip.setItemInMainHandDropChance((float) (mainHand.getLootChance() / 100d));
             entityEquip.setItemInOffHand(offHand.getLootItem());

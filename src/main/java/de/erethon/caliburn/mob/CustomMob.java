@@ -21,12 +21,15 @@ import de.erethon.caliburn.mob.actionhandler.AttackHandler;
 import de.erethon.caliburn.mob.actionhandler.DamageHandler;
 import de.erethon.caliburn.mob.actionhandler.DeathHandler;
 import de.erethon.caliburn.mob.actionhandler.InteractHandler;
+import de.erethon.commons.compatibility.CompatibilityHandler;
+import de.erethon.commons.compatibility.Internals;
 import de.erethon.commons.misc.EnumUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -734,6 +737,7 @@ public class CustomMob extends ExMob {
 
     @Override
     public Entity toEntity(Location location) {
+        Set<Internals> higher = Internals.andHigher(CompatibilityHandler.getInstance().getInternals());
         Entity entity = location.getWorld().spawnEntity(location, species);
 
         if (getName() != null) {
@@ -742,23 +746,31 @@ public class CustomMob extends ExMob {
         if (isCustomNameVisible() != null) {
             entity.setCustomNameVisible(isCustomNameVisible());
         }
-        if (isGlowing() != null) {
-            entity.setGlowing(isGlowing());
-        }
-        if (hasGravity() != null) {
-            entity.setGravity(hasGravity());
-        }
-        if (isInvulnerable() != null) {
-            entity.setInvulnerable(isInvulnerable());
-        }
-        if (isSilent() != null) {
-            entity.setSilent(isSilent());
-        }
-        if (isPersistent() != null) {
-            entity.setPersistent(isPersistent());
-        }
-        if (getPassengers() != null) {
-            getPassengers().forEach(p -> entity.addPassenger(api.getExMob(p).toEntity(location)));
+        if (!higher.contains(Internals.v1_8_R3)) {// 1.9+
+            if (isGlowing() != null) {
+                entity.setGlowing(isGlowing());
+            }
+            if (isInvulnerable() != null) {
+                entity.setInvulnerable(isInvulnerable());
+            }
+            if (isSilent() != null) {
+                entity.setSilent(isSilent());
+            }
+            if (!higher.contains(Internals.v1_9_R2)) {
+                if (hasGravity() != null) {
+                    entity.setGravity(hasGravity());
+                }
+                if (!higher.contains(Internals.v1_10_R1)) {
+                    if (getPassengers() != null) {
+                        getPassengers().forEach(p -> entity.addPassenger(api.getExMob(p).toEntity(location)));
+                    }
+                    if (!higher.contains(Internals.v1_12_R1)) {
+                        if (isPersistent() != null) {
+                            entity.setPersistent(isPersistent());
+                        }
+                    }
+                }
+            }
         }
 
         if (!(entity instanceof LivingEntity)) {
@@ -774,11 +786,13 @@ public class CustomMob extends ExMob {
         if (getRemoveWhenFarAway() != null) {
             living.setRemoveWhenFarAway(getRemoveWhenFarAway());
         }
-        if (hasAI() != null) {
-            living.setAI(hasAI());
-        }
-        if (isCollidable() != null) {
-            living.setCollidable(isCollidable());
+        if (!higher.contains(Internals.v1_8_R3)) {
+            if (hasAI() != null) {
+                living.setAI(hasAI());
+            }
+            if (isCollidable() != null) {
+                living.setCollidable(isCollidable());
+            }
         }
         if (canPickupItems() != null) {
             living.setCanPickupItems(canPickupItems());
