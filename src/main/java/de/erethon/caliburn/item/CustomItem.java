@@ -22,11 +22,13 @@ import de.erethon.caliburn.item.actionhandler.DropHandler;
 import de.erethon.caliburn.item.actionhandler.HitHandler;
 import de.erethon.caliburn.item.actionhandler.RightClickHandler;
 import de.erethon.commons.misc.EnumUtil;
+import de.erethon.headlib.HeadLib;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -56,6 +58,7 @@ public class CustomItem extends ExItem {
     private RightClickHandler rightClickHandler;
 
     private String skullOwner, textureValue;
+    private String nbt;
 
     @Deprecated
     private short data = Short.MIN_VALUE;
@@ -113,6 +116,11 @@ public class CustomItem extends ExItem {
         Object skullOwner = args.get("skullOwner"), textureValue = args.get("textureValue");
         if (skullOwner instanceof String && textureValue instanceof String) {
             setSkullTexture((String) skullOwner, (String) textureValue);
+        }
+
+        Object nbt = args.get("nbt");
+        if (nbt instanceof String) {
+            this.nbt = (String) nbt;
         }
 
         Object data = args.get("durability");
@@ -536,6 +544,9 @@ public class CustomItem extends ExItem {
         if (data != Short.MIN_VALUE) {
             config.put("durability", data);
         }
+        if (nbt != null) {
+            config.put("nbt", nbt);
+        }
         return config;
     }
 
@@ -546,6 +557,8 @@ public class CustomItem extends ExItem {
         if (data != Short.MIN_VALUE) {
             itemStack.setDurability(data);
         }
+        itemStack = HeadLib.setSkullOwner(itemStack, skullOwner, textureValue);
+        itemStack = Bukkit.getUnsafe().modifyItemStack(itemStack, nbt);
         return itemStack;
     }
 
