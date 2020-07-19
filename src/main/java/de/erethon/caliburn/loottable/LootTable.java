@@ -246,8 +246,8 @@ public class LootTable implements ConfigurationSerializable {
      * @param entityEquip the instance of EntityEquipment to override
      */
     public void setEntityEquipment(EntityEquipment entityEquip) {
-        Entry mainHand = getEntry(LootTable.MAIN_HAND);
-        Entry offHand = getEntry(LootTable.OFF_HAND);
+        Entry mainHand = getEntry(MAIN_HAND);
+        Entry offHand = getEntry(OFF_HAND);
         if (Version.isAtLeast(Version.MC1_9)) {
             entityEquip.setItemInMainHand(mainHand.getLootItem());
             entityEquip.setItemInMainHandDropChance((float) (mainHand.getLootChance() / 100d));
@@ -258,25 +258,25 @@ public class LootTable implements ConfigurationSerializable {
             entityEquip.setItemInHandDropChance((float) (mainHand.getLootChance() / 100d));
         }
 
-        Entry helmet = getEntry(LootTable.HELMET);
+        Entry helmet = getEntry(HELMET);
         if (helmet != null) {
             entityEquip.setHelmet(helmet.getLootItem());
             entityEquip.setHelmetDropChance((float) (helmet.getLootChance() / 100d));
         }
 
-        Entry chestplate = getEntry(LootTable.CHESTPLATE);
+        Entry chestplate = getEntry(CHESTPLATE);
         if (chestplate != null) {
             entityEquip.setHelmet(chestplate.getLootItem());
             entityEquip.setHelmetDropChance((float) (chestplate.getLootChance() / 100d));
         }
 
-        Entry leggings = getEntry(LootTable.LEGGINGS);
+        Entry leggings = getEntry(LEGGINGS);
         if (leggings != null) {
             entityEquip.setHelmet(leggings.getLootItem());
             entityEquip.setHelmetDropChance((float) (leggings.getLootChance() / 100d));
         }
 
-        Entry boots = getEntry(LootTable.BOOTS);
+        Entry boots = getEntry(BOOTS);
         if (boots != null) {
             entityEquip.setHelmet(boots.getLootItem());
             entityEquip.setHelmetDropChance((float) (boots.getLootChance() / 100d));

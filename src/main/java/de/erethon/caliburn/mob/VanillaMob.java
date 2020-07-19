@@ -56,7 +56,16 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob TNT = new VanillaMob(MC1_8, "PrimedTNT", "tnt", "PRIMED_TNT", 20);
     public static final VanillaMob FALLING_BLOCK = new VanillaMob(MC1_8, "FallingSand", "falling_block", "FALLING_BLOCK", 21);
     public static final VanillaMob FIREWORK_ROCKET = new VanillaMob(MC1_8, "FireworksRocketEntity", "fireworks_rocket", "firework_rocket", "FIREWORK", 22);
-    public static final VanillaMob TIPPED_ARROW = new VanillaMob(MC1_8, "TippedArrow", "tipped_arrow", "TIPPED_ARROW", 23);
+    public static final VanillaMob TIPPED_ARROW = new VanillaMob(MC1_8, MC1_13, "TippedArrow", "TippedArrow", "tipped_arrow", "TIPPED_ARROW", 23) {
+        @Override
+        public EntityType getSpecies() {
+            if (Version.isAtLeast(MC1_14)) {
+                return ARROW.getSpecies();
+            } else {
+                return species;
+            }
+        }
+    };
     public static final VanillaMob SPECTRAL_ARROW = new VanillaMob(MC1_9, "SpectralArrow", "spectral_arrow", "SPECTRAL_ARROW", 24);
     public static final VanillaMob SHULKER_BULLET = new VanillaMob(MC1_9, "ShulkerBullet", "shulker_bullet", "SHULKER_BULLET", 25);
     public static final VanillaMob DRAGON_FIREBALL = new VanillaMob(MC1_9, "DragonFireball", "dragon_fireball", "DRAGON_FIREBALL", 26);
@@ -129,12 +138,12 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob FOX = new VanillaMob(MC1_14, "fox", "FOX");
     public static final VanillaMob BEE = new VanillaMob(MC1_15, "bee", "BEE");
 
-    public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, "lingering_potion", "LINGERING_POTION");
+    public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, MC1_14, "lingering_potion", "LINGERING_POTION");
     public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");
     public static final VanillaMob LIGHTNING = new VanillaMob(MC1_8, "LightningBolt", "lightning_bolt", "LIGHTNING", -1);
-    public static final VanillaMob WEATHER = new VanillaMob(MC1_8, "weather", "WEATHER");
+    public static final VanillaMob WEATHER = new VanillaMob(MC1_8, MC1_14, "weather", "WEATHER");
     public static final VanillaMob PLAYER = new VanillaMob(MC1_8, "Player", "player", "PLAYER", -1);
-    public static final VanillaMob COMPLEX_PART = new VanillaMob(MC1_8, "complex_part", "COMPLEX_PART");
+    public static final VanillaMob COMPLEX_PART = new VanillaMob(MC1_8, MC1_14, "complex_part", "COMPLEX_PART");
 
     public static final SplitMob ELDER_GUARDIAN = new SplitMob(MC1_8, GUARDIAN, "elder_guardian", "ELDER_GUARDIAN", 4);
     public static final SplitMob WITHER_SKELETON = new SplitMob(MC1_8, SKELETON, "wither_skeleton", "WITHER_SKELETON", 5);
