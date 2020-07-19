@@ -30,12 +30,18 @@ import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
+import de.erethon.commons.config.RawConfiguration;
+import de.erethon.commons.misc.FileUtil;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
@@ -55,6 +61,7 @@ public class CaliburnAPI {
     private boolean isAtLeast1_14 = Version.isAtLeast(Version.MC1_14);
 
     private String identifierPrefix;
+    private File dataFolder;
 
     private SimpleSerialization simpleSerialization = new SimpleSerialization(this);
     private ExSerialization exSerialization = new ExSerialization(this);
@@ -84,6 +91,7 @@ public class CaliburnAPI {
         instance = this;
 
         this.identifierPrefix = identifierPrefix;
+        dataFolder = new File(plugin.getDataFolder().getParentFile(), "Caliburn");
 
         items.addAll(VanillaItem.getLoaded());
         mobs.addAll(VanillaMob.getLoaded());
@@ -110,11 +118,124 @@ public class CaliburnAPI {
     }
 
     /**
+     * Loads the data files.
+     */
+    public void loadDataFiles() {
+        getDataFolder().mkdir();
+        File icFile = new File(getDataFolder(), "ItemCategories.yml");
+        if (!icFile.exists()) {
+            try {
+                icFile.createNewFile();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+        RawConfiguration icConfig = RawConfiguration.loadConfiguration(icFile);
+        for (Object entry : icConfig.getArgs().entrySet()) {
+            itemCategories.add(new Category<>(this, ((Map.Entry) entry).getKey().toString(), (List<String>) ((Map.Entry) entry).getValue()));
+        }
+
+        File mcFile = new File(getDataFolder(), "MobCategories.yml");
+        if (!mcFile.exists()) {
+            try {
+                mcFile.createNewFile();
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+        RawConfiguration mcConfig = RawConfiguration.loadConfiguration(mcFile);
+        for (Object entry : mcConfig.getArgs().entrySet()) {
+            mobCategories.add(new Category<>(this, ((Map.Entry) entry).getKey().toString(), (List<String>) ((Map.Entry) entry).getValue()));
+        }
+
+        File custom = new File(getDataFolder() + "/custom/mobs");
+        custom.mkdirs();
+        for (File file : FileUtil.getFilesForFolder(custom)) {
+            RawConfiguration config = RawConfiguration.loadConfiguration(file);
+            CustomMob mob = new CustomMob(config.getArgs());
+            String id = file.getName().substring(0, file.getName().length() - 4);
+            mob.register(id);
+        }
+        File vmFile = new File(getDataFolder() + "/vanilla/mobs");
+        vmFile.mkdirs();
+        for (VanillaMob mob : VanillaMob.getLoaded()) {
+            File file = new File(vmFile, mob.getId() + ".yml");
+            RawConfiguration config;
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+                config = RawConfiguration.loadConfiguration(file);
+                config.createSection("categoryDamageModifiers");
+                config.createSection("itemDamageModifiers");
+                try {
+                    config.save(file);
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            } else {
+                config = RawConfiguration.loadConfiguration(file);
+            }
+            mob.setRaw(config.getArgs());
+        }
+
+        File ciFile = new File(getDataFolder() + "/custom/items");
+        ciFile.mkdirs();
+        for (File file : FileUtil.getFilesForFolder(ciFile)) {
+            RawConfiguration config = RawConfiguration.loadConfiguration(file);
+            CustomItem item = new CustomItem(config.getArgs());
+            String id = file.getName().substring(0, file.getName().length() - 4);
+            item.register(id);
+        }
+        File viFile = new File(getDataFolder() + "/vanilla/items");
+        if (!viFile.exists()) {
+            viFile.mkdirs();
+        }
+        for (VanillaItem item : VanillaItem.getLoaded()) {
+            File file = new File(viFile, item.getId() + ".yml");
+            RawConfiguration config;
+            if (!file.exists()) {
+                try {
+                    file.createNewFile();
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+                config = RawConfiguration.loadConfiguration(file);
+                config.createSection("categoryDamageModifiers");
+                config.createSection("mobDamageModifiers");
+                try {
+                    config.save(file);
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+            } else {
+                config = RawConfiguration.loadConfiguration(file);
+            }
+            item.setRaw(config.getArgs());
+        }
+
+        File ltDir = new File(getDataFolder() + "/custom/loottables");
+        ltDir.mkdirs();
+        FileUtil.getFilesForFolder(ltDir).forEach(f -> lootTables.add(new LootTable(YamlConfiguration.loadConfiguration(f).getValues(true))));
+    }
+
+    /**
      * Supposed to be called after all items, mobs and categories are loaded. Makes items and mobs load their damage modifiers.
      */
     public void finishInitialization() {
         items.forEach(i -> i.load(this));
         mobs.forEach(m -> m.load(this));
+    }
+
+    /**
+     * Returns the folder where the data is stored.
+     *
+     * @return
+     */
+    public File getDataFolder() {
+        return dataFolder;
     }
 
     /**
