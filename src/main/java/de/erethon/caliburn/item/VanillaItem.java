@@ -1109,6 +1109,8 @@ public class VanillaItem extends ExItem {
             }
         }
 
+        StringBuilder sb = new StringBuilder("&c[WARNING] Caliburn lacks a built-in representation of the following materials: ");
+        boolean send = false, first = true;
         bukkitMats:
         for (Material bukkit : Material.values()) {
             for (VanillaItem caliburn : VALUES) {
@@ -1117,19 +1119,40 @@ public class VanillaItem extends ExItem {
                 }
             }
 
-            MessageUtil.log("&c[WARNING] Caliburn lacks a built-in representation of the material " + bukkit.name() + ". Please update your implementation if possible.");
+            if (!first) {
+                sb.append(", ");
+            } else {
+                first = false;
+            }
+            sb.append(bukkit.name());
+            send = true;
             VALUES.add(new VanillaItem(NEW, bukkit.name()));
         }
+        if (send) {
+            MessageUtil.log(sb.append(" Please update your implementation if possible.").toString());
+        }
 
+        sb = new StringBuilder("&c[WARNING] Caliburn has a representation of the following materials that do not exist in Bukkit: ");
+        send = false;
+        first = true;
         for (VanillaItem vi : VALUES) {
             if (Material.getMaterial(vi.getName()) == null && vi.isAvailable()) {
-                MessageUtil.log("&c[WARNING] Caliburn has a representation of the material " + vi.getName() + " that does not exist in Bukkit.");
+                if (!first) {
+                    sb.append(", ");
+                } else {
+                    first = false;
+                }
+                sb.append(vi.getName());
+                send = true;
                 continue;
             }
             if (vi.isAvailable()) {
                 LOADED.add(vi);
                 BY_MATERIAL.put(vi.getMaterial(), vi);
             }
+        }
+        if (send) {
+            MessageUtil.log(sb.toString());
         }
     }
 

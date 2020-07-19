@@ -169,6 +169,8 @@ public class VanillaMob extends ExMob {
             }
         }
 
+        StringBuilder sb = new StringBuilder("&c[WARNING] Caliburn lacks a built-in representation of the following mobs: ");
+        boolean send = false, first = true;
         bukkitMobs:
         for (EntityType bukkit : EntityType.values()) {
             for (VanillaMob caliburn : VALUES) {
@@ -177,18 +179,40 @@ public class VanillaMob extends ExMob {
                 }
             }
 
-            MessageUtil.log("&c[WARNING] Caliburn lacks a built-in representation of the entity " + bukkit.name() + ". Please update your implementation if possible!");
+            if (!first) {
+                sb.append(", ");
+            } else {
+                first = false;
+            }
+            sb.append(bukkit.name());
+            send = true;
             VALUES.add(new VanillaMob(NEW, bukkit.name().toLowerCase(), bukkit.name()));
         }
+        if (send) {
+            MessageUtil.log(sb.append(" Please update your implementation if possible.").toString());
+        }
 
+        sb = new StringBuilder("&c[WARNING] Caliburn has a representation of the following mobs that do not exist in Bukkit: ");
+        send = false;
+        first = true;
         for (VanillaMob vm : VALUES) {
             if (EnumUtil.isValidEnum(EntityType.class, vm.getName()) && vm.isAvailable()) {
-                MessageUtil.log("&c[WARNING] Caliburn has a representation of the entity " + vm.getName() + " that does not exist in Bukkit.");
+                if (!first) {
+                    sb.append(", ");
+                } else {
+                    first = false;
+                }
+                sb.append(vm.getName());
+                send = true;
                 continue;
             }
             if (vm.isAvailable()) {
                 LOADED.add(vm);
+                BY_ENTITY_TYPE.put(vm.getSpecies(), vm);
             }
+        }
+        if (send) {
+            MessageUtil.log(sb.toString());
         }
     }
 
