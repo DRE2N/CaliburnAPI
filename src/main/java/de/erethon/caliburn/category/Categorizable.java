@@ -81,7 +81,7 @@ public abstract class Categorizable {
      * @return this object if the ID String refers to this item exclusively; null if not
      */
     public Categorizable idMatch(String id) {
-        return id.equals(this.id) ? this : null;
+        return id.equals(getId()) ? this : null;
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class Categorizable {
 
     @Override
     public String toString() {
-        return getClass().getSimpleName() + "{ID=" + id + "}";
+        return getClass().getSimpleName() + "{ID=" + getId() + "}";
     }
 
 }

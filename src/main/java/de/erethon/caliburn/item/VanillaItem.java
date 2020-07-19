@@ -968,6 +968,105 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem HONEY_BLOCK = new VanillaItem(MC1_15, "HONEY_BLOCK");
     public static final VanillaItem HONEY_BOTTLE = new VanillaItem(MC1_15, "HONEY_BOTTLE");
 
+    // 1.16 ITEMS
+    public static final VanillaItem CRIMSON_NYLIUM = new VanillaItem(MC1_16, "CRIMSON_NYLIUM");
+    public static final VanillaItem WARPED_NYLIUM = new VanillaItem(MC1_16, "WARPED_NYLIUM");
+    public static final VanillaItem CRIMSON_PLANKS = new VanillaItem(MC1_16, "CRIMSON_PLANKS");
+    public static final VanillaItem WARPED_PLANKS = new VanillaItem(MC1_16, "WARPED_PLANKS");
+    public static final VanillaItem NETHER_GOLD_ORE = new VanillaItem(MC1_16, "NETHER_GOLD_ORE");
+    public static final VanillaItem CRIMSON_STEM = new VanillaItem(MC1_16, "CRIMSON_STEM");
+    public static final VanillaItem WARPED_STEM = new VanillaItem(MC1_16, "WARPED_STEM");
+    public static final VanillaItem STRIPPED_CRIMSON_STEM = new VanillaItem(MC1_16, "STRIPPED_CRIMSON_STEM");
+    public static final VanillaItem STRIPPED_WARPED_STEM = new VanillaItem(MC1_16, "STRIPPED_WARPED_STEM");
+    public static final VanillaItem STRIPPED_CRIMSON_HYPHAE = new VanillaItem(MC1_16, "STRIPPED_CRIMSON_HYPHAE");
+    public static final VanillaItem STRIPPED_WARPED_HYPHAE = new VanillaItem(MC1_16, "STRIPPED_WARPED_HYPHAE");
+    public static final VanillaItem CRIMSON_HYPHAE = new VanillaItem(MC1_16, "CRIMSON_HYPHAE");
+    public static final VanillaItem WARPED_HYPHAE = new VanillaItem(MC1_16, "WARPED_HYPHAE");
+    public static final VanillaItem CRIMSON_FUNGUS = new VanillaItem(MC1_16, "CRIMSON_FUNGUS");
+    public static final VanillaItem WARPED_FUNGUS = new VanillaItem(MC1_16, "WARPED_FUNGUS");
+    public static final VanillaItem CRIMSON_ROOTS = new VanillaItem(MC1_16, "CRIMSON_ROOTS");
+    public static final VanillaItem WARPED_ROOTS = new VanillaItem(MC1_16, "WARPED_ROOTS");
+    public static final VanillaItem NETHER_SPROUTS = new VanillaItem(MC1_16, "NETHER_SPROUTS");
+    public static final VanillaItem WEEPING_VINES = new VanillaItem(MC1_16, "WEEPING_VINES");
+    public static final VanillaItem TWISTING_VINES = new VanillaItem(MC1_16, "TWISTING_VINES");
+    public static final VanillaItem CRIMSON_SLAB = new VanillaItem(MC1_16, "CRIMSON_SLAB");
+    public static final VanillaItem WARPED_SLAB = new VanillaItem(MC1_16, "WARPED_SLAB");
+    public static final VanillaItem CRIMSON_PRESSURE_PLATE = new VanillaItem(MC1_16, "CRIMSON_PRESSURE_PLATE");
+    public static final VanillaItem WARPED_PRESSURE_PLATE = new VanillaItem(MC1_16, "WARPED_PRESSURE_PLATE");
+    public static final VanillaItem POLISHED_BLACKSTONE_PRESSURE_PLATE = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_PRESSURE_PLATE");
+    public static final VanillaItem CRIMSON_FENCE = new VanillaItem(MC1_16, "CRIMSON_FENCE");
+    public static final VanillaItem WARPED_FENCE = new VanillaItem(MC1_16, "WARPED_FENCE");
+    public static final VanillaItem SOUL_SOIL = new VanillaItem(MC1_16, "SOUL_SOIL");
+    public static final VanillaItem BASALT = new VanillaItem(MC1_16, "BASALT");
+    public static final VanillaItem POLISHED_BASALT = new VanillaItem(MC1_16, "POLISHED_BASALT");
+    public static final VanillaItem SOUL_TORCH = new VanillaItem(MC1_16, "SOUL_TORCH");
+    public static final VanillaItem CRIMSON_TRAPDOOR = new VanillaItem(MC1_16, "CRIMSON_TRAPDOOR");
+    public static final VanillaItem WARPED_TRAPDOOR = new VanillaItem(MC1_16, "WARPED_TRAPDOOR");
+    public static final VanillaItem CHAIN = new VanillaItem(MC1_16, "CHAIN");
+    public static final VanillaItem CRIMSON_FENCE_GATE = new VanillaItem(MC1_16, "CRIMSON_FENCE_GATE");
+    public static final VanillaItem WARPED_FENCE_GATE = new VanillaItem(MC1_16, "WARPED_FENCE_GATE");
+    public static final VanillaItem CRACKED_NETHER_BRICKS = new VanillaItem(MC1_16, "CRACKED_NETHER_BRICKS");
+    public static final VanillaItem CHISELED_NETHER_BRICKS = new VanillaItem(MC1_16, "CHISELED_NETHER_BRICKS");
+    public static final VanillaItem CRIMSON_STAIRS = new VanillaItem(MC1_16, "CRIMSON_STAIRS");
+    public static final VanillaItem WARPED_STAIRS = new VanillaItem(MC1_16, "WARPED_STAIRS");
+    public static final VanillaItem BLACKSTONE_WALL = new VanillaItem(MC1_16, "BLACKSTONE_WALL");
+    public static final VanillaItem POLISHED_BLACKSTONE_WALL = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_WALL");
+    public static final VanillaItem POLISHED_BLACKSTONE_BRICK_WALL = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_BRICK_WALL");
+    public static final VanillaItem CRIMSON_BUTTON = new VanillaItem(MC1_16, "CRIMSON_BUTTON");
+    public static final VanillaItem WARPED_BUTTON = new VanillaItem(MC1_16, "WARPED_BUTTON");
+    public static final VanillaItem POLISHED_BLACKSTONE_BUTTON = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_BUTTON");
+    public static final VanillaItem QUARTZ_BRICKS = new VanillaItem(MC1_16, "QUARTZ_BRICKS");
+    public static final VanillaItem WARPED_WART_BLOCK = new VanillaItem(MC1_16, "WARPED_WART_BLOCK");
+    public static final VanillaItem CRIMSON_DOOR = new VanillaItem(MC1_16, "CRIMSON_DOOR");
+    public static final VanillaItem WARPED_DOOR = new VanillaItem(MC1_16, "WARPED_DOOR");
+    public static final VanillaItem NETHERITE_INGOT = new VanillaItem(MC1_16, "NETHERITE_INGOT");
+    public static final VanillaItem NETHERITE_SCRAP = new VanillaItem(MC1_16, "NETHERITE_SCRAP");
+    public static final VanillaItem NETHERITE_SWORD = new VanillaItem(MC1_16, "NETHERITE_SWORD");
+    public static final VanillaItem NETHERITE_SHOVEL = new VanillaItem(MC1_16, "NETHERITE_SHOVEL");
+    public static final VanillaItem NETHERITE_PICKAXE = new VanillaItem(MC1_16, "NETHERITE_PICKAXE");
+    public static final VanillaItem NETHERITE_AXE = new VanillaItem(MC1_16, "NETHERITE_AXE");
+    public static final VanillaItem NETHERITE_HOE = new VanillaItem(MC1_16, "NETHERITE_HOE");
+    public static final VanillaItem NETHERITE_HELMET = new VanillaItem(MC1_16, "NETHERITE_HELMET");
+    public static final VanillaItem NETHERITE_CHESTPLATE = new VanillaItem(MC1_16, "NETHERITE_CHESTPLATE");
+    public static final VanillaItem NETHERITE_LEGGINGS = new VanillaItem(MC1_16, "NETHERITE_LEGGINGS");
+    public static final VanillaItem NETHERITE_BOOTS = new VanillaItem(MC1_16, "NETHERITE_BOOTS");
+    public static final VanillaItem CRIMSON_SIGN = new VanillaItem(MC1_16, "CRIMSON_SIGN");
+    public static final VanillaItem WARPED_SIGN = new VanillaItem(MC1_16, "WARPED_SIGN");
+    public static final VanillaItem WARPED_FUNGUS_ON_A_STICK = new VanillaItem(MC1_16, "WARPED_FUNGUS_ON_A_STICK");
+    public static final VanillaItem MUSIC_DISC_PIGSTEP = new VanillaItem(MC1_16, "MUSIC_DISC_PIGSTEP");
+    public static final VanillaItem PIGLIN_BANNER_PATTERN = new VanillaItem(MC1_16, "PIGLIN_BANNER_PATTERN");
+    public static final VanillaItem SOUL_LANTERN = new VanillaItem(MC1_16, "SOUL_LANTERN");
+    public static final VanillaItem SOUL_CAMPFIRE = new VanillaItem(MC1_16, "SOUL_CAMPFIRE");
+    public static final VanillaItem SHROOMLIGHT = new VanillaItem(MC1_16, "SHROOMLIGHT");
+    public static final VanillaItem LODESTONE = new VanillaItem(MC1_16, "LODESTONE");
+    public static final VanillaItem NETHERITE_BLOCK = new VanillaItem(MC1_16, "NETHERITE_BLOCK");
+    public static final VanillaItem ANCIENT_DEBRIS = new VanillaItem(MC1_16, "ANCIENT_DEBRIS");
+    public static final VanillaItem TARGET = new VanillaItem(MC1_16, "TARGET");
+    public static final VanillaItem CRYING_OBSIDIAN = new VanillaItem(MC1_16, "CRYING_OBSIDIAN");
+    public static final VanillaItem BLACKSTONE = new VanillaItem(MC1_16, "BLACKSTONE");
+    public static final VanillaItem BLACKSTONE_SLAB = new VanillaItem(MC1_16, "BLACKSTONE_SLAB");
+    public static final VanillaItem BLACKSTONE_STAIRS = new VanillaItem(MC1_16, "BLACKSTONE_STAIRS");
+    public static final VanillaItem GILDED_BLACKSTONE = new VanillaItem(MC1_16, "GILDED_BLACKSTONE");
+    public static final VanillaItem POLISHED_BLACKSTONE = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE");
+    public static final VanillaItem POLISHED_BLACKSTONE_SLAB = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_SLAB");
+    public static final VanillaItem POLISHED_BLACKSTONE_STAIRS = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_STAIRS");
+    public static final VanillaItem CHISELED_POLISHED_BLACKSTONE = new VanillaItem(MC1_16, "CHISELED_POLISHED_BLACKSTONE");
+    public static final VanillaItem POLISHED_BLACKSTONE_BRICKS = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_BRICKS");
+    public static final VanillaItem POLISHED_BLACKSTONE_BRICK_SLAB = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_BRICK_SLAB");
+    public static final VanillaItem POLISHED_BLACKSTONE_BRICK_STAIRS = new VanillaItem(MC1_16, "POLISHED_BLACKSTONE_BRICK_STAIRS");
+    public static final VanillaItem CRACKED_POLISHED_BLACKSTONE_BRICKS = new VanillaItem(MC1_16, "CRACKED_POLISHED_BLACKSTONE_BRICKS");
+    public static final VanillaItem RESPAWN_ANCHOR = new VanillaItem(MC1_16, "RESPAWN_ANCHOR");
+    public static final VanillaItem SOUL_FIRE = new VanillaItem(MC1_16, "SOUL_FIRE");
+    public static final VanillaItem SOUL_WALL_TORCH = new VanillaItem(MC1_16, "SOUL_WALL_TORCH");
+    public static final VanillaItem WEEPING_VINES_PLANT = new VanillaItem(MC1_16, "WEEPING_VINES_PLANT");
+    public static final VanillaItem TWISTING_VINES_PLANT = new VanillaItem(MC1_16, "TWISTING_VINES_PLANT");
+    public static final VanillaItem CRIMSON_WALL_SIGN = new VanillaItem(MC1_16, "CRIMSON_WALL_SIGN");
+    public static final VanillaItem WARPED_WALL_SIGN = new VanillaItem(MC1_16, "WARPED_WALL_SIGN");
+    public static final VanillaItem POTTED_CRIMSON_FUNGUS = new VanillaItem(MC1_16, "POTTED_CRIMSON_FUNGUS");
+    public static final VanillaItem POTTED_WARPED_FUNGUS = new VanillaItem(MC1_16, "POTTED_WARPED_FUNGUS");
+    public static final VanillaItem POTTED_CRIMSON_ROOTS = new VanillaItem(MC1_16, "POTTED_CRIMSON_ROOTS");
+    public static final VanillaItem POTTED_WARPED_ROOTS = new VanillaItem(MC1_16, "POTTED_WARPED_ROOTS");
+
     // SPAWN EGGS
     public static final VanillaItem BAT_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "BAT_SPAWN_EGG", 383);
     public static final VanillaItem BEE_SPAWN_EGG = new VanillaItem(MC1_15, "BEE_SPAWN_EGG");
@@ -1025,8 +1124,21 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem WOLF_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "WOLF_SPAWN_EGG", 383);
     public static final VanillaItem ZOMBIE_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIE_SPAWN_EGG", 383);
     public static final VanillaItem ZOMBIE_HORSE_SPAWN_EGG = new VanillaItem(MC1_11, "MONSTER_EGG", "ZOMBIE_HORSE_SPAWN_EGG", 383);
-    public static final VanillaItem ZOMBIE_PIGMAN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIE_PIGMAN_SPAWN_EGG", 383);
+    public static final VanillaItem ZOMBIFIED_PIGLIN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIFIED_PIGLIN_SPAWN_EGG", 383) {
+        @Override
+        public String getId() {
+            if (Version.isAtMost(Version.MC1_15_2)) {
+                return "ZOMBIE_PIGMAN_SPAWN_EGG";
+            } else {
+                return super.getId();
+            }
+        }
+    };
     public static final VanillaItem ZOMBIE_VILLAGER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIE_VILLAGER_SPAWN_EGG", 383);
+    public static final VanillaItem HOGLIN_SPAWN_EGG = new VanillaItem(MC1_16, "HOGLIN_SPAWN_EGG");
+    public static final VanillaItem PIGLIN_SPAWN_EGG = new VanillaItem(MC1_16, "PIGLIN_SPAWN_EGG");
+    public static final VanillaItem STRIDER_SPAWN_EGG = new VanillaItem(MC1_16, "STRIDER_SPAWN_EGG");
+    public static final VanillaItem ZOGLIN_SPAWN_EGG = new VanillaItem(MC1_16, "ZOGLIN_SPAWN_EGG");
 
     // OLD / MERGED BLOCKS
     public static final OldBlockItem FLOWING_WATER = new OldBlockItem(MC1_8, "WATER", WATER, 8);
@@ -1325,7 +1437,7 @@ public class VanillaItem extends ExItem {
      */
     public String getInternalId() {
         if (CompatibilityHandler.getInstance().getVersion().useNewMaterials()) {
-            return id;
+            return getId();
         } else {
             return getOldNameAndData();
         }
@@ -1359,7 +1471,7 @@ public class VanillaItem extends ExItem {
 
     @Override
     public String getName() {
-        return id;
+        return getId();
     }
 
     /**

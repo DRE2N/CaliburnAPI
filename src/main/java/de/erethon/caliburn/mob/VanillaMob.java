@@ -90,7 +90,21 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob ZOMBIE = new VanillaMob(MC1_8, "Zombie", "zombie", "ZOMBIE", 54);
     public static final VanillaMob SLIME = new VanillaMob(MC1_8, "Slime", "slime", "SLIME", 55);
     public static final VanillaMob GHAST = new VanillaMob(MC1_8, "Ghast", "ghast", "GHAST", 56);
-    public static final VanillaMob ZOMBIE_PIGMAN = new VanillaMob(MC1_8, "PigZombie", "zombie_pigman", "PIG_ZOMBIE", 57);
+    public static final VanillaMob ZOMBIE_PIGMAN = new VanillaMob(MC1_8, "PigZombie", "zombie_pigman", "ZOMBIFIED_PIGLIN", 57) {
+        @Override
+        public String getId1_16() {
+            return "zombified_piglin";
+        }
+
+        @Override
+        public String getBukkitName() {
+            if (Version.isAtLeast(MC1_16)) {
+                return super.getBukkitName();
+            } else {
+                return "PIG_ZOMBIE";
+            }
+        }
+    };
     public static final VanillaMob ENDERMAN = new VanillaMob(MC1_8, "Enderman", "enderman", "ENDERMAN", 58);
     public static final VanillaMob CAVE_SPIDER = new VanillaMob(MC1_8, "CaveSpider", "cave_spider", "CAVE_SPIDER", 59);
     public static final VanillaMob SILVERFISH = new VanillaMob(MC1_8, "Silverfish", "silverfish", "SILVERFISH", 60);
@@ -137,6 +151,10 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob WANDERING_TRADER = new VanillaMob(MC1_14, "wandering_trader", "WANDERING_TRADER");
     public static final VanillaMob FOX = new VanillaMob(MC1_14, "fox", "FOX");
     public static final VanillaMob BEE = new VanillaMob(MC1_15, "bee", "BEE");
+    public static final VanillaMob HOGLIN = new VanillaMob(MC1_16, "hoglin", "HOGLIN");
+    public static final VanillaMob PIGLIN = new VanillaMob(MC1_16, "piglin", "PIGLIN");
+    public static final VanillaMob ZOGLIN = new VanillaMob(MC1_16, "zoglin", "ZOGLIN");
+    public static final VanillaMob STRIDER = new VanillaMob(MC1_16, "strider", "STRIDER");
 
     public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, MC1_14, "lingering_potion", "LINGERING_POTION");
     public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");
@@ -333,8 +351,6 @@ public class VanillaMob extends ExMob {
 
     /**
      * Returns the new String ID used since Minecraft 1.13.
-     * <p>
-     * This is the same as {@link #getId()}.
      *
      * @return the new String ID used since Minecraft 1.13
      */
@@ -342,9 +358,20 @@ public class VanillaMob extends ExMob {
         return id1_13;
     }
 
+    /**
+     * Returns the new String ID used since Minecraft 1.16.
+     * <p>
+     * This is the same as {@link #getId()}.
+     *
+     * @return the new String ID used since Minecraft 1.16
+     */
+    public String getId1_16() {
+        return id1_13;
+    }
+
     @Override
     public String getId() {
-        return id1_13;
+        return getId1_16();
     }
 
     /**
@@ -381,7 +408,7 @@ public class VanillaMob extends ExMob {
 
     @Override
     public ExMob idMatch(String id) {
-        if (id.toUpperCase().equals(bukkit) || id.equals(id1_13) || id.equals(id1_11) || id.equals(id1_8)) {
+        if (id.toUpperCase().equals(getBukkitName()) || id.equals(id1_13) || id.equals(id1_11) || id.equals(id1_8)) {
             return this;
         } else {
             return null;
@@ -391,7 +418,7 @@ public class VanillaMob extends ExMob {
     @Override
     public EntityType getSpecies() {
         if (isAvailable()) {
-            return EntityType.valueOf(bukkit);
+            return EntityType.valueOf(getBukkitName());
         } else {
             return EntityType.UNKNOWN;
         }
