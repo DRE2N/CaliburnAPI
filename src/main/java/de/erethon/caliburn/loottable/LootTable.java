@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -259,42 +260,42 @@ public class LootTable implements ConfigurationSerializable {
      */
     public void readEntityEquipment(EntityEquipment entityEquip) {
         if (Version.isAtLeast(Version.MC1_9)) {
-            if (entityEquip.getItemInMainHand() != null) {
+            if (entityEquip.getItemInMainHand() != null && entityEquip.getItemInMainHand().getType() != Material.AIR) {
                 Entry mainHand = getOrCreateEntry(MAIN_HAND);
                 mainHand.setLootItem(entityEquip.getItemInMainHand());
                 mainHand.setLootChance(entityEquip.getItemInMainHandDropChance() * 100d);
             }
-            if (entityEquip.getItemInOffHand() != null) {
+            if (entityEquip.getItemInOffHand() != null && entityEquip.getItemInOffHand().getType() != Material.AIR) {
                 Entry offHand = getOrCreateEntry(OFF_HAND);
                 offHand.setLootItem(entityEquip.getItemInOffHand());
                 offHand.setLootChance(entityEquip.getItemInMainHandDropChance() * 100d);
             }
-        } else if (entityEquip.getItemInMainHand() != null) {
+        } else if (entityEquip.getItemInHand() != null && entityEquip.getItemInHand().getType() != Material.AIR) {
             Entry mainHand = getOrCreateEntry(MAIN_HAND);
             mainHand.setLootItem(entityEquip.getItemInHand());
             mainHand.setLootChance(entityEquip.getItemInHandDropChance() * 100d);
         }
 
-        if (entityEquip.getHelmet() != null) {
+        if (entityEquip.getHelmet() != null && entityEquip.getHelmet().getType() != Material.AIR) {
             Entry helmet = getOrCreateEntry(HELMET);
             helmet.setLootItem(entityEquip.getHelmet());
             helmet.setLootChance(entityEquip.getHelmetDropChance() * 100d);
         }
 
-        if (entityEquip.getChestplate() != null) {
-            Entry chestplate = getEntry(CHESTPLATE);
+        if (entityEquip.getChestplate() != null && entityEquip.getChestplate().getType() != Material.AIR) {
+            Entry chestplate = getOrCreateEntry(CHESTPLATE);
             chestplate.setLootItem(entityEquip.getChestplate());
             chestplate.setLootChance(entityEquip.getChestplateDropChance() * 100d);
         }
 
-        if (entityEquip.getLeggings() != null) {
-            Entry leggings = getEntry(LEGGINGS);
+        if (entityEquip.getLeggings() != null && entityEquip.getLeggings().getType() != Material.AIR) {
+            Entry leggings = getOrCreateEntry(LEGGINGS);
             leggings.setLootItem(entityEquip.getLeggings());
             leggings.setLootChance(entityEquip.getLeggingsDropChance() * 100d);
         }
 
-        if (entityEquip.getBoots() != null) {
-            Entry boots = getEntry(BOOTS);
+        if (entityEquip.getBoots() != null && entityEquip.getBoots().getType() != Material.AIR) {
+            Entry boots = getOrCreateEntry(BOOTS);
             boots.setLootItem(entityEquip.getBoots());
             boots.setLootChance(entityEquip.getBootsDropChance() * 100d);
         }
