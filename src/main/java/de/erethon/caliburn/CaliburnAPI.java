@@ -232,7 +232,7 @@ public class CaliburnAPI {
     /**
      * Returns the folder where the data is stored.
      *
-     * @return
+     * @return the folder where the data is stored
      */
     public File getDataFolder() {
         return dataFolder;

@@ -206,7 +206,7 @@ public class LootTable implements ConfigurationSerializable {
      * Returns the entry with the given ID.
      *
      * @param id the entry ID
-     * @return the entry with the given ID.
+     * @return the entry with the given ID
      */
     public Entry getEntry(String id) {
         return entries.get(id);
@@ -216,7 +216,7 @@ public class LootTable implements ConfigurationSerializable {
      * Returns the entry with the given ID or creates a new one if none exists.
      *
      * @param id the entry ID
-     * @return the entry with the given ID or creates a new one if none exists.
+     * @return the entry with the given ID or creates a new one if none exists
      */
     public Entry getOrCreateEntry(String id) {
         Entry entry = entries.get(id);
