@@ -31,8 +31,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 
 /**
@@ -77,6 +81,7 @@ public class CustomMob extends ExMob {
         this.idType = idType;
         this.id = id;
 
+        setBase(VanillaMob.get(entity.getType()));
         name = entity.getCustomName();
         customNameVisible = entity.isCustomNameVisible();
         if (!higher.contains(Internals.v1_8_R3)) {// 1.9+
@@ -127,11 +132,12 @@ public class CustomMob extends ExMob {
             throw new IllegalArgumentException("args must not be null");
         }
         CustomMob deserialized = new CustomMob();
+        deserialized.api = CaliburnAPI.getInstance();
         deserialized.raw = args;
 
         Object species = args.get("species");
         if (species instanceof String) {
-            ExMob base = CaliburnAPI.getInstance().getExMob((String) species);
+            ExMob base = deserialized.api.getExMob((String) species);
             if (base instanceof VanillaMob) {
                 deserialized.setBase((VanillaMob) base);
             }
@@ -198,7 +204,7 @@ public class CustomMob extends ExMob {
         }
         Object equipment = args.get("equipment");
         if (equipment instanceof String) {
-            deserialized.setEquipment(CaliburnAPI.getInstance().getLootTable((String) equipment));
+            deserialized.setEquipment(deserialized.api.getLootTable((String) equipment));
         } else if (equipment instanceof LootTable) {
             deserialized.setEquipment((LootTable) equipment);
         }
@@ -225,7 +231,7 @@ public class CustomMob extends ExMob {
 
         Object drops = args.get("drops");
         if (drops instanceof String) {
-            deserialized.setDrops(CaliburnAPI.getInstance().getLootTable((String) drops));
+            deserialized.setDrops(deserialized.api.getLootTable((String) drops));
         } else if (equipment instanceof Map) {
             deserialized.setDrops((LootTable) drops);
         }
@@ -823,6 +829,14 @@ public class CustomMob extends ExMob {
                     }
                 }
             }
+        }
+
+        if (idType == IdentifierType.DISPLAY_NAME) {
+            entity.setCustomName(api.getIdentifierPrefix() + id);
+        } else if (idType == IdentifierType.METADATA) {
+            entity.setMetadata(CaliburnAPI.META_ID_KEY, new FixedMetadataValue(JavaPlugin.getProvidingPlugin(CaliburnAPI.class), "caliburnID"));
+        } else if (idType == IdentifierType.PERSISTENT_DATA_CONTAINER) {
+            entity.getPersistentDataContainer().set(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, id);
         }
 
         if (!(entity instanceof LivingEntity)) {

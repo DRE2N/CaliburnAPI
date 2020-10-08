@@ -30,6 +30,7 @@ import java.util.Map;
 import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
@@ -38,6 +39,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataType;
 
 /**
  * An item that has by default changed properties compared to Minecraft's vanilla items.
@@ -68,6 +70,7 @@ public class CustomItem extends ExItem {
         this.idType = idType;
         this.id = id;
 
+        setBase(VanillaItem.get(item.getType()));
         meta = item.getItemMeta();
         if (meta instanceof SkullMeta) {
             skullOwner = ((SkullMeta) meta).getOwningPlayer().getUniqueId().toString();
@@ -93,11 +96,12 @@ public class CustomItem extends ExItem {
             throw new IllegalArgumentException("args must not be null");
         }
         CustomItem deserialized = new CustomItem();
+        deserialized.api = CaliburnAPI.getInstance();
         deserialized.raw = args;
 
         Object material = args.get("material");
         if (material instanceof String) {
-            ExItem base = CaliburnAPI.getInstance().getExItem((String) material);
+            ExItem base = deserialized.api.getExItem((String) material);
             if (base instanceof VanillaItem) {
                 deserialized.setBase((VanillaItem) base);
             }
@@ -554,8 +558,29 @@ public class CustomItem extends ExItem {
         if (data != Short.MIN_VALUE) {
             itemStack.setDurability(data);
         }
-        itemStack = HeadLib.setSkullOwner(itemStack, skullOwner, textureValue);
-        itemStack = Bukkit.getUnsafe().modifyItemStack(itemStack, nbt);
+        if (textureValue != null && skullOwner != null) {
+            itemStack = HeadLib.setSkullOwner(itemStack, skullOwner, textureValue);
+        }
+        if (nbt != null) {
+            itemStack = Bukkit.getUnsafe().modifyItemStack(itemStack, nbt);
+        }
+
+        if (idType == IdentifierType.DISPLAY_NAME) {
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.setDisplayName(api.getIdentifierPrefix() + id);
+            itemStack.setItemMeta(meta);
+        } else if (idType == IdentifierType.LORE) {
+            ItemMeta meta = itemStack.getItemMeta();
+            List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+            lore.add(0, api.getIdentifierPrefix() + id);
+            meta.setLore(lore);
+            itemStack.setItemMeta(meta);
+        } else if (idType == IdentifierType.PERSISTENT_DATA_CONTAINER) {
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.getPersistentDataContainer().set(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, id);
+            itemStack.setItemMeta(meta);
+        }
+
         return itemStack;
     }
 
