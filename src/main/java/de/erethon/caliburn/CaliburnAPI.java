@@ -28,6 +28,7 @@ import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
+import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
 import de.erethon.commons.config.RawConfiguration;
@@ -59,6 +60,8 @@ public class CaliburnAPI {
     private static CaliburnAPI instance;
 
     private boolean isAtLeast1_14 = Version.isAtLeast(Version.MC1_14);
+
+    public static final String META_ID_KEY = "caliburnID";
 
     private String identifierPrefix;
     private File dataFolder;
@@ -152,7 +155,14 @@ public class CaliburnAPI {
         custom.mkdirs();
         for (File file : FileUtil.getFilesForFolder(custom)) {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
-            CustomMob mob = CustomMob.deserialize(config.getArgs());
+            CustomMob mob = null;
+            try {
+                mob = CustomMob.deserialize(config.getArgs());
+            } catch (Exception exception) {
+                MessageUtil.log("[Caliburn] The custom mob file \"" + file.getName() + "\"is invalid:");
+                exception.printStackTrace();
+                continue;
+            }
             String id = file.getName().substring(0, file.getName().length() - 4);
             mob.register(id);
         }
@@ -185,7 +195,14 @@ public class CaliburnAPI {
         ciFile.mkdirs();
         for (File file : FileUtil.getFilesForFolder(ciFile)) {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
-            CustomItem item = CustomItem.deserialize(config.getArgs());
+            CustomItem item = null;
+            try {
+                item = CustomItem.deserialize(config.getArgs());
+            } catch (Exception exception) {
+                MessageUtil.log("[Caliburn] The custom item file \"" + file.getName() + "\"is invalid:");
+                exception.printStackTrace();
+                continue;
+            }
             String id = file.getName().substring(0, file.getName().length() - 4);
             item.register(id);
         }
@@ -218,7 +235,9 @@ public class CaliburnAPI {
 
         File ltDir = new File(getDataFolder() + "/custom/loottables");
         ltDir.mkdirs();
-        FileUtil.getFilesForFolder(ltDir).forEach(f -> lootTables.add(new LootTable(YamlConfiguration.loadConfiguration(f).getValues(true))));
+        FileUtil.getFilesForFolder(ltDir).forEach(f -> lootTables.add(
+                LootTable.deserialize(YamlConfiguration.loadConfiguration(f).getValues(true)).name(f.getName().replace(".yml", "")))
+        );
     }
 
     /**
@@ -512,7 +531,7 @@ public class CaliburnAPI {
             case DISPLAY_NAME:
                 return entity.getCustomName();
             case METADATA:
-                List<MetadataValue> values = entity.getMetadata("caliburnId");
+                List<MetadataValue> values = entity.getMetadata(META_ID_KEY);
                 if (!values.isEmpty()) {
                     return values.get(0).asString();
                 }
