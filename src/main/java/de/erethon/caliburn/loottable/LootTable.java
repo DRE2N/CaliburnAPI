@@ -145,21 +145,6 @@ public class LootTable implements ConfigurationSerializable {
     private String name;
     private Map<String, Entry> entries = new HashMap<>();
 
-    public LootTable(Map<String, Object> args) {
-        for (Map.Entry<String, Object> mapEntry : args.entrySet()) {
-            if (mapEntry.getKey().equals("==")) {
-                continue;
-            }
-            try {
-                Entry entry = new Entry((Map<String, Object>) mapEntry.getValue());
-                entry.setId(mapEntry.getKey());
-                entries.put(mapEntry.getKey(), entry);
-            } catch (ClassCastException exception) {
-                MessageUtil.log(ChatColor.RED + "Skipping erroneous loot table entry \"" + mapEntry.getKey() + "\".");
-            }
-        }
-    }
-
     /**
      * Initializes a new loot table with the given name.
      *
@@ -169,6 +154,26 @@ public class LootTable implements ConfigurationSerializable {
     public LootTable(CaliburnAPI api, String name) {
         api.getLootTables().add(this);
         this.name = name;
+    }
+
+    private LootTable() {
+    }
+
+    public static LootTable deserialize(Map<String, Object> args) {
+        LootTable deserialized = new LootTable();
+        for (Map.Entry<String, Object> mapEntry : args.entrySet()) {
+            if (mapEntry.getKey().equals("==")) {
+                continue;
+            }
+            try {
+                Entry entry = deserialized.new Entry((Map<String, Object>) mapEntry.getValue());
+                entry.setId(mapEntry.getKey());
+                deserialized.entries.put(mapEntry.getKey(), entry);
+            } catch (ClassCastException exception) {
+                MessageUtil.log(ChatColor.RED + "Skipping erroneous loot table entry \"" + mapEntry.getKey() + "\".");
+            }
+        }
+        return deserialized;
     }
 
     /* Getters and setters */
@@ -314,11 +319,15 @@ public class LootTable implements ConfigurationSerializable {
         Entry mainHand = getEntry(MAIN_HAND);
         Entry offHand = getEntry(OFF_HAND);
         if (Version.isAtLeast(Version.MC1_9)) {
-            entityEquip.setItemInMainHand(mainHand.getLootItem());
-            entityEquip.setItemInMainHandDropChance((float) (mainHand.getLootChance() / 100d));
-            entityEquip.setItemInOffHand(offHand.getLootItem());
-            entityEquip.setItemInOffHandDropChance((float) (mainHand.getLootChance() / 100d));
-        } else {
+            if (mainHand != null) {
+                entityEquip.setItemInMainHand(mainHand.getLootItem());
+                entityEquip.setItemInMainHandDropChance((float) (mainHand.getLootChance() / 100d));
+            }
+            if (offHand != null) {
+                entityEquip.setItemInOffHand(offHand.getLootItem());
+                entityEquip.setItemInOffHandDropChance((float) (mainHand.getLootChance() / 100d));
+            }
+        } else if (mainHand != null) {
             entityEquip.setItemInHand(mainHand.getLootItem());
             entityEquip.setItemInHandDropChance((float) (mainHand.getLootChance() / 100d));
         }
