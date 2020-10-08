@@ -153,6 +153,7 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob BEE = new VanillaMob(MC1_15, "bee", "BEE");
     public static final VanillaMob HOGLIN = new VanillaMob(MC1_16, "hoglin", "HOGLIN");
     public static final VanillaMob PIGLIN = new VanillaMob(MC1_16, "piglin", "PIGLIN");
+    public static final VanillaMob PIGLIN_BRUTE = new VanillaMob(MC1_16_2, "piglin_brute", "PIGLIN_BRUTE");
     public static final VanillaMob ZOGLIN = new VanillaMob(MC1_16, "zoglin", "ZOGLIN");
     public static final VanillaMob STRIDER = new VanillaMob(MC1_16, "strider", "STRIDER");
 
@@ -216,7 +217,7 @@ public class VanillaMob extends ExMob {
             VALUES.add(new VanillaMob(NEW, bukkit.name().toLowerCase(), bukkit.name()));
         }
         if (send) {
-            MessageUtil.log(sb.append(" Please update your implementation if possible.").toString());
+            MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
         }
 
         sb = new StringBuilder("&c[WARNING] Caliburn has a representation of the following mobs that do not exist in Bukkit: ");

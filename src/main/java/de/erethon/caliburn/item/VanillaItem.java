@@ -1137,6 +1137,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem ZOMBIE_VILLAGER_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIE_VILLAGER_SPAWN_EGG", 383);
     public static final VanillaItem HOGLIN_SPAWN_EGG = new VanillaItem(MC1_16, "HOGLIN_SPAWN_EGG");
     public static final VanillaItem PIGLIN_SPAWN_EGG = new VanillaItem(MC1_16, "PIGLIN_SPAWN_EGG");
+    public static final VanillaItem PIGLIN_BRUTE_SPAWN_EGG = new VanillaItem(MC1_16_2, "PIGLIN_BRUTE_SPAWN_EGG");
     public static final VanillaItem STRIDER_SPAWN_EGG = new VanillaItem(MC1_16, "STRIDER_SPAWN_EGG");
     public static final VanillaItem ZOGLIN_SPAWN_EGG = new VanillaItem(MC1_16, "ZOGLIN_SPAWN_EGG");
 
@@ -1241,7 +1242,7 @@ public class VanillaItem extends ExItem {
             VALUES.add(new VanillaItem(NEW, bukkit.name()));
         }
         if (send) {
-            MessageUtil.log(sb.append(" Please update your implementation if possible.").toString());
+            MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
         }
 
         sb = new StringBuilder("&c[WARNING] Caliburn has a representation of the following materials that do not exist in Bukkit: ");
