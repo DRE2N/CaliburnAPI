@@ -152,7 +152,7 @@ public class CaliburnAPI {
         custom.mkdirs();
         for (File file : FileUtil.getFilesForFolder(custom)) {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
-            CustomMob mob = new CustomMob(config.getArgs());
+            CustomMob mob = CustomMob.deserialize(config.getArgs());
             String id = file.getName().substring(0, file.getName().length() - 4);
             mob.register(id);
         }
@@ -185,7 +185,7 @@ public class CaliburnAPI {
         ciFile.mkdirs();
         for (File file : FileUtil.getFilesForFolder(ciFile)) {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
-            CustomItem item = new CustomItem(config.getArgs());
+            CustomItem item = CustomItem.deserialize(config.getArgs());
             String id = file.getName().substring(0, file.getName().length() - 4);
             item.register(id);
         }
@@ -381,8 +381,6 @@ public class CaliburnAPI {
                 } else {
                     return null;
                 }
-            case METADATA:
-                return null;
             case LORE:
                 if (item.hasItemMeta() && item.getItemMeta().hasLore()) {
                     return item.getItemMeta().getLore().get(0).replace(identifierPrefix, "");
@@ -513,8 +511,6 @@ public class CaliburnAPI {
         switch (idType) {
             case DISPLAY_NAME:
                 return entity.getCustomName();
-            case LORE:
-                return null;
             case METADATA:
                 List<MetadataValue> values = entity.getMetadata("caliburnId");
                 if (!values.isEmpty()) {

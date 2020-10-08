@@ -37,6 +37,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
 
 /**
  * An item that has by default changed properties compared to Minecraft's vanilla items.
@@ -46,7 +47,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class CustomItem extends ExItem {
 
     private VanillaItem base;
-    private String name;
     /**
      * The ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
      */
@@ -63,70 +63,18 @@ public class CustomItem extends ExItem {
     @Deprecated
     private short data = Short.MIN_VALUE;
 
-    public CustomItem(Map<String, Object> args) {
-        raw = args;
+    public CustomItem(CaliburnAPI api, IdentifierType idType, String id, ItemStack item) {
+        this.api = api;
+        this.idType = idType;
+        this.id = id;
 
-        Object idType = args.get("idType");
-        if (idType instanceof String) {
-            IdentifierType idTypeValue = EnumUtil.getEnumIgnoreCase(IdentifierType.class, (String) idType);
-            if (idTypeValue != null) {
-                this.idType = idTypeValue;
-            }
-        } else {
-            idType = IdentifierType.LORE;
+        meta = item.getItemMeta();
+        if (meta instanceof SkullMeta) {
+            skullOwner = ((SkullMeta) meta).getOwningPlayer().getUniqueId().toString();
+            textureValue = HeadLib.getTextureValue(item);
         }
 
-        Object material = args.get("material");
-        if (material instanceof String) {
-            ExItem base = api.getExItem((String) material);
-            if (base instanceof VanillaItem) {
-                setBase((VanillaItem) base);
-            }
-        }
-
-        Object meta = args.get("meta");
-        if (meta instanceof ItemMeta) {
-            this.meta = (ItemMeta) meta;
-        } else {
-            this.meta = itemFactory.getItemMeta(this.material);
-        }
-
-        Object name = args.get("name");
-        if (name instanceof String) {
-            setName((String) name);
-        }
-
-        Object damageHandler = args.get("damageHandler");
-        if (damageHandler instanceof String) {
-            setDamageHandler(DamageHandler.create((String) damageHandler));
-        }
-        Object dropHandler = args.get("dropHandler");
-        if (dropHandler instanceof String) {
-            setDropHandler(DropHandler.create((String) dropHandler));
-        }
-        Object hitHandler = args.get("hitHandler");
-        if (hitHandler instanceof String) {
-            setHitHandler(HitHandler.create((String) hitHandler));
-        }
-        Object rightClickHandler = args.get("rightClickHandler");
-        if (rightClickHandler instanceof String) {
-            setRightClickHandler(RightClickHandler.create((String) rightClickHandler));
-        }
-
-        Object skullOwner = args.get("skullOwner"), textureValue = args.get("textureValue");
-        if (skullOwner instanceof String && textureValue instanceof String) {
-            setSkullTexture((String) skullOwner, (String) textureValue);
-        }
-
-        Object nbt = args.get("nbt");
-        if (nbt instanceof String) {
-            this.nbt = (String) nbt;
-        }
-
-        Object data = args.get("durability");
-        if (data instanceof Number) {
-            this.data = ((Number) data).shortValue();
-        }
+        raw = serialize();
     }
 
     public CustomItem(CaliburnAPI api, IdentifierType idType, String id, VanillaItem base) {
@@ -135,6 +83,79 @@ public class CustomItem extends ExItem {
         this.id = id;
         setBase(base);
         raw = serialize();
+    }
+
+    private CustomItem() {
+    }
+
+    public static CustomItem deserialize(Map<String, Object> args) {
+        if (args == null) {
+            throw new IllegalArgumentException("args must not be null");
+        }
+        CustomItem deserialized = new CustomItem();
+        deserialized.raw = args;
+
+        Object material = args.get("material");
+        if (material instanceof String) {
+            ExItem base = CaliburnAPI.getInstance().getExItem((String) material);
+            if (base instanceof VanillaItem) {
+                deserialized.setBase((VanillaItem) base);
+            }
+        }
+        if (deserialized.base == null) {
+            throw new IllegalArgumentException("Custom item does not have valid material");
+        }
+
+        Object idType = args.get("idType");
+        if (idType instanceof String) {
+            IdentifierType idTypeValue = EnumUtil.getEnumIgnoreCase(IdentifierType.class, (String) idType);
+            if (idTypeValue != null) {
+                deserialized.idType = idTypeValue;
+            }
+        } else {
+            idType = IdentifierType.LORE;
+        }
+
+        Object meta = args.get("meta");
+        if (meta instanceof ItemMeta) {
+            deserialized.meta = (ItemMeta) meta;
+        } else {
+            deserialized.meta = Bukkit.getItemFactory().getItemMeta(deserialized.material);
+        }
+
+        Object damageHandler = args.get("damageHandler");
+        if (damageHandler instanceof String) {
+            deserialized.setDamageHandler(DamageHandler.create((String) damageHandler));
+        }
+        Object dropHandler = args.get("dropHandler");
+        if (dropHandler instanceof String) {
+            deserialized.setDropHandler(DropHandler.create((String) dropHandler));
+        }
+        Object hitHandler = args.get("hitHandler");
+        if (hitHandler instanceof String) {
+            deserialized.setHitHandler(HitHandler.create((String) hitHandler));
+        }
+        Object rightClickHandler = args.get("rightClickHandler");
+        if (rightClickHandler instanceof String) {
+            deserialized.setRightClickHandler(RightClickHandler.create((String) rightClickHandler));
+        }
+
+        Object skullOwner = args.get("skullOwner"), textureValue = args.get("textureValue");
+        if (skullOwner instanceof String && textureValue instanceof String) {
+            deserialized.setSkullTexture((String) skullOwner, (String) textureValue);
+        }
+
+        Object nbt = args.get("nbt");
+        if (nbt instanceof String) {
+            deserialized.nbt = (String) nbt;
+        }
+
+        Object data = args.get("durability");
+        if (data instanceof Number) {
+            deserialized.data = ((Number) data).shortValue();
+        }
+
+        return deserialized;
     }
 
     /* Getters and setters */
@@ -173,28 +194,6 @@ public class CustomItem extends ExItem {
      */
     public void setMeta(ItemMeta meta) {
         this.meta = meta;
-    }
-
-    /**
-     * Returns the display name of this item.
-     *
-     * @return the display name of this item
-     */
-    @Override
-    public String getName() {
-        return name != null ? name : super.getName();
-    }
-
-    /**
-     * Sets the display name.
-     * <p>
-     * Supports color codes.
-     *
-     * @param name the display name to set
-     */
-    public void setName(String name) {
-        this.name = ChatColor.translateAlternateColorCodes('&', name);
-        meta.setDisplayName(this.name);
     }
 
     /**
@@ -517,10 +516,8 @@ public class CustomItem extends ExItem {
         }
         Map<String, Object> config = super.serialize();
 
-        config.put("idType", idType.toString());
-
         config.put("material", base.getId());
-
+        config.put("idType", idType.toString());
         config.put("meta", meta);
 
         if (damageHandler != null) {

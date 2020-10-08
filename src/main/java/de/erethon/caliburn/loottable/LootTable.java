@@ -213,6 +213,22 @@ public class LootTable implements ConfigurationSerializable {
     }
 
     /**
+     * Returns the entry with the given ID or creates a new one if none exists.
+     *
+     * @param id the entry ID
+     * @return the entry with the given ID or creates a new one if none exists.
+     */
+    public Entry getOrCreateEntry(String id) {
+        Entry entry = entries.get(id);
+        if (entry != null) {
+            return entry;
+        }
+        entry = new Entry(id, null, 100d);
+        entries.put(id, entry);
+        return entry;
+    }
+
+    /**
      * Adds an entry.
      *
      * @param entry the entry to add
@@ -234,6 +250,54 @@ public class LootTable implements ConfigurationSerializable {
             return;
         }
         entries.remove(entry.getId());
+    }
+
+    /**
+     * Fills the loot table with items from the entity equipment.
+     *
+     * @param entityEquip the instance of EntityEquipment to fill from
+     */
+    public void readEntityEquipment(EntityEquipment entityEquip) {
+        if (Version.isAtLeast(Version.MC1_9)) {
+            if (entityEquip.getItemInMainHand() != null) {
+                Entry mainHand = getOrCreateEntry(MAIN_HAND);
+                mainHand.setLootItem(entityEquip.getItemInMainHand());
+                mainHand.setLootChance(entityEquip.getItemInMainHandDropChance() * 100d);
+            }
+            if (entityEquip.getItemInOffHand() != null) {
+                Entry offHand = getOrCreateEntry(OFF_HAND);
+                offHand.setLootItem(entityEquip.getItemInOffHand());
+                offHand.setLootChance(entityEquip.getItemInMainHandDropChance() * 100d);
+            }
+        } else if (entityEquip.getItemInMainHand() != null) {
+            Entry mainHand = getOrCreateEntry(MAIN_HAND);
+            mainHand.setLootItem(entityEquip.getItemInHand());
+            mainHand.setLootChance(entityEquip.getItemInHandDropChance() * 100d);
+        }
+
+        if (entityEquip.getHelmet() != null) {
+            Entry helmet = getOrCreateEntry(HELMET);
+            helmet.setLootItem(entityEquip.getHelmet());
+            helmet.setLootChance(entityEquip.getHelmetDropChance() * 100d);
+        }
+
+        if (entityEquip.getChestplate() != null) {
+            Entry chestplate = getEntry(CHESTPLATE);
+            chestplate.setLootItem(entityEquip.getChestplate());
+            chestplate.setLootChance(entityEquip.getChestplateDropChance() * 100d);
+        }
+
+        if (entityEquip.getLeggings() != null) {
+            Entry leggings = getEntry(LEGGINGS);
+            leggings.setLootItem(entityEquip.getLeggings());
+            leggings.setLootChance(entityEquip.getLeggingsDropChance() * 100d);
+        }
+
+        if (entityEquip.getBoots() != null) {
+            Entry boots = getEntry(BOOTS);
+            boots.setLootItem(entityEquip.getBoots());
+            boots.setLootChance(entityEquip.getBootsDropChance() * 100d);
+        }
     }
 
     /**

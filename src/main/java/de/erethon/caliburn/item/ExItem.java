@@ -23,10 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -37,7 +35,6 @@ import org.bukkit.inventory.ItemStack;
 public class ExItem extends Categorizable implements ConfigurationSerializable {
 
     protected CaliburnAPI api;
-    protected ItemFactory itemFactory = Bukkit.getItemFactory();
 
     private boolean loaded = false;
 

@@ -43,6 +43,8 @@ import org.bukkit.potion.PotionEffect;
  */
 public class CustomMob extends ExMob {
 
+    private static Set<Internals> higher = Internals.andHigher(CompatibilityHandler.getInstance().getInternals());
+
     /* Entity */
     private VanillaMob base;
     private String name;
@@ -70,123 +72,43 @@ public class CustomMob extends ExMob {
     private DeathHandler deathHandler;
     private InteractHandler interactHandler;
 
-    public CustomMob(Map<String, Object> args) {
-        raw = args;
+    public CustomMob(CaliburnAPI api, IdentifierType idType, String id, Entity entity) {
+        this.api = api;
+        this.idType = idType;
+        this.id = id;
 
-        Object idType = args.get("idType");
-        if (idType instanceof String) {
-            IdentifierType idTypeValue = EnumUtil.getEnumIgnoreCase(IdentifierType.class, (String) idType);
-            if (idTypeValue != null) {
-                this.idType = idTypeValue;
-            }
-        } else {
-            this.idType = IdentifierType.DISPLAY_NAME;
-        }
-
-        /* Entity */
-        Object species = args.get("species");
-        if (species instanceof String) {
-            ExMob base = api.getExMob((String) species);
-            if (base instanceof VanillaMob) {
-                setBase((VanillaMob) base);
-            }
-        }
-
-        Object name = args.get("name");
-        if (name instanceof String) {
-            setName((String) name);
-        }
-        Object customNameVisible = args.get("isCustomNameVisible");
-        if (customNameVisible instanceof Boolean) {
-            setCustomNameVisible((Boolean) customNameVisible);
-        }
-        Object glowing = args.get("isGlowing");
-        if (glowing instanceof Boolean) {
-            setGlowing((Boolean) glowing);
-        }
-        Object gravity = args.get("hasGravity");
-        if (gravity instanceof Boolean) {
-            setGravity((Boolean) gravity);
-        }
-        Object invulnerable = args.get("isInvulnerable");
-        if (invulnerable instanceof Boolean) {
-            setInvulnerable((Boolean) invulnerable);
-        }
-        Object silent = args.get("isSilent");
-        if (silent instanceof Boolean) {
-            setSilent((Boolean) silent);
-        }
-        Object persistent = args.get("isPersistent");
-        if (persistent instanceof Boolean) {
-            setPersistent((Boolean) persistent);
-        }
-        Object passengers = args.get("passengers");
-        if (passengers instanceof List) {
-            for (Object passenger : (List) passengers) {
-                if (passenger instanceof String) {
-                    getPassengers().add((String) passenger);
+        name = entity.getCustomName();
+        customNameVisible = entity.isCustomNameVisible();
+        if (!higher.contains(Internals.v1_8_R3)) {// 1.9+
+            glowing = entity.isGlowing();
+            invulnerable = entity.isInvulnerable();
+            silent = entity.isSilent();
+            if (!higher.contains(Internals.v1_9_R2)) {
+                gravity = entity.hasGravity();
+                if (!higher.contains(Internals.v1_10_R1)) {
+                    entity.getPassengers().forEach(e -> passengers.add(api.getExMob(e).getId()));
+                    if (!higher.contains(Internals.v1_12_R1)) {
+                        persistent = entity.isPersistent();
+                    }
                 }
             }
         }
 
-        /* LivingEntity */
-        Object potionEffects = args.get("potionEffects");
-        if (potionEffects instanceof Collection) {
-            try {
-                setPotionEffects((Collection<PotionEffect>) potionEffects);
-            } catch (ClassCastException exception) {
+        if (entity instanceof LivingEntity) {
+            LivingEntity living = (LivingEntity) entity;
+            potionEffects = living.getActivePotionEffects();
+            equipment = new LootTable(api, id + "_loot");
+            equipment.readEntityEquipment(living.getEquipment());
+            removeWhenFarAway = living.getRemoveWhenFarAway();
+            if (!higher.contains(Internals.v1_8_R3)) {
+                ai = living.hasAI();
+                collidable = living.isCollidable();
             }
-        }
-        Object equipment = args.get("equipment");
-        if (equipment instanceof String) {
-            setEquipment(api.getLootTable((String) equipment));
-        } else if (equipment instanceof LootTable) {
-            setEquipment((LootTable) equipment);
-        }
-        Object removeWhenFarAway = args.get("removeWhenFarAway");
-        if (removeWhenFarAway instanceof Boolean) {
-            setRemoveWhenFarAway((Boolean) removeWhenFarAway);
-        }
-        Object ai = args.get("hasAI");
-        if (ai instanceof Boolean) {
-            setAI((Boolean) ai);
-        }
-        Object collidable = args.get("isCollidable");
-        if (collidable instanceof Boolean) {
-            setCollidable((Boolean) collidable);
-        }
-        Object pickupItems = args.get("canPickupItems");
-        if (pickupItems instanceof Boolean) {
-            setPickupItems((Boolean) pickupItems);
-        }
-        Object maxAir = args.get("maxAir");
-        if (maxAir instanceof Number) {
-            setMaxAir(((Number) maxAir).intValue());
+            pickupItems = living.getCanPickupItems();
+            maxAir = living.getMaximumAir();
         }
 
-        Object drops = args.get("drops");
-        if (drops instanceof String) {
-            setDrops(api.getLootTable((String) drops));
-        } else if (equipment instanceof Map) {
-            setDrops((LootTable) drops);
-        }
-
-        Object attackHandler = args.get("attackHandler");
-        if (attackHandler instanceof String) {
-            setAttackHandler(AttackHandler.create((String) attackHandler));
-        }
-        Object damageHandler = args.get("damageHandler");
-        if (damageHandler instanceof String) {
-            setDamageHandler(DamageHandler.create((String) damageHandler));
-        }
-        Object deathHandler = args.get("deathHandler");
-        if (deathHandler instanceof String) {
-            setDeathHandler(DeathHandler.create((String) deathHandler));
-        }
-        Object interactHandler = args.get("interactHandler");
-        if (interactHandler instanceof String) {
-            setInteractHandler(InteractHandler.create((String) interactHandler));
-        }
+        raw = serialize();
     }
 
     public CustomMob(CaliburnAPI api, IdentifierType idType, String id, VanillaMob base) {
@@ -195,6 +117,137 @@ public class CustomMob extends ExMob {
         this.id = id;
         setBase(base);
         raw = serialize();
+    }
+
+    private CustomMob() {
+    }
+
+    public static CustomMob deserialize(Map<String, Object> args) {
+        if (args == null) {
+            throw new IllegalArgumentException("args must not be null");
+        }
+        CustomMob deserialized = new CustomMob();
+        deserialized.raw = args;
+
+        Object species = args.get("species");
+        if (species instanceof String) {
+            ExMob base = CaliburnAPI.getInstance().getExMob((String) species);
+            if (base instanceof VanillaMob) {
+                deserialized.setBase((VanillaMob) base);
+            }
+        }
+        if (deserialized.base == null) {
+            throw new IllegalArgumentException("Custom item does not have valid material");
+        }
+
+        Object idType = args.get("idType");
+        if (idType instanceof String) {
+            IdentifierType idTypeValue = EnumUtil.getEnumIgnoreCase(IdentifierType.class, (String) idType);
+            if (idTypeValue != null) {
+                deserialized.idType = idTypeValue;
+            }
+        } else {
+            deserialized.idType = IdentifierType.DISPLAY_NAME;
+        }
+
+        /* Entity */
+        Object name = args.get("name");
+        if (name instanceof String) {
+            deserialized.setName((String) name);
+        }
+        Object customNameVisible = args.get("isCustomNameVisible");
+        if (customNameVisible instanceof Boolean) {
+            deserialized.setCustomNameVisible((Boolean) customNameVisible);
+        }
+        Object glowing = args.get("isGlowing");
+        if (glowing instanceof Boolean) {
+            deserialized.setGlowing((Boolean) glowing);
+        }
+        Object gravity = args.get("hasGravity");
+        if (gravity instanceof Boolean) {
+            deserialized.setGravity((Boolean) gravity);
+        }
+        Object invulnerable = args.get("isInvulnerable");
+        if (invulnerable instanceof Boolean) {
+            deserialized.setInvulnerable((Boolean) invulnerable);
+        }
+        Object silent = args.get("isSilent");
+        if (silent instanceof Boolean) {
+            deserialized.setSilent((Boolean) silent);
+        }
+        Object persistent = args.get("isPersistent");
+        if (persistent instanceof Boolean) {
+            deserialized.setPersistent((Boolean) persistent);
+        }
+        Object passengers = args.get("passengers");
+        if (passengers instanceof List) {
+            for (Object passenger : (List) passengers) {
+                if (passenger instanceof String) {
+                    deserialized.getPassengers().add((String) passenger);
+                }
+            }
+        }
+
+        /* LivingEntity */
+        Object potionEffects = args.get("potionEffects");
+        if (potionEffects instanceof Collection) {
+            try {
+                deserialized.setPotionEffects((Collection<PotionEffect>) potionEffects);
+            } catch (ClassCastException exception) {
+            }
+        }
+        Object equipment = args.get("equipment");
+        if (equipment instanceof String) {
+            deserialized.setEquipment(CaliburnAPI.getInstance().getLootTable((String) equipment));
+        } else if (equipment instanceof LootTable) {
+            deserialized.setEquipment((LootTable) equipment);
+        }
+        Object removeWhenFarAway = args.get("removeWhenFarAway");
+        if (removeWhenFarAway instanceof Boolean) {
+            deserialized.setRemoveWhenFarAway((Boolean) removeWhenFarAway);
+        }
+        Object ai = args.get("hasAI");
+        if (ai instanceof Boolean) {
+            deserialized.setAI((Boolean) ai);
+        }
+        Object collidable = args.get("isCollidable");
+        if (collidable instanceof Boolean) {
+            deserialized.setCollidable((Boolean) collidable);
+        }
+        Object pickupItems = args.get("canPickupItems");
+        if (pickupItems instanceof Boolean) {
+            deserialized.setPickupItems((Boolean) pickupItems);
+        }
+        Object maxAir = args.get("maxAir");
+        if (maxAir instanceof Number) {
+            deserialized.setMaxAir(((Number) maxAir).intValue());
+        }
+
+        Object drops = args.get("drops");
+        if (drops instanceof String) {
+            deserialized.setDrops(CaliburnAPI.getInstance().getLootTable((String) drops));
+        } else if (equipment instanceof Map) {
+            deserialized.setDrops((LootTable) drops);
+        }
+
+        Object attackHandler = args.get("attackHandler");
+        if (attackHandler instanceof String) {
+            deserialized.setAttackHandler(AttackHandler.create((String) attackHandler));
+        }
+        Object damageHandler = args.get("damageHandler");
+        if (damageHandler instanceof String) {
+            deserialized.setDamageHandler(DamageHandler.create((String) damageHandler));
+        }
+        Object deathHandler = args.get("deathHandler");
+        if (deathHandler instanceof String) {
+            deserialized.setDeathHandler(DeathHandler.create((String) deathHandler));
+        }
+        Object interactHandler = args.get("interactHandler");
+        if (interactHandler instanceof String) {
+            deserialized.setInteractHandler(InteractHandler.create((String) interactHandler));
+        }
+
+        return deserialized;
     }
 
     /* Getters and setters */
@@ -737,7 +790,6 @@ public class CustomMob extends ExMob {
 
     @Override
     public Entity toEntity(Location location) {
-        Set<Internals> higher = Internals.andHigher(CompatibilityHandler.getInstance().getInternals());
         Entity entity = location.getWorld().spawnEntity(location, species);
 
         if (getName() != null) {

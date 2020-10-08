@@ -48,7 +48,7 @@ public class ExSerialization {
     }
 
     public ItemStack deserialize(Map<String, Object> objects) {
-        ExItem item = new CustomItem(objects);
+        ExItem item = CustomItem.deserialize(objects);
         item.load(api);
         Integer amount = (Integer) objects.get("amount");
         return item.toItemStack(amount != null ? amount : 1);
