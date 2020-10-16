@@ -27,6 +27,7 @@ import java.util.Map;
 import java.util.Random;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
@@ -166,7 +167,13 @@ public class LootTable implements ConfigurationSerializable {
                 continue;
             }
             try {
-                Entry entry = deserialized.new Entry((Map<String, Object>) mapEntry.getValue());
+                Map<String, Object> valueMap = null;
+                if (mapEntry.getValue() instanceof ConfigurationSection) {
+                    valueMap = ((ConfigurationSection) mapEntry.getValue()).getValues(false);
+                } else if (mapEntry.getValue() instanceof Map) {
+                    valueMap = (Map<String, Object>) mapEntry.getValue();
+                }
+                Entry entry = deserialized.new Entry(valueMap);
                 entry.setId(mapEntry.getKey());
                 deserialized.entries.put(mapEntry.getKey(), entry);
             } catch (ClassCastException exception) {

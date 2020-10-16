@@ -236,7 +236,7 @@ public class CaliburnAPI {
         File ltDir = new File(getDataFolder() + "/custom/loottables");
         ltDir.mkdirs();
         FileUtil.getFilesForFolder(ltDir).forEach(f -> lootTables.add(
-                LootTable.deserialize(YamlConfiguration.loadConfiguration(f).getValues(true)).name(f.getName().replace(".yml", "")))
+                LootTable.deserialize(YamlConfiguration.loadConfiguration(f).getValues(false)).name(f.getName().replace(".yml", "")))
         );
     }
 
