@@ -383,7 +383,11 @@ public class LootTable implements ConfigurationSerializable {
     @Override
     public Map<String, Object> serialize() {
         Map<String, Object> config = new HashMap<>();
-        entries.values().forEach(e -> config.put(e.getId(), e.serialize()));
+        entries.values().forEach(e -> {
+            if (e.getLootItem().getType() != Material.AIR) {
+                config.put(e.getId(), e.serialize());
+            }
+        });
         return config;
     }
 
