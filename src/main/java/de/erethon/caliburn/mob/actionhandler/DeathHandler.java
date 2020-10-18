@@ -12,20 +12,18 @@
  * You should have received a copy of the GNU Lesser General Public License along with
  * this program. If not, see <http://www.gnu.org/licenses/>.
  */
-package de.erethon.caliburn.item.actionhandler;
+package de.erethon.caliburn.mob.actionhandler;
 
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.entity.Entity;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 
 /**
- * Fired when the playery performs a right click with the item in his hand.
- * <p>
- * Inventory actions do NOT fire this.
+ * Fired when the mob dies.
  *
  * @author Daniel Saukel
  */
 @FunctionalInterface
-public interface RightClickHandler {
+public interface DeathHandler {
 
     /**
      * Instantiates a handler through reflection.
@@ -33,11 +31,11 @@ public interface RightClickHandler {
      * @param className the name of the class
      * @return the handler instance
      */
-    static RightClickHandler create(String className) {
+    static DeathHandler create(String className) {
         try {
             Class cl = Class.forName(className);
-            if (cl != null && RightClickHandler.class.isAssignableFrom(cl)) {
-                return (RightClickHandler) cl.newInstance();
+            if (cl != null && DeathHandler.class.isAssignableFrom(cl)) {
+                return (DeathHandler) cl.newInstance();
             }
         } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
         }
@@ -45,9 +43,10 @@ public interface RightClickHandler {
     }
 
     /**
-     * @param itemInstance the ItemStack involved in this action
-     * @param player       the player who holds the item
+     * @param entityInstance the entity involved in this action
+     * @param damageCause    the damage cause
+     * @param killer         the entity that killed; null if the death cause is not another entity
      */
-    void onRightClick(ItemStack itemInstance, Player player);
+    void onDeath(Entity entityInstance, DamageCause damageCause, Entity killer);
 
 }

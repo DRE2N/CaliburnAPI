@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -14,10 +14,12 @@
  */
 package de.erethon.caliburn.mob;
 
+import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.Version;
 import static de.erethon.commons.compatibility.Version.*;
 import de.erethon.commons.misc.EnumUtil;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -27,6 +29,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 
 /**
+ * Represents a vanilla mob.
+ *
  * @author Daniel Saukel
  */
 public class VanillaMob extends ExMob {
@@ -52,7 +56,16 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob TNT = new VanillaMob(MC1_8, "PrimedTNT", "tnt", "PRIMED_TNT", 20);
     public static final VanillaMob FALLING_BLOCK = new VanillaMob(MC1_8, "FallingSand", "falling_block", "FALLING_BLOCK", 21);
     public static final VanillaMob FIREWORK_ROCKET = new VanillaMob(MC1_8, "FireworksRocketEntity", "fireworks_rocket", "firework_rocket", "FIREWORK", 22);
-    public static final VanillaMob TIPPED_ARROW = new VanillaMob(MC1_8, "TippedArrow", "tipped_arrow", "TIPPED_ARROW", 23);
+    public static final VanillaMob TIPPED_ARROW = new VanillaMob(MC1_8, MC1_13, "TippedArrow", "TippedArrow", "tipped_arrow", "TIPPED_ARROW", 23) {
+        @Override
+        public EntityType getSpecies() {
+            if (Version.isAtLeast(MC1_14)) {
+                return ARROW.getSpecies();
+            } else {
+                return species;
+            }
+        }
+    };
     public static final VanillaMob SPECTRAL_ARROW = new VanillaMob(MC1_9, "SpectralArrow", "spectral_arrow", "SPECTRAL_ARROW", 24);
     public static final VanillaMob SHULKER_BULLET = new VanillaMob(MC1_9, "ShulkerBullet", "shulker_bullet", "SHULKER_BULLET", 25);
     public static final VanillaMob DRAGON_FIREBALL = new VanillaMob(MC1_9, "DragonFireball", "dragon_fireball", "DRAGON_FIREBALL", 26);
@@ -77,7 +90,21 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob ZOMBIE = new VanillaMob(MC1_8, "Zombie", "zombie", "ZOMBIE", 54);
     public static final VanillaMob SLIME = new VanillaMob(MC1_8, "Slime", "slime", "SLIME", 55);
     public static final VanillaMob GHAST = new VanillaMob(MC1_8, "Ghast", "ghast", "GHAST", 56);
-    public static final VanillaMob ZOMBIE_PIGMAN = new VanillaMob(MC1_8, "PigZombie", "zombie_pigman", "PIG_ZOMBIE", 57);
+    public static final VanillaMob ZOMBIE_PIGMAN = new VanillaMob(MC1_8, "PigZombie", "zombie_pigman", "ZOMBIFIED_PIGLIN", 57) {
+        @Override
+        public String getId1_16() {
+            return "zombified_piglin";
+        }
+
+        @Override
+        public String getBukkitName() {
+            if (Version.isAtLeast(MC1_16)) {
+                return super.getBukkitName();
+            } else {
+                return "PIG_ZOMBIE";
+            }
+        }
+    };
     public static final VanillaMob ENDERMAN = new VanillaMob(MC1_8, "Enderman", "enderman", "ENDERMAN", 58);
     public static final VanillaMob CAVE_SPIDER = new VanillaMob(MC1_8, "CaveSpider", "cave_spider", "CAVE_SPIDER", 59);
     public static final VanillaMob SILVERFISH = new VanillaMob(MC1_8, "Silverfish", "silverfish", "SILVERFISH", 60);
@@ -123,13 +150,19 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob TRADER_LLAMA = new VanillaMob(MC1_14, "trader_llama", "TRADER_LLAMA");
     public static final VanillaMob WANDERING_TRADER = new VanillaMob(MC1_14, "wandering_trader", "WANDERING_TRADER");
     public static final VanillaMob FOX = new VanillaMob(MC1_14, "fox", "FOX");
+    public static final VanillaMob BEE = new VanillaMob(MC1_15, "bee", "BEE");
+    public static final VanillaMob HOGLIN = new VanillaMob(MC1_16, "hoglin", "HOGLIN");
+    public static final VanillaMob PIGLIN = new VanillaMob(MC1_16, "piglin", "PIGLIN");
+    public static final VanillaMob PIGLIN_BRUTE = new VanillaMob(MC1_16_2, "piglin_brute", "PIGLIN_BRUTE");
+    public static final VanillaMob ZOGLIN = new VanillaMob(MC1_16, "zoglin", "ZOGLIN");
+    public static final VanillaMob STRIDER = new VanillaMob(MC1_16, "strider", "STRIDER");
 
-    public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, "lingering_potion", "LINGERING_POTION");
+    public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, MC1_14, "lingering_potion", "LINGERING_POTION");
     public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");
     public static final VanillaMob LIGHTNING = new VanillaMob(MC1_8, "LightningBolt", "lightning_bolt", "LIGHTNING", -1);
-    public static final VanillaMob WEATHER = new VanillaMob(MC1_8, "weather", "WEATHER");
+    public static final VanillaMob WEATHER = new VanillaMob(MC1_8, MC1_14, "weather", "WEATHER");
     public static final VanillaMob PLAYER = new VanillaMob(MC1_8, "Player", "player", "PLAYER", -1);
-    public static final VanillaMob COMPLEX_PART = new VanillaMob(MC1_8, "complex_part", "COMPLEX_PART");
+    public static final VanillaMob COMPLEX_PART = new VanillaMob(MC1_8, MC1_14, "complex_part", "COMPLEX_PART");
 
     public static final SplitMob ELDER_GUARDIAN = new SplitMob(MC1_8, GUARDIAN, "elder_guardian", "ELDER_GUARDIAN", 4);
     public static final SplitMob WITHER_SKELETON = new SplitMob(MC1_8, SKELETON, "wither_skeleton", "WITHER_SKELETON", 5);
@@ -144,7 +177,7 @@ public class VanillaMob extends ExMob {
         @Override
         public EntityType getSpecies() {
             if (Version.isAtLeast(Version.MC1_14)) {
-                return EntityType.valueOf(CAT.getBukkitName());
+                return EntityType.valueOf(getBukkitName());
             } else {
                 return OCELOT.getSpecies();
             }
@@ -156,114 +189,16 @@ public class VanillaMob extends ExMob {
     private static Map<EntityType, VanillaMob> BY_ENTITY_TYPE = new HashMap<>();
 
     static {
-        VALUES.add(UNKNOWN);
-        VALUES.add(ITEM);
-        VALUES.add(EXPERIENCE_ORB);
-        VALUES.add(AREA_EFFECT_CLOUD);
-        VALUES.add(EGG);
-        VALUES.add(LEASH_KNOT);
-        VALUES.add(PAINTING);
-        VALUES.add(ARROW);
-        VALUES.add(SNOWBALL);
-        VALUES.add(FIREBALL);
-        VALUES.add(SMALL_FIREBALL);
-        VALUES.add(ENDER_PEARL);
-        VALUES.add(EYE_OF_ENDER);
-        VALUES.add(POTION);
-        VALUES.add(EXPERIENCE_BOTTLE);
-        VALUES.add(ITEM_FRAME);
-        VALUES.add(WITHER_SKULL);
-        VALUES.add(TNT);
-        VALUES.add(FALLING_BLOCK);
-        VALUES.add(FIREWORK_ROCKET);
-        VALUES.add(SPECTRAL_ARROW);
-        VALUES.add(SHULKER_BULLET);
-        VALUES.add(DRAGON_FIREBALL);
-        VALUES.add(ARMOR_STAND);
-        VALUES.add(EVOKER_FANGS);
-        VALUES.add(EVOKER);
-        VALUES.add(VEX);
-        VALUES.add(VINDICATOR);
-        VALUES.add(ILLUSIONER);
-        VALUES.add(COMMAND_BLOCK_MINECART);
-        VALUES.add(BOAT);
-        VALUES.add(MINECART);
-        VALUES.add(CHEST_MINECART);
-        VALUES.add(FURNACE_MINECART);
-        VALUES.add(TNT_MINECART);
-        VALUES.add(HOPPER_MINECART);
-        VALUES.add(SPAWNER_MINECART);
-        VALUES.add(CREEPER);
-        VALUES.add(SKELETON);
-        VALUES.add(SPIDER);
-        VALUES.add(GIANT);
-        VALUES.add(ZOMBIE);
-        VALUES.add(SLIME);
-        VALUES.add(GHAST);
-        VALUES.add(ZOMBIE_PIGMAN);
-        VALUES.add(ENDERMAN);
-        VALUES.add(CAVE_SPIDER);
-        VALUES.add(SILVERFISH);
-        VALUES.add(BLAZE);
-        VALUES.add(MAGMA_CUBE);
-        VALUES.add(ENDER_DRAGON);
-        VALUES.add(WITHER);
-        VALUES.add(BAT);
-        VALUES.add(WITCH);
-        VALUES.add(ENDERMITE);
-        VALUES.add(GUARDIAN);
-        VALUES.add(SHULKER);
-        VALUES.add(PIG);
-        VALUES.add(SHEEP);
-        VALUES.add(COW);
-        VALUES.add(CHICKEN);
-        VALUES.add(SQUID);
-        VALUES.add(WOLF);
-        VALUES.add(MOOSHROOM);
-        VALUES.add(SNOW_GOLEM);
-        VALUES.add(OCELOT);
-        VALUES.add(IRON_GOLEM);
-        VALUES.add(HORSE);
-        VALUES.add(RABBIT);
-        VALUES.add(POLAR_BEAR);
-        VALUES.add(LLAMA);
-        VALUES.add(LLAMA_SPIT);
-        VALUES.add(PARROT);
-        VALUES.add(VILLAGER);
-        VALUES.add(END_CRYSTAL);
-        VALUES.add(ELDER_GUARDIAN);
-        VALUES.add(WITHER_SKELETON);
-        VALUES.add(STRAY);
-        VALUES.add(HUSK);
-        VALUES.add(ZOMBIE_VILLAGER);
-        VALUES.add(SKELETON_HORSE);
-        VALUES.add(ZOMBIE_HORSE);
-        VALUES.add(DONKEY);
-        VALUES.add(MULE);
-        VALUES.add(CAT);
-        VALUES.add(DOLPHIN);
-        VALUES.add(DROWNED);
-        VALUES.add(COD);
-        VALUES.add(SALMON);
-        VALUES.add(PUFFERFISH);
-        VALUES.add(TROPICAL_FISH);
-        VALUES.add(PHANTOM);
-        VALUES.add(TURTLE);
-        VALUES.add(TRIDENT);
-        VALUES.add(PANDA);
-        VALUES.add(PILLAGER);
-        VALUES.add(RAVAGER);
-        VALUES.add(TRADER_LLAMA);
-        VALUES.add(WANDERING_TRADER);
-        VALUES.add(FOX);
-        VALUES.add(LINGERING_POTION);
-        VALUES.add(FISHING_HOOK);
-        VALUES.add(LIGHTNING);
-        VALUES.add(WEATHER);
-        VALUES.add(PLAYER);
-        VALUES.add(COMPLEX_PART);
-        VALUES.add(TIPPED_ARROW);
+        for (Field constant : VanillaMob.class.getFields()) {
+            try {
+                VALUES.add((VanillaMob) constant.get(null));
+            } catch (IllegalArgumentException | IllegalAccessException exception) {
+                exception.printStackTrace();
+            }
+        }
 
+        StringBuilder sb = new StringBuilder("&c[WARNING] Caliburn lacks a built-in representation of the following mobs: ");
+        boolean send = false, first = true;
         bukkitMobs:
         for (EntityType bukkit : EntityType.values()) {
             for (VanillaMob caliburn : VALUES) {
@@ -272,25 +207,57 @@ public class VanillaMob extends ExMob {
                 }
             }
 
-            MessageUtil.log("&c[WARNING] Caliburn lacks a built-in representation of the entity " + bukkit.name() + ". Please update your implementation if possible!");
+            if (!first) {
+                sb.append(", ");
+            } else {
+                first = false;
+            }
+            sb.append(bukkit.name());
+            send = true;
             VALUES.add(new VanillaMob(NEW, bukkit.name().toLowerCase(), bukkit.name()));
         }
+        if (send) {
+            MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
+        }
 
+        sb = new StringBuilder("&c[WARNING] Caliburn has a representation of the following mobs that do not exist in Bukkit: ");
+        send = false;
+        first = true;
         for (VanillaMob vm : VALUES) {
             if (EnumUtil.isValidEnum(EntityType.class, vm.getName()) && vm.isAvailable()) {
-                MessageUtil.log("&c[WARNING] Caliburn has a representation of the entity " + vm.getName() + " that does not exist in Bukkit.");
+                if (!first) {
+                    sb.append(", ");
+                } else {
+                    first = false;
+                }
+                sb.append(vm.getName());
+                send = true;
                 continue;
             }
             if (vm.isAvailable()) {
                 LOADED.add(vm);
+                BY_ENTITY_TYPE.put(vm.getSpecies(), vm);
             }
+        }
+        if (send) {
+            MessageUtil.log(sb.toString());
         }
     }
 
+    /**
+     * Returns all vanilla mobs that are known, including those that don't exist in this version.
+     *
+     * @return all vanilla mobs that are known
+     */
     public static Collection<VanillaMob> values() {
         return VALUES;
     }
 
+    /**
+     * Returns all vanilla mobs that exist in this runtime environment.
+     *
+     * @return all vanilla mobs that exist in this runtime environment
+     */
     public static Collection<VanillaMob> getLoaded() {
         return LOADED;
     }
@@ -337,6 +304,7 @@ public class VanillaMob extends ExMob {
     }
 
     protected VanillaMob(Version firstVersion, Version lastVersion, String id1_8, String id1_11, String id1_13, String bukkit, int numeric) {
+        this.idType = IdentifierType.VANILLA;
         this.firstVersion = firstVersion;
         this.lastVersion = lastVersion;
         this.id1_8 = id1_8;
@@ -347,20 +315,26 @@ public class VanillaMob extends ExMob {
     }
 
     /**
-     * @return the first supported version where this item existed
+     * Returns the first supported version where this mob existed.
+     *
+     * @return the first supported version where this mob existed
      */
     public Version getFirstVersion() {
         return firstVersion;
     }
 
     /**
-     * @return the last version where this item existed; NEW if the item still exists
+     * Returns the last version where this mob existed; NEW if the mob still exists.
+     *
+     * @return the last version where this mob existed; NEW if the mob still exists
      */
     public Version getLastVersion() {
         return lastVersion;
     }
 
     /**
+     * Returns the old String ID used before Minecraft 1.11.
+     *
      * @return the old String ID used before Minecraft 1.11
      */
     public String getId1_8() {
@@ -368,6 +342,8 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Returns the new String ID used since Minecraft 1.11.
+     *
      * @return the new String ID used since Minecraft 1.11
      */
     public String getId1_11() {
@@ -375,18 +351,33 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Returns the new String ID used since Minecraft 1.13.
+     *
      * @return the new String ID used since Minecraft 1.13
      */
     public String getId1_13() {
         return id1_13;
     }
 
-    @Override
-    public String getId() {
+    /**
+     * Returns the new String ID used since Minecraft 1.16.
+     * <p>
+     * This is the same as {@link #getId()}.
+     *
+     * @return the new String ID used since Minecraft 1.16
+     */
+    public String getId1_16() {
         return id1_13;
     }
 
+    @Override
+    public String getId() {
+        return getId1_16();
+    }
+
     /**
+     * Return the Bukkit enum name
+     *
      * @return the Bukkit enum name
      */
     public String getBukkitName() {
@@ -394,6 +385,8 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Returns the numeric ID used before Minecraft 1.13; -1 if the item didn't exist before 1.13.
+     *
      * @return the numeric ID used before Minecraft 1.13; -1 if the item didn't exist before 1.13
      */
     public int getNumericId() {
@@ -406,6 +399,8 @@ public class VanillaMob extends ExMob {
     }
 
     /**
+     * Returns if the represented mob is available in the current version.
+     *
      * @return if the represented mob is available in the current version
      */
     public boolean isAvailable() {
@@ -414,7 +409,7 @@ public class VanillaMob extends ExMob {
 
     @Override
     public ExMob idMatch(String id) {
-        if (id.toUpperCase().equals(bukkit) || id.equals(id1_13) || id.equals(id1_11) || id.equals(id1_8)) {
+        if (id.toUpperCase().equals(getBukkitName()) || id.equals(id1_13) || id.equals(id1_11) || id.equals(id1_8)) {
             return this;
         } else {
             return null;
@@ -424,7 +419,7 @@ public class VanillaMob extends ExMob {
     @Override
     public EntityType getSpecies() {
         if (isAvailable()) {
-            return EntityType.valueOf(bukkit);
+            return EntityType.valueOf(getBukkitName());
         } else {
             return EntityType.UNKNOWN;
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -47,6 +47,8 @@ public class SplitMob extends VanillaMob {
     }
 
     /**
+     * Returns the mob that used to be the super type of this mob.
+     *
      * @return the mob that used to be the super type of this mob
      */
     public VanillaMob getOldSuperType() {

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -17,29 +17,41 @@ package de.erethon.caliburn.listener;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.Category;
 import de.erethon.caliburn.item.ExItem;
+import de.erethon.caliburn.loottable.LootTable;
+import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.ExMob;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
  * @author Daniel Saukel
  */
-public class EntityListener implements Listener {
+public class MobListener implements Listener {
 
     private CaliburnAPI api;
 
-    public EntityListener(CaliburnAPI api) {
+    public MobListener(CaliburnAPI api) {
         this.api = api;
     }
 
     @EventHandler
-    public void onDamageByPlayer(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player) || event.getCause() != DamageCause.ENTITY_ATTACK) {
+    public void onDamageByEntity(EntityDamageByEntityEvent event) {
+        ExMob damager = api.getExMob(event.getDamager());
+        if (damager instanceof CustomMob && ((CustomMob) damager).hasAttackHandler()) {
+            ((CustomMob) damager).getAttackHandler().onAttack(event.getDamager(), event.getEntity());
+        }
+
+        if (!(event.getDamager() instanceof Player)) {
             return;
         }
 
@@ -79,6 +91,51 @@ public class EntityListener implements Listener {
 
         } else {
             event.setDamage(event.getDamage() * mob.getItemDamageModifier(item));
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onDamage(EntityDamageEvent event) {
+        Entity entity = event.getEntity();
+        ExMob exMob = api.getExMob(entity);
+        if (!(exMob instanceof CustomMob)) {
+            return;
+        }
+
+        CustomMob cMob = (CustomMob) exMob;
+        Entity attacker = event instanceof EntityDamageByEntityEvent ? ((EntityDamageByEntityEvent) event).getDamager() : null;
+
+        if (cMob.hasDamageHandler()) {
+            cMob.getDamageHandler().onDamage(entity, event.getCause(), event.getDamage(), attacker);
+        }
+
+        if (!cMob.hasDeathHandler() || !(entity instanceof LivingEntity)) {
+            return;
+        }
+        if (event.getDamage() > ((LivingEntity) entity).getHealth()) {
+            cMob.getDeathHandler().onDeath(entity, event.getCause(), attacker);
+        }
+    }
+
+    @EventHandler
+    public void onDeath(EntityDeathEvent event) {
+        ExMob exMob = api.getExMob(event.getEntity());
+        if (!(exMob instanceof CustomMob)) {
+            return;
+        }
+        LootTable drops = ((CustomMob) exMob).getDrops();
+        if (drops == null) {
+            return;
+        }
+        event.getDrops().clear();
+        event.getDrops().addAll(drops.generateLootList());
+    }
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEntityEvent event) {
+        ExMob mob = api.getExMob(event.getRightClicked());
+        if (mob instanceof CustomMob && ((CustomMob) mob).hasInteractHandler()) {
+            ((CustomMob) mob).getInteractHandler().onInteract(event.getRightClicked(), event.getPlayer());
         }
     }
 

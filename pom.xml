@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>caliburn</artifactId>
-    <version>0.5.5</version>
+    <version>1.0-RC-02</version>
     <packaging>jar</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
@@ -17,7 +17,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.2.4</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -27,20 +27,10 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>de.erethon.commons:compatibility</include>
-                                    <include>de.erethon:itemstacklib</include>
+                                    <include>de.erethon.commons:commons-dist</include>
+                                    <include>de.erethon:headlib</include>
                                 </includes>
                             </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>de.erethon.commons.item</pattern>
-                                    <shadedPattern>de.erethon.caliburn.util.item</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>de.erethon.commons.compatibility</pattern>
-                                    <shadedPattern>de.erethon.caliburn.util.compatibility</shadedPattern>
-                                </relocation>
-                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -48,9 +38,20 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
-                    <failOnError>false</failOnError>
+                    <excludePackageNames>de.erethon.caliburn.listener</excludePackageNames>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
@@ -58,25 +59,26 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14.2-R0.1-SNAPSHOT</version>
+            <version>1.14.4-R0.1-SNAPSHOT</version><!-- Actually for 1.15, but compatibility... -->
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon.commons</groupId>
-            <artifactId>compatibility</artifactId>
-            <version>1.5.1</version>
+            <artifactId>commons-dist</artifactId>
+            <version>6.2.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon</groupId>
-            <artifactId>itemstacklib</artifactId>
-            <version>2.0.3</version>
+            <artifactId>headlib</artifactId>
+            <version>3.0.5</version>
             <scope>compile</scope>
         </dependency>
+        <!-- From Minecraft -->
         <dependency>
-            <groupId>de.erethon.commons</groupId>
-            <artifactId>commons-dist</artifactId>
-            <version>6.0</version>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

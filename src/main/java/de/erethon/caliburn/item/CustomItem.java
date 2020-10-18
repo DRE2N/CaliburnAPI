@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -14,156 +14,158 @@
  */
 package de.erethon.caliburn.item;
 
+import com.google.common.collect.Multimap;
 import de.erethon.caliburn.CaliburnAPI;
+import de.erethon.caliburn.category.IdentifierType;
+import de.erethon.caliburn.item.actionhandler.DamageHandler;
 import de.erethon.caliburn.item.actionhandler.DropHandler;
 import de.erethon.caliburn.item.actionhandler.HitHandler;
 import de.erethon.caliburn.item.actionhandler.RightClickHandler;
-import de.erethon.commons.compatibility.Version;
-import de.erethon.commons.item.AttributeWrapper;
-import de.erethon.commons.item.InternalAttribute;
-import de.erethon.commons.item.InternalOperation;
-import de.erethon.commons.item.InternalSlot;
 import de.erethon.commons.misc.EnumUtil;
-import de.erethon.commons.misc.NumberUtil;
+import de.erethon.headlib.HeadLib;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataType;
 
+/**
+ * An item that has by default changed properties compared to Minecraft's vanilla items.
+ *
+ * @author Daniel Saukel
+ */
 public class CustomItem extends ExItem {
 
     private VanillaItem base;
-    private String name;
-    private List<String> lores = new ArrayList<>();
-    private Set<ItemFlag> itemFlags = new HashSet<>();
-    private Map<Enchantment, Integer> enchantments = new HashMap<>();
-    private List<AttributeWrapper> attributes = new ArrayList<>();
+    /**
+     * The ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
+     */
+    protected ItemMeta meta;
 
+    private DamageHandler damageHandler;
     private DropHandler dropHandler;
     private HitHandler hitHandler;
     private RightClickHandler rightClickHandler;
 
-    // TODO: Better exception handling
-    public CustomItem(Map<String, Object> args) {
-        raw = args;
+    private String skullOwner, textureValue;
+    private String nbt;
+
+    @Deprecated
+    private short data = Short.MIN_VALUE;
+
+    public CustomItem(CaliburnAPI api, IdentifierType idType, String id, ItemStack item) {
+        this.api = api;
+        this.idType = idType;
+        this.id = id;
+
+        setBase(VanillaItem.get(item.getType()));
+        meta = item.getItemMeta();
+        if (meta instanceof SkullMeta) {
+            skullOwner = ((SkullMeta) meta).getOwningPlayer().getUniqueId().toString();
+            textureValue = HeadLib.getTextureValue(item);
+        }
+
+        raw = serialize();
+    }
+
+    public CustomItem(CaliburnAPI api, IdentifierType idType, String id, VanillaItem base) {
+        this.api = api;
+        this.idType = idType;
+        this.id = id;
+        setBase(base);
+        raw = serialize();
+    }
+
+    private CustomItem() {
+    }
+
+    public static CustomItem deserialize(Map<String, Object> args) {
+        if (args == null) {
+            throw new IllegalArgumentException("args must not be null");
+        }
+        CustomItem deserialized = new CustomItem();
+        deserialized.api = CaliburnAPI.getInstance();
+        deserialized.raw = args;
 
         Object material = args.get("material");
         if (material instanceof String) {
-            ExItem base = CaliburnAPI.getInstance().getExItem((String) material);
+            ExItem base = deserialized.api.getExItem((String) material);
             if (base instanceof VanillaItem) {
-                setBase((VanillaItem) base);
-                this.material = base.getMaterial();
+                deserialized.setBase((VanillaItem) base);
             }
         }
-
-        Object name = args.get("name");
-        if (name instanceof String) {
-            setName((String) name);
+        if (deserialized.base == null) {
+            throw new IllegalArgumentException("Custom item does not have valid material");
         }
 
-        Object lores = args.get("lores");
-        if (lores instanceof List) {
-            for (Object lore : (List) lores) {
-                if (lore instanceof String) {
-                    addLore((String) lore);
-                }
+        Object idType = args.get("idType");
+        if (idType instanceof String) {
+            IdentifierType idTypeValue = EnumUtil.getEnumIgnoreCase(IdentifierType.class, (String) idType);
+            if (idTypeValue != null) {
+                deserialized.idType = idTypeValue;
             }
+        } else {
+            idType = IdentifierType.LORE;
         }
 
-        Object enchantments = args.get("enchantments");
-        if (enchantments instanceof Map) {
-            for (Object enchantment : ((Map) enchantments).entrySet()) {
-                Enchantment type = null;
-                if (Version.isAtLeast(Version.MC1_13)) {
-                    try {
-                        type = Enchantment.getByKey(NamespacedKey.minecraft(((Entry) enchantment).getKey().toString()));
-                    } catch (IllegalArgumentException exception) {
-                    }
-                }
-                if (type == null) {
-                    type = Enchantment.getByName(((Entry) enchantment).getKey().toString());
-                }
-                int level = (int) ((Entry) enchantment).getValue();
-                if (type != null && level != 0) {
-                    this.enchantments.put(type, level);
-                }
-            }
+        Object meta = args.get("meta");
+        if (meta instanceof ItemMeta) {
+            deserialized.meta = (ItemMeta) meta;
+        } else {
+            deserialized.meta = Bukkit.getItemFactory().getItemMeta(deserialized.material);
         }
 
-        Object itemFlags = args.get("itemFlags");
-        if (itemFlags instanceof List) {
-            for (Object flag : (List) itemFlags) {
-                if (flag instanceof String && EnumUtil.isValidEnum(ItemFlag.class, (String) flag)) {
-                    this.itemFlags.add(ItemFlag.valueOf((String) flag));
-                }
-            }
+        Object damageHandler = args.get("damageHandler");
+        if (damageHandler instanceof String) {
+            deserialized.setDamageHandler(DamageHandler.create((String) damageHandler));
+        }
+        Object dropHandler = args.get("dropHandler");
+        if (dropHandler instanceof String) {
+            deserialized.setDropHandler(DropHandler.create((String) dropHandler));
+        }
+        Object hitHandler = args.get("hitHandler");
+        if (hitHandler instanceof String) {
+            deserialized.setHitHandler(HitHandler.create((String) hitHandler));
+        }
+        Object rightClickHandler = args.get("rightClickHandler");
+        if (rightClickHandler instanceof String) {
+            deserialized.setRightClickHandler(RightClickHandler.create((String) rightClickHandler));
         }
 
-        Object attributes = args.get("attributes");
-        if (attributes instanceof Map) {
-            for (Object attribute : ((Map) attributes).entrySet()) {
-                if (!(attribute instanceof Entry)) {
-                    continue;
-                }
-
-                String attributeName = (String) ((Entry) attribute).getKey();
-                Map attributeMap = (Map) ((Entry) attribute).getValue();
-
-                Object type = attributeMap.get("type");
-                InternalAttribute intType = null;
-                Object slots = attributeMap.get("slots");
-                ArrayList<InternalSlot> intSlots = new ArrayList<>();
-                Object operation = attributeMap.get("operation");
-                InternalOperation intOp = null;
-                Object amount = attributeMap.get("amount");
-                Double intAmount = Double.NaN;
-
-                if (type instanceof String) {
-                    intType = EnumUtil.getEnumIgnoreCase(InternalAttribute.class, (String) type);
-                }
-                if (slots instanceof List) {
-                    for (Object slot : (List) slots) {
-                        if (slot instanceof String) {
-                            InternalSlot iSlot = EnumUtil.getEnumIgnoreCase(InternalSlot.class, (String) slot);
-                            if (iSlot != null) {
-                                intSlots.add(iSlot);
-                            }
-                        }
-                    }
-                }
-                if (operation instanceof String) {
-                    intOp = EnumUtil.getEnumIgnoreCase(InternalOperation.class, (String) operation);
-                }
-                if (amount instanceof String) {
-                    intAmount = NumberUtil.parseDouble((String) amount);
-                } else if (amount instanceof Double) {
-                    intAmount = (Double) amount;
-                }
-
-                if (intType != null && intOp != null && intAmount != Double.NaN) {
-                    this.attributes.add(new AttributeWrapper(intType, attributeName, intAmount, intOp, intSlots.toArray(new InternalSlot[intSlots.size()])));
-                }
-            }
+        Object skullOwner = args.get("skullOwner"), textureValue = args.get("textureValue");
+        if (skullOwner instanceof String && textureValue instanceof String) {
+            deserialized.setSkullTexture((String) skullOwner, (String) textureValue);
         }
-    }
 
-    public CustomItem(CaliburnAPI api, String id) {
-        this.api = api;
-        this.id = id;
-        raw = serialize();
+        Object nbt = args.get("nbt");
+        if (nbt instanceof String) {
+            deserialized.nbt = (String) nbt;
+        }
+
+        Object data = args.get("durability");
+        if (data instanceof Number) {
+            deserialized.data = ((Number) data).shortValue();
+        }
+
+        return deserialized;
     }
 
     /* Getters and setters */
     /**
+     * Returns the item that this one is based on.
+     *
      * @return the item that this one is based on
      */
     public VanillaItem getBase() {
@@ -171,83 +173,237 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @param base set the item that this one is based on
+     * Sets the item that this one is based on.
+     *
+     * @param base the item that this one is based on
      */
     public void setBase(VanillaItem base) {
         this.base = base;
-    }
-
-    @Override
-    public String getName() {
-        return name;
+        this.material = base.getMaterial();
     }
 
     /**
-     * @param name the display name to set
+     * Returns the ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
+     *
+     * @return the ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem
      */
-    public void setName(String name) {
-        this.name = ChatColor.translateAlternateColorCodes('&', name);
+    public ItemMeta getMeta() {
+        return meta;
     }
 
     /**
+     * Sets the ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem directly.
+     *
+     * @param meta the meta data to set
+     */
+    public void setMeta(ItemMeta meta) {
+        this.meta = meta;
+    }
+
+    /**
+     * Returns the lore.
+     *
      * @return the lore
      */
-    public List<String> getLores() {
-        return lores;
+    public List<String> getLore() {
+        return meta.getLore();
     }
 
     /**
+     * Adds a lore line.
+     *
      * @param lore the lore to add
      */
     public void addLore(String lore) {
-        lores.add(ChatColor.translateAlternateColorCodes('&', lore));
+        List<String> lines = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+        lines.add(ChatColor.translateAlternateColorCodes('&', lore));
+        meta.setLore(lines);
     }
 
     /**
-     * @return the enchantments as a Map<Enchantment, Integer>
+     * Removes a lore line.
+     *
+     * @param index the lore index number
+     */
+    public void removeLore(int index) {
+        if (!meta.hasLore()) {
+            return;
+        }
+        List<String> lines = meta.getLore();
+        lines.remove(index);
+        meta.setLore(lines);
+    }
+
+    /**
+     * Removes a lore line.
+     * <p>
+     * Chat colors are translated, so removing "&amp;4Test" will remove {@link org.bukkit.ChatColor}.DARK_RED + "Test".
+     *
+     * @param lore the lore to remove
+     */
+    public void removeLore(String lore) {
+        if (!meta.hasLore()) {
+            return;
+        }
+        List<String> lines = meta.getLore();
+        lines.remove(ChatColor.translateAlternateColorCodes('&', lore));
+        meta.setLore(lines);
+    }
+
+    /**
+     * Returns the enchantments as a Map of Enchantment and level integer.
+     *
+     * @return the enchantments as a Map of Enchantment and level integer
      */
     public Map<Enchantment, Integer> getEnchantments() {
-        return enchantments;
+        return meta.getEnchants();
     }
 
     /**
+     * Adds an enchantment.
+     *
      * @param enchantment the enchantment to add
      * @param level       the level of the enchantment
      */
     public void addEnchantment(Enchantment enchantment, int level) {
-        enchantments.put(enchantment, level);
+        meta.addEnchant(enchantment, level, true);
     }
 
     /**
-     * @return the ItemFlags as a List<ItemFlag>
+     * Removes an enchantment.
+     *
+     * @param enchantment the enchantment
+     */
+    public void removeEnchantment(Enchantment enchantment) {
+        meta.removeEnchant(enchantment);
+    }
+
+    /**
+     * Returns a List of the item flags.
+     *
+     * @return a List of the item flags
      */
     public Set<ItemFlag> getItemFlags() {
-        return itemFlags;
+        return meta.getItemFlags();
     }
 
     /**
-     * @param itemFlag the itemFlag to add
+     * Adds an item flag.
+     *
+     * @param itemFlag the item flag to add
      */
     public void addItemFlag(ItemFlag itemFlag) {
-        itemFlags.add(itemFlag);
+        meta.addItemFlags(itemFlag);
     }
 
     /**
-     * @param itemFlag the itemFlags to remove
+     * Removes an item flag.
+     *
+     * @param itemFlag the item flag to remove
      */
     public void removeItemFlag(ItemFlag itemFlag) {
-        itemFlags.remove(itemFlag);
+        meta.removeItemFlags(itemFlag);
     }
 
     /**
      * @return the attributes
      */
-    public List<AttributeWrapper> getAttributes() {
-        return attributes;
+    /*public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+        return meta.getAttributeModifiers();
+    }*/
+    /**
+     * @param attribute the attribute
+     * @param modifier  the attribute modifier
+     */
+    /*public void addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+        meta.addAttributeModifier(attribute, modifier);
+    }*/
+    /**
+     * Removes all modifiers of the given attribute.
+     *
+     * @param attribute the attribute
+     */
+    /*public void removeAttributeModifier(Attribute attribute) {
+        meta.removeAttributeModifier(attribute);
+    }*/
+    /**
+     * Removes a specific modifier of the given attribute.
+     *
+     * @param attribute the attribute
+     * @param modifier  the attribute modifier
+     */
+    /*public void removeAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+        meta.removeAttributeModifier(attribute);
+    }*/
+    /**
+     * Removes a modifier from the given slot.
+     *
+     * @param slot the equipment slot
+     */
+    public void removeAttributeModifier(EquipmentSlot slot) {
+        meta.removeAttributeModifier(slot);
+    }
+
+    /**
+     * Returns the skull owner UUID String.
+     *
+     * @return the skull owner UUID String
+     */
+    public String getSkullOwner() {
+        return skullOwner;
+    }
+
+    /**
+     * Returns the Base64 encoded skull owner texture value.
+     *
+     * @return the Base64 encoded skull owner texture value
+     */
+    public String getTextureValue() {
+        return textureValue;
+    }
+
+    /**
+     * Sets the skull owner and texture value for player heads.
+     *
+     * @param skullOwner   the skull owner UUID String
+     * @param textureValue the Base64 encoded skull owner texture value
+     */
+    public void setSkullTexture(String skullOwner, String textureValue) {
+        this.skullOwner = skullOwner;
+        this.textureValue = textureValue;
     }
 
     /* Events */
     /**
+     * Returns if the custom item has a DamageHandler.
+     *
+     * @return if the custom item has a DamageHandler
+     */
+    public boolean hasDamageHandler() {
+        return damageHandler != null;
+    }
+
+    /**
+     * Returns the DamageHandler.
+     *
+     * @return the DamageHandler
+     */
+    public DamageHandler getDamageHandler() {
+        return damageHandler;
+    }
+
+    /**
+     * Sets the DamageHandler.
+     *
+     * @param handler the handler to set
+     */
+    public void setDamageHandler(DamageHandler handler) {
+        damageHandler = handler;
+    }
+
+    /**
+     * Returns if the custom item has a DropHandler.
+     *
      * @return if the custom item has a DropHandler
      */
     public boolean hasDropHandler() {
@@ -255,6 +411,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the DropHandler.
+     *
      * @return the DropHandler
      */
     public DropHandler getDropHandler() {
@@ -262,6 +420,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Sets the DropHandler.
+     *
      * @param handler the handler to set
      */
     public void setDropHandler(DropHandler handler) {
@@ -269,6 +429,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns if the custom item has a HitHandler.
+     *
      * @return if the custom item has a HitHandler
      */
     public boolean hasHitHandler() {
@@ -276,6 +438,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the HitHandler.
+     *
      * @return the HitHandler
      */
     public HitHandler getHitHandler() {
@@ -283,6 +447,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Sets the HitHandler.
+     *
      * @param handler the handler to set
      */
     public void setHitHandler(HitHandler handler) {
@@ -290,6 +456,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns if the custom item has a RightClickHandler.
+     *
      * @return if the custom item has a RightClickHandler
      */
     public boolean hasRightClickHandler() {
@@ -297,6 +465,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the RightClickHandler.
+     *
      * @return the RightClickHandler
      */
     public RightClickHandler getRightClickHandler() {
@@ -304,6 +474,8 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Sets the RightClickHandler.
+     *
      * @param handler the handler to set
      */
     public void setRightClickHandler(RightClickHandler handler) {
@@ -312,7 +484,7 @@ public class CustomItem extends ExItem {
 
     /* Actions */
     /**
-     * Registers the item sothat it can be fetched through the getter methods
+     * Registers the item sothat it can be fetched through the getter methods.
      *
      * @return itself
      */
@@ -328,7 +500,7 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * Registers the item sothat it can be fetched through the getter methods
+     * Registers the item sothat it can be fetched through the getter methods.
      *
      * @param id the ID to set
      * @return itself
@@ -347,41 +519,66 @@ public class CustomItem extends ExItem {
             return new HashMap<>(raw);
         }
         Map<String, Object> config = super.serialize();
-        // TO DO
+
+        config.put("material", base.getId());
+        config.put("idType", idType.toString());
+        config.put("meta", meta);
+
+        if (damageHandler != null) {
+            config.put("damageHandler", damageHandler.getClass().getName());
+        }
+        if (dropHandler != null) {
+            config.put("dropHandler", dropHandler.getClass().getName());
+        }
+        if (hitHandler != null) {
+            config.put("hitHandler", hitHandler.getClass().getName());
+        }
+        if (rightClickHandler != null) {
+            config.put("rightClickHandler", rightClickHandler.getClass().getName());
+        }
+        if (skullOwner != null) {
+            config.put("skullOwner", skullOwner);
+        }
+        if (textureValue != null) {
+            config.put("textureValue", textureValue);
+        }
+        if (data != Short.MIN_VALUE) {
+            config.put("durability", data);
+        }
+        if (nbt != null) {
+            config.put("nbt", nbt);
+        }
         return config;
     }
 
-    /**
-     * @return the custom item as an ItemStack
-     */
     @Override
     public ItemStack toItemStack(int amount) {
         ItemStack itemStack = base.toItemStack(amount);
-        ItemMeta itemMeta = itemStack.getItemMeta();
-
-        if (name != null) {
-            itemMeta.setDisplayName(name);
+        itemStack.setItemMeta(meta.clone());
+        if (data != Short.MIN_VALUE) {
+            itemStack.setDurability(data);
+        }
+        if (textureValue != null && skullOwner != null) {
+            itemStack = HeadLib.setSkullOwner(itemStack, skullOwner, textureValue);
+        }
+        if (nbt != null) {
+            itemStack = Bukkit.getUnsafe().modifyItemStack(itemStack, nbt);
         }
 
-        List<String> lores = new ArrayList<>();
-        if (id != null) {
-            lores.add(getIdLore());
-        }
-        lores.addAll(getLores());
-        itemMeta.setLore(lores);
-
-        for (ItemFlag itemFlag : itemFlags) {
-            itemMeta.addItemFlags(itemFlag);
-        }
-
-        itemStack.setItemMeta(itemMeta);
-
-        for (Entry<Enchantment, Integer> enchantment : enchantments.entrySet()) {
-            itemStack.addUnsafeEnchantment(enchantment.getKey(), enchantment.getValue());
-        }
-
-        for (AttributeWrapper attribute : attributes) {
-            itemStack = attribute.applyTo(itemStack);
+        if (idType == IdentifierType.DISPLAY_NAME) {
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.setDisplayName(api.getIdentifierPrefix() + id);
+            itemStack.setItemMeta(meta);
+        } else if (idType == IdentifierType.LORE) {
+            ItemMeta meta = itemStack.getItemMeta();
+            List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
+            lore.add(0, api.getIdentifierPrefix() + id);
+            meta.setLore(lore);
+            itemStack.setItemMeta(meta);
+        } else if (idType == IdentifierType.PERSISTENT_DATA_CONTAINER) {
+            ItemMeta meta = itemStack.getItemMeta();
+            meta.getPersistentDataContainer().set(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, id);
+            itemStack.setItemMeta(meta);
         }
 
         return itemStack;

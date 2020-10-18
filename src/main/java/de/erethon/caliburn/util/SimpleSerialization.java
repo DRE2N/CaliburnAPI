@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2018 Daniel Saukel.
+ * Copyright (C) 2015-2020 Daniel Saukel.
  *
  * This library is free software: you can redistribute it and/or modify it under the
  * terms of the GNU Lesser General Public License as published by the Free Software
@@ -31,7 +31,20 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
- * A simple but powerful one-line serialization format for ItemStacks
+ * A simple but powerful one-line serialization format for item stacks.
+ * <p>
+ * The format looks like:
+ * <p>
+ * "item:id,amount,damage,data"
+ * <ul>
+ * <li>The "item:" prefix is optional.
+ * <li>The "data" consists of a prefix and a value after it.
+ * </ul><p>
+ * Examples:
+ * <ul>
+ * <li>"golden_sword" - A golden sword.
+ * <li>"apple,4,F:HIDE_UNBREAKABLE,U,L:&amp;4An unbreakable apple&lt;br&gt;&amp;5With two colored lore lines"
+ * </ul>
  *
  * @author Daniel Saukel
  */
@@ -40,6 +53,9 @@ public class SimpleSerialization {
     public static final String PREFIX = "item:";
     private CaliburnAPI api;
 
+    /**
+     * The valid data modifiers.
+     */
     public enum ItemModifier {
 
         ENCHANTMENT("ENCHANTMENT:", "ENCHANT:", "E:"),
@@ -115,7 +131,7 @@ public class SimpleSerialization {
         if (meta.hasDisplayName()) {
             serialized += "," + NAME.getPrefixes()[0] + unuseCC(meta.getDisplayName());
         }
-        if (meta.spigot().isUnbreakable()) {
+        if (isUnbreakable(meta)) {
             serialized += "," + UNBREAKABLE.getPrefixes()[0];
         }
         return serialized;
@@ -175,7 +191,7 @@ public class SimpleSerialization {
             } else if (mod == NAME) {
                 meta.setDisplayName(useCC(NAME.stripPrefix(arg)));
             } else if (mod == UNBREAKABLE) {
-                meta.spigot().setUnbreakable(true);
+                setUnbreakable(meta);
             }
         }
         item.setItemMeta(meta);
@@ -192,6 +208,24 @@ public class SimpleSerialization {
 
     private String unuseCC(String string) {
         return string.replace("\u00a7", "&");
+    }
+
+    @Deprecated
+    private boolean isUnbreakable(ItemMeta meta) {
+        if (de.erethon.commons.compatibility.Internals.isAtLeast(de.erethon.commons.compatibility.Internals.v1_11_R1)) {
+            return meta.isUnbreakable();
+        } else {
+            return meta.spigot().isUnbreakable();
+        }
+    }
+
+    @Deprecated
+    private void setUnbreakable(ItemMeta meta) {
+        if (de.erethon.commons.compatibility.Internals.isAtLeast(de.erethon.commons.compatibility.Internals.v1_11_R1)) {
+            meta.setUnbreakable(true);
+        } else {
+            meta.spigot().setUnbreakable(true);
+        }
     }
 
 }
