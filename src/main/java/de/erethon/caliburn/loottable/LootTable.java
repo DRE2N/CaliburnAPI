@@ -347,20 +347,20 @@ public class LootTable implements ConfigurationSerializable {
 
         Entry chestplate = getEntry(CHESTPLATE);
         if (chestplate != null) {
-            entityEquip.setHelmet(chestplate.getLootItem());
-            entityEquip.setHelmetDropChance((float) (chestplate.getLootChance() / 100d));
+            entityEquip.setChestplate(chestplate.getLootItem());
+            entityEquip.setChestplateDropChance((float) (chestplate.getLootChance() / 100d));
         }
 
         Entry leggings = getEntry(LEGGINGS);
         if (leggings != null) {
-            entityEquip.setHelmet(leggings.getLootItem());
-            entityEquip.setHelmetDropChance((float) (leggings.getLootChance() / 100d));
+            entityEquip.setLeggings(leggings.getLootItem());
+            entityEquip.setLeggingsDropChance((float) (leggings.getLootChance() / 100d));
         }
 
         Entry boots = getEntry(BOOTS);
         if (boots != null) {
-            entityEquip.setHelmet(boots.getLootItem());
-            entityEquip.setHelmetDropChance((float) (boots.getLootChance() / 100d));
+            entityEquip.setBoots(boots.getLootItem());
+            entityEquip.setBootsDropChance((float) (boots.getLootChance() / 100d));
         }
     }
 
