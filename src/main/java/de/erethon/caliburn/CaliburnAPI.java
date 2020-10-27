@@ -604,7 +604,7 @@ public class CaliburnAPI {
 
     /* Serialization */
     /**
-     * Universal deserialization method to deserialize a Bukkit ItemStack
+     * Universal deserialization method to deserialize a Bukkit ItemStack.
      *
      * @param config a ConfigurationSection
      * @param path   the path in the config where the item to deserialize is found
@@ -615,7 +615,7 @@ public class CaliburnAPI {
     }
 
     /**
-     * Universal deserialization method to deserialize a Bukkit ItemStack
+     * Universal deserialization method to deserialize a Bukkit ItemStack.
      *
      * @param object ItemStack, ExItem or {@link de.erethon.caliburn.util.SimpleSerialization} String
      * @return the deserialized ItemStack
@@ -633,7 +633,7 @@ public class CaliburnAPI {
     }
 
     /**
-     * Universal deserialization method to deserialize lists of Bukkit ItemStacks
+     * Universal deserialization method to deserialize lists of Bukkit ItemStacks.
      *
      * @param config a ConfigurationSection
      * @param path   the path in the config where the item to deserialize is found
@@ -645,12 +645,17 @@ public class CaliburnAPI {
         if (list == null) {
             return deserialized;
         }
-        list.forEach(e -> deserialized.add(deserializeStack(e)));
+        list.forEach(e -> {
+            ItemStack itemStack = deserializeStack(e);
+            if (itemStack != null) {
+                deserialized.add(itemStack);
+            }
+        });
         return deserialized;
     }
 
     /**
-     * Universal deserialization method to deserialize an ExItem
+     * Universal deserialization method to deserialize an ExItem.
      *
      * @param config a ConfigurationSection
      * @param path   the path in the config where the item to deserialize is found
@@ -667,7 +672,7 @@ public class CaliburnAPI {
     }
 
     /**
-     * Universal deserialization method to deserialize lists of ExItems
+     * Universal deserialization method to deserialize lists of ExItems.
      *
      * @param config a ConfigurationSection
      * @param path   the path in the config where the item to deserialize is found
@@ -681,7 +686,10 @@ public class CaliburnAPI {
         }
         for (Object obj : list) {
             if (obj instanceof String || obj instanceof Integer) {
-                deserialized.add(getExItem(obj));
+                ExItem exItem = getExItem(obj);
+                if (exItem != null) {
+                    deserialized.add(exItem);
+                }
             } else if (obj instanceof ExItem) {
                 deserialized.add((ExItem) obj);
             }
