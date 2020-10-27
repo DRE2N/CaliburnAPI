@@ -121,6 +121,21 @@ public class CaliburnAPI {
     }
 
     /**
+     * Reloads all content.
+     */
+    public void reload() {
+        items.clear();
+        items.addAll(VanillaItem.getLoaded());
+        mobs.clear();
+        mobs.addAll(VanillaMob.getLoaded());
+        itemCategories.clear();
+        mobCategories.clear();
+        lootTables.clear();
+        loadDataFiles();
+        finishInitialization();
+    }
+
+    /**
      * Loads the data files.
      */
     public void loadDataFiles() {
