@@ -40,7 +40,7 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
 
     protected Map<String, Object> raw;
 
-    protected Material material;
+    protected ExItem base;
 
     protected List<Category<ExItem>> categories = new ArrayList<>();
     protected Map<Category<ExMob>, Double> categoryDamageModifiers = new HashMap<>();
@@ -121,12 +121,30 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
+     * Returns the item that this one is based on.
+     *
+     * @return the item that this one is based on
+     */
+    public ExItem getBase() {
+        return base;
+    }
+
+    /**
+     * Sets the item that this one is based on.
+     *
+     * @param base the item that this one is based on
+     */
+    public void setBase(ExItem base) {
+        this.base = base;
+    }
+
+    /**
      * Returns the material.
      *
      * @return the material
      */
     public Material getMaterial() {
-        return material;
+        return base.getMaterial();
     }
 
     /**
@@ -237,6 +255,27 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
      */
     public ItemStack toItemStack() {
         return toItemStack(1);
+    }
+
+    /* Utils */
+    /**
+     * Returns if the given item equals this item or an item in the {@link #getBase() base} tree.
+     *
+     * @param item the item to check
+     * @return if the given item equals this item or an item in the {@link #getBase() base} tree
+     */
+    public boolean isSubsumableUnder(ExItem item) {
+        if (item == null) {
+            return false;
+        }
+        ExItem base = this;
+        while (base != null) {
+            if (item.equals(base)) {
+                return true;
+            }
+            base = base.getBase();
+        }
+        return false;
     }
 
 }

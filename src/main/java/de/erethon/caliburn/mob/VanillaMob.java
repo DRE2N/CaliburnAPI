@@ -282,6 +282,7 @@ public class VanillaMob extends ExMob {
     private String id1_13;
     private int numeric;
     private String bukkit;
+    protected EntityType species;
 
     protected VanillaMob(Version firstVersion, String id1_13, String bukkit) {
         this(firstVersion, "", id1_13, bukkit, -1);
@@ -312,6 +313,7 @@ public class VanillaMob extends ExMob {
         this.id1_13 = id1_13;
         this.bukkit = bukkit;
         this.numeric = numeric;
+        species = isAvailable() ? EntityType.valueOf(bukkit) : EntityType.UNKNOWN;
     }
 
     /**
@@ -418,11 +420,7 @@ public class VanillaMob extends ExMob {
 
     @Override
     public EntityType getSpecies() {
-        if (isAvailable()) {
-            return EntityType.valueOf(getBukkitName());
-        } else {
-            return EntityType.UNKNOWN;
-        }
+        return species;
     }
 
     @Override

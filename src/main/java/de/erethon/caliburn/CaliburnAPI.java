@@ -36,6 +36,7 @@ import de.erethon.commons.misc.FileUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.Bukkit;
@@ -351,14 +352,14 @@ public class CaliburnAPI {
      *         the material's type is used
      */
     public ExItem getExItem(ItemStack item) {
-        String id = null;
         for (IdentifierType idType : IdentifierType.ITEM_PRIORITY) {
-            id = getExItemId(item, idType);
-            if (id != null) {
-                break;
+            String id = id = getExItemId(item, idType);
+            ExItem exItem = getExItem(id);
+            if (exItem != null) {
+                return exItem;
             }
         }
-        return getExItem(id);
+        return null;
     }
 
     /**
@@ -432,6 +433,54 @@ public class CaliburnAPI {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Returns if the given collection contains any items that are subsumable under one of the given items.
+     *
+     * @param collection a Collection of items to check
+     * @param items      the possible parent items
+     * @return if the given collection contains any items that are subsumable under one of the given items
+     */
+    public boolean itemCollectionContainsSubsumables(Collection<ExItem> collection, ExItem... items) {
+        for (ExItem entry : collection) {
+            if (entry == null) {
+                continue;
+            }
+            for (ExItem item : items) {
+                if (item == null) {
+                    continue;
+                }
+                if (entry.isSubsumableUnder(item)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns if the given collection contains any items that are subsumable under one of the given items.
+     *
+     * @param collection a Collection of item stacks to check
+     * @param items      the possible parent items
+     * @return if the given collection contains any items that are subsumable under one of the given items
+     */
+    public boolean stackCollectionContainsSubsumables(Collection<ItemStack> collection, ExItem... items) {
+        for (ItemStack entry : collection) {
+            if (entry == null) {
+                continue;
+            }
+            for (ExItem item : items) {
+                if (item == null) {
+                    continue;
+                }
+                if (getExItem(entry).isSubsumableUnder(item)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /* Item categories */
@@ -519,14 +568,14 @@ public class CaliburnAPI {
      *         the entity's type is used
      */
     public ExMob getExMob(Entity entity) {
-        String id = null;
         for (IdentifierType idType : IdentifierType.MOB_PRIORITY) {
-            id = getExMobId(entity, idType);
-            if (id != null) {
-                break;
+            String id = getExMobId(entity, idType);
+            ExMob exMob = getExMob(id);
+            if (exMob != null) {
+                return exMob;
             }
         }
-        return getExMob(id);
+        return null;
     }
 
     /**
@@ -562,6 +611,54 @@ public class CaliburnAPI {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Returns if the given collection contains any mobs that are subsumable under one of the given mobs.
+     *
+     * @param collection a Collection of mobs to check
+     * @param mobs       the possible parent mobs
+     * @return if the given collection contains any mobs that are subsumable under one of the given mobs
+     */
+    public boolean mobCollectionContainsSubsumables(Collection<ExMob> collection, ExMob... mobs) {
+        for (ExMob entry : collection) {
+            if (entry == null) {
+                continue;
+            }
+            for (ExMob mob : mobs) {
+                if (mob == null) {
+                    continue;
+                }
+                if (entry.isSubsumableUnder(mob)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns if the given collection contains any mobs that are subsumable under one of the given mobs.
+     *
+     * @param collection a Collection of entities to check
+     * @param mobs       the possible parent mobs
+     * @return if the given collection contains any mobs that are subsumable under one of the given mobs
+     */
+    public boolean entityCollectionContainsSubsumables(Collection<Entity> collection, ExMob... mobs) {
+        for (Entity entry : collection) {
+            if (entry == null) {
+                continue;
+            }
+            for (ExMob mob : mobs) {
+                if (mob == null) {
+                    continue;
+                }
+                if (getExMob(entry).isSubsumableUnder(mob)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     /* Mob categories */

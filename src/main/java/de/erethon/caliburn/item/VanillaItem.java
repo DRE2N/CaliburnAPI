@@ -1307,6 +1307,7 @@ public class VanillaItem extends ExItem {
     private String id1_14;
     private int numeric;
     private short data;
+    protected Material material;
 
     protected VanillaItem(String id1_8, String id1_13, int numeric) {
         this(MC1_8, id1_8, id1_13, numeric);
@@ -1366,6 +1367,7 @@ public class VanillaItem extends ExItem {
         } else {
             id = id1_8;
         }
+        material = isAvailable() ? Material.valueOf(id) : Material.AIR;
     }
 
     /**
@@ -1505,12 +1507,6 @@ public class VanillaItem extends ExItem {
 
     @Override
     public Material getMaterial() {
-        if (material == null) {
-            if (!isAvailable()) {
-                material = Material.AIR;
-            }
-            material = Material.valueOf(getName());
-        }
         return material;
     }
 

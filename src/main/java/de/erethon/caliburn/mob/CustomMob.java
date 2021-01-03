@@ -50,7 +50,6 @@ public class CustomMob extends ExMob {
     private static Set<Internals> higher = Internals.andHigher(CompatibilityHandler.getInstance().getInternals());
 
     /* Entity */
-    private VanillaMob base;
     private String name;
     private Boolean customNameVisible;
     private Boolean glowing;
@@ -116,7 +115,7 @@ public class CustomMob extends ExMob {
         raw = serialize();
     }
 
-    public CustomMob(CaliburnAPI api, IdentifierType idType, String id, VanillaMob base) {
+    public CustomMob(CaliburnAPI api, IdentifierType idType, String id, ExMob base) {
         this.api = api;
         this.idType = idType;
         this.id = id;
@@ -138,8 +137,8 @@ public class CustomMob extends ExMob {
         Object species = args.get("species");
         if (species instanceof String) {
             ExMob base = deserialized.api.getExMob((String) species);
-            if (base instanceof VanillaMob) {
-                deserialized.setBase((VanillaMob) base);
+            if (base != null) {
+                deserialized.setBase(base);
             }
         }
         if (deserialized.base == null) {
@@ -257,25 +256,6 @@ public class CustomMob extends ExMob {
     }
 
     /* Getters and setters */
-    /**
-     * Returns the mob that this one is based on.
-     *
-     * @return the mob that this one is based on
-     */
-    public VanillaMob getBase() {
-        return base;
-    }
-
-    /**
-     * Sets the mob that this one is based on.
-     *
-     * @param base the mob that this one is based on
-     */
-    public void setBase(VanillaMob base) {
-        this.base = base;
-        this.species = base.getSpecies();
-    }
-
     /**
      * Returns the display name of this mob.
      *
@@ -796,7 +776,7 @@ public class CustomMob extends ExMob {
 
     @Override
     public Entity toEntity(Location location) {
-        Entity entity = location.getWorld().spawnEntity(location, species);
+        Entity entity = location.getWorld().spawnEntity(location, getSpecies());
 
         if (getName() != null) {
             entity.setCustomName(getName());

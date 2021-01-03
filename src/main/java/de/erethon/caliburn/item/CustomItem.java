@@ -48,7 +48,6 @@ import org.bukkit.persistence.PersistentDataType;
  */
 public class CustomItem extends ExItem {
 
-    private VanillaItem base;
     /**
      * The ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
      */
@@ -80,7 +79,7 @@ public class CustomItem extends ExItem {
         raw = serialize();
     }
 
-    public CustomItem(CaliburnAPI api, IdentifierType idType, String id, VanillaItem base) {
+    public CustomItem(CaliburnAPI api, IdentifierType idType, String id, ExItem base) {
         this.api = api;
         this.idType = idType;
         this.id = id;
@@ -102,8 +101,8 @@ public class CustomItem extends ExItem {
         Object material = args.get("material");
         if (material instanceof String) {
             ExItem base = deserialized.api.getExItem((String) material);
-            if (base instanceof VanillaItem) {
-                deserialized.setBase((VanillaItem) base);
+            if (base != null) {
+                deserialized.setBase(base);
             }
         }
         if (deserialized.base == null) {
@@ -124,7 +123,7 @@ public class CustomItem extends ExItem {
         if (meta instanceof ItemMeta) {
             deserialized.meta = (ItemMeta) meta;
         } else {
-            deserialized.meta = Bukkit.getItemFactory().getItemMeta(deserialized.material);
+            deserialized.meta = Bukkit.getItemFactory().getItemMeta(deserialized.getMaterial());
         }
 
         Object damageHandler = args.get("damageHandler");
@@ -163,25 +162,6 @@ public class CustomItem extends ExItem {
     }
 
     /* Getters and setters */
-    /**
-     * Returns the item that this one is based on.
-     *
-     * @return the item that this one is based on
-     */
-    public VanillaItem getBase() {
-        return base;
-    }
-
-    /**
-     * Sets the item that this one is based on.
-     *
-     * @param base the item that this one is based on
-     */
-    public void setBase(VanillaItem base) {
-        this.base = base;
-        this.material = base.getMaterial();
-    }
-
     /**
      * Returns the ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
      *

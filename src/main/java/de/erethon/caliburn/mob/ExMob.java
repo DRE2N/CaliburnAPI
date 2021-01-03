@@ -37,7 +37,7 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
 
     protected Map<String, Object> raw;
 
-    protected EntityType species;
+    protected ExMob base;
 
     protected List<Category<ExMob>> categories = new ArrayList<>();
     protected Map<Category<ExItem>, Double> categoryDamageModifiers = new HashMap<>();
@@ -112,12 +112,30 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
     }
 
     /**
+     * Returns the mob that this one is based on.
+     *
+     * @return the mob that this one is based on
+     */
+    public ExMob getBase() {
+        return base;
+    }
+
+    /**
+     * Sets the mob that this one is based on.
+     *
+     * @param base the mob that this one is based on
+     */
+    public void setBase(ExMob base) {
+        this.base = base;
+    }
+
+    /**
      * Returns the mob species.
      *
      * @return the mob species
      */
     public EntityType getSpecies() {
-        return species;
+        return base.getSpecies();
     }
 
     /**
@@ -202,6 +220,27 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
      */
     public Entity toEntity(Location location) {
         return location.getWorld().spawnEntity(location, getSpecies());
+    }
+
+    /* Utils */
+    /**
+     * Returns if the given mob equals this mob or a mob in the {@link #getBase() base} tree.
+     *
+     * @param mob the mob to check
+     * @return if the given mob equals this mob or a mob in the {@link #getBase() base} tree
+     */
+    public boolean isSubsumableUnder(ExMob mob) {
+        if (mob == null) {
+            return false;
+        }
+        ExMob base = this;
+        while (base != null) {
+            if (mob.equals(base)) {
+                return true;
+            }
+            base = base.getBase();
+        }
+        return false;
     }
 
 }
