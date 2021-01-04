@@ -313,7 +313,7 @@ public class VanillaMob extends ExMob {
         this.id1_13 = id1_13;
         this.bukkit = bukkit;
         this.numeric = numeric;
-        species = isAvailable() ? EntityType.valueOf(bukkit) : EntityType.UNKNOWN;
+        species = isAvailable() ? EntityType.valueOf(getBukkitName()) : EntityType.UNKNOWN;
     }
 
     /**
