@@ -173,7 +173,7 @@ public class VanillaMob extends ExMob {
     public static final SplitMob ZOMBIE_HORSE = new SplitMob(MC1_8, HORSE, "zombie_horse", "ZOMBIE_HORSE", 29);
     public static final SplitMob DONKEY = new SplitMob(MC1_8, HORSE, "donkey", "DONKEY", 31);
     public static final SplitMob MULE = new SplitMob(MC1_8, HORSE, "mule", "MULE", 32);
-    public static final SplitMob CAT = new SplitMob(MC1_8, OCELOT, "cat", "CAT", -1) {
+    public static final SplitMob CAT = new SplitMob(MC1_13, OCELOT, "cat", "CAT", -1) {
         @Override
         public EntityType getSpecies() {
             if (Version.isAtLeast(Version.MC1_14)) {

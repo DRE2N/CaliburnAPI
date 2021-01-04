@@ -18,12 +18,15 @@ import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
+
 import static de.erethon.commons.compatibility.Version.*;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
@@ -1127,6 +1130,8 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem ZOMBIFIED_PIGLIN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIFIED_PIGLIN_SPAWN_EGG", 383) {
         @Override
         public String getId() {
+            if (Version.isAtMost(Version.MC1_12_2))
+                return super.getId();
             if (Version.isAtMost(Version.MC1_15_2)) {
                 return "ZOMBIE_PIGMAN_SPAWN_EGG";
             } else {
