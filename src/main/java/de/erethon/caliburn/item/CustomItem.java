@@ -21,6 +21,7 @@ import de.erethon.caliburn.item.actionhandler.DamageHandler;
 import de.erethon.caliburn.item.actionhandler.DropHandler;
 import de.erethon.caliburn.item.actionhandler.HitHandler;
 import de.erethon.caliburn.item.actionhandler.RightClickHandler;
+import de.erethon.caliburn.util.StringUtil;
 import de.erethon.commons.misc.EnumUtil;
 import de.erethon.headlib.HeadLib;
 import java.util.ArrayList;
@@ -52,6 +53,7 @@ public class CustomItem extends ExItem {
      * The ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
      */
     protected ItemMeta meta;
+    private String name;
 
     private DamageHandler damageHandler;
     private DropHandler dropHandler;
@@ -68,6 +70,7 @@ public class CustomItem extends ExItem {
         this.api = api;
         this.idType = idType;
         this.id = id;
+        name = StringUtil.formatId(id);
 
         setBase(VanillaItem.get(item.getType()));
         meta = item.getItemMeta();
@@ -83,6 +86,7 @@ public class CustomItem extends ExItem {
         this.api = api;
         this.idType = idType;
         this.id = id;
+        name = StringUtil.formatId(id);
         setBase(base);
         raw = serialize();
     }
@@ -161,7 +165,23 @@ public class CustomItem extends ExItem {
         return deserialized;
     }
 
+    @Override
+    public CustomItem id(String id) {
+        super.id(id);
+        name = StringUtil.formatId(id);
+        return this;
+    }
+
     /* Getters and setters */
+    @Override
+    public String getName() {
+        if (getMeta() != null && getMeta().hasDisplayName()) {
+            return getMeta().getDisplayName();
+        } else {
+            return name;
+        }
+    }
+
     /**
      * Returns the ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
      *

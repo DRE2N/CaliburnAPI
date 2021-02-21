@@ -15,6 +15,7 @@
 package de.erethon.caliburn.mob;
 
 import de.erethon.caliburn.category.IdentifierType;
+import de.erethon.caliburn.util.StringUtil;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.Version;
 import static de.erethon.commons.compatibility.Version.*;
@@ -283,6 +284,7 @@ public class VanillaMob extends ExMob {
     private int numeric;
     private String bukkit;
     protected EntityType species;
+    private String name;
 
     protected VanillaMob(Version firstVersion, String id1_13, String bukkit) {
         this(firstVersion, "", id1_13, bukkit, -1);
@@ -314,6 +316,7 @@ public class VanillaMob extends ExMob {
         this.bukkit = bukkit;
         this.numeric = numeric;
         species = isAvailable() ? EntityType.valueOf(bukkit) : EntityType.UNKNOWN;
+        name = StringUtil.formatId(id1_13);
     }
 
     /**
@@ -397,7 +400,7 @@ public class VanillaMob extends ExMob {
 
     @Override
     public String getName() {
-        return getId1_13();
+        return name;
     }
 
     /**

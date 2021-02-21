@@ -32,7 +32,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Daniel Saukel
  */
-public class ExItem extends Categorizable implements ConfigurationSerializable {
+public abstract class ExItem extends Categorizable implements ConfigurationSerializable {
 
     protected CaliburnAPI api;
 
@@ -152,9 +152,7 @@ public class ExItem extends Categorizable implements ConfigurationSerializable {
      *
      * @return the name of the item
      */
-    public String getName() {
-        return getMaterial().name();
-    }
+    public abstract String getName();
 
     /**
      * This object if the ID String refers to this item not necessarily exclusively; null if not.

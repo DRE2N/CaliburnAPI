@@ -15,6 +15,7 @@
 package de.erethon.caliburn.item;
 
 import de.erethon.caliburn.category.IdentifierType;
+import de.erethon.caliburn.util.StringUtil;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
@@ -1308,6 +1309,7 @@ public class VanillaItem extends ExItem {
     private int numeric;
     private short data;
     protected Material material;
+    private String name;
 
     protected VanillaItem(String id1_8, String id1_13, int numeric) {
         this(MC1_8, id1_8, id1_13, numeric);
@@ -1368,6 +1370,7 @@ public class VanillaItem extends ExItem {
             id = id1_8;
         }
         material = isAvailable() ? Material.valueOf(id) : Material.AIR;
+        name = StringUtil.formatId(id1_14);
     }
 
     /**
@@ -1474,7 +1477,7 @@ public class VanillaItem extends ExItem {
 
     @Override
     public String getName() {
-        return getId();
+        return name;
     }
 
     /**

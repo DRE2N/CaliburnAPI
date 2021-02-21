@@ -21,6 +21,7 @@ import de.erethon.caliburn.mob.actionhandler.AttackHandler;
 import de.erethon.caliburn.mob.actionhandler.DamageHandler;
 import de.erethon.caliburn.mob.actionhandler.DeathHandler;
 import de.erethon.caliburn.mob.actionhandler.InteractHandler;
+import de.erethon.caliburn.util.StringUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Internals;
 import de.erethon.commons.misc.EnumUtil;
@@ -50,6 +51,7 @@ public class CustomMob extends ExMob {
     private static Set<Internals> higher = Internals.andHigher(CompatibilityHandler.getInstance().getInternals());
 
     /* Entity */
+    private String displayName;
     private String name;
     private Boolean customNameVisible;
     private Boolean glowing;
@@ -81,7 +83,8 @@ public class CustomMob extends ExMob {
         this.id = id;
 
         setBase(VanillaMob.get(entity.getType()));
-        name = entity.getCustomName();
+        displayName = entity.getCustomName();
+        name = StringUtil.formatId(id);
         customNameVisible = entity.isCustomNameVisible();
         if (!higher.contains(Internals.v1_8_R3)) {// 1.9+
             glowing = entity.isGlowing();
@@ -119,6 +122,7 @@ public class CustomMob extends ExMob {
         this.api = api;
         this.idType = idType;
         this.id = id;
+        name = StringUtil.formatId(id);
         setBase(base);
         raw = serialize();
     }
@@ -255,6 +259,13 @@ public class CustomMob extends ExMob {
         return deserialized;
     }
 
+    @Override
+    public CustomMob id(String id) {
+        super.id(id);
+        name = StringUtil.formatId(id);
+        return this;
+    }
+
     /* Getters and setters */
     /**
      * Returns the display name of this mob.
@@ -263,7 +274,7 @@ public class CustomMob extends ExMob {
      */
     @Override
     public String getName() {
-        return name != null ? name : super.getName();
+        return displayName != null ? displayName : name;
     }
 
     /**
@@ -274,7 +285,7 @@ public class CustomMob extends ExMob {
      * @param name the display name to set
      */
     public void setName(String name) {
-        this.name = name;
+        displayName = name;
     }
 
     /**

@@ -33,7 +33,7 @@ import org.bukkit.entity.EntityType;
  *
  * @author Daniel Saukel
  */
-public class ExMob extends Categorizable implements ConfigurationSerializable {
+public abstract class ExMob extends Categorizable implements ConfigurationSerializable {
 
     protected Map<String, Object> raw;
 
@@ -143,9 +143,7 @@ public class ExMob extends Categorizable implements ConfigurationSerializable {
      *
      * @return the name of the mob
      */
-    public String getName() {
-        return getSpecies().name();
-    }
+    public abstract String getName();
 
     /* Damage modifiers */
     /**
