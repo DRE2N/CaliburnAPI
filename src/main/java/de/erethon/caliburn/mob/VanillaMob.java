@@ -176,11 +176,11 @@ public class VanillaMob extends ExMob {
     public static final SplitMob MULE = new SplitMob(MC1_8, HORSE, "mule", "MULE", 32);
     public static final SplitMob CAT = new SplitMob(MC1_8, OCELOT, "cat", "CAT", -1) {
         @Override
-        public EntityType getSpecies() {
-            if (Version.isAtLeast(Version.MC1_14)) {
-                return EntityType.valueOf(getBukkitName());
+        public String getBukkitName() {
+            if (!Version.isAtLeast(Version.MC1_14)) {
+                return OCELOT.getBukkitName();
             } else {
-                return OCELOT.getSpecies();
+                return super.getBukkitName();
             }
         }
     };
@@ -315,7 +315,7 @@ public class VanillaMob extends ExMob {
         this.id1_13 = id1_13;
         this.bukkit = bukkit;
         this.numeric = numeric;
-        species = isAvailable() ? EntityType.valueOf(bukkit) : EntityType.UNKNOWN;
+        species = isAvailable() ? EntityType.valueOf(getBukkitName()) : EntityType.UNKNOWN;
         name = StringUtil.formatId(id1_13);
     }
 

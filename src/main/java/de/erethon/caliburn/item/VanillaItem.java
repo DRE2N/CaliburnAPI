@@ -1128,7 +1128,7 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem ZOMBIFIED_PIGLIN_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "ZOMBIFIED_PIGLIN_SPAWN_EGG", 383) {
         @Override
         public String getId() {
-            if (Version.isAtMost(Version.MC1_15_2)) {
+            if (Version.isAtLeast(Version.MC1_13) && Version.isAtMost(Version.MC1_15_2)) {
                 return "ZOMBIE_PIGMAN_SPAWN_EGG";
             } else {
                 return super.getId();
