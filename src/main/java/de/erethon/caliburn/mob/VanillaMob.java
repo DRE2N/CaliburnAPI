@@ -316,7 +316,7 @@ public class VanillaMob extends ExMob {
         this.bukkit = bukkit;
         this.numeric = numeric;
         species = isAvailable() ? EntityType.valueOf(getBukkitName()) : EntityType.UNKNOWN;
-        name = StringUtil.formatId(id1_13);
+        name = StringUtil.formatId(getBukkitName());
     }
 
     /**

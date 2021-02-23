@@ -1228,7 +1228,7 @@ public class VanillaItem extends ExItem {
         bukkitMats:
         for (Material bukkit : Material.values()) {
             for (VanillaItem caliburn : VALUES) {
-                if (caliburn.getName().equals(bukkit.name())) {
+                if (caliburn.getId().equals(bukkit.name())) {
                     continue bukkitMats;
                 }
             }
@@ -1250,13 +1250,13 @@ public class VanillaItem extends ExItem {
         send = false;
         first = true;
         for (VanillaItem vi : VALUES) {
-            if (Material.getMaterial(vi.getName()) == null && vi.isAvailable()) {
+            if (Material.getMaterial(vi.getId()) == null && vi.isAvailable()) {
                 if (!first) {
                     sb.append(", ");
                 } else {
                     first = false;
                 }
-                sb.append(vi.getName());
+                sb.append(vi.getId());
                 send = true;
                 continue;
             }
