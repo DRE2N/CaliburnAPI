@@ -23,7 +23,7 @@ public class StringUtil {
         String[] words = id.split("_");
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
-            builder.append(words[i].substring(0, 0).toUpperCase()).append(words[i].substring(1).toLowerCase());
+            builder.append(words[i].substring(0, 1).toUpperCase()).append(words[i].substring(1).toLowerCase());
             if (i < words.length - 1) {
                 builder.append(' ');
             }
