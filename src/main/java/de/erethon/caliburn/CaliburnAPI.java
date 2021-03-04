@@ -154,9 +154,9 @@ public class CaliburnAPI {
     public void reload(Plugin plugin) {
         this.reload();
         plugin.getLogger().info("Reloading recipes...");
-        removeRecipes();
+        unregisterRecipes();
         loadRecipes(plugin);
-        addLoadedRecipes();
+        registerLoadedRecipes();
         plugin.getLogger().info("Successfully loaded " + recipes.size() + " recipes");
     }
 
@@ -306,9 +306,9 @@ public class CaliburnAPI {
     /**
      * Registers all loaded recipes on the server.
      */
-    public void addLoadedRecipes() {
+    public void registerLoadedRecipes() {
         for (CustomRecipe recipe : recipes) {
-            addRecipe(recipe);
+            registerRecipe(recipe);
         }
     }
 
@@ -317,8 +317,8 @@ public class CaliburnAPI {
      *
      * @param recipe the recipe to add
      */
-    public boolean addRecipe(CustomRecipe recipe) {
-        removeRecipe(recipe);
+    public boolean registerRecipe(CustomRecipe recipe) {
+        unregisterRecipe(recipe);
         recipes.add(recipe);
         return Bukkit.addRecipe(recipe);
     }
@@ -328,7 +328,7 @@ public class CaliburnAPI {
      *
      * @param recipe the recipe to remove
      */
-    public void removeRecipe(CustomRecipe recipe) {
+    public void unregisterRecipe(CustomRecipe recipe) {
         recipes.removeIf(stored -> stored.getId().equalsIgnoreCase(recipe.getId()));
 
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
@@ -354,28 +354,9 @@ public class CaliburnAPI {
     /**
      * Unregister all loaded recipes and clears the recipe cache
      */
-    public void removeRecipes() {
-        Iterator<Recipe> iterator = Bukkit.recipeIterator();
-
-        while (iterator.hasNext()) {
-            Recipe recipe = iterator.next();
-            if (recipe instanceof ShapedRecipe) {
-                ShapedRecipe shaped = (ShapedRecipe) recipe;
-
-                for (CustomRecipe customRecipe : recipes) {
-                    if (shaped.getKey().getKey().equalsIgnoreCase(customRecipe.getId())) {
-                        iterator.remove();
-                    }
-                }
-            } else if (recipe instanceof ShapelessRecipe) {
-                ShapelessRecipe shapeless = (ShapelessRecipe) recipe;
-
-                for (CustomRecipe customRecipe : recipes) {
-                    if (shapeless.getKey().getKey().equalsIgnoreCase(customRecipe.getId())) {
-                        iterator.remove();
-                    }
-                }
-            }
+    public void unregisterRecipes() {
+        for (CustomRecipe recipe : recipes) {
+            unregisterRecipe(recipe);
         }
         recipes.clear();
     }
