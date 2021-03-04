@@ -46,7 +46,7 @@ public class Category<T extends Categorizable> extends Categorizable {
             WHITE_WALL_BANNER, ORANGE_WALL_BANNER, MAGENTA_WALL_BANNER, LIGHT_BLUE_WALL_BANNER, YELLOW_WALL_BANNER, LIME_WALL_BANNER, PINK_WALL_BANNER, GRAY_WALL_BANNER,
             LIGHT_GRAY_WALL_BANNER, CYAN_WALL_BANNER, PURPLE_WALL_BANNER, BLUE_WALL_BANNER, BROWN_WALL_BANNER, GREEN_WALL_BANNER, RED_WALL_BANNER, BLACK_WALL_BANNER);
     public static final Category<ExItem> BASE_STONE_NETHER = new Category<>("base_stone_nether", NETHERRACK, BASALT, BLACKSTONE);
-    public static final Category<ExItem> BASE_STONE_OVERWORLD = new Category<>("base_stone_overworld‌", STONE, GRANITE, DIORITE, ANDESITE);
+    public static final Category<ExItem> BASE_STONE_OVERWORLD = new Category<>("base_stone_overworld", STONE, GRANITE, DIORITE, ANDESITE);
     public static final Category<ExItem> BEACON_BASE_BLOCKS = new Category<>("beacon_base_blocks", NETHERITE_BLOCK, EMERALD_BLOCK, DIAMOND_BLOCK, GOLD_BLOCK,
             IRON_BLOCK);
     public static final Category<ExItem> BEDS = new Category<>("beds", WHITE_BED, ORANGE_BED, MAGENTA_BED, LIGHT_BLUE_BED, YELLOW_BED, LIME_BED, PINK_BED, GRAY_BED,

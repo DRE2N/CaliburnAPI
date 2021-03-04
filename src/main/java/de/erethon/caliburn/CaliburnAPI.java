@@ -26,19 +26,15 @@ import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
+import de.erethon.caliburn.recipe.CustomRecipe;
 import de.erethon.caliburn.util.ExSerialization;
+import de.erethon.caliburn.util.RecipeSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
 import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.misc.FileUtil;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
@@ -47,34 +43,53 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.Recipe;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Logger;
+
 /**
  * The main class of the API. It contains methods for initialization and most important getter methods.
  *
- * @author Daniel Saukel
+ * @author Daniel Saukel, Fyreum
  */
 public class CaliburnAPI {
 
     private static CaliburnAPI instance;
 
-    private boolean isAtLeast1_14 = Version.isAtLeast(Version.MC1_14);
+    private final boolean isAtLeast1_14 = Version.isAtLeast(Version.MC1_14);
 
     public static final String META_ID_KEY = "caliburnID";
 
-    private String identifierPrefix;
-    private File dataFolder;
+    private final String identifierPrefix;
+    private final File dataFolder;
+    private File ciDir;
+    private File rDir;
+    private File rFile;
+    private RawConfiguration recipeConfig;
 
-    private SimpleSerialization simpleSerialization = new SimpleSerialization(this);
-    private ExSerialization exSerialization = new ExSerialization(this);
+    private final SimpleSerialization simpleSerialization = new SimpleSerialization(this);
+    private final ExSerialization exSerialization = new ExSerialization(this);
+    private final RecipeSerialization recipeSerialization = new RecipeSerialization(this);
 
-    private List<Category<ExItem>> itemCategories = new ArrayList<>();
-    private List<ExItem> items = new ArrayList<>();
-    private List<Category<ExMob>> mobCategories = new ArrayList<>();
-    private List<ExMob> mobs = new ArrayList<>();
-    private List<LootTable> lootTables = new ArrayList<>();
+    private final List<Category<ExItem>> itemCategories = new ArrayList<>();
+    private final List<ExItem> items = new ArrayList<>();
+    private final List<Category<ExMob>> mobCategories = new ArrayList<>();
+    private final List<ExMob> mobs = new ArrayList<>();
+    private final List<LootTable> lootTables = new ArrayList<>();
+    private final List<CustomRecipe> recipes = new CopyOnWriteArrayList<>();
 
     /**
      * Initializes the singleton instance with the default identifier prefix.
@@ -134,6 +149,15 @@ public class CaliburnAPI {
         lootTables.clear();
         loadDataFiles();
         finishInitialization();
+    }
+
+    public void reload(Plugin plugin) {
+        this.reload();
+        plugin.getLogger().info("Reloading recipes...");
+        removeRecipes();
+        loadRecipes(plugin);
+        addLoadedRecipes();
+        plugin.getLogger().info("Successfully loaded " + recipes.size() + " recipes");
     }
 
     /**
@@ -207,9 +231,9 @@ public class CaliburnAPI {
             mob.setRaw(config.getArgs());
         }
 
-        File ciFile = new File(getDataFolder() + "/custom/items");
-        ciFile.mkdirs();
-        for (File file : FileUtil.getFilesForFolder(ciFile)) {
+        ciDir = new File(getDataFolder() + "/custom/items");
+        ciDir.mkdirs();
+        for (File file : FileUtil.getFilesForFolder(ciDir)) {
             RawConfiguration config = RawConfiguration.loadConfiguration(file);
             CustomItem item = null;
             try {
@@ -252,8 +276,23 @@ public class CaliburnAPI {
         File ltDir = new File(getDataFolder() + "/custom/loottables");
         ltDir.mkdirs();
         FileUtil.getFilesForFolder(ltDir).forEach(f -> lootTables.add(
-                LootTable.deserialize(YamlConfiguration.loadConfiguration(f).getValues(false)).name(f.getName().replace(".yml", "")))
-        );
+                LootTable.deserialize(YamlConfiguration.loadConfiguration(f).getValues(false)).name(f.getName().replace(".yml", ""))
+        ));
+        rDir = new File(getDataFolder() + "/custom/recipes");
+        rDir.mkdirs();
+        rFile = new File(rDir, "recipes.yml");
+        FileUtil.createIfNotExisting(rFile);
+        recipeConfig = RawConfiguration.loadConfiguration(rFile);
+    }
+
+    /**
+     * Deserializes all recipes from the recipes.yml file and adds them to the cache.
+     *
+     * @param plugin the plugin to create the {@link NamespacedKey}s with
+     */
+    public void loadRecipes(Plugin plugin) {
+        List<CustomRecipe> recipes = recipeSerialization.deserializeRecipes(plugin, recipeConfig.getValues(false));
+        this.recipes.addAll(recipes);
     }
 
     /**
@@ -263,6 +302,112 @@ public class CaliburnAPI {
         items.forEach(i -> i.load(this));
         mobs.forEach(m -> m.load(this));
     }
+
+    /**
+     * Registers all loaded recipes on the server.
+     */
+    public void addLoadedRecipes() {
+        for (CustomRecipe recipe : recipes) {
+            addRecipe(recipe);
+        }
+    }
+
+    /**
+     * Registers the recipe on the server and adds it to the cache.
+     *
+     * @param recipe the recipe to add
+     */
+    public boolean addRecipe(CustomRecipe recipe) {
+        removeRecipe(recipe);
+        recipes.add(recipe);
+        return Bukkit.addRecipe(recipe);
+    }
+
+    /**
+     * Unregisters the recipe on the server removes it from the cache.
+     *
+     * @param recipe the recipe to remove
+     */
+    public void removeRecipe(CustomRecipe recipe) {
+        recipes.removeIf(stored -> stored.getId().equalsIgnoreCase(recipe.getId()));
+
+        Iterator<Recipe> iterator = Bukkit.recipeIterator();
+
+        while (iterator.hasNext()) {
+            Recipe next = iterator.next();
+            if (next instanceof ShapedRecipe) {
+                ShapedRecipe other = (ShapedRecipe) next;
+
+                if (other.getKey().getKey().equalsIgnoreCase(recipe.getId())) {
+                    iterator.remove();
+                }
+            } else if (next instanceof ShapelessRecipe) {
+                ShapelessRecipe other = (ShapelessRecipe) next;
+
+                if (other.getKey().getKey().equalsIgnoreCase(recipe.getId())) {
+                    iterator.remove();
+                }
+            }
+        }
+    }
+
+    /**
+     * Unregister all loaded recipes and clears the recipe cache
+     */
+    public void removeRecipes() {
+        Iterator<Recipe> iterator = Bukkit.recipeIterator();
+
+        while (iterator.hasNext()) {
+            Recipe recipe = iterator.next();
+            if (recipe instanceof ShapedRecipe) {
+                ShapedRecipe shaped = (ShapedRecipe) recipe;
+
+                for (CustomRecipe customRecipe : recipes) {
+                    if (shaped.getKey().getKey().equalsIgnoreCase(customRecipe.getId())) {
+                        iterator.remove();
+                    }
+                }
+            } else if (recipe instanceof ShapelessRecipe) {
+                ShapelessRecipe shapeless = (ShapelessRecipe) recipe;
+
+                for (CustomRecipe customRecipe : recipes) {
+                    if (shapeless.getKey().getKey().equalsIgnoreCase(customRecipe.getId())) {
+                        iterator.remove();
+                    }
+                }
+            }
+        }
+        recipes.clear();
+    }
+
+    /**
+     * Deletes the recipe from the recipes configuration
+     *
+     * @param recipe the recipe to delete
+     */
+    public void deleteRecipe(CustomRecipe recipe) {
+        String id = recipe.getId();
+
+        for (String configKey : recipeConfig.getKeys(false)) {
+            if (configKey.equalsIgnoreCase(id)) {
+                recipeConfig.set(configKey, null);
+                saveRecipeConfig();
+            }
+        }
+    }
+
+    /**
+     * Save the recipe configuration into the recipes file
+     */
+    public void saveRecipeConfig() {
+        try {
+            recipeConfig.save(getRecipesFile());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // getter
 
     /**
      * Returns the folder where the data is stored.
@@ -353,7 +498,7 @@ public class CaliburnAPI {
      */
     public ExItem getExItem(ItemStack item) {
         for (IdentifierType idType : IdentifierType.ITEM_PRIORITY) {
-            String id = id = getExItemId(item, idType);
+            String id = getExItemId(item, idType);
             ExItem exItem = getExItem(id);
             if (exItem != null) {
                 return exItem;
@@ -807,6 +952,128 @@ public class CaliburnAPI {
             }
         }
         return deserialized;
+    }
+
+    /**
+     * Returns the custom items folder where all item files are stored at.
+     *
+     * @return the custom items folder
+     */
+    public File getCustomItemsFile() {
+        return ciDir;
+    }
+
+    /**
+     * Returns the recipe folder where all recipe files are stored at.
+     *
+     * @return the recipe folder
+     */
+    public File getRecipeFolder() {
+        return rDir;
+    }
+
+    /**
+     * Returns the file where all recipes are stored at.
+     *
+     * @return the recipes file
+     */
+    public File getRecipesFile() {
+        return rFile;
+    }
+
+    public RawConfiguration getRecipeConfig() {
+        return recipeConfig;
+    }
+
+    public RecipeSerialization getRecipeSerialization() {
+        return recipeSerialization;
+    }
+
+    /* recipe */
+
+    /**
+     * Returns a list of all loaded recipes.
+     *
+     * @return the list of loaded recipes
+     */
+    public List<CustomRecipe> getRecipes() {
+        return recipes;
+    }
+
+    /**
+     * Returns the matching recipe for this id, or null if not found.
+     *
+     * @param id the id
+     * @return the matching recipe if found, or else null
+     */
+    public CustomRecipe getRecipe(String id) {
+        for (CustomRecipe recipe : recipes) {
+            if (recipe.getKey().getKey().equalsIgnoreCase(id)) {
+                return recipe;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns a list of all recipes with the given ItemStack as result.
+     *
+     * @param result the result to get recipes for
+     * @return the list of all recipes with matching item as result
+     */
+    public List<CustomRecipe> getRecipes(ItemStack result) {
+        List<CustomRecipe> list = new ArrayList<>();
+        for (CustomRecipe recipe : recipes) {
+            if (recipe.getRecipeResult().getItemStack().isSimilar(result)) {
+                list.add(recipe);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Returns the serialized recipe as string.
+     *
+     * @param recipe the recipe to serialize
+     * @return the serialized recipe string
+     */
+    public String serializeRecipe(CustomRecipe recipe) {
+        return recipeSerialization.serialize(recipe);
+    }
+
+    /**
+     * Returns the list of serialized recipes as strings.
+     *
+     * @param recipes the recipes to serialize
+     * @return the list of serialized recipe strings
+     */
+    public List<String> serializeRecipes(Collection<CustomRecipe> recipes) {
+        return recipeSerialization.serializeRecipes(recipes);
+    }
+
+    /**
+     * Returns the deserialized {@link CustomRecipe} if success,
+     * <br>
+     * else an Exception with detailed error message will be thrown.
+     *
+     * @param recipeKey the key to register the recipe with
+     * @param serialized the serialized recipe string
+     * @throws IllegalArgumentException if the string doesn't have the right format or lacks of information
+     */
+    public CustomRecipe deserializeRecipe(NamespacedKey recipeKey, String serialized) throws IllegalArgumentException {
+        return recipeSerialization.deserialize(recipeKey, serialized);
+    }
+
+    /**
+     * Returns a list of deserialized {@link CustomRecipe}s.
+     * <br>
+     * Thrown Exceptions will be caught and logged via the {@link Logger} class.
+     *
+     * @param plugin the plugin to create the {@link NamespacedKey}s with
+     * @param serializedRecipes the serialized recipes map
+     */
+    public List<CustomRecipe> deserializeRecipes(Plugin plugin, Map<String, Object> serializedRecipes) {
+        return recipeSerialization.deserializeRecipes(plugin, serializedRecipes);
     }
 
 }

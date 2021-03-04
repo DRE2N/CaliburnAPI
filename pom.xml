@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>caliburn</artifactId>
-    <version>1.0-RC-06</version>
+    <version>1.0-RC-07</version>
     <packaging>jar</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
@@ -43,14 +43,6 @@
                     <excludePackageNames>de.erethon.caliburn.listener</excludePackageNames>
                 </configuration>
                 <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
                 </executions>
             </plugin>
         </plugins>

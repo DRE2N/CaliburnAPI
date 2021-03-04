@@ -14,8 +14,11 @@
  */
 package de.erethon.caliburn.util;
 
+import java.util.List;
+import java.util.Map;
+
 /**
- * @author Daniel Saukel
+ * @author Daniel Saukel, Fyreum
  */
 public class StringUtil {
 
@@ -31,4 +34,31 @@ public class StringUtil {
         return builder.toString();
     }
 
+    public static String toString(Map<String, String> m) {
+        String[] k = m.keySet().toArray(new String[0]);
+        String[] v = m.values().toArray(new String[0]);
+        int iMax = k.length - 1;
+
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; ; i++) {
+            b.append(k[i]).append(":").append(v[i]);
+            if (i == iMax) {
+                return b.toString();
+            }
+            b.append(",");
+        }
+    }
+
+    public static String toString(List<String> l) {
+        int iMax = l.size() - 1;
+
+        StringBuilder b = new StringBuilder();
+        for (int i = 0; ; i++) {
+            b.append(l.get(i));
+            if (i == iMax) {
+                return b.toString();
+            }
+            b.append(",");
+        }
+    }
 }
