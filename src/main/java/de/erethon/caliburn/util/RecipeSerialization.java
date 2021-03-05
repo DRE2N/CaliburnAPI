@@ -286,7 +286,7 @@ public class RecipeSerialization {
         return StringUtil.toString(m);
     }
 
-    public static String toIngredientString(Map<RecipeIngredient, Integer> ingredients) {
+    private String toIngredientString(Map<RecipeIngredient, Integer> ingredients) {
         List<String> l = new ArrayList<>();
         ingredients.forEach((in, i) -> l.add(in.getSerialized() + ":" + i));
         return StringUtil.toString(l);
