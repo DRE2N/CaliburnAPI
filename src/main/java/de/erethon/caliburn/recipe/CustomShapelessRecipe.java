@@ -122,7 +122,14 @@ public class CustomShapelessRecipe extends ShapelessRecipe implements CustomReci
 
     @Override
     public boolean equals(Object obj) {
-        return getKey().equals(obj);
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof CustomShapelessRecipe)) {
+            return false;
+        }
+        CustomShapelessRecipe other = (CustomShapelessRecipe) obj;
+        return getKey().equals(other.getKey());
     }
 
 }

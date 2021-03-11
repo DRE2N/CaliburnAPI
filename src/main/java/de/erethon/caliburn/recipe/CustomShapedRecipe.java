@@ -92,6 +92,13 @@ public class CustomShapedRecipe extends ShapedRecipe implements CustomRecipe {
 
     @Override
     public boolean equals(Object obj) {
-        return getKey().equals(obj);
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof CustomShapedRecipe)) {
+            return false;
+        }
+        CustomShapedRecipe other = (CustomShapedRecipe) obj;
+        return getKey().equals(other.getKey());
     }
 }

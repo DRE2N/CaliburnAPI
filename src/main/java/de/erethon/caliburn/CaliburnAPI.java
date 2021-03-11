@@ -69,27 +69,27 @@ public class CaliburnAPI {
 
     private static CaliburnAPI instance;
 
-    private final boolean isAtLeast1_14 = Version.isAtLeast(Version.MC1_14);
+    private boolean isAtLeast1_14 = Version.isAtLeast(Version.MC1_14);
 
     public static final String META_ID_KEY = "caliburnID";
 
-    private final String identifierPrefix;
-    private final File dataFolder;
+    private String identifierPrefix;
+    private File dataFolder;
     private File ciDir;
     private File rDir;
     private File rFile;
     private RawConfiguration recipeConfig;
 
-    private final SimpleSerialization simpleSerialization = new SimpleSerialization(this);
-    private final ExSerialization exSerialization = new ExSerialization(this);
-    private final RecipeSerialization recipeSerialization = new RecipeSerialization(this);
+    private SimpleSerialization simpleSerialization = new SimpleSerialization(this);
+    private ExSerialization exSerialization = new ExSerialization(this);
+    private RecipeSerialization recipeSerialization = new RecipeSerialization(this);
 
-    private final List<Category<ExItem>> itemCategories = new ArrayList<>();
-    private final List<ExItem> items = new ArrayList<>();
-    private final List<Category<ExMob>> mobCategories = new ArrayList<>();
-    private final List<ExMob> mobs = new ArrayList<>();
-    private final List<LootTable> lootTables = new ArrayList<>();
-    private final List<CustomRecipe> recipes = new CopyOnWriteArrayList<>();
+    private List<Category<ExItem>> itemCategories = new ArrayList<>();
+    private List<ExItem> items = new ArrayList<>();
+    private List<Category<ExMob>> mobCategories = new ArrayList<>();
+    private List<ExMob> mobs = new ArrayList<>();
+    private List<LootTable> lootTables = new ArrayList<>();
+    private List<CustomRecipe> recipes = new CopyOnWriteArrayList<>();
 
     /**
      * Initializes the singleton instance with the default identifier prefix.

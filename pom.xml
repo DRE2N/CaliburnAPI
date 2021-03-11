@@ -43,6 +43,14 @@
                     <excludePackageNames>de.erethon.caliburn.listener</excludePackageNames>
                 </configuration>
                 <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>javadoc</goal>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
         </plugins>
