@@ -1210,9 +1210,9 @@ public class VanillaItem extends ExItem {
     public static final OldBlockItem DARK_OAK_DOOR_BLOCK = new OldBlockItem(MC1_8, "DARK_OAK_DOOR", DARK_OAK_DOOR, 197);
     public static final OldBlockItem PURPUR_DOUBLE_SLAB = new OldBlockItem(MC1_9, "PURPUR_DOUBLE_SLAB", PURPUR_SLAB, 204);
 
-    private static Collection<VanillaItem> VALUES = new ArrayList<>();
-    private static Collection<VanillaItem> LOADED = new ArrayList<>();
-    private static Map<Material, VanillaItem> BY_MATERIAL = new HashMap<>();
+    private static final Collection<VanillaItem> VALUES = new ArrayList<>();
+    private static final Collection<VanillaItem> LOADED = new ArrayList<>();
+    private static final Map<Material, VanillaItem> BY_MATERIAL = new HashMap<>();
 
     static {
         for (Field constant : VanillaItem.class.getFields()) {
@@ -1369,7 +1369,7 @@ public class VanillaItem extends ExItem {
         } else {
             id = id1_8;
         }
-        material = isAvailable() ? Material.valueOf(id) : Material.AIR;
+        material = isAvailable() ? Material.valueOf(getId()) : Material.AIR;
         name = StringUtil.formatId(id1_14);
     }
 
