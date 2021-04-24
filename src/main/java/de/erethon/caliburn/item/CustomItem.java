@@ -26,6 +26,9 @@ import de.erethon.headlib.HeadLib;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
@@ -73,8 +76,11 @@ public class CustomItem extends ExItem {
         setBase(VanillaItem.get(item.getType()));
         meta = item.getItemMeta();
         if (meta instanceof SkullMeta) {
-            skullOwner = ((SkullMeta) meta).getOwningPlayer().getUniqueId().toString();
-            textureValue = HeadLib.getTextureValue(item);
+            OfflinePlayer owner = ((SkullMeta) meta).getOwningPlayer();
+            if (owner != null) {
+                skullOwner = owner.getUniqueId().toString();
+                textureValue = HeadLib.getTextureValue(item);
+            }
         }
 
         raw = serialize();

@@ -185,9 +185,9 @@ public class VanillaMob extends ExMob {
         }
     };
 
-    private static Collection<VanillaMob> VALUES = new ArrayList<>();
-    private static Collection<VanillaMob> LOADED = new ArrayList<>();
-    private static Map<EntityType, VanillaMob> BY_ENTITY_TYPE = new HashMap<>();
+    private static final Collection<VanillaMob> VALUES = new ArrayList<>();
+    private static final Collection<VanillaMob> LOADED = new ArrayList<>();
+    private static final Map<EntityType, VanillaMob> BY_ENTITY_TYPE = new HashMap<>();
 
     static {
         for (Field constant : VanillaMob.class.getFields()) {
