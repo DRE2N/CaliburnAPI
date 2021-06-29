@@ -315,7 +315,6 @@ public class VanillaMob extends ExMob {
         this.id1_13 = id1_13;
         this.bukkit = bukkit;
         this.numeric = numeric;
-        species = isAvailable() ? EntityType.valueOf(getBukkitName()) : EntityType.UNKNOWN;
         name = StringUtil.formatId(getBukkitName());
     }
 
@@ -423,6 +422,14 @@ public class VanillaMob extends ExMob {
 
     @Override
     public EntityType getSpecies() {
+        if (species == null) {
+            if (isAvailable() && EnumUtil.isValidEnum(EntityType.class, getBukkitName())){
+                species = EntityType.valueOf(getBukkitName());
+            } else {
+                MessageUtil.log("&c[WARNING] Invalid species: " + getBukkitName());
+                species = EntityType.UNKNOWN;
+            }
+        }
         return species;
     }
 

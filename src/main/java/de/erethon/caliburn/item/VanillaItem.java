@@ -20,6 +20,7 @@ import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
 import static de.erethon.commons.compatibility.Version.*;
+import de.erethon.commons.misc.EnumUtil;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,8 +31,7 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Represents a vanilla item. As of 1.13, a Material enum value is considered one vanilla item. Before 1.13, each data value of the same material is considered
- * an item if it is not a damage value.
+ * Represents a vanilla item. As of 1.13, a Material enum value is considered one vanilla item. Before 1.13, each data value of the same material is considered an item if it is not a damage value.
  *
  * @author Daniel Saukel
  */
@@ -1369,7 +1369,6 @@ public class VanillaItem extends ExItem {
         } else {
             id = id1_8;
         }
-        material = isAvailable() ? Material.valueOf(getId()) : Material.AIR;
         name = StringUtil.formatId(id1_14);
     }
 
@@ -1510,6 +1509,14 @@ public class VanillaItem extends ExItem {
 
     @Override
     public Material getMaterial() {
+        if (material == null) {
+            if (isAvailable() && EnumUtil.isValidEnum(Material.class, getId())) {
+                material = Material.valueOf(getId());
+            } else {
+                MessageUtil.log("&c[WARNING] Invalid material: " + getId());
+                material = Material.AIR;
+            }
+        }
         return material;
     }
 
