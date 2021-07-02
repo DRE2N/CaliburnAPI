@@ -157,6 +157,11 @@ public class VanillaMob extends ExMob {
     public static final VanillaMob PIGLIN_BRUTE = new VanillaMob(MC1_16_2, "piglin_brute", "PIGLIN_BRUTE");
     public static final VanillaMob ZOGLIN = new VanillaMob(MC1_16, "zoglin", "ZOGLIN");
     public static final VanillaMob STRIDER = new VanillaMob(MC1_16, "strider", "STRIDER");
+    public static final VanillaMob AXOLOTL = new VanillaMob(MC1_17, "axolotl", "AXOLOTL");
+    public static final VanillaMob GLOW_ITEM_FRAME = new VanillaMob(MC1_17, "glow_item_frame", "GLOW_ITEM_FRAME");
+    public static final VanillaMob GLOW_SQUID = new VanillaMob(MC1_17, "glow_squid", "GLOW_SQUID");
+    public static final VanillaMob GOAT = new VanillaMob(MC1_17, "goat", "GOAT");
+    public static final VanillaMob MARKER = new VanillaMob(MC1_17, "markert", "MARKER");
 
     public static final VanillaMob LINGERING_POTION = new VanillaMob(MC1_9, MC1_14, "lingering_potion", "LINGERING_POTION");
     public static final VanillaMob FISHING_HOOK = new VanillaMob(MC1_8, "fishing_bobber", "FISHING_HOOK");
