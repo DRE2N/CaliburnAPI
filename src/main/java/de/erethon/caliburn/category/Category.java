@@ -17,10 +17,8 @@ package de.erethon.caliburn.category;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
-import static de.erethon.caliburn.item.VanillaItem.*;
 import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
-import static de.erethon.caliburn.mob.VanillaMob.*;
 import de.erethon.commons.chat.MessageUtil;
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -40,259 +38,353 @@ import org.bukkit.inventory.ItemStack;
  */
 public class Category<T extends Categorizable> extends Categorizable {
 
-    public static final Category<ExItem> ACACIA_LOGS = new Category<>("acacia_logs", ACACIA_LOG, ACACIA_WOOD, STRIPPED_ACACIA_LOG, STRIPPED_ACACIA_WOOD);
-    public static final Category<ExItem> ANVIL = new Category<>("anvil", VanillaItem.ANVIL, CHIPPED_ANVIL, DAMAGED_ANVIL);
-    public static final Category<ExItem> BANNERS = new Category<>("banners", WHITE_BANNER, ORANGE_BANNER, MAGENTA_BANNER, LIGHT_BLUE_BANNER, YELLOW_BANNER, LIME_BANNER, PINK_BANNER, GRAY_BANNER,
-            LIGHT_GRAY_BANNER, CYAN_BANNER, PURPLE_BANNER, BLUE_BANNER, BROWN_BANNER, GREEN_BANNER, RED_BANNER, BLACK_BANNER, WHITE_WALL_BANNER, ORANGE_WALL_BANNER, MAGENTA_WALL_BANNER,
-            LIGHT_BLUE_WALL_BANNER, YELLOW_WALL_BANNER, LIME_WALL_BANNER, PINK_WALL_BANNER, GRAY_WALL_BANNER, LIGHT_GRAY_WALL_BANNER, CYAN_WALL_BANNER, PURPLE_WALL_BANNER, BLUE_WALL_BANNER,
-            BROWN_WALL_BANNER, GREEN_WALL_BANNER, RED_WALL_BANNER, BLACK_WALL_BANNER);
-    public static final Category<ExItem> BASE_STONE_NETHER = new Category<>("base_stone_nether", NETHERRACK, BASALT, BLACKSTONE);
-    public static final Category<ExItem> BASE_STONE_OVERWORLD = new Category<>("base_stone_overworld", STONE, GRANITE, DIORITE, ANDESITE, TUFF, DEEPSLATE);
-    public static final Category<ExItem> BEACON_BASE_BLOCKS = new Category<>("beacon_base_blocks", NETHERITE_BLOCK, EMERALD_BLOCK, DIAMOND_BLOCK, GOLD_BLOCK, IRON_BLOCK);
-    public static final Category<ExItem> BEDS = new Category<>("beds", RED_BED, BLACK_BED, BLUE_BED, BROWN_BED, CYAN_BED, GRAY_BED, GREEN_BED, LIGHT_BLUE_BED, LIGHT_GRAY_BED, LIME_BED, MAGENTA_BED,
-            ORANGE_BED, PINK_BED, PURPLE_BED, WHITE_BED, YELLOW_BED);
-    public static final Category<ExItem> BEEHIVES = new Category<>("beehives", BEE_NEST, BEEHIVE);
-    public static final Category<ExItem> BIRCH_LOGS = new Category<>("birch_logs", BIRCH_LOG, BIRCH_WOOD, STRIPPED_BIRCH_LOG, STRIPPED_BIRCH_WOOD);
-    public static final Category<ExItem> CAMPFIRES = new Category<>("campfires", CAMPFIRE, SOUL_CAMPFIRE);
-    public static final Category<ExItem> CANDLES = new Category<>("candles", CANDLE, WHITE_CANDLE, ORANGE_CANDLE, MAGENTA_CANDLE, LIGHT_BLUE_CANDLE, YELLOW_CANDLE, LIME_CANDLE, PINK_CANDLE,
-            GRAY_CANDLE, LIGHT_GRAY_CANDLE, CYAN_CANDLE, PURPLE_CANDLE, BLUE_CANDLE, BROWN_CANDLE, GREEN_CANDLE, RED_CANDLE, BLACK_CANDLE);
-    public static final Category<ExItem> CANDLE_CAKES = new Category<>("candle_cakes", CANDLE_CAKE, WHITE_CANDLE_CAKE, ORANGE_CANDLE_CAKE, MAGENTA_CANDLE_CAKE, LIGHT_BLUE_CANDLE_CAKE,
-            YELLOW_CANDLE_CAKE, LIME_CANDLE_CAKE, PINK_CANDLE_CAKE, GRAY_CANDLE_CAKE, LIGHT_GRAY_CANDLE_CAKE, CYAN_CANDLE_CAKE, PURPLE_CANDLE_CAKE, BLUE_CANDLE_CAKE, BROWN_CANDLE_CAKE,
-            GREEN_CANDLE_CAKE, RED_CANDLE_CAKE, BLACK_CANDLE_CAKE);
-    public static final Category<ExItem> CARPETS = new Category<>("carpets", WHITE_CARPET, ORANGE_CARPET, MAGENTA_CARPET, LIGHT_BLUE_CARPET, YELLOW_CARPET, LIME_CARPET, PINK_CARPET, GRAY_CARPET,
-            LIGHT_GRAY_CARPET, CYAN_CARPET, PURPLE_CARPET, BLUE_CARPET, BROWN_CARPET, GREEN_CARPET, RED_CARPET, BLACK_CARPET);
-    public static final Category<ExItem> CAULDRONS = new Category<>("cauldrons", CAULDRON, WATER_CAULDRON, LAVA_CAULDRON, POWDER_SNOW_CAULDRON);
-    public static final Category<ExItem> CAVE_VINES = new Category<>("cave_vines", CAVE_VINES_PLANT, VanillaItem.CAVE_VINES);
-    public static final Category<ExItem> CLIMBABLE = new Category<>("climbable", LADDER, VINE, SCAFFOLDING, WEEPING_VINES, WEEPING_VINES_PLANT, TWISTING_VINES, TWISTING_VINES_PLANT, CAVE_VINES,
-            CAVE_VINES_PLANT);
-    public static final Category<ExItem> COAL_ORES = new Category<>("coal_ores", COAL_ORE, DEEPSLATE_COAL_ORE);
-    public static final Category<ExItem> COPPER_ORES = new Category<>("copper_ores", COPPER_ORE, DEEPSLATE_COPPER_ORE);
-    public static final Category<ExItem> CORAL_BLOCKS = new Category<>("coral_blocks", TUBE_CORAL_BLOCK, BRAIN_CORAL_BLOCK, BUBBLE_CORAL_BLOCK, FIRE_CORAL_BLOCK, HORN_CORAL_BLOCK);
-    public static final Category<ExItem> CORAL_PLANTS = new Category<>("coral_plants", TUBE_CORAL, BRAIN_CORAL, BUBBLE_CORAL, FIRE_CORAL, HORN_CORAL);
-    public static final Category<ExItem> CRIMSON_STEMS = new Category<>("crimson_stems", CRIMSON_STEM, STRIPPED_CRIMSON_STEM, CRIMSON_HYPHAE, STRIPPED_CRIMSON_HYPHAE);
-    public static final Category<ExItem> CROPS = new Category<>("crops", BEETROOTS, CARROTS, POTATOES, WHEAT, MELON_STEM, PUMPKIN_STEM);
-    public static final Category<ExItem> CRYSTAL_SOUND_BLOCKS = new Category<>("crystal_sound_blocks", AMETHYST_BLOCK, BUDDING_AMETHYST);
-    public static final Category<ExItem> DARK_OAK_LOGS = new Category<>("dark_oak_logs", DARK_OAK_LOG, DARK_OAK_WOOD, STRIPPED_DARK_OAK_LOG, STRIPPED_DARK_OAK_WOOD);
-    public static final Category<ExItem> DEEPSLATE_ORE_REPLACEABLES = new Category<>("deepslate_ore_replaceables", DEEPSLATE, TUFF);
-    public static final Category<ExItem> DIAMOND_ORES = new Category<>("diamond_ores", DIAMOND_ORE, DEEPSLATE_DIAMOND_ORE);
-    public static final Category<ExItem> DIRT = new Category<>("dirt", VanillaItem.DIRT, GRASS_BLOCK, PODZOL, COARSE_DIRT, MYCELIUM, ROOTED_DIRT, MOSS_BLOCK);
-    public static final Category<ExItem> DRAGON_IMMUNE = new Category<>("dragon_immune", BARRIER, BEDROCK, END_PORTAL, END_PORTAL_FRAME, END_GATEWAY, COMMAND_BLOCK, REPEATING_COMMAND_BLOCK,
-            CHAIN_COMMAND_BLOCK, STRUCTURE_BLOCK, JIGSAW, MOVING_PISTON, OBSIDIAN, CRYING_OBSIDIAN, END_STONE, IRON_BARS, RESPAWN_ANCHOR);
-    public static final Category<ExItem> EMERALD_ORES = new Category<>("emerald_ores", EMERALD_ORE, DEEPSLATE_EMERALD_ORE);
-    public static final Category<ExItem> FEATURES_CANNOT_REPLACE = new Category<>("features_cannot_replace", BEDROCK, SPAWNER, CHEST, END_PORTAL_FRAME);
-    public static final Category<ExItem> FENCE_GATES = new Category<>("fence_gates", ACACIA_FENCE_GATE, BIRCH_FENCE_GATE, DARK_OAK_FENCE_GATE, JUNGLE_FENCE_GATE, OAK_FENCE_GATE, SPRUCE_FENCE_GATE,
-            CRIMSON_FENCE_GATE, WARPED_FENCE_GATE);
-    public static final Category<ExItem> FIRE = new Category<>("fire", VanillaItem.FIRE, SOUL_FIRE);
-    public static final Category<ExItem> FLOWER_POTS = new Category<>("flower_pots", FLOWER_POT, POTTED_POPPY, POTTED_BLUE_ORCHID, POTTED_ALLIUM, POTTED_AZURE_BLUET, POTTED_RED_TULIP,
-            POTTED_ORANGE_TULIP, POTTED_WHITE_TULIP, POTTED_PINK_TULIP, POTTED_OXEYE_DAISY, POTTED_DANDELION, POTTED_OAK_SAPLING, POTTED_SPRUCE_SAPLING, POTTED_BIRCH_SAPLING, POTTED_JUNGLE_SAPLING,
-            POTTED_ACACIA_SAPLING, POTTED_DARK_OAK_SAPLING, POTTED_RED_MUSHROOM, POTTED_BROWN_MUSHROOM, POTTED_DEAD_BUSH, POTTED_FERN, POTTED_CACTUS, POTTED_CORNFLOWER, POTTED_LILY_OF_THE_VALLEY,
-            POTTED_WITHER_ROSE, POTTED_BAMBOO, POTTED_CRIMSON_FUNGUS, POTTED_WARPED_FUNGUS, POTTED_CRIMSON_ROOTS, POTTED_WARPED_ROOTS, POTTED_AZALEA_BUSH, POTTED_FLOWERING_AZALEA_BUSH);
-    public static final Category<ExItem> GEODE_INVALID_BLOCKS = new Category<>("geode_invalid_blocks", BEDROCK, VanillaItem.WATER, VanillaItem.LAVA, VanillaItem.ICE, PACKED_ICE, BLUE_ICE);
-    public static final Category<ExItem> GOLD_ORES = new Category<>("gold_ores", GOLD_ORE, NETHER_GOLD_ORE, DEEPSLATE_GOLD_ORE);
-    public static final Category<ExItem> HOGLIN_REPELLENTS = new Category<>("hoglin_repellents", WARPED_FUNGUS, POTTED_WARPED_FUNGUS, NETHER_PORTAL, RESPAWN_ANCHOR);
-    public static final Category<ExItem> ICE = new Category<>("ice", VanillaItem.ICE, PACKED_ICE, BLUE_ICE, FROSTED_ICE);
-    public static final Category<ExItem> IMPERMEABLE = new Category<>("impermeable", GLASS, WHITE_STAINED_GLASS, ORANGE_STAINED_GLASS, MAGENTA_STAINED_GLASS, LIGHT_BLUE_STAINED_GLASS,
-            YELLOW_STAINED_GLASS, LIME_STAINED_GLASS, PINK_STAINED_GLASS, GRAY_STAINED_GLASS, LIGHT_GRAY_STAINED_GLASS, CYAN_STAINED_GLASS, PURPLE_STAINED_GLASS, BLUE_STAINED_GLASS,
-            BROWN_STAINED_GLASS, GREEN_STAINED_GLASS, RED_STAINED_GLASS, BLACK_STAINED_GLASS, TINTED_GLASS);
-    public static final Category<ExItem> INFINIBURN_OVERWORLD = new Category<>("infiniburn_overworld", NETHERRACK, MAGMA_BLOCK);
-    public static final Category<ExItem> INSIDE_STEP_SOUND_BLOCKS = new Category<>("inside_step_sound_blocks", VanillaItem.SNOW, POWDER_SNOW);
-    public static final Category<ExItem> IRON_ORES = new Category<>("iron_ores", IRON_ORE, DEEPSLATE_IRON_ORE);
-    public static final Category<ExItem> JUNGLE_LOGS = new Category<>("jungle_logs", JUNGLE_LOG, JUNGLE_WOOD, STRIPPED_JUNGLE_LOG, STRIPPED_JUNGLE_WOOD);
-    public static final Category<ExItem> LAPIS_ORES = new Category<>("lapis_ores", LAPIS_ORE, DEEPSLATE_LAPIS_ORE);
-    public static final Category<ExItem> LEAVES = new Category<>("leaves", JUNGLE_LEAVES, OAK_LEAVES, SPRUCE_LEAVES, DARK_OAK_LEAVES, ACACIA_LEAVES, BIRCH_LEAVES, AZALEA_LEAVES,
-            FLOWERING_AZALEA_LEAVES);
-    public static final Category<ExItem> HOE = new Category<>("hoe", NETHER_WART_BLOCK, WARPED_WART_BLOCK, HAY_BLOCK, DRIED_KELP_BLOCK, TARGET, SHROOMLIGHT, SPONGE, WET_SPONGE, JUNGLE_LEAVES,
-            OAK_LEAVES, SPRUCE_LEAVES, DARK_OAK_LEAVES, ACACIA_LEAVES, BIRCH_LEAVES, AZALEA_LEAVES, FLOWERING_AZALEA_LEAVES, SCULK_SENSOR, MOSS_BLOCK, MOSS_CARPET);
-    public static final Category<ExItem> SHOVEL = new Category<>("shovel", CLAY, VanillaItem.DIRT, COARSE_DIRT, PODZOL, VanillaItem.FARMLAND, GRASS_BLOCK, GRAVEL, MYCELIUM, VanillaItem.SAND, RED_SAND,
-            SNOW_BLOCK, VanillaItem.SNOW, SOUL_SAND, DIRT_PATH, WHITE_CONCRETE_POWDER, ORANGE_CONCRETE_POWDER, MAGENTA_CONCRETE_POWDER, LIGHT_BLUE_CONCRETE_POWDER, YELLOW_CONCRETE_POWDER,
-            LIME_CONCRETE_POWDER, PINK_CONCRETE_POWDER, GRAY_CONCRETE_POWDER, LIGHT_GRAY_CONCRETE_POWDER, CYAN_CONCRETE_POWDER, PURPLE_CONCRETE_POWDER, BLUE_CONCRETE_POWDER, BROWN_CONCRETE_POWDER,
-            GREEN_CONCRETE_POWDER, RED_CONCRETE_POWDER, BLACK_CONCRETE_POWDER, SOUL_SOIL, ROOTED_DIRT);
-    public static final Category<ExItem> MUSHROOM_GROW_BLOCK = new Category<>("mushroom_grow_block", MYCELIUM, PODZOL, CRIMSON_NYLIUM, WARPED_NYLIUM);
-    public static final Category<ExItem> NEEDS_DIAMOND_TOOL = new Category<>("needs_diamond_tool", OBSIDIAN, CRYING_OBSIDIAN, NETHERITE_BLOCK, RESPAWN_ANCHOR, ANCIENT_DEBRIS);
-    public static final Category<ExItem> NEEDS_IRON_TOOL = new Category<>("needs_iron_tool", DIAMOND_BLOCK, DIAMOND_ORE, DEEPSLATE_DIAMOND_ORE, EMERALD_ORE, DEEPSLATE_EMERALD_ORE, EMERALD_BLOCK,
-            GOLD_BLOCK, RAW_GOLD_BLOCK, GOLD_ORE, DEEPSLATE_GOLD_ORE, REDSTONE_ORE, DEEPSLATE_REDSTONE_ORE);
-    public static final Category<ExItem> NEEDS_STONE_TOOL = new Category<>("needs_stone_tool", IRON_BLOCK, RAW_IRON_BLOCK, IRON_ORE, DEEPSLATE_IRON_ORE, LAPIS_BLOCK, LAPIS_ORE, DEEPSLATE_LAPIS_ORE,
-            COPPER_BLOCK, RAW_COPPER_BLOCK, COPPER_ORE, DEEPSLATE_COPPER_ORE, CUT_COPPER_SLAB, CUT_COPPER_STAIRS, CUT_COPPER, WEATHERED_COPPER, WEATHERED_CUT_COPPER_SLAB, WEATHERED_CUT_COPPER_STAIRS,
-            WEATHERED_CUT_COPPER, OXIDIZED_COPPER, OXIDIZED_CUT_COPPER_SLAB, OXIDIZED_CUT_COPPER_STAIRS, OXIDIZED_CUT_COPPER, EXPOSED_COPPER, EXPOSED_CUT_COPPER_SLAB, EXPOSED_CUT_COPPER_STAIRS,
-            EXPOSED_CUT_COPPER, WAXED_COPPER_BLOCK, WAXED_CUT_COPPER_SLAB, WAXED_CUT_COPPER_STAIRS, WAXED_CUT_COPPER, WAXED_WEATHERED_COPPER, WAXED_WEATHERED_CUT_COPPER_SLAB,
-            WAXED_WEATHERED_CUT_COPPER_STAIRS, WAXED_WEATHERED_CUT_COPPER, WAXED_EXPOSED_COPPER, WAXED_EXPOSED_CUT_COPPER_SLAB, WAXED_EXPOSED_CUT_COPPER_STAIRS, WAXED_EXPOSED_CUT_COPPER,
-            WAXED_OXIDIZED_COPPER, WAXED_OXIDIZED_CUT_COPPER_SLAB, WAXED_OXIDIZED_CUT_COPPER_STAIRS, WAXED_OXIDIZED_CUT_COPPER, LIGHTNING_ROD);
-    public static final Category<ExItem> NON_FLAMMABLE_WOOD = new Category<>("non_flammable_wood", WARPED_STEM, STRIPPED_WARPED_STEM, WARPED_HYPHAE, STRIPPED_WARPED_HYPHAE, CRIMSON_STEM,
-            STRIPPED_CRIMSON_STEM, CRIMSON_HYPHAE, STRIPPED_CRIMSON_HYPHAE, CRIMSON_PLANKS, WARPED_PLANKS, CRIMSON_SLAB, WARPED_SLAB, CRIMSON_PRESSURE_PLATE, WARPED_PRESSURE_PLATE, CRIMSON_FENCE,
-            WARPED_FENCE, CRIMSON_TRAPDOOR, WARPED_TRAPDOOR, CRIMSON_FENCE_GATE, WARPED_FENCE_GATE, CRIMSON_STAIRS, WARPED_STAIRS, CRIMSON_BUTTON, WARPED_BUTTON, CRIMSON_DOOR, WARPED_DOOR,
-            CRIMSON_SIGN, WARPED_SIGN, CRIMSON_WALL_SIGN, WARPED_WALL_SIGN);
-    public static final Category<ExItem> NYLIUM = new Category<>("nylium", CRIMSON_NYLIUM, WARPED_NYLIUM);
-    public static final Category<ExItem> OAK_LOGS = new Category<>("oak_logs", OAK_LOG, OAK_WOOD, STRIPPED_OAK_LOG, STRIPPED_OAK_WOOD);
-    public static final Category<ExItem> PIGLIN_REPELLENTS = new Category<>("piglin_repellents", SOUL_FIRE, SOUL_TORCH, SOUL_LANTERN, SOUL_WALL_TORCH, SOUL_CAMPFIRE);
-    public static final Category<ExItem> PLANKS = new Category<>("planks", OAK_PLANKS, SPRUCE_PLANKS, BIRCH_PLANKS, JUNGLE_PLANKS, ACACIA_PLANKS, DARK_OAK_PLANKS, CRIMSON_PLANKS, WARPED_PLANKS);
-    public static final Category<ExItem> PORTALS = new Category<>("portals", NETHER_PORTAL, END_PORTAL, END_GATEWAY);
-    public static final Category<ExItem> RAILS = new Category<>("rails", RAIL, POWERED_RAIL, DETECTOR_RAIL, ACTIVATOR_RAIL);
-    public static final Category<ExItem> REDSTONE_ORES = new Category<>("redstone_ores", REDSTONE_ORE, DEEPSLATE_REDSTONE_ORE);
-    public static final Category<ExItem> SAND = new Category<>("sand", VanillaItem.SAND, RED_SAND);
-    public static final Category<ExItem> SAPLINGS = new Category<>("saplings", OAK_SAPLING, SPRUCE_SAPLING, BIRCH_SAPLING, JUNGLE_SAPLING, ACACIA_SAPLING, DARK_OAK_SAPLING, AZALEA, FLOWERING_AZALEA);
-    public static final Category<ExItem> SHULKER_BOXES = new Category<>("shulker_boxes", SHULKER_BOX, BLACK_SHULKER_BOX, BLUE_SHULKER_BOX, BROWN_SHULKER_BOX, CYAN_SHULKER_BOX, GRAY_SHULKER_BOX,
-            GREEN_SHULKER_BOX, LIGHT_BLUE_SHULKER_BOX, LIGHT_GRAY_SHULKER_BOX, LIME_SHULKER_BOX, MAGENTA_SHULKER_BOX, ORANGE_SHULKER_BOX, PINK_SHULKER_BOX, PURPLE_SHULKER_BOX, RED_SHULKER_BOX,
-            WHITE_SHULKER_BOX, YELLOW_SHULKER_BOX);
-    public static final Category<ExItem> SMALL_DRIPLEAF_PLACEABLE = new Category<>("small_dripleaf_placeable", CLAY, MOSS_BLOCK);
-    public static final Category<ExItem> SMALL_FLOWERS = new Category<>("small_flowers", DANDELION, POPPY, BLUE_ORCHID, ALLIUM, AZURE_BLUET, RED_TULIP, ORANGE_TULIP, WHITE_TULIP, PINK_TULIP,
-            OXEYE_DAISY, CORNFLOWER, LILY_OF_THE_VALLEY, WITHER_ROSE);
-    public static final Category<ExItem> SNOW = new Category<>("snow", VanillaItem.SNOW, SNOW_BLOCK, POWDER_SNOW);
-    public static final Category<ExItem> SOUL_FIRE_BASE_BLOCKS = new Category<>("soul_fire_base_blocks", SOUL_SAND, SOUL_SOIL);
-    public static final Category<ExItem> SOUL_SPEED_BLOCKS = new Category<>("soul_speed_blocks", SOUL_SAND, SOUL_SOIL);
-    public static final Category<ExItem> SPRUCE_LOGS = new Category<>("spruce_logs", SPRUCE_LOG, SPRUCE_WOOD, STRIPPED_SPRUCE_LOG, STRIPPED_SPRUCE_WOOD);
-    public static final Category<ExItem> STANDING_SIGNS = new Category<>("standing_signs", OAK_SIGN, SPRUCE_SIGN, BIRCH_SIGN, ACACIA_SIGN, JUNGLE_SIGN, DARK_OAK_SIGN, CRIMSON_SIGN, WARPED_SIGN);
-    public static final Category<ExItem> STONE_BRICKS = new Category<>("stone_bricks", VanillaItem.STONE_BRICKS, MOSSY_STONE_BRICKS, CRACKED_STONE_BRICKS, CHISELED_STONE_BRICKS);
-    public static final Category<ExItem> STONE_ORE_REPLACEABLES = new Category<>("stone_ore_replaceables", STONE, GRANITE, DIORITE, ANDESITE);
-    public static final Category<ExItem> STONE_PRESSURE_PLATES = new Category<>("stone_pressure_plates", STONE_PRESSURE_PLATE, POLISHED_BLACKSTONE_PRESSURE_PLATE);
+    public static final Category<ExItem> NEEDS_DIAMOND_TOOL = new Category<>("needs_diamond_tool", VanillaItem.OBSIDIAN, VanillaItem.CRYING_OBSIDIAN, VanillaItem.NETHERITE_BLOCK,
+            VanillaItem.RESPAWN_ANCHOR, VanillaItem.ANCIENT_DEBRIS);
+    public static final Category<ExItem> BASE_STONE_OVERWORLD = new Category<>("base_stone_overworld", VanillaItem.STONE, VanillaItem.GRANITE, VanillaItem.DIORITE, VanillaItem.ANDESITE,
+            VanillaItem.TUFF, VanillaItem.DEEPSLATE);
+    public static final Category<ExItem> CARPETS = new Category<>("carpets", VanillaItem.WHITE_CARPET, VanillaItem.ORANGE_CARPET, VanillaItem.MAGENTA_CARPET, VanillaItem.LIGHT_BLUE_CARPET,
+            VanillaItem.YELLOW_CARPET, VanillaItem.LIME_CARPET, VanillaItem.PINK_CARPET, VanillaItem.GRAY_CARPET, VanillaItem.LIGHT_GRAY_CARPET, VanillaItem.CYAN_CARPET, VanillaItem.PURPLE_CARPET,
+            VanillaItem.BLUE_CARPET, VanillaItem.BROWN_CARPET, VanillaItem.GREEN_CARPET, VanillaItem.RED_CARPET, VanillaItem.BLACK_CARPET);
+    public static final Category<ExItem> TALL_FLOWERS = new Category<>("tall_flowers", VanillaItem.SUNFLOWER, VanillaItem.LILAC, VanillaItem.PEONY, VanillaItem.ROSE_BUSH);
+    public static final Category<ExItem> FISHES = new Category<>("fishes", VanillaItem.COD, VanillaItem.COOKED_COD, VanillaItem.SALMON, VanillaItem.COOKED_SALMON, VanillaItem.PUFFERFISH,
+            VanillaItem.TROPICAL_FISH);
+    public static final Category<ExItem> GOLD_ORES = new Category<>("gold_ores", VanillaItem.GOLD_ORE, VanillaItem.NETHER_GOLD_ORE, VanillaItem.DEEPSLATE_GOLD_ORE);
+    public static final Category<ExItem> DIAMOND_ORES = new Category<>("diamond_ores", VanillaItem.DIAMOND_ORE, VanillaItem.DEEPSLATE_DIAMOND_ORE);
+    public static final Category<ExItem> CAVE_VINES = new Category<>("cave_vines", VanillaItem.CAVE_VINES_PLANT, VanillaItem.CAVE_VINES);
+    public static final Category<ExItem> FIRE = new Category<>("fire", VanillaItem.FIRE, VanillaItem.SOUL_FIRE);
+    public static final Category<ExItem> CORAL_BLOCKS = new Category<>("coral_blocks", VanillaItem.TUBE_CORAL_BLOCK, VanillaItem.BRAIN_CORAL_BLOCK, VanillaItem.BUBBLE_CORAL_BLOCK,
+            VanillaItem.FIRE_CORAL_BLOCK, VanillaItem.HORN_CORAL_BLOCK);
+    public static final Category<ExItem> CORAL_PLANTS = new Category<>("coral_plants", VanillaItem.TUBE_CORAL, VanillaItem.BRAIN_CORAL, VanillaItem.BUBBLE_CORAL, VanillaItem.FIRE_CORAL,
+            VanillaItem.HORN_CORAL);
+    public static final Category<ExItem> COALS = new Category<>("coals", VanillaItem.COAL, VanillaItem.CHARCOAL);
+    public static final Category<ExItem> BEACON_BASE_BLOCKS = new Category<>("beacon_base_blocks", VanillaItem.NETHERITE_BLOCK, VanillaItem.EMERALD_BLOCK, VanillaItem.DIAMOND_BLOCK,
+            VanillaItem.GOLD_BLOCK, VanillaItem.IRON_BLOCK);
+    public static final Category<ExItem> SPRUCE_LOGS = new Category<>("spruce_logs", VanillaItem.SPRUCE_LOG, VanillaItem.SPRUCE_WOOD, VanillaItem.STRIPPED_SPRUCE_LOG, VanillaItem.STRIPPED_SPRUCE_WOOD);
+    public static final Category<ExItem> LECTERN_BOOKS = new Category<>("lectern_books", VanillaItem.WRITTEN_BOOK, VanillaItem.WRITABLE_BOOK);
+    public static final Category<ExItem> WITHER_IMMUNE = new Category<>("wither_immune", VanillaItem.BARRIER, VanillaItem.BEDROCK, VanillaItem.END_PORTAL, VanillaItem.END_PORTAL_FRAME,
+            VanillaItem.END_GATEWAY, VanillaItem.COMMAND_BLOCK, VanillaItem.REPEATING_COMMAND_BLOCK, VanillaItem.CHAIN_COMMAND_BLOCK, VanillaItem.STRUCTURE_BLOCK, VanillaItem.JIGSAW,
+            VanillaItem.MOVING_PISTON);
     public static final Category<ExItem> STRIDER_WARM_BLOCKS = new Category<>("strider_warm_blocks", VanillaItem.LAVA);
-    public static final Category<ExItem> TALL_FLOWERS = new Category<>("tall_flowers", SUNFLOWER, LILAC, PEONY, ROSE_BUSH);
-    public static final Category<ExItem> VALID_SPAWN = new Category<>("valid_spawn", GRASS_BLOCK, PODZOL);
-    public static final Category<ExItem> WALLS = new Category<>("walls", COBBLESTONE_WALL, MOSSY_COBBLESTONE_WALL, BRICK_WALL, PRISMARINE_WALL, RED_SANDSTONE_WALL, MOSSY_STONE_BRICK_WALL, GRANITE_WALL,
-            STONE_BRICK_WALL, NETHER_BRICK_WALL, ANDESITE_WALL, RED_NETHER_BRICK_WALL, SANDSTONE_WALL, END_STONE_BRICK_WALL, DIORITE_WALL, BLACKSTONE_WALL, POLISHED_BLACKSTONE_BRICK_WALL,
-            POLISHED_BLACKSTONE_WALL, COBBLED_DEEPSLATE_WALL, POLISHED_DEEPSLATE_WALL, DEEPSLATE_TILE_WALL, DEEPSLATE_BRICK_WALL);
-    public static final Category<ExItem> WALL_CORALS = new Category<>("wall_corals", TUBE_CORAL_WALL_FAN, BRAIN_CORAL_WALL_FAN, BUBBLE_CORAL_WALL_FAN, FIRE_CORAL_WALL_FAN, HORN_CORAL_WALL_FAN);
-    public static final Category<ExItem> WALL_SIGNS = new Category<>("wall_signs", OAK_WALL_SIGN, SPRUCE_WALL_SIGN, BIRCH_WALL_SIGN, ACACIA_WALL_SIGN, JUNGLE_WALL_SIGN, DARK_OAK_WALL_SIGN,
-            CRIMSON_WALL_SIGN, WARPED_WALL_SIGN);
-    public static final Category<ExItem> WARPED_STEMS = new Category<>("warped_stems", WARPED_STEM, STRIPPED_WARPED_STEM, WARPED_HYPHAE, STRIPPED_WARPED_HYPHAE);
-    public static final Category<ExItem> WART_BLOCKS = new Category<>("wart_blocks", NETHER_WART_BLOCK, WARPED_WART_BLOCK);
-    public static final Category<ExItem> WITHER_IMMUNE = new Category<>("wither_immune", BARRIER, BEDROCK, END_PORTAL, END_PORTAL_FRAME, END_GATEWAY, COMMAND_BLOCK, REPEATING_COMMAND_BLOCK,
-            CHAIN_COMMAND_BLOCK, STRUCTURE_BLOCK, JIGSAW, MOVING_PISTON);
-    public static final Category<ExItem> WITHER_SUMMON_BASE_BLOCKS = new Category<>("wither_summon_base_blocks", SOUL_SAND, SOUL_SOIL);
-    public static final Category<ExItem> WOODEN_BUTTONS = new Category<>("wooden_buttons", OAK_BUTTON, SPRUCE_BUTTON, BIRCH_BUTTON, JUNGLE_BUTTON, ACACIA_BUTTON, DARK_OAK_BUTTON, CRIMSON_BUTTON,
-            WARPED_BUTTON);
-    public static final Category<ExItem> WOODEN_DOORS = new Category<>("wooden_doors", OAK_DOOR, SPRUCE_DOOR, BIRCH_DOOR, JUNGLE_DOOR, ACACIA_DOOR, DARK_OAK_DOOR, CRIMSON_DOOR, WARPED_DOOR);
-    public static final Category<ExItem> WOODEN_FENCES = new Category<>("wooden_fences", OAK_FENCE, ACACIA_FENCE, DARK_OAK_FENCE, SPRUCE_FENCE, BIRCH_FENCE, JUNGLE_FENCE, CRIMSON_FENCE, WARPED_FENCE);
-    public static final Category<ExItem> WOODEN_PRESSURE_PLATES = new Category<>("wooden_pressure_plates", OAK_PRESSURE_PLATE, SPRUCE_PRESSURE_PLATE, BIRCH_PRESSURE_PLATE, JUNGLE_PRESSURE_PLATE,
-            ACACIA_PRESSURE_PLATE, DARK_OAK_PRESSURE_PLATE, CRIMSON_PRESSURE_PLATE, WARPED_PRESSURE_PLATE);
-    public static final Category<ExItem> WOODEN_SLABS = new Category<>("wooden_slabs", OAK_SLAB, SPRUCE_SLAB, BIRCH_SLAB, JUNGLE_SLAB, ACACIA_SLAB, DARK_OAK_SLAB, CRIMSON_SLAB, WARPED_SLAB);
-    public static final Category<ExItem> WOODEN_STAIRS = new Category<>("wooden_stairs", OAK_STAIRS, SPRUCE_STAIRS, BIRCH_STAIRS, JUNGLE_STAIRS, ACACIA_STAIRS, DARK_OAK_STAIRS, CRIMSON_STAIRS,
-            WARPED_STAIRS);
-    public static final Category<ExItem> WOODEN_TRAPDOORS = new Category<>("wooden_trapdoors", ACACIA_TRAPDOOR, BIRCH_TRAPDOOR, DARK_OAK_TRAPDOOR, JUNGLE_TRAPDOOR, OAK_TRAPDOOR, SPRUCE_TRAPDOOR,
-            CRIMSON_TRAPDOOR, WARPED_TRAPDOOR);
-    public static final Category<ExItem> WOOL = new Category<>("wool", WHITE_WOOL, ORANGE_WOOL, MAGENTA_WOOL, LIGHT_BLUE_WOOL, YELLOW_WOOL, LIME_WOOL, PINK_WOOL, GRAY_WOOL, LIGHT_GRAY_WOOL, CYAN_WOOL,
-            PURPLE_WOOL, BLUE_WOOL, BROWN_WOOL, GREEN_WOOL, RED_WOOL, BLACK_WOOL);
-    // Vanilla: ARROWS
-    public static final Category<ExMob> ARROW_MOBS = new Category<>("arrow_mobs", VanillaMob.ARROW, VanillaMob.SPECTRAL_ARROW);
-    public static final Category<ExMob> AXOLOTL_ALWAYS_HOSTILES = new Category<>("axolotl_always_hostiles", DROWNED, GUARDIAN, ELDER_GUARDIAN);
-    public static final Category<ExMob> AXOLOTL_HUNT_TARGETS = new Category<>("axolotl_hunt_targets", VanillaMob.TROPICAL_FISH, VanillaMob.PUFFERFISH, VanillaMob.SALMON, VanillaMob.COD, SQUID,
-            GLOW_SQUID);
-    public static final Category<ExMob> BEEHIVE_INHABITORS = new Category<>("beehive_inhabitors", BEE);
-    public static final Category<ExMob> FREEZE_HURTS_EXTRA_TYPES = new Category<>("freeze_hurts_extra_types", STRIDER, BLAZE, MAGMA_CUBE);
-    public static final Category<ExMob> FREEZE_IMMUNE_ENTITY_TYPES = new Category<>("freeze_immune_entity_types", STRAY, POLAR_BEAR, SNOW_GOLEM, WITHER);
-    public static final Category<ExMob> POWDER_SNOW_WALKABLE_MOBS = new Category<>("powder_snow_walkable_mobs", VanillaMob.RABBIT, ENDERMITE, SILVERFISH, FOX);
-    public static final Category<ExMob> RAIDERS = new Category<>("raiders", EVOKER, PILLAGER, RAVAGER, VINDICATOR, ILLUSIONER, WITCH);
-    public static final Category<ExMob> SKELETONS = new Category<>("skeletons", SKELETON, STRAY, WITHER_SKELETON);
-    public static final Category<ExItem> LAVA = new Category<>("lava", VanillaItem.LAVA, FLOWING_LAVA);
-    public static final Category<ExItem> WATER = new Category<>("water", VanillaItem.WATER, FLOWING_WATER);
+    public static final Category<ExItem> FENCE_GATES = new Category<>("fence_gates", VanillaItem.ACACIA_FENCE_GATE, VanillaItem.BIRCH_FENCE_GATE, VanillaItem.DARK_OAK_FENCE_GATE,
+            VanillaItem.JUNGLE_FENCE_GATE, VanillaItem.OAK_FENCE_GATE, VanillaItem.SPRUCE_FENCE_GATE, VanillaItem.CRIMSON_FENCE_GATE, VanillaItem.WARPED_FENCE_GATE);
+    public static final Category<ExItem> PIGLIN_REPELLENTS = new Category<>("piglin_repellents", VanillaItem.SOUL_FIRE, VanillaItem.SOUL_TORCH, VanillaItem.SOUL_LANTERN, VanillaItem.SOUL_WALL_TORCH,
+            VanillaItem.SOUL_CAMPFIRE);
+    public static final Category<ExItem> PORTALS = new Category<>("portals", VanillaItem.NETHER_PORTAL, VanillaItem.END_PORTAL, VanillaItem.END_GATEWAY);
+    public static final Category<ExItem> SMALL_DRIPLEAF_PLACEABLE = new Category<>("small_dripleaf_placeable", VanillaItem.CLAY, VanillaItem.MOSS_BLOCK);
+    public static final Category<ExItem> BANNERS = new Category<>("banners", VanillaItem.WHITE_BANNER, VanillaItem.ORANGE_BANNER, VanillaItem.MAGENTA_BANNER, VanillaItem.LIGHT_BLUE_BANNER,
+            VanillaItem.YELLOW_BANNER, VanillaItem.LIME_BANNER, VanillaItem.PINK_BANNER, VanillaItem.GRAY_BANNER, VanillaItem.LIGHT_GRAY_BANNER, VanillaItem.CYAN_BANNER, VanillaItem.PURPLE_BANNER,
+            VanillaItem.BLUE_BANNER, VanillaItem.BROWN_BANNER, VanillaItem.GREEN_BANNER, VanillaItem.RED_BANNER, VanillaItem.BLACK_BANNER, VanillaItem.WHITE_WALL_BANNER, VanillaItem.ORANGE_WALL_BANNER,
+            VanillaItem.MAGENTA_WALL_BANNER, VanillaItem.LIGHT_BLUE_WALL_BANNER, VanillaItem.YELLOW_WALL_BANNER, VanillaItem.LIME_WALL_BANNER, VanillaItem.PINK_WALL_BANNER,
+            VanillaItem.GRAY_WALL_BANNER, VanillaItem.LIGHT_GRAY_WALL_BANNER, VanillaItem.CYAN_WALL_BANNER, VanillaItem.PURPLE_WALL_BANNER, VanillaItem.BLUE_WALL_BANNER, VanillaItem.BROWN_WALL_BANNER,
+            VanillaItem.GREEN_WALL_BANNER, VanillaItem.RED_WALL_BANNER, VanillaItem.BLACK_WALL_BANNER);
+    public static final Category<ExItem> STONE_CRAFTING_MATERIALS = new Category<>("stone_crafting_materials", VanillaItem.COBBLESTONE, VanillaItem.BLACKSTONE, VanillaItem.COBBLED_DEEPSLATE);
+    public static final Category<ExItem> STONE_PRESSURE_PLATES = new Category<>("stone_pressure_plates", VanillaItem.STONE_PRESSURE_PLATE, VanillaItem.POLISHED_BLACKSTONE_PRESSURE_PLATE);
+    public static final Category<ExItem> BEDS = new Category<>("beds", VanillaItem.RED_BED, VanillaItem.BLACK_BED, VanillaItem.BLUE_BED, VanillaItem.BROWN_BED, VanillaItem.CYAN_BED,
+            VanillaItem.GRAY_BED, VanillaItem.GREEN_BED, VanillaItem.LIGHT_BLUE_BED, VanillaItem.LIGHT_GRAY_BED, VanillaItem.LIME_BED, VanillaItem.MAGENTA_BED, VanillaItem.ORANGE_BED,
+            VanillaItem.PINK_BED, VanillaItem.PURPLE_BED, VanillaItem.WHITE_BED, VanillaItem.YELLOW_BED);
+    public static final Category<ExItem> SAPLINGS = new Category<>("saplings", VanillaItem.OAK_SAPLING, VanillaItem.SPRUCE_SAPLING, VanillaItem.BIRCH_SAPLING, VanillaItem.JUNGLE_SAPLING,
+            VanillaItem.ACACIA_SAPLING, VanillaItem.DARK_OAK_SAPLING, VanillaItem.AZALEA, VanillaItem.FLOWERING_AZALEA);
+    public static final Category<ExItem> HOE = new Category<>("hoe", VanillaItem.NETHER_WART_BLOCK, VanillaItem.WARPED_WART_BLOCK, VanillaItem.HAY_BLOCK, VanillaItem.DRIED_KELP_BLOCK,
+            VanillaItem.TARGET, VanillaItem.SHROOMLIGHT, VanillaItem.SPONGE, VanillaItem.WET_SPONGE, VanillaItem.JUNGLE_LEAVES, VanillaItem.OAK_LEAVES, VanillaItem.SPRUCE_LEAVES,
+            VanillaItem.DARK_OAK_LEAVES, VanillaItem.ACACIA_LEAVES, VanillaItem.BIRCH_LEAVES, VanillaItem.AZALEA_LEAVES, VanillaItem.FLOWERING_AZALEA_LEAVES, VanillaItem.SCULK_SENSOR,
+            VanillaItem.MOSS_BLOCK, VanillaItem.MOSS_CARPET);
+    public static final Category<ExItem> ACACIA_LOGS = new Category<>("acacia_logs", VanillaItem.ACACIA_LOG, VanillaItem.ACACIA_WOOD, VanillaItem.STRIPPED_ACACIA_LOG, VanillaItem.STRIPPED_ACACIA_WOOD);
+    public static final Category<ExItem> ANVIL = new Category<>("anvil", VanillaItem.ANVIL, VanillaItem.CHIPPED_ANVIL, VanillaItem.DAMAGED_ANVIL);
+    public static final Category<ExItem> WITHER_SUMMON_BASE_BLOCKS = new Category<>("wither_summon_base_blocks", VanillaItem.SOUL_SAND, VanillaItem.SOUL_SOIL);
+    public static final Category<ExItem> CROPS = new Category<>("crops", VanillaItem.BEETROOTS, VanillaItem.CARROTS, VanillaItem.POTATOES, VanillaItem.WHEAT, VanillaItem.MELON_STEM,
+            VanillaItem.PUMPKIN_STEM);
+    public static final Category<ExItem> BASE_STONE_NETHER = new Category<>("base_stone_nether", VanillaItem.NETHERRACK, VanillaItem.BASALT, VanillaItem.BLACKSTONE);
+    public static final Category<ExItem> LAPIS_ORES = new Category<>("lapis_ores", VanillaItem.LAPIS_ORE, VanillaItem.DEEPSLATE_LAPIS_ORE);
+    public static final Category<ExItem> NON_FLAMMABLE_WOOD = new Category<>("non_flammable_wood", VanillaItem.WARPED_STEM, VanillaItem.STRIPPED_WARPED_STEM, VanillaItem.WARPED_HYPHAE,
+            VanillaItem.STRIPPED_WARPED_HYPHAE, VanillaItem.CRIMSON_STEM, VanillaItem.STRIPPED_CRIMSON_STEM, VanillaItem.CRIMSON_HYPHAE, VanillaItem.STRIPPED_CRIMSON_HYPHAE, VanillaItem.CRIMSON_PLANKS,
+            VanillaItem.WARPED_PLANKS, VanillaItem.CRIMSON_SLAB, VanillaItem.WARPED_SLAB, VanillaItem.CRIMSON_PRESSURE_PLATE, VanillaItem.WARPED_PRESSURE_PLATE, VanillaItem.CRIMSON_FENCE,
+            VanillaItem.WARPED_FENCE, VanillaItem.CRIMSON_TRAPDOOR, VanillaItem.WARPED_TRAPDOOR, VanillaItem.CRIMSON_FENCE_GATE, VanillaItem.WARPED_FENCE_GATE, VanillaItem.CRIMSON_STAIRS,
+            VanillaItem.WARPED_STAIRS, VanillaItem.CRIMSON_BUTTON, VanillaItem.WARPED_BUTTON, VanillaItem.CRIMSON_DOOR, VanillaItem.WARPED_DOOR, VanillaItem.CRIMSON_SIGN, VanillaItem.WARPED_SIGN,
+            VanillaItem.CRIMSON_WALL_SIGN, VanillaItem.WARPED_WALL_SIGN);
+    public static final Category<ExItem> WALLS = new Category<>("walls", VanillaItem.COBBLESTONE_WALL, VanillaItem.MOSSY_COBBLESTONE_WALL, VanillaItem.BRICK_WALL, VanillaItem.PRISMARINE_WALL,
+            VanillaItem.RED_SANDSTONE_WALL, VanillaItem.MOSSY_STONE_BRICK_WALL, VanillaItem.GRANITE_WALL, VanillaItem.STONE_BRICK_WALL, VanillaItem.NETHER_BRICK_WALL, VanillaItem.ANDESITE_WALL,
+            VanillaItem.RED_NETHER_BRICK_WALL, VanillaItem.SANDSTONE_WALL, VanillaItem.END_STONE_BRICK_WALL, VanillaItem.DIORITE_WALL, VanillaItem.BLACKSTONE_WALL,
+            VanillaItem.POLISHED_BLACKSTONE_BRICK_WALL, VanillaItem.POLISHED_BLACKSTONE_WALL, VanillaItem.COBBLED_DEEPSLATE_WALL, VanillaItem.POLISHED_DEEPSLATE_WALL, VanillaItem.DEEPSLATE_TILE_WALL,
+            VanillaItem.DEEPSLATE_BRICK_WALL);
+    public static final Category<ExItem> AXOLOTL_TEMPT_ITEMS = new Category<>("axolotl_tempt_items", VanillaItem.TROPICAL_FISH_BUCKET);
+    public static final Category<ExItem> WOODEN_STAIRS = new Category<>("wooden_stairs", VanillaItem.OAK_STAIRS, VanillaItem.SPRUCE_STAIRS, VanillaItem.BIRCH_STAIRS, VanillaItem.JUNGLE_STAIRS,
+            VanillaItem.ACACIA_STAIRS, VanillaItem.DARK_OAK_STAIRS, VanillaItem.CRIMSON_STAIRS, VanillaItem.WARPED_STAIRS);
+    public static final Category<ExItem> RAILS = new Category<>("rails", VanillaItem.RAIL, VanillaItem.POWERED_RAIL, VanillaItem.DETECTOR_RAIL, VanillaItem.ACTIVATOR_RAIL);
+    public static final Category<ExItem> WOODEN_PRESSURE_PLATES = new Category<>("wooden_pressure_plates", VanillaItem.OAK_PRESSURE_PLATE, VanillaItem.SPRUCE_PRESSURE_PLATE,
+            VanillaItem.BIRCH_PRESSURE_PLATE, VanillaItem.JUNGLE_PRESSURE_PLATE, VanillaItem.ACACIA_PRESSURE_PLATE, VanillaItem.DARK_OAK_PRESSURE_PLATE, VanillaItem.CRIMSON_PRESSURE_PLATE,
+            VanillaItem.WARPED_PRESSURE_PLATE);
+    public static final Category<ExItem> WOODEN_FENCES = new Category<>("wooden_fences", VanillaItem.OAK_FENCE, VanillaItem.ACACIA_FENCE, VanillaItem.DARK_OAK_FENCE, VanillaItem.SPRUCE_FENCE,
+            VanillaItem.BIRCH_FENCE, VanillaItem.JUNGLE_FENCE, VanillaItem.CRIMSON_FENCE, VanillaItem.WARPED_FENCE);
+    public static final Category<ExItem> FLOWER_POTS = new Category<>("flower_pots", VanillaItem.FLOWER_POT, VanillaItem.POTTED_POPPY, VanillaItem.POTTED_BLUE_ORCHID, VanillaItem.POTTED_ALLIUM,
+            VanillaItem.POTTED_AZURE_BLUET, VanillaItem.POTTED_RED_TULIP, VanillaItem.POTTED_ORANGE_TULIP, VanillaItem.POTTED_WHITE_TULIP, VanillaItem.POTTED_PINK_TULIP, VanillaItem.POTTED_OXEYE_DAISY,
+            VanillaItem.POTTED_DANDELION, VanillaItem.POTTED_OAK_SAPLING, VanillaItem.POTTED_SPRUCE_SAPLING, VanillaItem.POTTED_BIRCH_SAPLING, VanillaItem.POTTED_JUNGLE_SAPLING,
+            VanillaItem.POTTED_ACACIA_SAPLING, VanillaItem.POTTED_DARK_OAK_SAPLING, VanillaItem.POTTED_RED_MUSHROOM, VanillaItem.POTTED_BROWN_MUSHROOM, VanillaItem.POTTED_DEAD_BUSH,
+            VanillaItem.POTTED_FERN, VanillaItem.POTTED_CACTUS, VanillaItem.POTTED_CORNFLOWER, VanillaItem.POTTED_LILY_OF_THE_VALLEY, VanillaItem.POTTED_WITHER_ROSE, VanillaItem.POTTED_BAMBOO,
+            VanillaItem.POTTED_CRIMSON_FUNGUS, VanillaItem.POTTED_WARPED_FUNGUS, VanillaItem.POTTED_CRIMSON_ROOTS, VanillaItem.POTTED_WARPED_ROOTS, VanillaItem.POTTED_AZALEA_BUSH,
+            VanillaItem.POTTED_FLOWERING_AZALEA_BUSH);
+    public static final Category<ExItem> EMERALD_ORES = new Category<>("emerald_ores", VanillaItem.EMERALD_ORE, VanillaItem.DEEPSLATE_EMERALD_ORE);
+    public static final Category<ExItem> COAL_ORES = new Category<>("coal_ores", VanillaItem.COAL_ORE, VanillaItem.DEEPSLATE_COAL_ORE);
+    public static final Category<ExItem> INSIDE_STEP_SOUND_BLOCKS = new Category<>("inside_step_sound_blocks", VanillaItem.SNOW, VanillaItem.POWDER_SNOW);
+    public static final Category<ExItem> SOUL_FIRE_BASE_BLOCKS = new Category<>("soul_fire_base_blocks", VanillaItem.SOUL_SAND, VanillaItem.SOUL_SOIL);
+    public static final Category<ExItem> PLANKS = new Category<>("planks", VanillaItem.OAK_PLANKS, VanillaItem.SPRUCE_PLANKS, VanillaItem.BIRCH_PLANKS, VanillaItem.JUNGLE_PLANKS,
+            VanillaItem.ACACIA_PLANKS, VanillaItem.DARK_OAK_PLANKS, VanillaItem.CRIMSON_PLANKS, VanillaItem.WARPED_PLANKS);
+    public static final Category<ExItem> WALL_SIGNS = new Category<>("wall_signs", VanillaItem.OAK_WALL_SIGN, VanillaItem.SPRUCE_WALL_SIGN, VanillaItem.BIRCH_WALL_SIGN, VanillaItem.ACACIA_WALL_SIGN,
+            VanillaItem.JUNGLE_WALL_SIGN, VanillaItem.DARK_OAK_WALL_SIGN, VanillaItem.CRIMSON_WALL_SIGN, VanillaItem.WARPED_WALL_SIGN);
+    public static final Category<ExItem> VALID_SPAWN = new Category<>("valid_spawn", VanillaItem.GRASS_BLOCK, VanillaItem.PODZOL);
+    public static final Category<ExItem> FOX_FOOD = new Category<>("fox_food", VanillaItem.SWEET_BERRIES, VanillaItem.GLOW_BERRIES);
+    public static final Category<ExItem> WOOL = new Category<>("wool", VanillaItem.WHITE_WOOL, VanillaItem.ORANGE_WOOL, VanillaItem.MAGENTA_WOOL, VanillaItem.LIGHT_BLUE_WOOL, VanillaItem.YELLOW_WOOL,
+            VanillaItem.LIME_WOOL, VanillaItem.PINK_WOOL, VanillaItem.GRAY_WOOL, VanillaItem.LIGHT_GRAY_WOOL, VanillaItem.CYAN_WOOL, VanillaItem.PURPLE_WOOL, VanillaItem.BLUE_WOOL,
+            VanillaItem.BROWN_WOOL, VanillaItem.GREEN_WOOL, VanillaItem.RED_WOOL, VanillaItem.BLACK_WOOL);
+    public static final Category<ExItem> SHOVEL = new Category<>("shovel", VanillaItem.CLAY, VanillaItem.DIRT, VanillaItem.COARSE_DIRT, VanillaItem.PODZOL, VanillaItem.FARMLAND,
+            VanillaItem.GRASS_BLOCK, VanillaItem.GRAVEL, VanillaItem.MYCELIUM, VanillaItem.SAND, VanillaItem.RED_SAND, VanillaItem.SNOW_BLOCK, VanillaItem.SNOW, VanillaItem.SOUL_SAND,
+            VanillaItem.DIRT_PATH, VanillaItem.WHITE_CONCRETE_POWDER, VanillaItem.ORANGE_CONCRETE_POWDER, VanillaItem.MAGENTA_CONCRETE_POWDER, VanillaItem.LIGHT_BLUE_CONCRETE_POWDER,
+            VanillaItem.YELLOW_CONCRETE_POWDER, VanillaItem.LIME_CONCRETE_POWDER, VanillaItem.PINK_CONCRETE_POWDER, VanillaItem.GRAY_CONCRETE_POWDER, VanillaItem.LIGHT_GRAY_CONCRETE_POWDER,
+            VanillaItem.CYAN_CONCRETE_POWDER, VanillaItem.PURPLE_CONCRETE_POWDER, VanillaItem.BLUE_CONCRETE_POWDER, VanillaItem.BROWN_CONCRETE_POWDER, VanillaItem.GREEN_CONCRETE_POWDER,
+            VanillaItem.RED_CONCRETE_POWDER, VanillaItem.BLACK_CONCRETE_POWDER, VanillaItem.SOUL_SOIL, VanillaItem.ROOTED_DIRT);
     public static final Category<ExItem> ARROWS = new Category<>("arrows", VanillaItem.ARROW, VanillaItem.TIPPED_ARROW, VanillaItem.SPECTRAL_ARROW);
-    public static final Category<ExItem> AXOLOTL_TEMPT_ITEMS = new Category<>("axolotl_tempt_items", TROPICAL_FISH_BUCKET);
-    public static final Category<ExItem> BEACON_PAYMENT_ITEMS = new Category<>("beacon_payment_items", NETHERITE_INGOT, EMERALD, DIAMOND, GOLD_INGOT, IRON_INGOT);
-    public static final Category<ExItem> BOATS = new Category<>("boats", OAK_BOAT, SPRUCE_BOAT, BIRCH_BOAT, JUNGLE_BOAT, ACACIA_BOAT, DARK_OAK_BOAT);
-    public static final Category<ExItem> CLUSTER_MAX_HARVESTABLES = new Category<>("cluster_max_harvestables", DIAMOND_PICKAXE, GOLDEN_PICKAXE, IRON_PICKAXE, NETHERITE_PICKAXE, STONE_PICKAXE,
-            WOODEN_PICKAXE);
-    public static final Category<ExItem> COALS = new Category<>("coals", COAL, CHARCOAL);
-    public static final Category<ExItem> CREEPER_DROP_MUSIC_DISCS = new Category<>("creeper_drop_music_discs", MUSIC_DISC_13, MUSIC_DISC_CAT, MUSIC_DISC_BLOCKS, MUSIC_DISC_CHIRP, MUSIC_DISC_FAR,
-            MUSIC_DISC_MALL, MUSIC_DISC_MELLOHI, MUSIC_DISC_STAL, MUSIC_DISC_STRAD, MUSIC_DISC_WARD, MUSIC_DISC_11, MUSIC_DISC_WAIT);
-    public static final Category<ExItem> FISHES = new Category<>("fishes", VanillaItem.COD, COOKED_COD, VanillaItem.SALMON, COOKED_SALMON, VanillaItem.PUFFERFISH, VanillaItem.TROPICAL_FISH);
-    public static final Category<ExItem> FOX_FOOD = new Category<>("fox_food", SWEET_BERRIES, GLOW_BERRIES);
-    public static final Category<ExItem> FREEZE_IMMUNE_WEARABLES = new Category<>("freeze_immune_wearables", LEATHER_BOOTS, LEATHER_LEGGINGS, LEATHER_CHESTPLATE, LEATHER_HELMET, LEATHER_HORSE_ARMOR);
-    public static final Category<ExItem> IGNORED_BY_PIGLIN_BABIES = new Category<>("ignored_by_piglin_babies", LEATHER);
-    public static final Category<ExItem> LECTERN_BOOKS = new Category<>("lectern_books", WRITTEN_BOOK, WRITABLE_BOOK);
-    public static final Category<ExItem> PIGLIN_FOOD = new Category<>("piglin_food", PORKCHOP, COOKED_PORKCHOP);
-    public static final Category<ExItem> SIGNS = new Category<>("signs", OAK_SIGN, SPRUCE_SIGN, BIRCH_SIGN, ACACIA_SIGN, JUNGLE_SIGN, DARK_OAK_SIGN, CRIMSON_SIGN, WARPED_SIGN);
-    public static final Category<ExItem> STONE_CRAFTING_MATERIALS = new Category<>("stone_crafting_materials", COBBLESTONE, BLACKSTONE, COBBLED_DEEPSLATE);
-    public static final Category<ExItem> STONE_TOOL_MATERIALS = new Category<>("stone_tool_materials", COBBLESTONE, BLACKSTONE, COBBLED_DEEPSLATE);
-    public static final Category<ExItem> BAMBOO_PLANTABLE_ON = new Category<>("bamboo_plantable_on", SAND, DIRT, BAMBOO, BAMBOO_SAPLING, GRAVEL);
-    public static final Category<ExItem> BEE_GROWABLES = new Category<>("bee_growables", CROPS, SWEET_BERRY_BUSH, CAVE_VINES, CAVE_VINES_PLANT);
-    public static final Category<ExItem> BUTTONS = new Category<>("buttons", WOODEN_BUTTONS, STONE_BUTTON, POLISHED_BLACKSTONE_BUTTON);
-    public static final Category<ExItem> CORALS = new Category<>("corals", CORAL_PLANTS, TUBE_CORAL_FAN, BRAIN_CORAL_FAN, BUBBLE_CORAL_FAN, FIRE_CORAL_FAN, HORN_CORAL_FAN);
-    public static final Category<ExItem> DOORS = new Category<>("doors", WOODEN_DOORS, IRON_DOOR);
-    public static final Category<ExItem> DRIPSTONE_REPLACEABLE_BLOCKS = new Category<>("dripstone_replaceable_blocks", BASE_STONE_OVERWORLD, DIRT);
-    public static final Category<ExItem> ENDERMAN_HOLDABLE = new Category<>("enderman_holdable", SMALL_FLOWERS, DIRT, SAND, RED_SAND, GRAVEL, BROWN_MUSHROOM, RED_MUSHROOM, VanillaItem.TNT, CACTUS,
-            CLAY, PUMPKIN, CARVED_PUMPKIN, MELON, CRIMSON_FUNGUS, CRIMSON_NYLIUM, CRIMSON_ROOTS, WARPED_FUNGUS, WARPED_NYLIUM, WARPED_ROOTS);
-    public static final Category<ExItem> FENCES = new Category<>("fences", WOODEN_FENCES, NETHER_BRICK_FENCE);
-    public static final Category<ExItem> FLOWERS = new Category<>("flowers", SMALL_FLOWERS, TALL_FLOWERS, FLOWERING_AZALEA_LEAVES, FLOWERING_AZALEA);
-    public static final Category<ExItem> GUARDED_BY_PIGLINS = new Category<>("guarded_by_piglins", GOLD_BLOCK, BARREL, CHEST, ENDER_CHEST, GILDED_BLACKSTONE, TRAPPED_CHEST, RAW_GOLD_BLOCK,
-            SHULKER_BOXES, GOLD_ORES);
-    public static final Category<ExItem> INFINIBURN_END = new Category<>("infiniburn_end", INFINIBURN_OVERWORLD, BEDROCK);
-    public static final Category<ExItem> INFINIBURN_NETHER = new Category<>("infiniburn_nether", INFINIBURN_OVERWORLD);
-    public static final Category<ExItem> LAVA_POOL_STONE_REPLACEABLES = new Category<>("lava_pool_stone_replaceables", FEATURES_CANNOT_REPLACE, LEAVES);
-    public static final Category<ExItem> LOGS_THAT_BURN = new Category<>("logs_that_burn", DARK_OAK_LOGS, OAK_LOGS, ACACIA_LOGS, BIRCH_LOGS, JUNGLE_LOGS, SPRUCE_LOGS);
-    public static final Category<ExItem> LOGS = new Category<>("logs", LOGS_THAT_BURN, CRIMSON_STEMS, WARPED_STEMS);
-    public static final Category<ExItem> AXE = new Category<>("axe", NOTE_BLOCK, ATTACHED_MELON_STEM, ATTACHED_PUMPKIN_STEM, AZALEA, BAMBOO, BARREL, BEE_NEST, BEEHIVE, BEETROOTS, BIG_DRIPLEAF_STEM,
-            BIG_DRIPLEAF, BOOKSHELF, BROWN_MUSHROOM_BLOCK, BROWN_MUSHROOM, CAMPFIRE, CARROTS, CARTOGRAPHY_TABLE, CARVED_PUMPKIN, CAVE_VINES_PLANT, CAVE_VINES, CHEST, CHORUS_FLOWER, CHORUS_PLANT, COCOA,
-            COMPOSTER, CRAFTING_TABLE, CRIMSON_FUNGUS, DAYLIGHT_DETECTOR, DEAD_BUSH, FERN, FLETCHING_TABLE, GLOW_LICHEN, GRASS, HANGING_ROOTS, JACK_O_LANTERN, JUKEBOX, LADDER, LARGE_FERN, LECTERN,
-            LILY_PAD, LOOM, MELON_STEM, MELON, MUSHROOM_STEM, NETHER_WART, POTATOES, PUMPKIN_STEM, PUMPKIN, RED_MUSHROOM_BLOCK, RED_MUSHROOM, SCAFFOLDING, SMALL_DRIPLEAF, SMITHING_TABLE, SOUL_CAMPFIRE,
-            SPORE_BLOSSOM, SUGAR_CANE, SWEET_BERRY_BUSH, TALL_GRASS, TRAPPED_CHEST, TWISTING_VINES_PLANT, TWISTING_VINES, VINE, WARPED_FUNGUS, WEEPING_VINES_PLANT, WEEPING_VINES, WHEAT, BANNERS,
-            FENCE_GATES, FLOWERS, LOGS, PLANKS, SAPLINGS, SIGNS, WOODEN_BUTTONS, WOODEN_DOORS, WOODEN_FENCES, WOODEN_PRESSURE_PLATES, WOODEN_SLABS, WOODEN_STAIRS, WOODEN_TRAPDOORS);
-    public static final Category<ExItem> PICKAXE = new Category<>("pickaxe", STONE, GRANITE, POLISHED_GRANITE, DIORITE, POLISHED_DIORITE, ANDESITE, POLISHED_ANDESITE, COBBLESTONE, GOLD_ORE,
-            DEEPSLATE_GOLD_ORE, IRON_ORE, DEEPSLATE_IRON_ORE, COAL_ORE, DEEPSLATE_COAL_ORE, NETHER_GOLD_ORE, LAPIS_ORE, DEEPSLATE_LAPIS_ORE, LAPIS_BLOCK, DISPENSER, SANDSTONE, CHISELED_SANDSTONE,
-            CUT_SANDSTONE, GOLD_BLOCK, IRON_BLOCK, BRICKS, MOSSY_COBBLESTONE, OBSIDIAN, SPAWNER, DIAMOND_ORE, DEEPSLATE_DIAMOND_ORE, DIAMOND_BLOCK, FURNACE, COBBLESTONE_STAIRS, STONE_PRESSURE_PLATE,
-            IRON_DOOR, REDSTONE_ORE, DEEPSLATE_REDSTONE_ORE, NETHERRACK, BASALT, POLISHED_BASALT, STONE_BRICKS, MOSSY_STONE_BRICKS, CRACKED_STONE_BRICKS, CHISELED_STONE_BRICKS, IRON_BARS, CHAIN,
-            BRICK_STAIRS, STONE_BRICK_STAIRS, NETHER_BRICKS, NETHER_BRICK_FENCE, NETHER_BRICK_STAIRS, ENCHANTING_TABLE, BREWING_STAND, END_STONE, SANDSTONE_STAIRS, EMERALD_ORE, DEEPSLATE_EMERALD_ORE,
-            ENDER_CHEST, EMERALD_BLOCK, LIGHT_WEIGHTED_PRESSURE_PLATE, HEAVY_WEIGHTED_PRESSURE_PLATE, REDSTONE_BLOCK, NETHER_QUARTZ_ORE, HOPPER, QUARTZ_BLOCK, CHISELED_QUARTZ_BLOCK, QUARTZ_PILLAR,
-            QUARTZ_STAIRS, DROPPER, WHITE_TERRACOTTA, ORANGE_TERRACOTTA, MAGENTA_TERRACOTTA, LIGHT_BLUE_TERRACOTTA, YELLOW_TERRACOTTA, LIME_TERRACOTTA, PINK_TERRACOTTA, GRAY_TERRACOTTA,
-            LIGHT_GRAY_TERRACOTTA, CYAN_TERRACOTTA, PURPLE_TERRACOTTA, BLUE_TERRACOTTA, BROWN_TERRACOTTA, GREEN_TERRACOTTA, RED_TERRACOTTA, BLACK_TERRACOTTA, IRON_TRAPDOOR, PRISMARINE,
-            PRISMARINE_BRICKS, DARK_PRISMARINE, PRISMARINE_STAIRS, PRISMARINE_BRICK_STAIRS, DARK_PRISMARINE_STAIRS, PRISMARINE_SLAB, PRISMARINE_BRICK_SLAB, DARK_PRISMARINE_SLAB, TERRACOTTA, COAL_BLOCK,
-            RED_SANDSTONE, CHISELED_RED_SANDSTONE, CUT_RED_SANDSTONE, RED_SANDSTONE_STAIRS, STONE_SLAB, SMOOTH_STONE_SLAB, SANDSTONE_SLAB, CUT_SANDSTONE_SLAB, PETRIFIED_OAK_SLAB, COBBLESTONE_SLAB,
-            BRICK_SLAB, STONE_BRICK_SLAB, NETHER_BRICK_SLAB, QUARTZ_SLAB, RED_SANDSTONE_SLAB, CUT_RED_SANDSTONE_SLAB, PURPUR_SLAB, SMOOTH_STONE, SMOOTH_SANDSTONE, SMOOTH_QUARTZ, SMOOTH_RED_SANDSTONE,
-            PURPUR_BLOCK, PURPUR_PILLAR, PURPUR_STAIRS, END_STONE_BRICKS, MAGMA_BLOCK, RED_NETHER_BRICKS, BONE_BLOCK, OBSERVER, WHITE_GLAZED_TERRACOTTA, ORANGE_GLAZED_TERRACOTTA,
-            MAGENTA_GLAZED_TERRACOTTA, LIGHT_BLUE_GLAZED_TERRACOTTA, YELLOW_GLAZED_TERRACOTTA, LIME_GLAZED_TERRACOTTA, PINK_GLAZED_TERRACOTTA, GRAY_GLAZED_TERRACOTTA, LIGHT_GRAY_GLAZED_TERRACOTTA,
-            CYAN_GLAZED_TERRACOTTA, PURPLE_GLAZED_TERRACOTTA, BLUE_GLAZED_TERRACOTTA, BROWN_GLAZED_TERRACOTTA, GREEN_GLAZED_TERRACOTTA, RED_GLAZED_TERRACOTTA, BLACK_GLAZED_TERRACOTTA, WHITE_CONCRETE,
-            ORANGE_CONCRETE, MAGENTA_CONCRETE, LIGHT_BLUE_CONCRETE, YELLOW_CONCRETE, LIME_CONCRETE, PINK_CONCRETE, GRAY_CONCRETE, LIGHT_GRAY_CONCRETE, CYAN_CONCRETE, PURPLE_CONCRETE, BLUE_CONCRETE,
-            BROWN_CONCRETE, GREEN_CONCRETE, RED_CONCRETE, BLACK_CONCRETE, DEAD_TUBE_CORAL_BLOCK, DEAD_BRAIN_CORAL_BLOCK, DEAD_BUBBLE_CORAL_BLOCK, DEAD_FIRE_CORAL_BLOCK, DEAD_HORN_CORAL_BLOCK,
-            TUBE_CORAL_BLOCK, BRAIN_CORAL_BLOCK, BUBBLE_CORAL_BLOCK, FIRE_CORAL_BLOCK, HORN_CORAL_BLOCK, DEAD_TUBE_CORAL, DEAD_BRAIN_CORAL, DEAD_BUBBLE_CORAL, DEAD_FIRE_CORAL, DEAD_HORN_CORAL,
-            DEAD_TUBE_CORAL_FAN, DEAD_BRAIN_CORAL_FAN, DEAD_BUBBLE_CORAL_FAN, DEAD_FIRE_CORAL_FAN, DEAD_HORN_CORAL_FAN, DEAD_TUBE_CORAL_WALL_FAN, DEAD_BRAIN_CORAL_WALL_FAN, DEAD_BUBBLE_CORAL_WALL_FAN,
-            DEAD_FIRE_CORAL_WALL_FAN, DEAD_HORN_CORAL_WALL_FAN, POLISHED_GRANITE_STAIRS, SMOOTH_RED_SANDSTONE_STAIRS, MOSSY_STONE_BRICK_STAIRS, POLISHED_DIORITE_STAIRS, MOSSY_COBBLESTONE_STAIRS,
-            END_STONE_BRICK_STAIRS, STONE_STAIRS, SMOOTH_SANDSTONE_STAIRS, SMOOTH_QUARTZ_STAIRS, GRANITE_STAIRS, ANDESITE_STAIRS, RED_NETHER_BRICK_STAIRS, POLISHED_ANDESITE_STAIRS, DIORITE_STAIRS,
-            POLISHED_GRANITE_SLAB, SMOOTH_RED_SANDSTONE_SLAB, MOSSY_STONE_BRICK_SLAB, POLISHED_DIORITE_SLAB, MOSSY_COBBLESTONE_SLAB, END_STONE_BRICK_SLAB, SMOOTH_SANDSTONE_SLAB, SMOOTH_QUARTZ_SLAB,
-            GRANITE_SLAB, ANDESITE_SLAB, RED_NETHER_BRICK_SLAB, POLISHED_ANDESITE_SLAB, DIORITE_SLAB, SMOKER, BLAST_FURNACE, GRINDSTONE, STONECUTTER, BELL, LANTERN, SOUL_LANTERN, WARPED_NYLIUM,
-            CRIMSON_NYLIUM, NETHERITE_BLOCK, ANCIENT_DEBRIS, CRYING_OBSIDIAN, RESPAWN_ANCHOR, LODESTONE, BLACKSTONE, BLACKSTONE_STAIRS, BLACKSTONE_SLAB, POLISHED_BLACKSTONE, POLISHED_BLACKSTONE_BRICKS,
-            CRACKED_POLISHED_BLACKSTONE_BRICKS, CHISELED_POLISHED_BLACKSTONE, POLISHED_BLACKSTONE_BRICK_SLAB, POLISHED_BLACKSTONE_BRICK_STAIRS, GILDED_BLACKSTONE, POLISHED_BLACKSTONE_STAIRS,
-            POLISHED_BLACKSTONE_SLAB, POLISHED_BLACKSTONE_PRESSURE_PLATE, CHISELED_NETHER_BRICKS, CRACKED_NETHER_BRICKS, QUARTZ_BRICKS, TUFF, CALCITE, OXIDIZED_COPPER, WEATHERED_COPPER, EXPOSED_COPPER,
-            COPPER_BLOCK, COPPER_ORE, DEEPSLATE_COPPER_ORE, OXIDIZED_CUT_COPPER, WEATHERED_CUT_COPPER, EXPOSED_CUT_COPPER, CUT_COPPER, OXIDIZED_CUT_COPPER_STAIRS, WEATHERED_CUT_COPPER_STAIRS,
-            EXPOSED_CUT_COPPER_STAIRS, CUT_COPPER_STAIRS, OXIDIZED_CUT_COPPER_SLAB, WEATHERED_CUT_COPPER_SLAB, EXPOSED_CUT_COPPER_SLAB, CUT_COPPER_SLAB, WAXED_COPPER_BLOCK, WAXED_WEATHERED_COPPER,
-            WAXED_EXPOSED_COPPER, WAXED_OXIDIZED_COPPER, WAXED_OXIDIZED_CUT_COPPER, WAXED_WEATHERED_CUT_COPPER, WAXED_EXPOSED_CUT_COPPER, WAXED_CUT_COPPER, WAXED_OXIDIZED_CUT_COPPER_STAIRS,
-            WAXED_WEATHERED_CUT_COPPER_STAIRS, WAXED_EXPOSED_CUT_COPPER_STAIRS, WAXED_CUT_COPPER_STAIRS, WAXED_OXIDIZED_CUT_COPPER_SLAB, WAXED_WEATHERED_CUT_COPPER_SLAB, WAXED_EXPOSED_CUT_COPPER_SLAB,
-            WAXED_CUT_COPPER_SLAB, LIGHTNING_ROD, POINTED_DRIPSTONE, DRIPSTONE_BLOCK, DEEPSLATE, COBBLED_DEEPSLATE, COBBLED_DEEPSLATE_STAIRS, COBBLED_DEEPSLATE_SLAB, POLISHED_DEEPSLATE,
-            POLISHED_DEEPSLATE_STAIRS, POLISHED_DEEPSLATE_SLAB, DEEPSLATE_TILES, DEEPSLATE_TILE_STAIRS, DEEPSLATE_TILE_SLAB, DEEPSLATE_BRICKS, DEEPSLATE_BRICK_STAIRS, DEEPSLATE_BRICK_SLAB,
-            CHISELED_DEEPSLATE, CRACKED_DEEPSLATE_BRICKS, CRACKED_DEEPSLATE_TILES, SMOOTH_BASALT, RAW_IRON_BLOCK, RAW_COPPER_BLOCK, RAW_GOLD_BLOCK, ICE, PACKED_ICE, BLUE_ICE, STONE_BUTTON, PISTON,
-            STICKY_PISTON, PISTON_HEAD, AMETHYST_CLUSTER, SMALL_AMETHYST_BUD, MEDIUM_AMETHYST_BUD, LARGE_AMETHYST_BUD, AMETHYST_BLOCK, BUDDING_AMETHYST, INFESTED_COBBLESTONE,
-            INFESTED_CHISELED_STONE_BRICKS, INFESTED_CRACKED_STONE_BRICKS, INFESTED_DEEPSLATE, INFESTED_STONE, INFESTED_MOSSY_STONE_BRICKS, INFESTED_STONE_BRICKS, WALLS, SHULKER_BOXES, ANVIL,
-            CAULDRONS, RAILS);
-    public static final Category<ExItem> MOSS_REPLACEABLE = new Category<>("moss_replaceable", BASE_STONE_OVERWORLD, CAVE_VINES, DIRT);
-    public static final Category<ExItem> LUSH_GROUND_REPLACEABLE = new Category<>("lush_ground_replaceable", MOSS_REPLACEABLE, CLAY, GRAVEL, SAND);
-    public static final Category<ExItem> OCCLUDES_VIBRATION_SIGNALS = new Category<>("occludes_vibration_signals", WOOL);
-    public static final Category<ExItem> PRESSURE_PLATES = new Category<>("pressure_plates", LIGHT_WEIGHTED_PRESSURE_PLATE, HEAVY_WEIGHTED_PRESSURE_PLATE, WOODEN_PRESSURE_PLATES, STONE_PRESSURE_PLATES);
-    public static final Category<ExItem> PREVENT_MOB_SPAWNING_INSIDE = new Category<>("prevent_mob_spawning_inside", RAILS);
-    public static final Category<ExItem> SLABS = new Category<>("slabs", WOODEN_SLABS, STONE_SLAB, SMOOTH_STONE_SLAB, STONE_BRICK_SLAB, SANDSTONE_SLAB, PURPUR_SLAB, QUARTZ_SLAB, RED_SANDSTONE_SLAB,
-            BRICK_SLAB, COBBLESTONE_SLAB, NETHER_BRICK_SLAB, PETRIFIED_OAK_SLAB, PRISMARINE_SLAB, PRISMARINE_BRICK_SLAB, DARK_PRISMARINE_SLAB, POLISHED_GRANITE_SLAB, SMOOTH_RED_SANDSTONE_SLAB,
-            MOSSY_STONE_BRICK_SLAB, POLISHED_DIORITE_SLAB, MOSSY_COBBLESTONE_SLAB, END_STONE_BRICK_SLAB, SMOOTH_SANDSTONE_SLAB, SMOOTH_QUARTZ_SLAB, GRANITE_SLAB, ANDESITE_SLAB, RED_NETHER_BRICK_SLAB,
-            POLISHED_ANDESITE_SLAB, DIORITE_SLAB, CUT_SANDSTONE_SLAB, CUT_RED_SANDSTONE_SLAB, BLACKSTONE_SLAB, POLISHED_BLACKSTONE_BRICK_SLAB, POLISHED_BLACKSTONE_SLAB, COBBLED_DEEPSLATE_SLAB,
-            POLISHED_DEEPSLATE_SLAB, DEEPSLATE_TILE_SLAB, DEEPSLATE_BRICK_SLAB, WAXED_WEATHERED_CUT_COPPER_SLAB, WAXED_EXPOSED_CUT_COPPER_SLAB, WAXED_CUT_COPPER_SLAB, OXIDIZED_CUT_COPPER_SLAB,
-            WEATHERED_CUT_COPPER_SLAB, EXPOSED_CUT_COPPER_SLAB, CUT_COPPER_SLAB, WAXED_OXIDIZED_CUT_COPPER_SLAB);
-    public static final Category<ExItem> STAIRS = new Category<>("stairs", WOODEN_STAIRS, COBBLESTONE_STAIRS, SANDSTONE_STAIRS, NETHER_BRICK_STAIRS, STONE_BRICK_STAIRS, BRICK_STAIRS, PURPUR_STAIRS,
-            QUARTZ_STAIRS, RED_SANDSTONE_STAIRS, PRISMARINE_BRICK_STAIRS, PRISMARINE_STAIRS, DARK_PRISMARINE_STAIRS, POLISHED_GRANITE_STAIRS, SMOOTH_RED_SANDSTONE_STAIRS, MOSSY_STONE_BRICK_STAIRS,
-            POLISHED_DIORITE_STAIRS, MOSSY_COBBLESTONE_STAIRS, END_STONE_BRICK_STAIRS, STONE_STAIRS, SMOOTH_SANDSTONE_STAIRS, SMOOTH_QUARTZ_STAIRS, GRANITE_STAIRS, ANDESITE_STAIRS,
-            RED_NETHER_BRICK_STAIRS, POLISHED_ANDESITE_STAIRS, DIORITE_STAIRS, BLACKSTONE_STAIRS, POLISHED_BLACKSTONE_BRICK_STAIRS, POLISHED_BLACKSTONE_STAIRS, COBBLED_DEEPSLATE_STAIRS,
-            POLISHED_DEEPSLATE_STAIRS, DEEPSLATE_TILE_STAIRS, DEEPSLATE_BRICK_STAIRS, OXIDIZED_CUT_COPPER_STAIRS, WEATHERED_CUT_COPPER_STAIRS, EXPOSED_CUT_COPPER_STAIRS, CUT_COPPER_STAIRS,
-            WAXED_WEATHERED_CUT_COPPER_STAIRS, WAXED_EXPOSED_CUT_COPPER_STAIRS, WAXED_CUT_COPPER_STAIRS, WAXED_OXIDIZED_CUT_COPPER_STAIRS);
-    public static final Category<ExItem> TRAPDOORS = new Category<>("trapdoors", WOODEN_TRAPDOORS, IRON_TRAPDOOR);
-    public static final Category<ExItem> UNDERWATER_BONEMEALS = new Category<>("underwater_bonemeals", SEAGRASS, CORALS, WALL_CORALS);
-    public static final Category<ExItem> UNSTABLE_BOTTOM_CENTER = new Category<>("unstable_bottom_center", FENCE_GATES);
-    public static final Category<ExItem> WALL_POST_OVERRIDE = new Category<>("wall_post_override", TORCH, SOUL_TORCH, REDSTONE_TORCH, TRIPWIRE, SIGNS, BANNERS, PRESSURE_PLATES);
-    public static final Category<ExMob> IMPACT_PROJECTILES = new Category<>("impact_projectiles", ARROW_MOBS, VanillaMob.SNOWBALL, FIREBALL, SMALL_FIREBALL, VanillaMob.EGG, VanillaMob.TRIDENT,
-            DRAGON_FIREBALL, WITHER_SKULL);
-    public static final Category<ExItem> MUSIC_DISCS = new Category<>("music_discs", CREEPER_DROP_MUSIC_DISCS, MUSIC_DISC_PIGSTEP);
-    public static final Category<ExItem> PIGLIN_LOVED = new Category<>("piglin_loved", GOLD_ORES, GOLD_BLOCK, GILDED_BLACKSTONE, LIGHT_WEIGHTED_PRESSURE_PLATE, GOLD_INGOT, BELL, CLOCK, GOLDEN_CARROT,
-            GLISTERING_MELON_SLICE, GOLDEN_APPLE, ENCHANTED_GOLDEN_APPLE, GOLDEN_HELMET, GOLDEN_CHESTPLATE, GOLDEN_LEGGINGS, GOLDEN_BOOTS, GOLDEN_HORSE_ARMOR, GOLDEN_SWORD, GOLDEN_PICKAXE,
-            GOLDEN_SHOVEL, GOLDEN_AXE, GOLDEN_HOE, RAW_GOLD, RAW_GOLD_BLOCK);
+    public static final Category<ExItem> ICE = new Category<>("ice", VanillaItem.ICE, VanillaItem.PACKED_ICE, VanillaItem.BLUE_ICE, VanillaItem.FROSTED_ICE);
+    public static final Category<ExItem> CREEPER_DROP_MUSIC_DISCS = new Category<>("creeper_drop_music_discs", VanillaItem.MUSIC_DISC_13, VanillaItem.MUSIC_DISC_CAT, VanillaItem.MUSIC_DISC_BLOCKS,
+            VanillaItem.MUSIC_DISC_CHIRP, VanillaItem.MUSIC_DISC_FAR, VanillaItem.MUSIC_DISC_MALL, VanillaItem.MUSIC_DISC_MELLOHI, VanillaItem.MUSIC_DISC_STAL, VanillaItem.MUSIC_DISC_STRAD,
+            VanillaItem.MUSIC_DISC_WARD, VanillaItem.MUSIC_DISC_11, VanillaItem.MUSIC_DISC_WAIT);
+    public static final Category<ExItem> BEEHIVES = new Category<>("beehives", VanillaItem.BEE_NEST, VanillaItem.BEEHIVE);
+    public static final Category<ExItem> DRAGON_IMMUNE = new Category<>("dragon_immune", VanillaItem.BARRIER, VanillaItem.BEDROCK, VanillaItem.END_PORTAL, VanillaItem.END_PORTAL_FRAME,
+            VanillaItem.END_GATEWAY, VanillaItem.COMMAND_BLOCK, VanillaItem.REPEATING_COMMAND_BLOCK, VanillaItem.CHAIN_COMMAND_BLOCK, VanillaItem.STRUCTURE_BLOCK, VanillaItem.JIGSAW,
+            VanillaItem.MOVING_PISTON, VanillaItem.OBSIDIAN, VanillaItem.CRYING_OBSIDIAN, VanillaItem.END_STONE, VanillaItem.IRON_BARS, VanillaItem.RESPAWN_ANCHOR);
+    public static final Category<ExItem> DEEPSLATE_ORE_REPLACEABLES = new Category<>("deepslate_ore_replaceables", VanillaItem.DEEPSLATE, VanillaItem.TUFF);
+    public static final Category<ExItem> LEAVES = new Category<>("leaves", VanillaItem.JUNGLE_LEAVES, VanillaItem.OAK_LEAVES, VanillaItem.SPRUCE_LEAVES, VanillaItem.DARK_OAK_LEAVES,
+            VanillaItem.ACACIA_LEAVES, VanillaItem.BIRCH_LEAVES, VanillaItem.AZALEA_LEAVES, VanillaItem.FLOWERING_AZALEA_LEAVES);
+    public static final Category<ExItem> STONE_TOOL_MATERIALS = new Category<>("stone_tool_materials", VanillaItem.COBBLESTONE, VanillaItem.BLACKSTONE, VanillaItem.COBBLED_DEEPSLATE);
+    public static final Category<ExItem> GEODE_INVALID_BLOCKS = new Category<>("geode_invalid_blocks", VanillaItem.BEDROCK, VanillaItem.WATER, VanillaItem.LAVA, VanillaItem.ICE, VanillaItem.PACKED_ICE,
+            VanillaItem.BLUE_ICE);
+    public static final Category<ExItem> PIGLIN_FOOD = new Category<>("piglin_food", VanillaItem.PORKCHOP, VanillaItem.COOKED_PORKCHOP);
+    public static final Category<ExItem> NEEDS_IRON_TOOL = new Category<>("needs_iron_tool", VanillaItem.DIAMOND_BLOCK, VanillaItem.DIAMOND_ORE, VanillaItem.DEEPSLATE_DIAMOND_ORE,
+            VanillaItem.EMERALD_ORE, VanillaItem.DEEPSLATE_EMERALD_ORE, VanillaItem.EMERALD_BLOCK, VanillaItem.GOLD_BLOCK, VanillaItem.RAW_GOLD_BLOCK, VanillaItem.GOLD_ORE,
+            VanillaItem.DEEPSLATE_GOLD_ORE, VanillaItem.REDSTONE_ORE, VanillaItem.DEEPSLATE_REDSTONE_ORE);
+    public static final Category<ExItem> CAMPFIRES = new Category<>("campfires", VanillaItem.CAMPFIRE, VanillaItem.SOUL_CAMPFIRE);
+    public static final Category<ExItem> REDSTONE_ORES = new Category<>("redstone_ores", VanillaItem.REDSTONE_ORE, VanillaItem.DEEPSLATE_REDSTONE_ORE);
+    public static final Category<ExItem> CRIMSON_STEMS = new Category<>("crimson_stems", VanillaItem.CRIMSON_STEM, VanillaItem.STRIPPED_CRIMSON_STEM, VanillaItem.CRIMSON_HYPHAE,
+            VanillaItem.STRIPPED_CRIMSON_HYPHAE);
+    public static final Category<ExItem> IRON_ORES = new Category<>("iron_ores", VanillaItem.IRON_ORE, VanillaItem.DEEPSLATE_IRON_ORE);
+    public static final Category<ExItem> DIRT = new Category<>("dirt", VanillaItem.DIRT, VanillaItem.GRASS_BLOCK, VanillaItem.PODZOL, VanillaItem.COARSE_DIRT, VanillaItem.MYCELIUM,
+            VanillaItem.ROOTED_DIRT, VanillaItem.MOSS_BLOCK);
+    public static final Category<ExItem> WOODEN_SLABS = new Category<>("wooden_slabs", VanillaItem.OAK_SLAB, VanillaItem.SPRUCE_SLAB, VanillaItem.BIRCH_SLAB, VanillaItem.JUNGLE_SLAB,
+            VanillaItem.ACACIA_SLAB, VanillaItem.DARK_OAK_SLAB, VanillaItem.CRIMSON_SLAB, VanillaItem.WARPED_SLAB);
+    public static final Category<ExItem> BEACON_PAYMENT_ITEMS = new Category<>("beacon_payment_items", VanillaItem.NETHERITE_INGOT, VanillaItem.EMERALD, VanillaItem.DIAMOND, VanillaItem.GOLD_INGOT,
+            VanillaItem.IRON_INGOT);
+    public static final Category<ExItem> BOATS = new Category<>("boats", VanillaItem.OAK_BOAT, VanillaItem.SPRUCE_BOAT, VanillaItem.BIRCH_BOAT, VanillaItem.JUNGLE_BOAT, VanillaItem.ACACIA_BOAT,
+            VanillaItem.DARK_OAK_BOAT);
+    public static final Category<ExItem> SMALL_FLOWERS = new Category<>("small_flowers", VanillaItem.DANDELION, VanillaItem.POPPY, VanillaItem.BLUE_ORCHID, VanillaItem.ALLIUM, VanillaItem.AZURE_BLUET,
+            VanillaItem.RED_TULIP, VanillaItem.ORANGE_TULIP, VanillaItem.WHITE_TULIP, VanillaItem.PINK_TULIP, VanillaItem.OXEYE_DAISY, VanillaItem.CORNFLOWER, VanillaItem.LILY_OF_THE_VALLEY,
+            VanillaItem.WITHER_ROSE);
+    public static final Category<ExItem> WATER = new Category<>("water", VanillaItem.WATER, VanillaItem.FLOWING_WATER);
+    public static final Category<ExItem> DARK_OAK_LOGS = new Category<>("dark_oak_logs", VanillaItem.DARK_OAK_LOG, VanillaItem.DARK_OAK_WOOD, VanillaItem.STRIPPED_DARK_OAK_LOG,
+            VanillaItem.STRIPPED_DARK_OAK_WOOD);
+    public static final Category<ExItem> NYLIUM = new Category<>("nylium", VanillaItem.CRIMSON_NYLIUM, VanillaItem.WARPED_NYLIUM);
+    public static final Category<ExItem> WOODEN_TRAPDOORS = new Category<>("wooden_trapdoors", VanillaItem.ACACIA_TRAPDOOR, VanillaItem.BIRCH_TRAPDOOR, VanillaItem.DARK_OAK_TRAPDOOR,
+            VanillaItem.JUNGLE_TRAPDOOR, VanillaItem.OAK_TRAPDOOR, VanillaItem.SPRUCE_TRAPDOOR, VanillaItem.CRIMSON_TRAPDOOR, VanillaItem.WARPED_TRAPDOOR);
+    public static final Category<ExItem> SAND = new Category<>("sand", VanillaItem.SAND, VanillaItem.RED_SAND);
+    public static final Category<ExItem> IMPERMEABLE = new Category<>("impermeable", VanillaItem.GLASS, VanillaItem.WHITE_STAINED_GLASS, VanillaItem.ORANGE_STAINED_GLASS,
+            VanillaItem.MAGENTA_STAINED_GLASS, VanillaItem.LIGHT_BLUE_STAINED_GLASS, VanillaItem.YELLOW_STAINED_GLASS, VanillaItem.LIME_STAINED_GLASS, VanillaItem.PINK_STAINED_GLASS,
+            VanillaItem.GRAY_STAINED_GLASS, VanillaItem.LIGHT_GRAY_STAINED_GLASS, VanillaItem.CYAN_STAINED_GLASS, VanillaItem.PURPLE_STAINED_GLASS, VanillaItem.BLUE_STAINED_GLASS,
+            VanillaItem.BROWN_STAINED_GLASS, VanillaItem.GREEN_STAINED_GLASS, VanillaItem.RED_STAINED_GLASS, VanillaItem.BLACK_STAINED_GLASS, VanillaItem.TINTED_GLASS);
+    public static final Category<ExItem> SNOW = new Category<>("snow", VanillaItem.SNOW, VanillaItem.SNOW_BLOCK, VanillaItem.POWDER_SNOW);
+    public static final Category<ExItem> OAK_LOGS = new Category<>("oak_logs", VanillaItem.OAK_LOG, VanillaItem.OAK_WOOD, VanillaItem.STRIPPED_OAK_LOG, VanillaItem.STRIPPED_OAK_WOOD);
+    public static final Category<ExItem> FREEZE_IMMUNE_WEARABLES = new Category<>("freeze_immune_wearables", VanillaItem.LEATHER_BOOTS, VanillaItem.LEATHER_LEGGINGS, VanillaItem.LEATHER_CHESTPLATE,
+            VanillaItem.LEATHER_HELMET, VanillaItem.LEATHER_HORSE_ARMOR);
+    public static final Category<ExItem> CLUSTER_MAX_HARVESTABLES = new Category<>("cluster_max_harvestables", VanillaItem.DIAMOND_PICKAXE, VanillaItem.GOLDEN_PICKAXE, VanillaItem.IRON_PICKAXE,
+            VanillaItem.NETHERITE_PICKAXE, VanillaItem.STONE_PICKAXE, VanillaItem.WOODEN_PICKAXE);
+    public static final Category<ExItem> BIRCH_LOGS = new Category<>("birch_logs", VanillaItem.BIRCH_LOG, VanillaItem.BIRCH_WOOD, VanillaItem.STRIPPED_BIRCH_LOG, VanillaItem.STRIPPED_BIRCH_WOOD);
+    public static final Category<ExItem> COPPER_ORES = new Category<>("copper_ores", VanillaItem.COPPER_ORE, VanillaItem.DEEPSLATE_COPPER_ORE);
+    public static final Category<ExItem> CANDLE_CAKES = new Category<>("candle_cakes", VanillaItem.CANDLE_CAKE, VanillaItem.WHITE_CANDLE_CAKE, VanillaItem.ORANGE_CANDLE_CAKE,
+            VanillaItem.MAGENTA_CANDLE_CAKE, VanillaItem.LIGHT_BLUE_CANDLE_CAKE, VanillaItem.YELLOW_CANDLE_CAKE, VanillaItem.LIME_CANDLE_CAKE, VanillaItem.PINK_CANDLE_CAKE,
+            VanillaItem.GRAY_CANDLE_CAKE, VanillaItem.LIGHT_GRAY_CANDLE_CAKE, VanillaItem.CYAN_CANDLE_CAKE, VanillaItem.PURPLE_CANDLE_CAKE, VanillaItem.BLUE_CANDLE_CAKE, VanillaItem.BROWN_CANDLE_CAKE,
+            VanillaItem.GREEN_CANDLE_CAKE, VanillaItem.RED_CANDLE_CAKE, VanillaItem.BLACK_CANDLE_CAKE);
+    public static final Category<ExItem> WOODEN_BUTTONS = new Category<>("wooden_buttons", VanillaItem.OAK_BUTTON, VanillaItem.SPRUCE_BUTTON, VanillaItem.BIRCH_BUTTON, VanillaItem.JUNGLE_BUTTON,
+            VanillaItem.ACACIA_BUTTON, VanillaItem.DARK_OAK_BUTTON, VanillaItem.CRIMSON_BUTTON, VanillaItem.WARPED_BUTTON);
+    public static final Category<ExItem> CRYSTAL_SOUND_BLOCKS = new Category<>("crystal_sound_blocks", VanillaItem.AMETHYST_BLOCK, VanillaItem.BUDDING_AMETHYST);
+    public static final Category<ExItem> WALL_CORALS = new Category<>("wall_corals", VanillaItem.TUBE_CORAL_WALL_FAN, VanillaItem.BRAIN_CORAL_WALL_FAN, VanillaItem.BUBBLE_CORAL_WALL_FAN,
+            VanillaItem.FIRE_CORAL_WALL_FAN, VanillaItem.HORN_CORAL_WALL_FAN);
+    public static final Category<ExItem> CANDLES = new Category<>("candles", VanillaItem.CANDLE, VanillaItem.WHITE_CANDLE, VanillaItem.ORANGE_CANDLE, VanillaItem.MAGENTA_CANDLE,
+            VanillaItem.LIGHT_BLUE_CANDLE, VanillaItem.YELLOW_CANDLE, VanillaItem.LIME_CANDLE, VanillaItem.PINK_CANDLE, VanillaItem.GRAY_CANDLE, VanillaItem.LIGHT_GRAY_CANDLE, VanillaItem.CYAN_CANDLE,
+            VanillaItem.PURPLE_CANDLE, VanillaItem.BLUE_CANDLE, VanillaItem.BROWN_CANDLE, VanillaItem.GREEN_CANDLE, VanillaItem.RED_CANDLE, VanillaItem.BLACK_CANDLE);
+    public static final Category<ExItem> STONE_BRICKS = new Category<>("stone_bricks", VanillaItem.STONE_BRICKS, VanillaItem.MOSSY_STONE_BRICKS, VanillaItem.CRACKED_STONE_BRICKS,
+            VanillaItem.CHISELED_STONE_BRICKS);
+    public static final Category<ExItem> LAVA = new Category<>("lava", VanillaItem.LAVA, VanillaItem.FLOWING_LAVA);
+    public static final Category<ExItem> SHULKER_BOXES = new Category<>("shulker_boxes", VanillaItem.SHULKER_BOX, VanillaItem.BLACK_SHULKER_BOX, VanillaItem.BLUE_SHULKER_BOX,
+            VanillaItem.BROWN_SHULKER_BOX, VanillaItem.CYAN_SHULKER_BOX, VanillaItem.GRAY_SHULKER_BOX, VanillaItem.GREEN_SHULKER_BOX, VanillaItem.LIGHT_BLUE_SHULKER_BOX,
+            VanillaItem.LIGHT_GRAY_SHULKER_BOX, VanillaItem.LIME_SHULKER_BOX, VanillaItem.MAGENTA_SHULKER_BOX, VanillaItem.ORANGE_SHULKER_BOX, VanillaItem.PINK_SHULKER_BOX,
+            VanillaItem.PURPLE_SHULKER_BOX, VanillaItem.RED_SHULKER_BOX, VanillaItem.WHITE_SHULKER_BOX, VanillaItem.YELLOW_SHULKER_BOX);
+    public static final Category<ExItem> CAULDRONS = new Category<>("cauldrons", VanillaItem.CAULDRON, VanillaItem.WATER_CAULDRON, VanillaItem.LAVA_CAULDRON, VanillaItem.POWDER_SNOW_CAULDRON);
+    public static final Category<ExItem> JUNGLE_LOGS = new Category<>("jungle_logs", VanillaItem.JUNGLE_LOG, VanillaItem.JUNGLE_WOOD, VanillaItem.STRIPPED_JUNGLE_LOG, VanillaItem.STRIPPED_JUNGLE_WOOD);
+    public static final Category<ExItem> NEEDS_STONE_TOOL = new Category<>("needs_stone_tool", VanillaItem.IRON_BLOCK, VanillaItem.RAW_IRON_BLOCK, VanillaItem.IRON_ORE, VanillaItem.DEEPSLATE_IRON_ORE,
+            VanillaItem.LAPIS_BLOCK, VanillaItem.LAPIS_ORE, VanillaItem.DEEPSLATE_LAPIS_ORE, VanillaItem.COPPER_BLOCK, VanillaItem.RAW_COPPER_BLOCK, VanillaItem.COPPER_ORE,
+            VanillaItem.DEEPSLATE_COPPER_ORE, VanillaItem.CUT_COPPER_SLAB, VanillaItem.CUT_COPPER_STAIRS, VanillaItem.CUT_COPPER, VanillaItem.WEATHERED_COPPER, VanillaItem.WEATHERED_CUT_COPPER_SLAB,
+            VanillaItem.WEATHERED_CUT_COPPER_STAIRS, VanillaItem.WEATHERED_CUT_COPPER, VanillaItem.OXIDIZED_COPPER, VanillaItem.OXIDIZED_CUT_COPPER_SLAB, VanillaItem.OXIDIZED_CUT_COPPER_STAIRS,
+            VanillaItem.OXIDIZED_CUT_COPPER, VanillaItem.EXPOSED_COPPER, VanillaItem.EXPOSED_CUT_COPPER_SLAB, VanillaItem.EXPOSED_CUT_COPPER_STAIRS, VanillaItem.EXPOSED_CUT_COPPER,
+            VanillaItem.WAXED_COPPER_BLOCK, VanillaItem.WAXED_CUT_COPPER_SLAB, VanillaItem.WAXED_CUT_COPPER_STAIRS, VanillaItem.WAXED_CUT_COPPER, VanillaItem.WAXED_WEATHERED_COPPER,
+            VanillaItem.WAXED_WEATHERED_CUT_COPPER_SLAB, VanillaItem.WAXED_WEATHERED_CUT_COPPER_STAIRS, VanillaItem.WAXED_WEATHERED_CUT_COPPER, VanillaItem.WAXED_EXPOSED_COPPER,
+            VanillaItem.WAXED_EXPOSED_CUT_COPPER_SLAB, VanillaItem.WAXED_EXPOSED_CUT_COPPER_STAIRS, VanillaItem.WAXED_EXPOSED_CUT_COPPER, VanillaItem.WAXED_OXIDIZED_COPPER,
+            VanillaItem.WAXED_OXIDIZED_CUT_COPPER_SLAB, VanillaItem.WAXED_OXIDIZED_CUT_COPPER_STAIRS, VanillaItem.WAXED_OXIDIZED_CUT_COPPER, VanillaItem.LIGHTNING_ROD);
+    public static final Category<ExItem> IGNORED_BY_PIGLIN_BABIES = new Category<>("ignored_by_piglin_babies", VanillaItem.LEATHER);
+    public static final Category<ExItem> SOUL_SPEED_BLOCKS = new Category<>("soul_speed_blocks", VanillaItem.SOUL_SAND, VanillaItem.SOUL_SOIL);
+    public static final Category<ExItem> WART_BLOCKS = new Category<>("wart_blocks", VanillaItem.NETHER_WART_BLOCK, VanillaItem.WARPED_WART_BLOCK);
+    public static final Category<ExItem> MUSHROOM_GROW_BLOCK = new Category<>("mushroom_grow_block", VanillaItem.MYCELIUM, VanillaItem.PODZOL, VanillaItem.CRIMSON_NYLIUM, VanillaItem.WARPED_NYLIUM);
+    public static final Category<ExItem> CLIMBABLE = new Category<>("climbable", VanillaItem.LADDER, VanillaItem.VINE, VanillaItem.SCAFFOLDING, VanillaItem.WEEPING_VINES,
+            VanillaItem.WEEPING_VINES_PLANT, VanillaItem.TWISTING_VINES, VanillaItem.TWISTING_VINES_PLANT, VanillaItem.CAVE_VINES, VanillaItem.CAVE_VINES_PLANT);
+    public static final Category<ExItem> WOODEN_DOORS = new Category<>("wooden_doors", VanillaItem.OAK_DOOR, VanillaItem.SPRUCE_DOOR, VanillaItem.BIRCH_DOOR, VanillaItem.JUNGLE_DOOR,
+            VanillaItem.ACACIA_DOOR, VanillaItem.DARK_OAK_DOOR, VanillaItem.CRIMSON_DOOR, VanillaItem.WARPED_DOOR);
+    public static final Category<ExItem> HOGLIN_REPELLENTS = new Category<>("hoglin_repellents", VanillaItem.WARPED_FUNGUS, VanillaItem.POTTED_WARPED_FUNGUS, VanillaItem.NETHER_PORTAL,
+            VanillaItem.RESPAWN_ANCHOR);
+    public static final Category<ExItem> STONE_ORE_REPLACEABLES = new Category<>("stone_ore_replaceables", VanillaItem.STONE, VanillaItem.GRANITE, VanillaItem.DIORITE, VanillaItem.ANDESITE);
+    public static final Category<ExItem> FEATURES_CANNOT_REPLACE = new Category<>("features_cannot_replace", VanillaItem.BEDROCK, VanillaItem.SPAWNER, VanillaItem.CHEST, VanillaItem.END_PORTAL_FRAME);
+    public static final Category<ExItem> INFINIBURN_OVERWORLD = new Category<>("infiniburn_overworld", VanillaItem.NETHERRACK, VanillaItem.MAGMA_BLOCK);
+    public static final Category<ExItem> STANDING_SIGNS = new Category<>("standing_signs", VanillaItem.OAK_SIGN, VanillaItem.SPRUCE_SIGN, VanillaItem.BIRCH_SIGN, VanillaItem.ACACIA_SIGN,
+            VanillaItem.JUNGLE_SIGN, VanillaItem.DARK_OAK_SIGN, VanillaItem.CRIMSON_SIGN, VanillaItem.WARPED_SIGN);
+    public static final Category<ExItem> WARPED_STEMS = new Category<>("warped_stems", VanillaItem.WARPED_STEM, VanillaItem.STRIPPED_WARPED_STEM, VanillaItem.WARPED_HYPHAE,
+            VanillaItem.STRIPPED_WARPED_HYPHAE);
+    public static final Category<ExItem> MUSIC_DISCS = new Category<>("music_discs", Category.CREEPER_DROP_MUSIC_DISCS, VanillaItem.MUSIC_DISC_PIGSTEP);
+    public static final Category<ExItem> AXE = new Category<>("axe", VanillaItem.NOTE_BLOCK, VanillaItem.ATTACHED_MELON_STEM, VanillaItem.ATTACHED_PUMPKIN_STEM, VanillaItem.AZALEA, VanillaItem.BAMBOO,
+            VanillaItem.BARREL, VanillaItem.BEE_NEST, VanillaItem.BEEHIVE, VanillaItem.BEETROOTS, VanillaItem.BIG_DRIPLEAF_STEM, VanillaItem.BIG_DRIPLEAF, VanillaItem.BOOKSHELF,
+            VanillaItem.BROWN_MUSHROOM_BLOCK, VanillaItem.BROWN_MUSHROOM, VanillaItem.CAMPFIRE, VanillaItem.CARROTS, VanillaItem.CARTOGRAPHY_TABLE, VanillaItem.CARVED_PUMPKIN,
+            VanillaItem.CAVE_VINES_PLANT, VanillaItem.CAVE_VINES, VanillaItem.CHEST, VanillaItem.CHORUS_FLOWER, VanillaItem.CHORUS_PLANT, VanillaItem.COCOA, VanillaItem.COMPOSTER,
+            VanillaItem.CRAFTING_TABLE, VanillaItem.CRIMSON_FUNGUS, VanillaItem.DAYLIGHT_DETECTOR, VanillaItem.DEAD_BUSH, VanillaItem.FERN, VanillaItem.FLETCHING_TABLE, VanillaItem.GLOW_LICHEN,
+            VanillaItem.GRASS, VanillaItem.HANGING_ROOTS, VanillaItem.JACK_O_LANTERN, VanillaItem.JUKEBOX, VanillaItem.LADDER, VanillaItem.LARGE_FERN, VanillaItem.LECTERN, VanillaItem.LILY_PAD,
+            VanillaItem.LOOM, VanillaItem.MELON_STEM, VanillaItem.MELON, VanillaItem.MUSHROOM_STEM, VanillaItem.NETHER_WART, VanillaItem.POTATOES, VanillaItem.PUMPKIN_STEM, VanillaItem.PUMPKIN,
+            VanillaItem.RED_MUSHROOM_BLOCK, VanillaItem.RED_MUSHROOM, VanillaItem.SCAFFOLDING, VanillaItem.SMALL_DRIPLEAF, VanillaItem.SMITHING_TABLE, VanillaItem.SOUL_CAMPFIRE,
+            VanillaItem.SPORE_BLOSSOM, VanillaItem.SUGAR_CANE, VanillaItem.SWEET_BERRY_BUSH, VanillaItem.TALL_GRASS, VanillaItem.TRAPPED_CHEST, VanillaItem.TWISTING_VINES_PLANT,
+            VanillaItem.TWISTING_VINES, VanillaItem.VINE, VanillaItem.WARPED_FUNGUS, VanillaItem.WEEPING_VINES_PLANT, VanillaItem.WEEPING_VINES, VanillaItem.WHEAT, Category.BANNERS,
+            Category.FENCE_GATES, Category.FLOWERS, Category.LOGS, Category.PLANKS, Category.SAPLINGS, Category.SIGNS, Category.WOODEN_BUTTONS, Category.WOODEN_DOORS, Category.WOODEN_FENCES,
+            Category.WOODEN_PRESSURE_PLATES, Category.WOODEN_SLABS, Category.WOODEN_STAIRS, Category.WOODEN_TRAPDOORS);
+    public static final Category<ExItem> TRAPDOORS = new Category<>("trapdoors", Category.WOODEN_TRAPDOORS, VanillaItem.IRON_TRAPDOOR);
+    public static final Category<ExItem> FLOWERS = new Category<>("flowers", Category.SMALL_FLOWERS, Category.TALL_FLOWERS, VanillaItem.FLOWERING_AZALEA_LEAVES, VanillaItem.FLOWERING_AZALEA);
+    public static final Category<ExItem> BAMBOO_PLANTABLE_ON = new Category<>("bamboo_plantable_on", Category.SAND, Category.DIRT, VanillaItem.BAMBOO, VanillaItem.BAMBOO_SAPLING, VanillaItem.GRAVEL);
+    public static final Category<ExItem> CORALS = new Category<>("corals", Category.CORAL_PLANTS, VanillaItem.TUBE_CORAL_FAN, VanillaItem.BRAIN_CORAL_FAN, VanillaItem.BUBBLE_CORAL_FAN,
+            VanillaItem.FIRE_CORAL_FAN, VanillaItem.HORN_CORAL_FAN);
+    public static final Category<ExItem> DOORS = new Category<>("doors", Category.WOODEN_DOORS, VanillaItem.IRON_DOOR);
+    public static final Category<ExItem> WALL_POST_OVERRIDE = new Category<>("wall_post_override", VanillaItem.TORCH, VanillaItem.SOUL_TORCH, VanillaItem.REDSTONE_TORCH, VanillaItem.TRIPWIRE,
+            Category.SIGNS, Category.BANNERS, Category.PRESSURE_PLATES);
+    public static final Category<ExItem> LOGS_THAT_BURN = new Category<>("logs_that_burn", Category.DARK_OAK_LOGS, Category.OAK_LOGS, Category.ACACIA_LOGS, Category.BIRCH_LOGS, Category.JUNGLE_LOGS,
+            Category.SPRUCE_LOGS);
+    public static final Category<ExItem> LUSH_GROUND_REPLACEABLE = new Category<>("lush_ground_replaceable", Category.MOSS_REPLACEABLE, VanillaItem.CLAY, VanillaItem.GRAVEL, VanillaItem.SAND);
+    public static final Category<ExItem> DRIPSTONE_REPLACEABLE_BLOCKS = new Category<>("dripstone_replaceable_blocks", Category.BASE_STONE_OVERWORLD, VanillaItem.DIRT);
+    public static final Category<ExItem> PIGLIN_LOVED = new Category<>("piglin_loved", Category.GOLD_ORES, VanillaItem.GOLD_BLOCK, VanillaItem.GILDED_BLACKSTONE,
+            VanillaItem.LIGHT_WEIGHTED_PRESSURE_PLATE, VanillaItem.GOLD_INGOT, VanillaItem.BELL, VanillaItem.CLOCK, VanillaItem.GOLDEN_CARROT, VanillaItem.GLISTERING_MELON_SLICE,
+            VanillaItem.GOLDEN_APPLE, VanillaItem.ENCHANTED_GOLDEN_APPLE, VanillaItem.GOLDEN_HELMET, VanillaItem.GOLDEN_CHESTPLATE, VanillaItem.GOLDEN_LEGGINGS, VanillaItem.GOLDEN_BOOTS,
+            VanillaItem.GOLDEN_HORSE_ARMOR, VanillaItem.GOLDEN_SWORD, VanillaItem.GOLDEN_PICKAXE, VanillaItem.GOLDEN_SHOVEL, VanillaItem.GOLDEN_AXE, VanillaItem.GOLDEN_HOE, VanillaItem.RAW_GOLD,
+            VanillaItem.RAW_GOLD_BLOCK);
+    public static final Category<ExItem> LAVA_POOL_STONE_REPLACEABLES = new Category<>("lava_pool_stone_replaceables", Category.FEATURES_CANNOT_REPLACE, Category.LEAVES);
+    public static final Category<ExItem> BEE_GROWABLES = new Category<>("bee_growables", Category.CROPS, VanillaItem.SWEET_BERRY_BUSH, VanillaItem.CAVE_VINES, VanillaItem.CAVE_VINES_PLANT);
+    public static final Category<ExItem> ENDERMAN_HOLDABLE = new Category<>("enderman_holdable", Category.SMALL_FLOWERS, Category.DIRT, VanillaItem.SAND, VanillaItem.RED_SAND, VanillaItem.GRAVEL,
+            VanillaItem.BROWN_MUSHROOM, VanillaItem.RED_MUSHROOM, VanillaItem.TNT, VanillaItem.CACTUS, VanillaItem.CLAY, VanillaItem.PUMPKIN, VanillaItem.CARVED_PUMPKIN, VanillaItem.MELON,
+            VanillaItem.CRIMSON_FUNGUS, VanillaItem.CRIMSON_NYLIUM, VanillaItem.CRIMSON_ROOTS, VanillaItem.WARPED_FUNGUS, VanillaItem.WARPED_NYLIUM, VanillaItem.WARPED_ROOTS);
+    public static final Category<ExItem> INFINIBURN_END = new Category<>("infiniburn_end", Category.INFINIBURN_OVERWORLD, VanillaItem.BEDROCK);
+    public static final Category<ExItem> GUARDED_BY_PIGLINS = new Category<>("guarded_by_piglins", VanillaItem.GOLD_BLOCK, VanillaItem.BARREL, VanillaItem.CHEST, VanillaItem.ENDER_CHEST,
+            VanillaItem.GILDED_BLACKSTONE, VanillaItem.TRAPPED_CHEST, VanillaItem.RAW_GOLD_BLOCK, Category.SHULKER_BOXES, Category.GOLD_ORES);
+    public static final Category<ExItem> MOSS_REPLACEABLE = new Category<>("moss_replaceable", Category.BASE_STONE_OVERWORLD, Category.CAVE_VINES, Category.DIRT);
+    public static final Category<ExItem> STAIRS = new Category<>("stairs", Category.WOODEN_STAIRS, VanillaItem.COBBLESTONE_STAIRS, VanillaItem.SANDSTONE_STAIRS, VanillaItem.NETHER_BRICK_STAIRS,
+            VanillaItem.STONE_BRICK_STAIRS, VanillaItem.BRICK_STAIRS, VanillaItem.PURPUR_STAIRS, VanillaItem.QUARTZ_STAIRS, VanillaItem.RED_SANDSTONE_STAIRS, VanillaItem.PRISMARINE_BRICK_STAIRS,
+            VanillaItem.PRISMARINE_STAIRS, VanillaItem.DARK_PRISMARINE_STAIRS, VanillaItem.POLISHED_GRANITE_STAIRS, VanillaItem.SMOOTH_RED_SANDSTONE_STAIRS, VanillaItem.MOSSY_STONE_BRICK_STAIRS,
+            VanillaItem.POLISHED_DIORITE_STAIRS, VanillaItem.MOSSY_COBBLESTONE_STAIRS, VanillaItem.END_STONE_BRICK_STAIRS, VanillaItem.STONE_STAIRS, VanillaItem.SMOOTH_SANDSTONE_STAIRS,
+            VanillaItem.SMOOTH_QUARTZ_STAIRS, VanillaItem.GRANITE_STAIRS, VanillaItem.ANDESITE_STAIRS, VanillaItem.RED_NETHER_BRICK_STAIRS, VanillaItem.POLISHED_ANDESITE_STAIRS,
+            VanillaItem.DIORITE_STAIRS, VanillaItem.BLACKSTONE_STAIRS, VanillaItem.POLISHED_BLACKSTONE_BRICK_STAIRS, VanillaItem.POLISHED_BLACKSTONE_STAIRS, VanillaItem.COBBLED_DEEPSLATE_STAIRS,
+            VanillaItem.POLISHED_DEEPSLATE_STAIRS, VanillaItem.DEEPSLATE_TILE_STAIRS, VanillaItem.DEEPSLATE_BRICK_STAIRS, VanillaItem.OXIDIZED_CUT_COPPER_STAIRS,
+            VanillaItem.WEATHERED_CUT_COPPER_STAIRS, VanillaItem.EXPOSED_CUT_COPPER_STAIRS, VanillaItem.CUT_COPPER_STAIRS, VanillaItem.WAXED_WEATHERED_CUT_COPPER_STAIRS,
+            VanillaItem.WAXED_EXPOSED_CUT_COPPER_STAIRS, VanillaItem.WAXED_CUT_COPPER_STAIRS, VanillaItem.WAXED_OXIDIZED_CUT_COPPER_STAIRS);
+    public static final Category<ExItem> LOGS = new Category<>("logs", Category.LOGS_THAT_BURN, Category.CRIMSON_STEMS, Category.WARPED_STEMS);
+    public static final Category<ExItem> OCCLUDES_VIBRATION_SIGNALS = new Category<>("occludes_vibration_signals", Category.WOOL);
+    public static final Category<ExItem> INFINIBURN_NETHER = new Category<>("infiniburn_nether", Category.INFINIBURN_OVERWORLD);
+    public static final Category<ExItem> FENCES = new Category<>("fences", Category.WOODEN_FENCES, VanillaItem.NETHER_BRICK_FENCE);
+    public static final Category<ExItem> UNSTABLE_BOTTOM_CENTER = new Category<>("unstable_bottom_center", Category.FENCE_GATES);
+    public static final Category<ExItem> PICKAXE = new Category<>("pickaxe", VanillaItem.STONE, VanillaItem.GRANITE, VanillaItem.POLISHED_GRANITE, VanillaItem.DIORITE, VanillaItem.POLISHED_DIORITE,
+            VanillaItem.ANDESITE, VanillaItem.POLISHED_ANDESITE, VanillaItem.COBBLESTONE, VanillaItem.GOLD_ORE, VanillaItem.DEEPSLATE_GOLD_ORE, VanillaItem.IRON_ORE, VanillaItem.DEEPSLATE_IRON_ORE,
+            VanillaItem.COAL_ORE, VanillaItem.DEEPSLATE_COAL_ORE, VanillaItem.NETHER_GOLD_ORE, VanillaItem.LAPIS_ORE, VanillaItem.DEEPSLATE_LAPIS_ORE, VanillaItem.LAPIS_BLOCK, VanillaItem.DISPENSER,
+            VanillaItem.SANDSTONE, VanillaItem.CHISELED_SANDSTONE, VanillaItem.CUT_SANDSTONE, VanillaItem.GOLD_BLOCK, VanillaItem.IRON_BLOCK, VanillaItem.BRICKS, VanillaItem.MOSSY_COBBLESTONE,
+            VanillaItem.OBSIDIAN, VanillaItem.SPAWNER, VanillaItem.DIAMOND_ORE, VanillaItem.DEEPSLATE_DIAMOND_ORE, VanillaItem.DIAMOND_BLOCK, VanillaItem.FURNACE, VanillaItem.COBBLESTONE_STAIRS,
+            VanillaItem.STONE_PRESSURE_PLATE, VanillaItem.IRON_DOOR, VanillaItem.REDSTONE_ORE, VanillaItem.DEEPSLATE_REDSTONE_ORE, VanillaItem.NETHERRACK, VanillaItem.BASALT,
+            VanillaItem.POLISHED_BASALT, VanillaItem.STONE_BRICKS, VanillaItem.MOSSY_STONE_BRICKS, VanillaItem.CRACKED_STONE_BRICKS, VanillaItem.CHISELED_STONE_BRICKS, VanillaItem.IRON_BARS,
+            VanillaItem.CHAIN, VanillaItem.BRICK_STAIRS, VanillaItem.STONE_BRICK_STAIRS, VanillaItem.NETHER_BRICKS, VanillaItem.NETHER_BRICK_FENCE, VanillaItem.NETHER_BRICK_STAIRS,
+            VanillaItem.ENCHANTING_TABLE, VanillaItem.BREWING_STAND, VanillaItem.END_STONE, VanillaItem.SANDSTONE_STAIRS, VanillaItem.EMERALD_ORE, VanillaItem.DEEPSLATE_EMERALD_ORE,
+            VanillaItem.ENDER_CHEST, VanillaItem.EMERALD_BLOCK, VanillaItem.LIGHT_WEIGHTED_PRESSURE_PLATE, VanillaItem.HEAVY_WEIGHTED_PRESSURE_PLATE, VanillaItem.REDSTONE_BLOCK,
+            VanillaItem.NETHER_QUARTZ_ORE, VanillaItem.HOPPER, VanillaItem.QUARTZ_BLOCK, VanillaItem.CHISELED_QUARTZ_BLOCK, VanillaItem.QUARTZ_PILLAR, VanillaItem.QUARTZ_STAIRS, VanillaItem.DROPPER,
+            VanillaItem.WHITE_TERRACOTTA, VanillaItem.ORANGE_TERRACOTTA, VanillaItem.MAGENTA_TERRACOTTA, VanillaItem.LIGHT_BLUE_TERRACOTTA, VanillaItem.YELLOW_TERRACOTTA, VanillaItem.LIME_TERRACOTTA,
+            VanillaItem.PINK_TERRACOTTA, VanillaItem.GRAY_TERRACOTTA, VanillaItem.LIGHT_GRAY_TERRACOTTA, VanillaItem.CYAN_TERRACOTTA, VanillaItem.PURPLE_TERRACOTTA, VanillaItem.BLUE_TERRACOTTA,
+            VanillaItem.BROWN_TERRACOTTA, VanillaItem.GREEN_TERRACOTTA, VanillaItem.RED_TERRACOTTA, VanillaItem.BLACK_TERRACOTTA, VanillaItem.IRON_TRAPDOOR, VanillaItem.PRISMARINE,
+            VanillaItem.PRISMARINE_BRICKS, VanillaItem.DARK_PRISMARINE, VanillaItem.PRISMARINE_STAIRS, VanillaItem.PRISMARINE_BRICK_STAIRS, VanillaItem.DARK_PRISMARINE_STAIRS,
+            VanillaItem.PRISMARINE_SLAB, VanillaItem.PRISMARINE_BRICK_SLAB, VanillaItem.DARK_PRISMARINE_SLAB, VanillaItem.TERRACOTTA, VanillaItem.COAL_BLOCK, VanillaItem.RED_SANDSTONE,
+            VanillaItem.CHISELED_RED_SANDSTONE, VanillaItem.CUT_RED_SANDSTONE, VanillaItem.RED_SANDSTONE_STAIRS, VanillaItem.STONE_SLAB, VanillaItem.SMOOTH_STONE_SLAB, VanillaItem.SANDSTONE_SLAB,
+            VanillaItem.CUT_SANDSTONE_SLAB, VanillaItem.PETRIFIED_OAK_SLAB, VanillaItem.COBBLESTONE_SLAB, VanillaItem.BRICK_SLAB, VanillaItem.STONE_BRICK_SLAB, VanillaItem.NETHER_BRICK_SLAB,
+            VanillaItem.QUARTZ_SLAB, VanillaItem.RED_SANDSTONE_SLAB, VanillaItem.CUT_RED_SANDSTONE_SLAB, VanillaItem.PURPUR_SLAB, VanillaItem.SMOOTH_STONE, VanillaItem.SMOOTH_SANDSTONE,
+            VanillaItem.SMOOTH_QUARTZ, VanillaItem.SMOOTH_RED_SANDSTONE, VanillaItem.PURPUR_BLOCK, VanillaItem.PURPUR_PILLAR, VanillaItem.PURPUR_STAIRS, VanillaItem.END_STONE_BRICKS,
+            VanillaItem.MAGMA_BLOCK, VanillaItem.RED_NETHER_BRICKS, VanillaItem.BONE_BLOCK, VanillaItem.OBSERVER, VanillaItem.WHITE_GLAZED_TERRACOTTA, VanillaItem.ORANGE_GLAZED_TERRACOTTA,
+            VanillaItem.MAGENTA_GLAZED_TERRACOTTA, VanillaItem.LIGHT_BLUE_GLAZED_TERRACOTTA, VanillaItem.YELLOW_GLAZED_TERRACOTTA, VanillaItem.LIME_GLAZED_TERRACOTTA,
+            VanillaItem.PINK_GLAZED_TERRACOTTA, VanillaItem.GRAY_GLAZED_TERRACOTTA, VanillaItem.LIGHT_GRAY_GLAZED_TERRACOTTA, VanillaItem.CYAN_GLAZED_TERRACOTTA, VanillaItem.PURPLE_GLAZED_TERRACOTTA,
+            VanillaItem.BLUE_GLAZED_TERRACOTTA, VanillaItem.BROWN_GLAZED_TERRACOTTA, VanillaItem.GREEN_GLAZED_TERRACOTTA, VanillaItem.RED_GLAZED_TERRACOTTA, VanillaItem.BLACK_GLAZED_TERRACOTTA,
+            VanillaItem.WHITE_CONCRETE, VanillaItem.ORANGE_CONCRETE, VanillaItem.MAGENTA_CONCRETE, VanillaItem.LIGHT_BLUE_CONCRETE, VanillaItem.YELLOW_CONCRETE, VanillaItem.LIME_CONCRETE,
+            VanillaItem.PINK_CONCRETE, VanillaItem.GRAY_CONCRETE, VanillaItem.LIGHT_GRAY_CONCRETE, VanillaItem.CYAN_CONCRETE, VanillaItem.PURPLE_CONCRETE, VanillaItem.BLUE_CONCRETE,
+            VanillaItem.BROWN_CONCRETE, VanillaItem.GREEN_CONCRETE, VanillaItem.RED_CONCRETE, VanillaItem.BLACK_CONCRETE, VanillaItem.DEAD_TUBE_CORAL_BLOCK, VanillaItem.DEAD_BRAIN_CORAL_BLOCK,
+            VanillaItem.DEAD_BUBBLE_CORAL_BLOCK, VanillaItem.DEAD_FIRE_CORAL_BLOCK, VanillaItem.DEAD_HORN_CORAL_BLOCK, VanillaItem.TUBE_CORAL_BLOCK, VanillaItem.BRAIN_CORAL_BLOCK,
+            VanillaItem.BUBBLE_CORAL_BLOCK, VanillaItem.FIRE_CORAL_BLOCK, VanillaItem.HORN_CORAL_BLOCK, VanillaItem.DEAD_TUBE_CORAL, VanillaItem.DEAD_BRAIN_CORAL, VanillaItem.DEAD_BUBBLE_CORAL,
+            VanillaItem.DEAD_FIRE_CORAL, VanillaItem.DEAD_HORN_CORAL, VanillaItem.DEAD_TUBE_CORAL_FAN, VanillaItem.DEAD_BRAIN_CORAL_FAN, VanillaItem.DEAD_BUBBLE_CORAL_FAN,
+            VanillaItem.DEAD_FIRE_CORAL_FAN, VanillaItem.DEAD_HORN_CORAL_FAN, VanillaItem.DEAD_TUBE_CORAL_WALL_FAN, VanillaItem.DEAD_BRAIN_CORAL_WALL_FAN, VanillaItem.DEAD_BUBBLE_CORAL_WALL_FAN,
+            VanillaItem.DEAD_FIRE_CORAL_WALL_FAN, VanillaItem.DEAD_HORN_CORAL_WALL_FAN, VanillaItem.POLISHED_GRANITE_STAIRS, VanillaItem.SMOOTH_RED_SANDSTONE_STAIRS,
+            VanillaItem.MOSSY_STONE_BRICK_STAIRS, VanillaItem.POLISHED_DIORITE_STAIRS, VanillaItem.MOSSY_COBBLESTONE_STAIRS, VanillaItem.END_STONE_BRICK_STAIRS, VanillaItem.STONE_STAIRS,
+            VanillaItem.SMOOTH_SANDSTONE_STAIRS, VanillaItem.SMOOTH_QUARTZ_STAIRS, VanillaItem.GRANITE_STAIRS, VanillaItem.ANDESITE_STAIRS, VanillaItem.RED_NETHER_BRICK_STAIRS,
+            VanillaItem.POLISHED_ANDESITE_STAIRS, VanillaItem.DIORITE_STAIRS, VanillaItem.POLISHED_GRANITE_SLAB, VanillaItem.SMOOTH_RED_SANDSTONE_SLAB, VanillaItem.MOSSY_STONE_BRICK_SLAB,
+            VanillaItem.POLISHED_DIORITE_SLAB, VanillaItem.MOSSY_COBBLESTONE_SLAB, VanillaItem.END_STONE_BRICK_SLAB, VanillaItem.SMOOTH_SANDSTONE_SLAB, VanillaItem.SMOOTH_QUARTZ_SLAB,
+            VanillaItem.GRANITE_SLAB, VanillaItem.ANDESITE_SLAB, VanillaItem.RED_NETHER_BRICK_SLAB, VanillaItem.POLISHED_ANDESITE_SLAB, VanillaItem.DIORITE_SLAB, VanillaItem.SMOKER,
+            VanillaItem.BLAST_FURNACE, VanillaItem.GRINDSTONE, VanillaItem.STONECUTTER, VanillaItem.BELL, VanillaItem.LANTERN, VanillaItem.SOUL_LANTERN, VanillaItem.WARPED_NYLIUM,
+            VanillaItem.CRIMSON_NYLIUM, VanillaItem.NETHERITE_BLOCK, VanillaItem.ANCIENT_DEBRIS, VanillaItem.CRYING_OBSIDIAN, VanillaItem.RESPAWN_ANCHOR, VanillaItem.LODESTONE, VanillaItem.BLACKSTONE,
+            VanillaItem.BLACKSTONE_STAIRS, VanillaItem.BLACKSTONE_SLAB, VanillaItem.POLISHED_BLACKSTONE, VanillaItem.POLISHED_BLACKSTONE_BRICKS, VanillaItem.CRACKED_POLISHED_BLACKSTONE_BRICKS,
+            VanillaItem.CHISELED_POLISHED_BLACKSTONE, VanillaItem.POLISHED_BLACKSTONE_BRICK_SLAB, VanillaItem.POLISHED_BLACKSTONE_BRICK_STAIRS, VanillaItem.GILDED_BLACKSTONE,
+            VanillaItem.POLISHED_BLACKSTONE_STAIRS, VanillaItem.POLISHED_BLACKSTONE_SLAB, VanillaItem.POLISHED_BLACKSTONE_PRESSURE_PLATE, VanillaItem.CHISELED_NETHER_BRICKS,
+            VanillaItem.CRACKED_NETHER_BRICKS, VanillaItem.QUARTZ_BRICKS, VanillaItem.TUFF, VanillaItem.CALCITE, VanillaItem.OXIDIZED_COPPER, VanillaItem.WEATHERED_COPPER, VanillaItem.EXPOSED_COPPER,
+            VanillaItem.COPPER_BLOCK, VanillaItem.COPPER_ORE, VanillaItem.DEEPSLATE_COPPER_ORE, VanillaItem.OXIDIZED_CUT_COPPER, VanillaItem.WEATHERED_CUT_COPPER, VanillaItem.EXPOSED_CUT_COPPER,
+            VanillaItem.CUT_COPPER, VanillaItem.OXIDIZED_CUT_COPPER_STAIRS, VanillaItem.WEATHERED_CUT_COPPER_STAIRS, VanillaItem.EXPOSED_CUT_COPPER_STAIRS, VanillaItem.CUT_COPPER_STAIRS,
+            VanillaItem.OXIDIZED_CUT_COPPER_SLAB, VanillaItem.WEATHERED_CUT_COPPER_SLAB, VanillaItem.EXPOSED_CUT_COPPER_SLAB, VanillaItem.CUT_COPPER_SLAB, VanillaItem.WAXED_COPPER_BLOCK,
+            VanillaItem.WAXED_WEATHERED_COPPER, VanillaItem.WAXED_EXPOSED_COPPER, VanillaItem.WAXED_OXIDIZED_COPPER, VanillaItem.WAXED_OXIDIZED_CUT_COPPER, VanillaItem.WAXED_WEATHERED_CUT_COPPER,
+            VanillaItem.WAXED_EXPOSED_CUT_COPPER, VanillaItem.WAXED_CUT_COPPER, VanillaItem.WAXED_OXIDIZED_CUT_COPPER_STAIRS, VanillaItem.WAXED_WEATHERED_CUT_COPPER_STAIRS,
+            VanillaItem.WAXED_EXPOSED_CUT_COPPER_STAIRS, VanillaItem.WAXED_CUT_COPPER_STAIRS, VanillaItem.WAXED_OXIDIZED_CUT_COPPER_SLAB, VanillaItem.WAXED_WEATHERED_CUT_COPPER_SLAB,
+            VanillaItem.WAXED_EXPOSED_CUT_COPPER_SLAB, VanillaItem.WAXED_CUT_COPPER_SLAB, VanillaItem.LIGHTNING_ROD, VanillaItem.POINTED_DRIPSTONE, VanillaItem.DRIPSTONE_BLOCK, VanillaItem.DEEPSLATE,
+            VanillaItem.COBBLED_DEEPSLATE, VanillaItem.COBBLED_DEEPSLATE_STAIRS, VanillaItem.COBBLED_DEEPSLATE_SLAB, VanillaItem.POLISHED_DEEPSLATE, VanillaItem.POLISHED_DEEPSLATE_STAIRS,
+            VanillaItem.POLISHED_DEEPSLATE_SLAB, VanillaItem.DEEPSLATE_TILES, VanillaItem.DEEPSLATE_TILE_STAIRS, VanillaItem.DEEPSLATE_TILE_SLAB, VanillaItem.DEEPSLATE_BRICKS,
+            VanillaItem.DEEPSLATE_BRICK_STAIRS, VanillaItem.DEEPSLATE_BRICK_SLAB, VanillaItem.CHISELED_DEEPSLATE, VanillaItem.CRACKED_DEEPSLATE_BRICKS, VanillaItem.CRACKED_DEEPSLATE_TILES,
+            VanillaItem.SMOOTH_BASALT, VanillaItem.RAW_IRON_BLOCK, VanillaItem.RAW_COPPER_BLOCK, VanillaItem.RAW_GOLD_BLOCK, VanillaItem.ICE, VanillaItem.PACKED_ICE, VanillaItem.BLUE_ICE,
+            VanillaItem.STONE_BUTTON, VanillaItem.PISTON, VanillaItem.STICKY_PISTON, VanillaItem.PISTON_HEAD, VanillaItem.AMETHYST_CLUSTER, VanillaItem.SMALL_AMETHYST_BUD,
+            VanillaItem.MEDIUM_AMETHYST_BUD, VanillaItem.LARGE_AMETHYST_BUD, VanillaItem.AMETHYST_BLOCK, VanillaItem.BUDDING_AMETHYST, VanillaItem.INFESTED_COBBLESTONE,
+            VanillaItem.INFESTED_CHISELED_STONE_BRICKS, VanillaItem.INFESTED_CRACKED_STONE_BRICKS, VanillaItem.INFESTED_DEEPSLATE, VanillaItem.INFESTED_STONE, VanillaItem.INFESTED_MOSSY_STONE_BRICKS,
+            VanillaItem.INFESTED_STONE_BRICKS, Category.WALLS, Category.SHULKER_BOXES, Category.ANVIL, Category.CAULDRONS, Category.RAILS);
+    public static final Category<ExItem> UNDERWATER_BONEMEALS = new Category<>("underwater_bonemeals", VanillaItem.SEAGRASS, Category.CORALS, Category.WALL_CORALS);
+    public static final Category<ExItem> SIGNS = new Category<>("signs", Category.STANDING_SIGNS, Category.WALL_SIGNS);
+    public static final Category<ExItem> PRESSURE_PLATES = new Category<>("pressure_plates", VanillaItem.LIGHT_WEIGHTED_PRESSURE_PLATE, VanillaItem.HEAVY_WEIGHTED_PRESSURE_PLATE,
+            Category.WOODEN_PRESSURE_PLATES, Category.STONE_PRESSURE_PLATES);
+    public static final Category<ExItem> BUTTONS = new Category<>("buttons", Category.WOODEN_BUTTONS, VanillaItem.STONE_BUTTON, VanillaItem.POLISHED_BLACKSTONE_BUTTON);
+    public static final Category<ExItem> PREVENT_MOB_SPAWNING_INSIDE = new Category<>("prevent_mob_spawning_inside", Category.RAILS);
+    public static final Category<ExItem> SLABS = new Category<>("slabs", Category.WOODEN_SLABS, VanillaItem.STONE_SLAB, VanillaItem.SMOOTH_STONE_SLAB, VanillaItem.STONE_BRICK_SLAB,
+            VanillaItem.SANDSTONE_SLAB, VanillaItem.PURPUR_SLAB, VanillaItem.QUARTZ_SLAB, VanillaItem.RED_SANDSTONE_SLAB, VanillaItem.BRICK_SLAB, VanillaItem.COBBLESTONE_SLAB,
+            VanillaItem.NETHER_BRICK_SLAB, VanillaItem.PETRIFIED_OAK_SLAB, VanillaItem.PRISMARINE_SLAB, VanillaItem.PRISMARINE_BRICK_SLAB, VanillaItem.DARK_PRISMARINE_SLAB,
+            VanillaItem.POLISHED_GRANITE_SLAB, VanillaItem.SMOOTH_RED_SANDSTONE_SLAB, VanillaItem.MOSSY_STONE_BRICK_SLAB, VanillaItem.POLISHED_DIORITE_SLAB, VanillaItem.MOSSY_COBBLESTONE_SLAB,
+            VanillaItem.END_STONE_BRICK_SLAB, VanillaItem.SMOOTH_SANDSTONE_SLAB, VanillaItem.SMOOTH_QUARTZ_SLAB, VanillaItem.GRANITE_SLAB, VanillaItem.ANDESITE_SLAB, VanillaItem.RED_NETHER_BRICK_SLAB,
+            VanillaItem.POLISHED_ANDESITE_SLAB, VanillaItem.DIORITE_SLAB, VanillaItem.CUT_SANDSTONE_SLAB, VanillaItem.CUT_RED_SANDSTONE_SLAB, VanillaItem.BLACKSTONE_SLAB,
+            VanillaItem.POLISHED_BLACKSTONE_BRICK_SLAB, VanillaItem.POLISHED_BLACKSTONE_SLAB, VanillaItem.COBBLED_DEEPSLATE_SLAB, VanillaItem.POLISHED_DEEPSLATE_SLAB, VanillaItem.DEEPSLATE_TILE_SLAB,
+            VanillaItem.DEEPSLATE_BRICK_SLAB, VanillaItem.WAXED_WEATHERED_CUT_COPPER_SLAB, VanillaItem.WAXED_EXPOSED_CUT_COPPER_SLAB, VanillaItem.WAXED_CUT_COPPER_SLAB,
+            VanillaItem.OXIDIZED_CUT_COPPER_SLAB, VanillaItem.WEATHERED_CUT_COPPER_SLAB, VanillaItem.EXPOSED_CUT_COPPER_SLAB, VanillaItem.CUT_COPPER_SLAB, VanillaItem.WAXED_OXIDIZED_CUT_COPPER_SLAB);
 
-    // Removed in 1.15
-    public static final Category<ExItem> DIRT_LIKE = new Category<>("dirt_like", DIRT, GRASS_BLOCK, PODZOL, COARSE_DIRT, MYCELIUM);
+    public static final Category<ExMob> FREEZE_IMMUNE_ENTITY_TYPES = new Category<>("freeze_immune_entity_types", VanillaMob.STRAY, VanillaMob.POLAR_BEAR, VanillaMob.SNOW_GOLEM, VanillaMob.WITHER);
+    public static final Category<ExMob> SKELETONS = new Category<>("skeletons", VanillaMob.SKELETON, VanillaMob.STRAY, VanillaMob.WITHER_SKELETON);
+    public static final Category<ExMob> AXOLOTL_HUNT_TARGETS = new Category<>("axolotl_hunt_targets", VanillaMob.TROPICAL_FISH, VanillaMob.PUFFERFISH, VanillaMob.SALMON, VanillaMob.COD,
+            VanillaMob.SQUID, VanillaMob.GLOW_SQUID);
+    public static final Category<ExMob> POWDER_SNOW_WALKABLE_MOBS = new Category<>("powder_snow_walkable_mobs", VanillaMob.RABBIT, VanillaMob.ENDERMITE, VanillaMob.SILVERFISH, VanillaMob.FOX);
+    // Vanilla tag is called "arrows"
+    public static final Category<ExMob> ARROW_MOBS = new Category<>("arrow_mobs", VanillaMob.ARROW, VanillaMob.SPECTRAL_ARROW);
+    public static final Category<ExMob> BEEHIVE_INHABITORS = new Category<>("beehive_inhabitors", VanillaMob.BEE);
+    public static final Category<ExMob> AXOLOTL_ALWAYS_HOSTILES = new Category<>("axolotl_always_hostiles", VanillaMob.DROWNED, VanillaMob.GUARDIAN, VanillaMob.ELDER_GUARDIAN);
+    public static final Category<ExMob> FREEZE_HURTS_EXTRA_TYPES = new Category<>("freeze_hurts_extra_types", VanillaMob.STRIDER, VanillaMob.BLAZE, VanillaMob.MAGMA_CUBE);
+    public static final Category<ExMob> RAIDERS = new Category<>("raiders", VanillaMob.EVOKER, VanillaMob.PILLAGER, VanillaMob.RAVAGER, VanillaMob.VINDICATOR, VanillaMob.ILLUSIONER, VanillaMob.WITCH);
+    public static final Category<ExMob> IMPACT_PROJECTILES = new Category<>("impact_projectiles", Category.ARROWS, VanillaMob.SNOWBALL, VanillaMob.FIREBALL, VanillaMob.SMALL_FIREBALL, VanillaMob.EGG,
+            VanillaMob.TRIDENT, VanillaMob.DRAGON_FIREBALL, VanillaMob.WITHER_SKULL);
 
     // Caliburn
-    public static final Category<ExItem> CHESTS = new Category<>("chests", CHEST, TRAPPED_CHEST, ENDER_CHEST, SHULKER_BOXES);
+    public static final Category<ExItem> CHESTS = new Category<>("chests", VanillaItem.CHEST, VanillaItem.TRAPPED_CHEST, VanillaItem.ENDER_CHEST, Category.SHULKER_BOXES);
 
     static {
         if (System.getProperty("XLDevMode") != null) {
