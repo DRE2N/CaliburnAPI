@@ -243,6 +243,14 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> WARPED_STEMS = new Category<>("warped_stems", VanillaItem.WARPED_STEM, VanillaItem.STRIPPED_WARPED_STEM, VanillaItem.WARPED_HYPHAE,
             VanillaItem.STRIPPED_WARPED_HYPHAE);
     public static final Category<ExItem> MUSIC_DISCS = new Category<>("music_discs", Category.CREEPER_DROP_MUSIC_DISCS, VanillaItem.MUSIC_DISC_PIGSTEP);
+    public static final Category<ExItem> FLOWERS = new Category<>("flowers", Category.SMALL_FLOWERS, Category.TALL_FLOWERS, VanillaItem.FLOWERING_AZALEA_LEAVES, VanillaItem.FLOWERING_AZALEA);
+    public static final Category<ExItem> SIGNS = new Category<>("signs", Category.STANDING_SIGNS, Category.WALL_SIGNS);
+    public static final Category<ExItem> PRESSURE_PLATES = new Category<>("pressure_plates", VanillaItem.LIGHT_WEIGHTED_PRESSURE_PLATE, VanillaItem.HEAVY_WEIGHTED_PRESSURE_PLATE,
+            Category.WOODEN_PRESSURE_PLATES, Category.STONE_PRESSURE_PLATES);
+    public static final Category<ExItem> MOSS_REPLACEABLE = new Category<>("moss_replaceable", Category.BASE_STONE_OVERWORLD, Category.CAVE_VINES, Category.DIRT);
+    public static final Category<ExItem> LOGS_THAT_BURN = new Category<>("logs_that_burn", Category.DARK_OAK_LOGS, Category.OAK_LOGS, Category.ACACIA_LOGS, Category.BIRCH_LOGS, Category.JUNGLE_LOGS,
+            Category.SPRUCE_LOGS);
+    public static final Category<ExItem> LOGS = new Category<>("logs", Category.LOGS_THAT_BURN, Category.CRIMSON_STEMS, Category.WARPED_STEMS);
     public static final Category<ExItem> AXE = new Category<>("axe", VanillaItem.NOTE_BLOCK, VanillaItem.ATTACHED_MELON_STEM, VanillaItem.ATTACHED_PUMPKIN_STEM, VanillaItem.AZALEA, VanillaItem.BAMBOO,
             VanillaItem.BARREL, VanillaItem.BEE_NEST, VanillaItem.BEEHIVE, VanillaItem.BEETROOTS, VanillaItem.BIG_DRIPLEAF_STEM, VanillaItem.BIG_DRIPLEAF, VanillaItem.BOOKSHELF,
             VanillaItem.BROWN_MUSHROOM_BLOCK, VanillaItem.BROWN_MUSHROOM, VanillaItem.CAMPFIRE, VanillaItem.CARROTS, VanillaItem.CARTOGRAPHY_TABLE, VanillaItem.CARVED_PUMPKIN,
@@ -256,15 +264,13 @@ public class Category<T extends Categorizable> extends Categorizable {
             Category.FENCE_GATES, Category.FLOWERS, Category.LOGS, Category.PLANKS, Category.SAPLINGS, Category.SIGNS, Category.WOODEN_BUTTONS, Category.WOODEN_DOORS, Category.WOODEN_FENCES,
             Category.WOODEN_PRESSURE_PLATES, Category.WOODEN_SLABS, Category.WOODEN_STAIRS, Category.WOODEN_TRAPDOORS);
     public static final Category<ExItem> TRAPDOORS = new Category<>("trapdoors", Category.WOODEN_TRAPDOORS, VanillaItem.IRON_TRAPDOOR);
-    public static final Category<ExItem> FLOWERS = new Category<>("flowers", Category.SMALL_FLOWERS, Category.TALL_FLOWERS, VanillaItem.FLOWERING_AZALEA_LEAVES, VanillaItem.FLOWERING_AZALEA);
     public static final Category<ExItem> BAMBOO_PLANTABLE_ON = new Category<>("bamboo_plantable_on", Category.SAND, Category.DIRT, VanillaItem.BAMBOO, VanillaItem.BAMBOO_SAPLING, VanillaItem.GRAVEL);
     public static final Category<ExItem> CORALS = new Category<>("corals", Category.CORAL_PLANTS, VanillaItem.TUBE_CORAL_FAN, VanillaItem.BRAIN_CORAL_FAN, VanillaItem.BUBBLE_CORAL_FAN,
             VanillaItem.FIRE_CORAL_FAN, VanillaItem.HORN_CORAL_FAN);
     public static final Category<ExItem> DOORS = new Category<>("doors", Category.WOODEN_DOORS, VanillaItem.IRON_DOOR);
     public static final Category<ExItem> WALL_POST_OVERRIDE = new Category<>("wall_post_override", VanillaItem.TORCH, VanillaItem.SOUL_TORCH, VanillaItem.REDSTONE_TORCH, VanillaItem.TRIPWIRE,
             Category.SIGNS, Category.BANNERS, Category.PRESSURE_PLATES);
-    public static final Category<ExItem> LOGS_THAT_BURN = new Category<>("logs_that_burn", Category.DARK_OAK_LOGS, Category.OAK_LOGS, Category.ACACIA_LOGS, Category.BIRCH_LOGS, Category.JUNGLE_LOGS,
-            Category.SPRUCE_LOGS);
+
     public static final Category<ExItem> LUSH_GROUND_REPLACEABLE = new Category<>("lush_ground_replaceable", Category.MOSS_REPLACEABLE, VanillaItem.CLAY, VanillaItem.GRAVEL, VanillaItem.SAND);
     public static final Category<ExItem> DRIPSTONE_REPLACEABLE_BLOCKS = new Category<>("dripstone_replaceable_blocks", Category.BASE_STONE_OVERWORLD, VanillaItem.DIRT);
     public static final Category<ExItem> PIGLIN_LOVED = new Category<>("piglin_loved", Category.GOLD_ORES, VanillaItem.GOLD_BLOCK, VanillaItem.GILDED_BLACKSTONE,
@@ -280,7 +286,6 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> INFINIBURN_END = new Category<>("infiniburn_end", Category.INFINIBURN_OVERWORLD, VanillaItem.BEDROCK);
     public static final Category<ExItem> GUARDED_BY_PIGLINS = new Category<>("guarded_by_piglins", VanillaItem.GOLD_BLOCK, VanillaItem.BARREL, VanillaItem.CHEST, VanillaItem.ENDER_CHEST,
             VanillaItem.GILDED_BLACKSTONE, VanillaItem.TRAPPED_CHEST, VanillaItem.RAW_GOLD_BLOCK, Category.SHULKER_BOXES, Category.GOLD_ORES);
-    public static final Category<ExItem> MOSS_REPLACEABLE = new Category<>("moss_replaceable", Category.BASE_STONE_OVERWORLD, Category.CAVE_VINES, Category.DIRT);
     public static final Category<ExItem> STAIRS = new Category<>("stairs", Category.WOODEN_STAIRS, VanillaItem.COBBLESTONE_STAIRS, VanillaItem.SANDSTONE_STAIRS, VanillaItem.NETHER_BRICK_STAIRS,
             VanillaItem.STONE_BRICK_STAIRS, VanillaItem.BRICK_STAIRS, VanillaItem.PURPUR_STAIRS, VanillaItem.QUARTZ_STAIRS, VanillaItem.RED_SANDSTONE_STAIRS, VanillaItem.PRISMARINE_BRICK_STAIRS,
             VanillaItem.PRISMARINE_STAIRS, VanillaItem.DARK_PRISMARINE_STAIRS, VanillaItem.POLISHED_GRANITE_STAIRS, VanillaItem.SMOOTH_RED_SANDSTONE_STAIRS, VanillaItem.MOSSY_STONE_BRICK_STAIRS,
@@ -290,7 +295,6 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.POLISHED_DEEPSLATE_STAIRS, VanillaItem.DEEPSLATE_TILE_STAIRS, VanillaItem.DEEPSLATE_BRICK_STAIRS, VanillaItem.OXIDIZED_CUT_COPPER_STAIRS,
             VanillaItem.WEATHERED_CUT_COPPER_STAIRS, VanillaItem.EXPOSED_CUT_COPPER_STAIRS, VanillaItem.CUT_COPPER_STAIRS, VanillaItem.WAXED_WEATHERED_CUT_COPPER_STAIRS,
             VanillaItem.WAXED_EXPOSED_CUT_COPPER_STAIRS, VanillaItem.WAXED_CUT_COPPER_STAIRS, VanillaItem.WAXED_OXIDIZED_CUT_COPPER_STAIRS);
-    public static final Category<ExItem> LOGS = new Category<>("logs", Category.LOGS_THAT_BURN, Category.CRIMSON_STEMS, Category.WARPED_STEMS);
     public static final Category<ExItem> OCCLUDES_VIBRATION_SIGNALS = new Category<>("occludes_vibration_signals", Category.WOOL);
     public static final Category<ExItem> INFINIBURN_NETHER = new Category<>("infiniburn_nether", Category.INFINIBURN_OVERWORLD);
     public static final Category<ExItem> FENCES = new Category<>("fences", Category.WOODEN_FENCES, VanillaItem.NETHER_BRICK_FENCE);
@@ -354,9 +358,6 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.INFESTED_CHISELED_STONE_BRICKS, VanillaItem.INFESTED_CRACKED_STONE_BRICKS, VanillaItem.INFESTED_DEEPSLATE, VanillaItem.INFESTED_STONE, VanillaItem.INFESTED_MOSSY_STONE_BRICKS,
             VanillaItem.INFESTED_STONE_BRICKS, Category.WALLS, Category.SHULKER_BOXES, Category.ANVIL, Category.CAULDRONS, Category.RAILS);
     public static final Category<ExItem> UNDERWATER_BONEMEALS = new Category<>("underwater_bonemeals", VanillaItem.SEAGRASS, Category.CORALS, Category.WALL_CORALS);
-    public static final Category<ExItem> SIGNS = new Category<>("signs", Category.STANDING_SIGNS, Category.WALL_SIGNS);
-    public static final Category<ExItem> PRESSURE_PLATES = new Category<>("pressure_plates", VanillaItem.LIGHT_WEIGHTED_PRESSURE_PLATE, VanillaItem.HEAVY_WEIGHTED_PRESSURE_PLATE,
-            Category.WOODEN_PRESSURE_PLATES, Category.STONE_PRESSURE_PLATES);
     public static final Category<ExItem> BUTTONS = new Category<>("buttons", Category.WOODEN_BUTTONS, VanillaItem.STONE_BUTTON, VanillaItem.POLISHED_BLACKSTONE_BUTTON);
     public static final Category<ExItem> PREVENT_MOB_SPAWNING_INSIDE = new Category<>("prevent_mob_spawning_inside", Category.RAILS);
     public static final Category<ExItem> SLABS = new Category<>("slabs", Category.WOODEN_SLABS, VanillaItem.STONE_SLAB, VanillaItem.SMOOTH_STONE_SLAB, VanillaItem.STONE_BRICK_SLAB,
@@ -380,31 +381,51 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExMob> AXOLOTL_ALWAYS_HOSTILES = new Category<>("axolotl_always_hostiles", VanillaMob.DROWNED, VanillaMob.GUARDIAN, VanillaMob.ELDER_GUARDIAN);
     public static final Category<ExMob> FREEZE_HURTS_EXTRA_TYPES = new Category<>("freeze_hurts_extra_types", VanillaMob.STRIDER, VanillaMob.BLAZE, VanillaMob.MAGMA_CUBE);
     public static final Category<ExMob> RAIDERS = new Category<>("raiders", VanillaMob.EVOKER, VanillaMob.PILLAGER, VanillaMob.RAVAGER, VanillaMob.VINDICATOR, VanillaMob.ILLUSIONER, VanillaMob.WITCH);
-    public static final Category<ExMob> IMPACT_PROJECTILES = new Category<>("impact_projectiles", Category.ARROWS, VanillaMob.SNOWBALL, VanillaMob.FIREBALL, VanillaMob.SMALL_FIREBALL, VanillaMob.EGG,
-            VanillaMob.TRIDENT, VanillaMob.DRAGON_FIREBALL, VanillaMob.WITHER_SKULL);
+    public static final Category<ExMob> IMPACT_PROJECTILES = new Category<>("impact_projectiles", Category.ARROW_MOBS, VanillaMob.SNOWBALL, VanillaMob.FIREBALL, VanillaMob.SMALL_FIREBALL,
+            VanillaMob.EGG, VanillaMob.TRIDENT, VanillaMob.DRAGON_FIREBALL, VanillaMob.WITHER_SKULL);
 
     // Caliburn
     public static final Category<ExItem> CHESTS = new Category<>("chests", VanillaItem.CHEST, VanillaItem.TRAPPED_CHEST, VanillaItem.ENDER_CHEST, Category.SHULKER_BOXES);
 
     static {
         if (System.getProperty("XLDevMode") != null) {
+            String msg = "&c[ERROR] One or more categories contain an erroneous element:";
+            StringBuilder sb = new StringBuilder(msg);
             for (Field constant : Category.class.getFields()) {
                 try {
-                    confirmCorrect(((Category) constant.get(null)));
+                    Object category = constant.get(null);
+                    if (category instanceof Category) {
+                        confirmCorrect(((Category) category), sb);
+                    }
                 } catch (IllegalArgumentException | IllegalAccessException exception) {
                     exception.printStackTrace();
                 }
             }
+            if (sb.length() > msg.length()) {
+                MessageUtil.log(sb.toString());
+            }
         }
     }
 
-    private static void confirmCorrect(Category category) {
-        boolean item = category.getElements().stream().findFirst().get() instanceof ExItem;
+    private static void confirmCorrect(Category category, StringBuilder sb) {
+        boolean correct = true, first = true, item = true;
         for (Object element : category.getElements()) {
-            if (element instanceof Category) {
-                confirmCorrect(category);
-            } else if ((item && !(element instanceof ExItem)) || (item && element instanceof ExMob)) {
-                MessageUtil.log("&c[ERROR] Category " + category.getId() + " contains erroneous elements.");
+            if (element != null && first) {
+                item = element instanceof ExItem;
+                first = false;
+            }
+
+            if (element == null || !(element instanceof Category) && ((item && !(element instanceof ExItem)) || (item && element instanceof ExMob))) {
+                if (correct) {
+                    if (sb.length() > 62) {
+                        sb.append(";");
+                    }
+                    sb.append(" ").append(category.getId()).append(": ");
+                    correct = false;
+                } else {
+                    sb.append(",");
+                }
+                sb.append(element);
             }
         }
     }
