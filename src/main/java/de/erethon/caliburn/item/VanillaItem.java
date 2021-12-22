@@ -1226,6 +1226,9 @@ public class VanillaItem extends ExItem {
     public static final VanillaItem POTTED_AZALEA_BUSH = new VanillaItem(MC1_17, "POTTED_AZALEA_BUSH");
     public static final VanillaItem POTTED_FLOWERING_AZALEA_BUSH = new VanillaItem(MC1_17, "POTTED_FLOWERING_AZALEA_BUSH");
 
+    // 1.18 ITEMS
+    public static final VanillaItem MUSIC_DISC_OTHERSIDE = new VanillaItem(MC1_18, "MUSIC_DISC_OTHERSIDE");
+
     // SPAWN EGGS
     public static final VanillaItem BAT_SPAWN_EGG = new VanillaItem(MC1_8, "MONSTER_EGG", "BAT_SPAWN_EGG", 383);
     public static final VanillaItem BEE_SPAWN_EGG = new VanillaItem(MC1_15, "BEE_SPAWN_EGG");

@@ -50,6 +50,9 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.TROPICAL_FISH);
     public static final Category<ExItem> GOLD_ORES = new Category<>("gold_ores", VanillaItem.GOLD_ORE, VanillaItem.NETHER_GOLD_ORE, VanillaItem.DEEPSLATE_GOLD_ORE);
     public static final Category<ExItem> DIAMOND_ORES = new Category<>("diamond_ores", VanillaItem.DIAMOND_ORE, VanillaItem.DEEPSLATE_DIAMOND_ORE);
+    public static final Category<ExItem> GOATS_SPAWNABLE_ON = new Category<>("goats_spawnable_on", VanillaItem.STONE, VanillaItem.SNOW, VanillaItem.POWDER_SNOW, VanillaItem.SNOW_BLOCK,
+            VanillaItem.PACKED_ICE, VanillaItem.GRAVEL);
+    public static final Category<ExItem> POLAR_BEARS_SPAWNABLE_ON_IN_FROZEN_OCEAN = new Category<>("polar_bears_spawnable_on_in_frozen_ocean", VanillaItem.ICE);
     public static final Category<ExItem> CAVE_VINES = new Category<>("cave_vines", VanillaItem.CAVE_VINES_PLANT, VanillaItem.CAVE_VINES);
     public static final Category<ExItem> FIRE = new Category<>("fire", VanillaItem.FIRE, VanillaItem.SOUL_FIRE);
     public static final Category<ExItem> CORAL_BLOCKS = new Category<>("coral_blocks", VanillaItem.TUBE_CORAL_BLOCK, VanillaItem.BRAIN_CORAL_BLOCK, VanillaItem.BUBBLE_CORAL_BLOCK,
@@ -70,6 +73,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> PIGLIN_REPELLENTS = new Category<>("piglin_repellents", VanillaItem.SOUL_FIRE, VanillaItem.SOUL_TORCH, VanillaItem.SOUL_LANTERN, VanillaItem.SOUL_WALL_TORCH,
             VanillaItem.SOUL_CAMPFIRE);
     public static final Category<ExItem> PORTALS = new Category<>("portals", VanillaItem.NETHER_PORTAL, VanillaItem.END_PORTAL, VanillaItem.END_GATEWAY);
+    public static final Category<ExItem> MOOSHROOMS_SPAWNABLE_ON = new Category<>("mooshrooms_spawnable_on", VanillaItem.MYCELIUM);
     public static final Category<ExItem> SMALL_DRIPLEAF_PLACEABLE = new Category<>("small_dripleaf_placeable", VanillaItem.CLAY, VanillaItem.MOSS_BLOCK);
     public static final Category<ExItem> BANNERS = new Category<>("banners", VanillaItem.WHITE_BANNER, VanillaItem.ORANGE_BANNER, VanillaItem.MAGENTA_BANNER, VanillaItem.LIGHT_BLUE_BANNER,
             VanillaItem.YELLOW_BANNER, VanillaItem.LIME_BANNER, VanillaItem.PINK_BANNER, VanillaItem.GRAY_BANNER, VanillaItem.LIGHT_GRAY_BANNER, VanillaItem.CYAN_BANNER, VanillaItem.PURPLE_BANNER,
@@ -79,6 +83,7 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.GREEN_WALL_BANNER, VanillaItem.RED_WALL_BANNER, VanillaItem.BLACK_WALL_BANNER);
     public static final Category<ExItem> STONE_CRAFTING_MATERIALS = new Category<>("stone_crafting_materials", VanillaItem.COBBLESTONE, VanillaItem.BLACKSTONE, VanillaItem.COBBLED_DEEPSLATE);
     public static final Category<ExItem> STONE_PRESSURE_PLATES = new Category<>("stone_pressure_plates", VanillaItem.STONE_PRESSURE_PLATE, VanillaItem.POLISHED_BLACKSTONE_PRESSURE_PLATE);
+    public static final Category<ExItem> RABBITS_SPAWNABLE_ON = new Category<>("rabbits_spawnable_on", VanillaItem.GRASS_BLOCK, VanillaItem.SNOW, VanillaItem.SNOW_BLOCK, VanillaItem.SAND);
     public static final Category<ExItem> BEDS = new Category<>("beds", VanillaItem.RED_BED, VanillaItem.BLACK_BED, VanillaItem.BLUE_BED, VanillaItem.BROWN_BED, VanillaItem.CYAN_BED,
             VanillaItem.GRAY_BED, VanillaItem.GREEN_BED, VanillaItem.LIGHT_BLUE_BED, VanillaItem.LIGHT_GRAY_BED, VanillaItem.LIME_BED, VanillaItem.MAGENTA_BED, VanillaItem.ORANGE_BED,
             VanillaItem.PINK_BED, VanillaItem.PURPLE_BED, VanillaItem.WHITE_BED, VanillaItem.YELLOW_BED);
@@ -110,6 +115,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> WOODEN_STAIRS = new Category<>("wooden_stairs", VanillaItem.OAK_STAIRS, VanillaItem.SPRUCE_STAIRS, VanillaItem.BIRCH_STAIRS, VanillaItem.JUNGLE_STAIRS,
             VanillaItem.ACACIA_STAIRS, VanillaItem.DARK_OAK_STAIRS, VanillaItem.CRIMSON_STAIRS, VanillaItem.WARPED_STAIRS);
     public static final Category<ExItem> RAILS = new Category<>("rails", VanillaItem.RAIL, VanillaItem.POWERED_RAIL, VanillaItem.DETECTOR_RAIL, VanillaItem.ACTIVATOR_RAIL);
+    public static final Category<ExItem> WOLVES_SPAWNABLE_ON = new Category<>("wolves_spawnable_on", VanillaItem.GRASS_BLOCK, VanillaItem.SNOW, VanillaItem.SNOW_BLOCK);
     public static final Category<ExItem> WOODEN_PRESSURE_PLATES = new Category<>("wooden_pressure_plates", VanillaItem.OAK_PRESSURE_PLATE, VanillaItem.SPRUCE_PRESSURE_PLATE,
             VanillaItem.BIRCH_PRESSURE_PLATE, VanillaItem.JUNGLE_PRESSURE_PLATE, VanillaItem.ACACIA_PRESSURE_PLATE, VanillaItem.DARK_OAK_PRESSURE_PLATE, VanillaItem.CRIMSON_PRESSURE_PLATE,
             VanillaItem.WARPED_PRESSURE_PLATE);
@@ -156,6 +162,8 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> STONE_TOOL_MATERIALS = new Category<>("stone_tool_materials", VanillaItem.COBBLESTONE, VanillaItem.BLACKSTONE, VanillaItem.COBBLED_DEEPSLATE);
     public static final Category<ExItem> GEODE_INVALID_BLOCKS = new Category<>("geode_invalid_blocks", VanillaItem.BEDROCK, VanillaItem.WATER, VanillaItem.LAVA, VanillaItem.ICE, VanillaItem.PACKED_ICE,
             VanillaItem.BLUE_ICE);
+    public static final Category<ExItem> FOXES_SPAWNABLE_ON = new Category<>("foxes_spawnable_on", VanillaItem.GRASS_BLOCK, VanillaItem.SNOW, VanillaItem.SNOW_BLOCK, VanillaItem.PODZOL,
+            VanillaItem.COARSE_DIRT);
     public static final Category<ExItem> PIGLIN_FOOD = new Category<>("piglin_food", VanillaItem.PORKCHOP, VanillaItem.COOKED_PORKCHOP);
     public static final Category<ExItem> NEEDS_IRON_TOOL = new Category<>("needs_iron_tool", VanillaItem.DIAMOND_BLOCK, VanillaItem.DIAMOND_ORE, VanillaItem.DEEPSLATE_DIAMOND_ORE,
             VanillaItem.EMERALD_ORE, VanillaItem.DEEPSLATE_EMERALD_ORE, VanillaItem.EMERALD_BLOCK, VanillaItem.GOLD_BLOCK, VanillaItem.RAW_GOLD_BLOCK, VanillaItem.GOLD_ORE,
@@ -164,6 +172,10 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExItem> REDSTONE_ORES = new Category<>("redstone_ores", VanillaItem.REDSTONE_ORE, VanillaItem.DEEPSLATE_REDSTONE_ORE);
     public static final Category<ExItem> CRIMSON_STEMS = new Category<>("crimson_stems", VanillaItem.CRIMSON_STEM, VanillaItem.STRIPPED_CRIMSON_STEM, VanillaItem.CRIMSON_HYPHAE,
             VanillaItem.STRIPPED_CRIMSON_HYPHAE);
+    public static final Category<ExItem> TERRACOTTA = new Category<>("terracotta", VanillaItem.TERRACOTTA, VanillaItem.WHITE_TERRACOTTA, VanillaItem.ORANGE_TERRACOTTA, VanillaItem.MAGENTA_TERRACOTTA,
+            VanillaItem.LIGHT_BLUE_TERRACOTTA, VanillaItem.YELLOW_TERRACOTTA, VanillaItem.LIME_TERRACOTTA, VanillaItem.PINK_TERRACOTTA, VanillaItem.GRAY_TERRACOTTA, VanillaItem.LIGHT_GRAY_TERRACOTTA,
+            VanillaItem.CYAN_TERRACOTTA, VanillaItem.PURPLE_TERRACOTTA, VanillaItem.BLUE_TERRACOTTA, VanillaItem.BROWN_TERRACOTTA, VanillaItem.GREEN_TERRACOTTA, VanillaItem.RED_TERRACOTTA,
+            VanillaItem.BLACK_TERRACOTTA);
     public static final Category<ExItem> IRON_ORES = new Category<>("iron_ores", VanillaItem.IRON_ORE, VanillaItem.DEEPSLATE_IRON_ORE);
     public static final Category<ExItem> DIRT = new Category<>("dirt", VanillaItem.DIRT, VanillaItem.GRASS_BLOCK, VanillaItem.PODZOL, VanillaItem.COARSE_DIRT, VanillaItem.MYCELIUM,
             VanillaItem.ROOTED_DIRT, VanillaItem.MOSS_BLOCK);
@@ -209,6 +221,7 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.PURPLE_CANDLE, VanillaItem.BLUE_CANDLE, VanillaItem.BROWN_CANDLE, VanillaItem.GREEN_CANDLE, VanillaItem.RED_CANDLE, VanillaItem.BLACK_CANDLE);
     public static final Category<ExItem> STONE_BRICKS = new Category<>("stone_bricks", VanillaItem.STONE_BRICKS, VanillaItem.MOSSY_STONE_BRICKS, VanillaItem.CRACKED_STONE_BRICKS,
             VanillaItem.CHISELED_STONE_BRICKS);
+    public static final Category<ExItem> AXOLOTLS_SPAWNABLE_ON = new Category<>("axolotls_spawnable_on", VanillaItem.CLAY);
     public static final Category<ExItem> LAVA = new Category<>("lava", VanillaItem.LAVA, VanillaItem.FLOWING_LAVA);
     public static final Category<ExItem> SHULKER_BOXES = new Category<>("shulker_boxes", VanillaItem.SHULKER_BOX, VanillaItem.BLACK_SHULKER_BOX, VanillaItem.BLUE_SHULKER_BOX,
             VanillaItem.BROWN_SHULKER_BOX, VanillaItem.CYAN_SHULKER_BOX, VanillaItem.GRAY_SHULKER_BOX, VanillaItem.GREEN_SHULKER_BOX, VanillaItem.LIGHT_BLUE_SHULKER_BOX,
@@ -225,9 +238,12 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.WAXED_WEATHERED_CUT_COPPER_SLAB, VanillaItem.WAXED_WEATHERED_CUT_COPPER_STAIRS, VanillaItem.WAXED_WEATHERED_CUT_COPPER, VanillaItem.WAXED_EXPOSED_COPPER,
             VanillaItem.WAXED_EXPOSED_CUT_COPPER_SLAB, VanillaItem.WAXED_EXPOSED_CUT_COPPER_STAIRS, VanillaItem.WAXED_EXPOSED_CUT_COPPER, VanillaItem.WAXED_OXIDIZED_COPPER,
             VanillaItem.WAXED_OXIDIZED_CUT_COPPER_SLAB, VanillaItem.WAXED_OXIDIZED_CUT_COPPER_STAIRS, VanillaItem.WAXED_OXIDIZED_CUT_COPPER, VanillaItem.LIGHTNING_ROD);
+    public static final Category<ExItem> REPLACEABLE_PLANTS = new Category<>("replaceable_plants", VanillaItem.GRASS, VanillaItem.FERN, VanillaItem.DEAD_BUSH, VanillaItem.VINE, VanillaItem.GLOW_LICHEN,
+            VanillaItem.SUNFLOWER, VanillaItem.LILAC, VanillaItem.ROSE_BUSH, VanillaItem.PEONY, VanillaItem.TALL_GRASS, VanillaItem.LARGE_FERN, VanillaItem.HANGING_ROOTS);
     public static final Category<ExItem> IGNORED_BY_PIGLIN_BABIES = new Category<>("ignored_by_piglin_babies", VanillaItem.LEATHER);
     public static final Category<ExItem> SOUL_SPEED_BLOCKS = new Category<>("soul_speed_blocks", VanillaItem.SOUL_SAND, VanillaItem.SOUL_SOIL);
     public static final Category<ExItem> WART_BLOCKS = new Category<>("wart_blocks", VanillaItem.NETHER_WART_BLOCK, VanillaItem.WARPED_WART_BLOCK);
+    public static final Category<ExItem> ANIMALS_SPAWNABLE_ON = new Category<>("animals_spawnable_on", VanillaItem.GRASS_BLOCK);
     public static final Category<ExItem> MUSHROOM_GROW_BLOCK = new Category<>("mushroom_grow_block", VanillaItem.MYCELIUM, VanillaItem.PODZOL, VanillaItem.CRIMSON_NYLIUM, VanillaItem.WARPED_NYLIUM);
     public static final Category<ExItem> CLIMBABLE = new Category<>("climbable", VanillaItem.LADDER, VanillaItem.VINE, VanillaItem.SCAFFOLDING, VanillaItem.WEEPING_VINES,
             VanillaItem.WEEPING_VINES_PLANT, VanillaItem.TWISTING_VINES, VanillaItem.TWISTING_VINES_PLANT, VanillaItem.CAVE_VINES, VanillaItem.CAVE_VINES_PLANT);
@@ -261,16 +277,16 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.RED_MUSHROOM_BLOCK, VanillaItem.RED_MUSHROOM, VanillaItem.SCAFFOLDING, VanillaItem.SMALL_DRIPLEAF, VanillaItem.SMITHING_TABLE, VanillaItem.SOUL_CAMPFIRE,
             VanillaItem.SPORE_BLOSSOM, VanillaItem.SUGAR_CANE, VanillaItem.SWEET_BERRY_BUSH, VanillaItem.TALL_GRASS, VanillaItem.TRAPPED_CHEST, VanillaItem.TWISTING_VINES_PLANT,
             VanillaItem.TWISTING_VINES, VanillaItem.VINE, VanillaItem.WARPED_FUNGUS, VanillaItem.WEEPING_VINES_PLANT, VanillaItem.WEEPING_VINES, VanillaItem.WHEAT, Category.BANNERS,
-            Category.FENCE_GATES, Category.FLOWERS, Category.LOGS, Category.PLANKS, Category.SAPLINGS, Category.SIGNS, Category.WOODEN_BUTTONS, Category.WOODEN_DOORS, Category.WOODEN_FENCES,
+            Category.FENCE_GATES, Category.LOGS, Category.PLANKS, Category.SAPLINGS, Category.SIGNS, Category.WOODEN_BUTTONS, Category.WOODEN_DOORS, Category.WOODEN_FENCES,
             Category.WOODEN_PRESSURE_PLATES, Category.WOODEN_SLABS, Category.WOODEN_STAIRS, Category.WOODEN_TRAPDOORS);
     public static final Category<ExItem> TRAPDOORS = new Category<>("trapdoors", Category.WOODEN_TRAPDOORS, VanillaItem.IRON_TRAPDOOR);
     public static final Category<ExItem> BAMBOO_PLANTABLE_ON = new Category<>("bamboo_plantable_on", Category.SAND, Category.DIRT, VanillaItem.BAMBOO, VanillaItem.BAMBOO_SAPLING, VanillaItem.GRAVEL);
     public static final Category<ExItem> CORALS = new Category<>("corals", Category.CORAL_PLANTS, VanillaItem.TUBE_CORAL_FAN, VanillaItem.BRAIN_CORAL_FAN, VanillaItem.BUBBLE_CORAL_FAN,
             VanillaItem.FIRE_CORAL_FAN, VanillaItem.HORN_CORAL_FAN);
+    public static final Category<ExItem> LAVA_POOL_STONE_CANNOT_REPLACE = new Category<>("lava_pool_stone_cannot_replace", Category.FEATURES_CANNOT_REPLACE, Category.LEAVES, Category.LOGS);
     public static final Category<ExItem> DOORS = new Category<>("doors", Category.WOODEN_DOORS, VanillaItem.IRON_DOOR);
     public static final Category<ExItem> WALL_POST_OVERRIDE = new Category<>("wall_post_override", VanillaItem.TORCH, VanillaItem.SOUL_TORCH, VanillaItem.REDSTONE_TORCH, VanillaItem.TRIPWIRE,
             Category.SIGNS, Category.BANNERS, Category.PRESSURE_PLATES);
-
     public static final Category<ExItem> LUSH_GROUND_REPLACEABLE = new Category<>("lush_ground_replaceable", Category.MOSS_REPLACEABLE, VanillaItem.CLAY, VanillaItem.GRAVEL, VanillaItem.SAND);
     public static final Category<ExItem> DRIPSTONE_REPLACEABLE_BLOCKS = new Category<>("dripstone_replaceable_blocks", Category.BASE_STONE_OVERWORLD, VanillaItem.DIRT);
     public static final Category<ExItem> PIGLIN_LOVED = new Category<>("piglin_loved", Category.GOLD_ORES, VanillaItem.GOLD_BLOCK, VanillaItem.GILDED_BLACKSTONE,
@@ -278,12 +294,13 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.GOLDEN_APPLE, VanillaItem.ENCHANTED_GOLDEN_APPLE, VanillaItem.GOLDEN_HELMET, VanillaItem.GOLDEN_CHESTPLATE, VanillaItem.GOLDEN_LEGGINGS, VanillaItem.GOLDEN_BOOTS,
             VanillaItem.GOLDEN_HORSE_ARMOR, VanillaItem.GOLDEN_SWORD, VanillaItem.GOLDEN_PICKAXE, VanillaItem.GOLDEN_SHOVEL, VanillaItem.GOLDEN_AXE, VanillaItem.GOLDEN_HOE, VanillaItem.RAW_GOLD,
             VanillaItem.RAW_GOLD_BLOCK);
-    public static final Category<ExItem> LAVA_POOL_STONE_REPLACEABLES = new Category<>("lava_pool_stone_replaceables", Category.FEATURES_CANNOT_REPLACE, Category.LEAVES);
+    public static final Category<ExItem> AZALEA_ROOT_REPLACEABLE = new Category<>("azalea_root_replaceable", Category.LUSH_GROUND_REPLACEABLE, Category.TERRACOTTA, VanillaItem.RED_SAND);
     public static final Category<ExItem> BEE_GROWABLES = new Category<>("bee_growables", Category.CROPS, VanillaItem.SWEET_BERRY_BUSH, VanillaItem.CAVE_VINES, VanillaItem.CAVE_VINES_PLANT);
     public static final Category<ExItem> ENDERMAN_HOLDABLE = new Category<>("enderman_holdable", Category.SMALL_FLOWERS, Category.DIRT, VanillaItem.SAND, VanillaItem.RED_SAND, VanillaItem.GRAVEL,
             VanillaItem.BROWN_MUSHROOM, VanillaItem.RED_MUSHROOM, VanillaItem.TNT, VanillaItem.CACTUS, VanillaItem.CLAY, VanillaItem.PUMPKIN, VanillaItem.CARVED_PUMPKIN, VanillaItem.MELON,
             VanillaItem.CRIMSON_FUNGUS, VanillaItem.CRIMSON_NYLIUM, VanillaItem.CRIMSON_ROOTS, VanillaItem.WARPED_FUNGUS, VanillaItem.WARPED_NYLIUM, VanillaItem.WARPED_ROOTS);
     public static final Category<ExItem> INFINIBURN_END = new Category<>("infiniburn_end", Category.INFINIBURN_OVERWORLD, VanillaItem.BEDROCK);
+    public static final Category<ExItem> AZALEA_GROWS_ON = new Category<>("azalea_grows_on", Category.DIRT, Category.SAND, Category.TERRACOTTA, VanillaItem.SNOW_BLOCK, VanillaItem.POWDER_SNOW);
     public static final Category<ExItem> GUARDED_BY_PIGLINS = new Category<>("guarded_by_piglins", VanillaItem.GOLD_BLOCK, VanillaItem.BARREL, VanillaItem.CHEST, VanillaItem.ENDER_CHEST,
             VanillaItem.GILDED_BLACKSTONE, VanillaItem.TRAPPED_CHEST, VanillaItem.RAW_GOLD_BLOCK, Category.SHULKER_BOXES, Category.GOLD_ORES);
     public static final Category<ExItem> STAIRS = new Category<>("stairs", Category.WOODEN_STAIRS, VanillaItem.COBBLESTONE_STAIRS, VanillaItem.SANDSTONE_STAIRS, VanillaItem.NETHER_BRICK_STAIRS,
@@ -356,8 +373,10 @@ public class Category<T extends Categorizable> extends Categorizable {
             VanillaItem.STONE_BUTTON, VanillaItem.PISTON, VanillaItem.STICKY_PISTON, VanillaItem.PISTON_HEAD, VanillaItem.AMETHYST_CLUSTER, VanillaItem.SMALL_AMETHYST_BUD,
             VanillaItem.MEDIUM_AMETHYST_BUD, VanillaItem.LARGE_AMETHYST_BUD, VanillaItem.AMETHYST_BLOCK, VanillaItem.BUDDING_AMETHYST, VanillaItem.INFESTED_COBBLESTONE,
             VanillaItem.INFESTED_CHISELED_STONE_BRICKS, VanillaItem.INFESTED_CRACKED_STONE_BRICKS, VanillaItem.INFESTED_DEEPSLATE, VanillaItem.INFESTED_STONE, VanillaItem.INFESTED_MOSSY_STONE_BRICKS,
-            VanillaItem.INFESTED_STONE_BRICKS, Category.WALLS, Category.SHULKER_BOXES, Category.ANVIL, Category.CAULDRONS, Category.RAILS);
+            VanillaItem.INFESTED_STONE_BRICKS, Category.WALLS, Category.SHULKER_BOXES, Category.ANVIL, Category.CAULDRONS, Category.RAILS, VanillaItem.CONDUIT);
     public static final Category<ExItem> UNDERWATER_BONEMEALS = new Category<>("underwater_bonemeals", VanillaItem.SEAGRASS, Category.CORALS, Category.WALL_CORALS);
+    public static final Category<ExItem> BIG_DRIPLEAF_PLACEABLE = new Category<>("big_dripleaf_placeable", Category.SMALL_DRIPLEAF_PLACEABLE, Category.DIRT, VanillaItem.FARMLAND);
+    public static final Category<ExItem> PARROTS_SPAWNABLE_ON = new Category<>("parrots_spawnable_on", VanillaItem.GRASS_BLOCK, VanillaItem.AIR, Category.LEAVES, Category.LOGS);
     public static final Category<ExItem> BUTTONS = new Category<>("buttons", Category.WOODEN_BUTTONS, VanillaItem.STONE_BUTTON, VanillaItem.POLISHED_BLACKSTONE_BUTTON);
     public static final Category<ExItem> PREVENT_MOB_SPAWNING_INSIDE = new Category<>("prevent_mob_spawning_inside", Category.RAILS);
     public static final Category<ExItem> SLABS = new Category<>("slabs", Category.WOODEN_SLABS, VanillaItem.STONE_SLAB, VanillaItem.SMOOTH_STONE_SLAB, VanillaItem.STONE_BRICK_SLAB,

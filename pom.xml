@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon</groupId>
     <artifactId>caliburn</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
     <name>CaliburnAPI</name>
     <url>https://dre2n.github.io</url>
@@ -59,27 +59,27 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version><!-- Actually for 1.17, but compatibility... -->
+            <version>1.14.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon.commons</groupId>
             <artifactId>commons-dist</artifactId>
-            <version>6.2.5</version>
+            <version>6.3.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon</groupId>
             <artifactId>headlib</artifactId>
-            <version>3.0.7</version>
+            <version>3.0.9</version>
             <scope>compile</scope>
         </dependency>
         <!-- From Minecraft -->
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>21.0</version>
-            <scope>provided</scope>
+            <version>31.0.1-jre</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <repositories>
