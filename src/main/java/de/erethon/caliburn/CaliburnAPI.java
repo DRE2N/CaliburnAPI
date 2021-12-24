@@ -31,7 +31,6 @@ import de.erethon.caliburn.util.SimpleSerialization;
 import de.erethon.commons.chat.MessageUtil;
 import de.erethon.commons.compatibility.CompatibilityHandler;
 import de.erethon.commons.compatibility.Version;
-import de.erethon.commons.config.RawConfiguration;
 import de.erethon.commons.misc.FileUtil;
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +42,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
@@ -149,8 +149,8 @@ public class CaliburnAPI {
                 exception.printStackTrace();
             }
         }
-        RawConfiguration icConfig = RawConfiguration.loadConfiguration(icFile);
-        for (Object entry : icConfig.getArgs().entrySet()) {
+        FileConfiguration icConfig = YamlConfiguration.loadConfiguration(icFile);
+        for (Object entry : icConfig.getValues(false).entrySet()) {
             itemCategories.add(new Category<>(this, ((Map.Entry) entry).getKey().toString(), (List<String>) ((Map.Entry) entry).getValue()));
         }
 
@@ -162,18 +162,18 @@ public class CaliburnAPI {
                 exception.printStackTrace();
             }
         }
-        RawConfiguration mcConfig = RawConfiguration.loadConfiguration(mcFile);
-        for (Object entry : mcConfig.getArgs().entrySet()) {
+        FileConfiguration mcConfig = YamlConfiguration.loadConfiguration(mcFile);
+        for (Object entry : mcConfig.getValues(false).entrySet()) {
             mobCategories.add(new Category<>(this, ((Map.Entry) entry).getKey().toString(), (List<String>) ((Map.Entry) entry).getValue()));
         }
 
         File custom = new File(getDataFolder() + "/custom/mobs");
         custom.mkdirs();
         for (File file : FileUtil.getFilesForFolder(custom)) {
-            RawConfiguration config = RawConfiguration.loadConfiguration(file);
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             CustomMob mob = null;
             try {
-                mob = CustomMob.deserialize(config.getArgs());
+                mob = CustomMob.deserialize(config.getValues(false));
             } catch (Exception exception) {
                 MessageUtil.log("[Caliburn] The custom mob file \"" + file.getName() + "\"is invalid:");
                 exception.printStackTrace();
@@ -186,14 +186,14 @@ public class CaliburnAPI {
         vmFile.mkdirs();
         for (VanillaMob mob : VanillaMob.getLoaded()) {
             File file = new File(vmFile, mob.getId() + ".yml");
-            RawConfiguration config;
+            YamlConfiguration config;
             if (!file.exists()) {
                 try {
                     file.createNewFile();
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }
-                config = RawConfiguration.loadConfiguration(file);
+                config = YamlConfiguration.loadConfiguration(file);
                 config.createSection("categoryDamageModifiers");
                 config.createSection("itemDamageModifiers");
                 try {
@@ -202,18 +202,18 @@ public class CaliburnAPI {
                     exception.printStackTrace();
                 }
             } else {
-                config = RawConfiguration.loadConfiguration(file);
+                config = YamlConfiguration.loadConfiguration(file);
             }
-            mob.setRaw(config.getArgs());
+            mob.setRaw(config.getValues(false));
         }
 
         File ciFile = new File(getDataFolder() + "/custom/items");
         ciFile.mkdirs();
         for (File file : FileUtil.getFilesForFolder(ciFile)) {
-            RawConfiguration config = RawConfiguration.loadConfiguration(file);
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
             CustomItem item = null;
             try {
-                item = CustomItem.deserialize(config.getArgs());
+                item = CustomItem.deserialize(config.getValues(false));
             } catch (Exception exception) {
                 MessageUtil.log("[Caliburn] The custom item file \"" + file.getName() + "\"is invalid:");
                 exception.printStackTrace();
@@ -228,14 +228,14 @@ public class CaliburnAPI {
         }
         for (VanillaItem item : VanillaItem.getLoaded()) {
             File file = new File(viFile, item.getId() + ".yml");
-            RawConfiguration config;
+            FileConfiguration config;
             if (!file.exists()) {
                 try {
                     file.createNewFile();
                 } catch (IOException exception) {
                     exception.printStackTrace();
                 }
-                config = RawConfiguration.loadConfiguration(file);
+                config = YamlConfiguration.loadConfiguration(file);
                 config.createSection("categoryDamageModifiers");
                 config.createSection("mobDamageModifiers");
                 try {
@@ -244,9 +244,9 @@ public class CaliburnAPI {
                     exception.printStackTrace();
                 }
             } else {
-                config = RawConfiguration.loadConfiguration(file);
+                config = YamlConfiguration.loadConfiguration(file);
             }
-            item.setRaw(config.getArgs());
+            item.setRaw(config.getValues(false));
         }
 
         File ltDir = new File(getDataFolder() + "/custom/loottables");
