@@ -1,0 +1,11 @@
+name: ItemsXL
+main: de.erethon.itemsxl.ItemsXL
+version: ${project.version}${buildNo}
+author: Daniel Saukel
+description: "Implementation of Caliburn v${apiVersion}."
+website: ${project.url}
+commands:
+  itemsxl:
+    description: ItemsXL core command.
+    aliases: [ixl]
+api-version: 1.13
