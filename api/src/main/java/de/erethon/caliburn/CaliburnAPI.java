@@ -28,10 +28,10 @@ import de.erethon.caliburn.mob.ExMob;
 import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
-import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.compatibility.CompatibilityHandler;
-import de.erethon.commons.compatibility.Version;
-import de.erethon.commons.misc.FileUtil;
+import de.erethon.bedrock.chat.MessageUtil;
+import de.erethon.bedrock.compatibility.CompatibilityHandler;
+import de.erethon.bedrock.compatibility.Version;
+import de.erethon.bedrock.misc.FileUtil;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -103,7 +103,7 @@ public class CaliburnAPI {
         Bukkit.getPluginManager().registerEvents(new MobListener(this), plugin);
         ItemListener il = new ItemListener(this);
         Bukkit.getPluginManager().registerEvents(il, plugin);
-        if (CompatibilityHandler.getInstance().isSpigot()) {
+        if (CompatibilityHandler.getInstance().isSpigot() && Version.isAtLeast(Version.MC1_12_2)) {
             Bukkit.getPluginManager().registerEvents(il.new Spigot(), plugin);
         }
 

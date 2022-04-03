@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Daniel Saukel
+ * Copyright (C) 2015-2022 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,10 +17,10 @@
 package de.erethon.itemsxl;
 
 import de.erethon.caliburn.CaliburnAPI;
-import de.erethon.commons.command.DRECommandCache;
-import de.erethon.commons.compatibility.Internals;
-import de.erethon.commons.javaplugin.DREPlugin;
-import de.erethon.commons.javaplugin.DREPluginSettings;
+import de.erethon.bedrock.command.ECommandCache;
+import de.erethon.bedrock.compatibility.Internals;
+import de.erethon.bedrock.plugin.EPlugin;
+import de.erethon.bedrock.plugin.EPluginSettings;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
 import de.erethon.itemsxl.item.ItemBoxListener;
@@ -31,16 +31,16 @@ import org.bukkit.ChatColor;
 /**
  * @author Daniel Saukel
  */
-public class ItemsXL extends DREPlugin {
+public class ItemsXL extends EPlugin {
 
     private CaliburnAPI api;
 
     private IConfig iConfig;
-    private DRECommandCache iCommands;
+    private ECommandCache iCommands;
 
     public ItemsXL() {
-        settings = DREPluginSettings.builder()
-                .internals(Internals.andHigher(Internals.v1_8_R1))
+        settings = EPluginSettings.builder()
+                .internals(Internals.INDEPENDENT)
                 .metrics(true)
                 .bStatsResourceId(1041)
                 .spigotMCResourceId(14472)
@@ -74,15 +74,15 @@ public class ItemsXL extends DREPlugin {
     }
 
     @Override
-    public DRECommandCache getCommandCache() {
+    public ECommandCache getCommandCache() {
         return iCommands;
     }
 
     /**
-     * load / reload a new instance of DRECommandCache
+     * load / reload a new instance of ECommandCache
      */
     public void loadICommandCache() {
-        iCommands = new DRECommandCache(
+        iCommands = new ECommandCache(
                 "itemsxl",
                 this,
                 new HelpCommand(this),

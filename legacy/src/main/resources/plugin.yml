@@ -1,0 +1,7 @@
+name: LegacyIXL
+main: de.erethon.Legacy
+version: ${project.version}
+author: Daniel Saukel
+description: "Spigot and backward compatibility for ItemsXL"
+api-version: 1.13
+loadbefore: [ItemsXL]

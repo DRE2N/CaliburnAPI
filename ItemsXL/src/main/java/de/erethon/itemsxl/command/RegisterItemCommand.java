@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Daniel Saukel
+ * Copyright (C) 2015-2022 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,10 @@ import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.command.DRECommand;
-import de.erethon.commons.compatibility.Version;
-import de.erethon.commons.misc.EnumUtil;
+import de.erethon.bedrock.chat.MessageUtil;
+import de.erethon.bedrock.command.ECommand;
+import de.erethon.bedrock.compatibility.Version;
+import de.erethon.bedrock.misc.EnumUtil;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
 import java.io.File;
@@ -38,7 +38,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Daniel Saukel
  */
-public class RegisterItemCommand extends DRECommand {
+public class RegisterItemCommand extends ECommand {
 
     private CaliburnAPI api;
 

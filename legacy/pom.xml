@@ -1,12 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon.caliburn</groupId>
-    <artifactId>itemsxl</artifactId>
+    <artifactId>legacy</artifactId>
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
-    <name>ItemsXL</name>
-    <url>https://dre2n.github.io</url>
-    <description>A plugin to create and (de-) serialize custom items and mobs.</description>
+    <name>LegacyIXL</name>
     <parent>
         <groupId>de.erethon.caliburn</groupId>
         <artifactId>caliburn-parent</artifactId>
@@ -21,7 +19,6 @@
                 <directory>${basedir}/src/main/resources/</directory>
                 <includes>
                     <include>plugin.yml</include>
-                    <include>languages/*</include>
                 </includes>
             </resource>
         </resources>
@@ -39,16 +36,10 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>de.erethon.vignette:vignette-dist</include>
-                                    <include>de.erethon.caliburn:caliburn-api</include>
+                                    <include>de.erethon.caliburn:legacy-1_8_R3</include>
+                                    <include>net.kyori:*</include>
                                 </includes>
                             </artifactSet>
-                            <relocations>
-                                <relocation>
-                                    <pattern>de.erethon.vignette</pattern>
-                                    <shadedPattern>de.erethon.itemsxl.util.vignette</shadedPattern>
-                                </relocation>
-                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -57,27 +48,57 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
+            <groupId>io.papermc.paper</groupId>
+            <artifactId>paper-api</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon.caliburn</groupId>
-            <artifactId>caliburn-api</artifactId>
+            <artifactId>legacy-1_8_R3</artifactId>
             <version>${project.parent.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>de.erethon.caliburn</groupId>
-            <artifactId>legacy</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>provided</scope>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-api</artifactId>
+            <version>4.10.1</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>de.erethon.vignette</groupId>
-            <artifactId>vignette-dist</artifactId>
-            <version>1.0-SNAPSHOT-24</version>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-gson</artifactId>
+            <version>4.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-legacy</artifactId>
+            <version>4.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-plain</artifactId>
+            <version>4.10.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-serializer-bungeecord</artifactId>
+            <version>4.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-platform-bukkit</artifactId>
+            <version>4.1.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

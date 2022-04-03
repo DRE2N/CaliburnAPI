@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Daniel Saukel
+ * Copyright (C) 2015-2022 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,9 +16,9 @@
  */
 package de.erethon.itemsxl.command;
 
-import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.command.DRECommand;
-import de.erethon.commons.misc.NumberUtil;
+import de.erethon.bedrock.chat.MessageUtil;
+import de.erethon.bedrock.command.ECommand;
+import de.erethon.bedrock.misc.NumberUtil;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
 import java.util.HashSet;
@@ -28,7 +28,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author Daniel Saukel
  */
-public class HelpCommand extends DRECommand {
+public class HelpCommand extends ECommand {
 
     private ItemsXL plugin;
 
@@ -44,8 +44,8 @@ public class HelpCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        Set<DRECommand> commandList = plugin.getCommandCache().getCommands();
-        Set<DRECommand> toSend = new HashSet<>();
+        Set<ECommand> commandList = plugin.getCommandCache().getCommands();
+        Set<ECommand> toSend = new HashSet<>();
 
         int page = 1;
         if (args.length == 2) {
@@ -54,7 +54,7 @@ public class HelpCommand extends DRECommand {
         int send = 0;
         int max = 0;
         int min = 0;
-        for (DRECommand command : commandList) {
+        for (ECommand command : commandList) {
             send++;
             if (send >= page * 5 - 4 && send <= page * 5) {
                 min = page * 5 - 4;
@@ -66,7 +66,7 @@ public class HelpCommand extends DRECommand {
         MessageUtil.sendPluginTag(sender, plugin);
         MessageUtil.sendCenteredMessage(sender, "&4&l[ &6" + min + "-" + max + " &4/&6 " + send + " &4|&6 " + page + " &4&l]");
 
-        for (DRECommand command : toSend) {
+        for (ECommand command : toSend) {
             MessageUtil.sendMessage(sender, "&b" + command.getCommand() + "&7 - " + command.getHelp());
         }
     }

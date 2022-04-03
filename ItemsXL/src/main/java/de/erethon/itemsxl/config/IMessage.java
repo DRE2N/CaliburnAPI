@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Daniel Saukel
+ * Copyright (C) 2015-2022 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  */
 package de.erethon.itemsxl.config;
 
-import de.erethon.commons.config.Message;
+import de.erethon.bedrock.config.Message;
 
 /**
  * @author Daniel Saukel

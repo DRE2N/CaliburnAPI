@@ -16,11 +16,11 @@ package de.erethon.caliburn.item;
 
 import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.util.StringUtil;
-import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.compatibility.CompatibilityHandler;
-import de.erethon.commons.compatibility.Version;
-import static de.erethon.commons.compatibility.Version.*;
-import de.erethon.commons.misc.EnumUtil;
+import de.erethon.bedrock.chat.MessageUtil;
+import de.erethon.bedrock.compatibility.CompatibilityHandler;
+import de.erethon.bedrock.compatibility.Version;
+import static de.erethon.bedrock.compatibility.Version.*;
+import de.erethon.bedrock.misc.EnumUtil;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;

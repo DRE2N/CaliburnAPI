@@ -8,6 +8,8 @@
     <modules>
         <module>api</module>
         <module>ItemsXL</module>
+        <module>legacy</module>
+        <module>legacy-1_8_R3</module>
     </modules>
     <properties>
         <buildNo></buildNo>
@@ -17,9 +19,9 @@
     </properties>
     <dependencies>
         <dependency>
-            <groupId>de.erethon.commons</groupId>
-            <artifactId>commons-dist</artifactId>
-            <version>6.3.3</version>
+            <groupId>de.erethon</groupId>
+            <artifactId>bedrock</artifactId>
+            <version>1.2.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -38,11 +40,15 @@
     </dependencies>
     <repositories>
         <repository>
-            <id>spigot-repo</id>
+            <id>spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
-            <id>dre-repo</id>
+            <id>paper</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>erethon</id>
             <url>https://erethon.de/repo/</url>
         </repository>
     </repositories>

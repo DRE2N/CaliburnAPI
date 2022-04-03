@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Daniel Saukel
+ * Copyright (C) 2015-2022 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@ package de.erethon.itemsxl.command;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.command.DRECommand;
-import de.erethon.commons.compatibility.CompatibilityHandler;
+import de.erethon.bedrock.chat.MessageUtil;
+import de.erethon.bedrock.command.ECommand;
+import de.erethon.bedrock.compatibility.CompatibilityHandler;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
 import java.util.Collection;
@@ -30,7 +30,7 @@ import org.bukkit.command.CommandSender;
 /**
  * @author Daniel Saukel
  */
-public class ReloadCommand extends DRECommand {
+public class ReloadCommand extends ECommand {
 
     private ItemsXL plugin;
     private CaliburnAPI api;

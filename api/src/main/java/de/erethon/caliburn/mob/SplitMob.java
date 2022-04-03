@@ -14,8 +14,8 @@
  */
 package de.erethon.caliburn.mob;
 
-import de.erethon.commons.compatibility.CompatibilityHandler;
-import de.erethon.commons.compatibility.Version;
+import de.erethon.bedrock.compatibility.CompatibilityHandler;
+import de.erethon.bedrock.compatibility.Version;
 import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;

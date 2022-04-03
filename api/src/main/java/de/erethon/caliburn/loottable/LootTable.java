@@ -17,8 +17,8 @@
 package de.erethon.caliburn.loottable;
 
 import de.erethon.caliburn.CaliburnAPI;
-import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.compatibility.Version;
+import de.erethon.bedrock.chat.MessageUtil;
+import de.erethon.bedrock.compatibility.Version;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;

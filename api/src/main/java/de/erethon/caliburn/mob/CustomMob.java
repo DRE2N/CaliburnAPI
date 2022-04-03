@@ -22,9 +22,9 @@ import de.erethon.caliburn.mob.actionhandler.DamageHandler;
 import de.erethon.caliburn.mob.actionhandler.DeathHandler;
 import de.erethon.caliburn.mob.actionhandler.InteractHandler;
 import de.erethon.caliburn.util.StringUtil;
-import de.erethon.commons.compatibility.CompatibilityHandler;
-import de.erethon.commons.compatibility.Internals;
-import de.erethon.commons.misc.EnumUtil;
+import de.erethon.bedrock.compatibility.CompatibilityHandler;
+import de.erethon.bedrock.compatibility.Version;
+import de.erethon.bedrock.misc.EnumUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -48,7 +48,7 @@ import org.bukkit.potion.PotionEffect;
  */
 public class CustomMob extends ExMob {
 
-    private static Set<Internals> higher = Internals.andHigher(CompatibilityHandler.getInstance().getInternals());
+    private static Set<Version> higher = Version.andHigher(CompatibilityHandler.getInstance().getVersion());
 
     /* Entity */
     private String displayName;
@@ -86,15 +86,15 @@ public class CustomMob extends ExMob {
         displayName = entity.getCustomName();
         name = StringUtil.formatId(id);
         customNameVisible = entity.isCustomNameVisible();
-        if (!higher.contains(Internals.v1_8_R3)) {// 1.9+
+        if (!higher.contains(Version.MC1_8_9)) {// 1.9+
             glowing = entity.isGlowing();
             invulnerable = entity.isInvulnerable();
             silent = entity.isSilent();
-            if (!higher.contains(Internals.v1_9_R2)) {
+            if (!higher.contains(Version.MC1_9_4)) {
                 gravity = entity.hasGravity();
-                if (!higher.contains(Internals.v1_10_R1)) {
+                if (!higher.contains(Version.MC1_10_2)) {
                     entity.getPassengers().forEach(e -> passengers.add(api.getExMob(e).getId()));
-                    if (!higher.contains(Internals.v1_12_R1)) {
+                    if (!higher.contains(Version.MC1_12_2)) {
                         persistent = entity.isPersistent();
                     }
                 }
@@ -107,7 +107,7 @@ public class CustomMob extends ExMob {
             equipment = new LootTable(api, id + "_loot");
             equipment.readEntityEquipment(living.getEquipment());
             removeWhenFarAway = living.getRemoveWhenFarAway();
-            if (!higher.contains(Internals.v1_8_R3)) {
+            if (!higher.contains(Version.MC1_8_9)) {
                 ai = living.hasAI();
                 collidable = living.isCollidable();
             }
@@ -795,7 +795,7 @@ public class CustomMob extends ExMob {
         if (isCustomNameVisible() != null) {
             entity.setCustomNameVisible(isCustomNameVisible());
         }
-        if (!higher.contains(Internals.v1_8_R3)) {// 1.9+
+        if (!higher.contains(Version.MC1_8_9)) {// 1.9+
             if (isGlowing() != null) {
                 entity.setGlowing(isGlowing());
             }
@@ -805,15 +805,15 @@ public class CustomMob extends ExMob {
             if (isSilent() != null) {
                 entity.setSilent(isSilent());
             }
-            if (!higher.contains(Internals.v1_9_R2)) {
+            if (!higher.contains(Version.MC1_9_4)) {
                 if (hasGravity() != null) {
                     entity.setGravity(hasGravity());
                 }
-                if (!higher.contains(Internals.v1_10_R1)) {
+                if (!higher.contains(Version.MC1_10_2)) {
                     if (getPassengers() != null) {
                         getPassengers().forEach(p -> entity.addPassenger(api.getExMob(p).toEntity(location)));
                     }
-                    if (!higher.contains(Internals.v1_12_R1)) {
+                    if (!higher.contains(Version.MC1_12_2)) {
                         if (isPersistent() != null) {
                             entity.setPersistent(isPersistent());
                         }
@@ -843,7 +843,7 @@ public class CustomMob extends ExMob {
         if (getRemoveWhenFarAway() != null) {
             living.setRemoveWhenFarAway(getRemoveWhenFarAway());
         }
-        if (!higher.contains(Internals.v1_8_R3)) {
+        if (!higher.contains(Version.MC1_8_9)) {
             if (hasAI() != null) {
                 living.setAI(hasAI());
             }

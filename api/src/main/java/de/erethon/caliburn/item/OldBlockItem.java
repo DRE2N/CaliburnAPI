@@ -14,8 +14,8 @@
  */
 package de.erethon.caliburn.item;
 
-import de.erethon.commons.compatibility.CompatibilityHandler;
-import de.erethon.commons.compatibility.Version;
+import de.erethon.bedrock.compatibility.CompatibilityHandler;
+import de.erethon.bedrock.compatibility.Version;
 import org.bukkit.inventory.ItemStack;
 
 /**

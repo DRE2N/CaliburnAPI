@@ -18,7 +18,7 @@ import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.commons.compatibility.Version;
+import de.erethon.bedrock.compatibility.Version;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;

@@ -22,7 +22,7 @@ import de.erethon.caliburn.item.actionhandler.DropHandler;
 import de.erethon.caliburn.item.actionhandler.HitHandler;
 import de.erethon.caliburn.item.actionhandler.RightClickHandler;
 import de.erethon.caliburn.util.StringUtil;
-import de.erethon.commons.misc.EnumUtil;
+import de.erethon.bedrock.misc.EnumUtil;
 import de.erethon.headlib.HeadLib;
 import java.util.ArrayList;
 import java.util.HashMap;

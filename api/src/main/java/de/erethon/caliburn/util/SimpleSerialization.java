@@ -14,11 +14,12 @@
  */
 package de.erethon.caliburn.util;
 
+import de.erethon.bedrock.compatibility.Version;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.item.ExItem;
 import static de.erethon.caliburn.util.SimpleSerialization.ItemModifier.*;
-import de.erethon.commons.misc.EnumUtil;
-import de.erethon.commons.misc.NumberUtil;
+import de.erethon.bedrock.misc.EnumUtil;
+import de.erethon.bedrock.misc.NumberUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -52,6 +53,8 @@ public class SimpleSerialization {
 
     public static final String PREFIX = "item:";
     private CaliburnAPI api;
+    
+    private boolean isAtLeast1_15 = Version.isAtLeast(Version.MC1_15);
 
     /**
      * The valid data modifiers.
@@ -131,8 +134,10 @@ public class SimpleSerialization {
         if (meta.hasDisplayName()) {
             serialized += "," + NAME.getPrefixes()[0] + unuseCC(meta.getDisplayName());
         }
-        if (isUnbreakable(meta)) {
-            serialized += "," + UNBREAKABLE.getPrefixes()[0];
+        if (isAtLeast1_15) {
+            if (meta.isUnbreakable()) {
+                serialized += "," + UNBREAKABLE.getPrefixes()[0];
+            }
         }
         return serialized;
     }
@@ -190,8 +195,8 @@ public class SimpleSerialization {
                 }
             } else if (mod == NAME) {
                 meta.setDisplayName(useCC(NAME.stripPrefix(arg)));
-            } else if (mod == UNBREAKABLE) {
-                setUnbreakable(meta);
+            } else if (isAtLeast1_15 && mod == UNBREAKABLE) {
+                meta.setUnbreakable(true);
             }
         }
         item.setItemMeta(meta);
@@ -208,24 +213,6 @@ public class SimpleSerialization {
 
     private String unuseCC(String string) {
         return string.replace("\u00a7", "&");
-    }
-
-    @Deprecated
-    private boolean isUnbreakable(ItemMeta meta) {
-        if (de.erethon.commons.compatibility.Internals.isAtLeast(de.erethon.commons.compatibility.Internals.v1_11_R1)) {
-            return meta.isUnbreakable();
-        } else {
-            return meta.spigot().isUnbreakable();
-        }
-    }
-
-    @Deprecated
-    private void setUnbreakable(ItemMeta meta) {
-        if (de.erethon.commons.compatibility.Internals.isAtLeast(de.erethon.commons.compatibility.Internals.v1_11_R1)) {
-            meta.setUnbreakable(true);
-        } else {
-            meta.spigot().setUnbreakable(true);
-        }
     }
 
 }

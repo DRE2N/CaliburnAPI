@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Daniel Saukel
+ * Copyright (C) 2015-2022 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,7 +16,7 @@
  */
 package de.erethon.itemsxl.item;
 
-import de.erethon.commons.compatibility.Version;
+import de.erethon.bedrock.compatibility.Version;
 import de.erethon.itemsxl.ItemsXL;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2021 Daniel Saukel
+ * Copyright (C) 2015-2022 Daniel Saukel
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,9 +18,9 @@ package de.erethon.itemsxl.command;
 
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.mob.ExMob;
-import de.erethon.commons.chat.MessageUtil;
-import de.erethon.commons.command.DRECommand;
-import de.erethon.commons.config.CommonMessage;
+import de.erethon.bedrock.chat.MessageUtil;
+import de.erethon.bedrock.command.ECommand;
+import de.erethon.bedrock.config.BedrockMessage;
 import de.erethon.itemsxl.ItemsXL;
 import de.erethon.itemsxl.config.IMessage;
 import org.bukkit.Bukkit;
@@ -32,7 +32,7 @@ import org.bukkit.entity.Player;
 /**
  * @author Daniel Saukel
  */
-public class SummonCommand extends DRECommand {
+public class SummonCommand extends ECommand {
     
     private CaliburnAPI api;
     
@@ -73,7 +73,7 @@ public class SummonCommand extends DRECommand {
         // No world specified
         if (args.length == 7 || args.length == 5) {
             if (!(sender instanceof Player)) {
-                MessageUtil.sendMessage(sender, CommonMessage.CMD_NO_CONSOLE_COMMAND.getMessage());
+                MessageUtil.sendMessage(sender, BedrockMessage.CMD_NO_CONSOLE_COMMAND.getMessage());
                 return;
             }
             world = ((Player) sender).getWorld();
