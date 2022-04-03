@@ -8,8 +8,9 @@
     <modules>
         <module>api</module>
         <module>ItemsXL</module>
-        <module>legacy</module>
-        <module>legacy-1_8_R3</module>
+        <module>calicomp</module>
+        <module>badrock</module>
+        <module>badrock-1_8_R3</module>
     </modules>
     <properties>
         <buildNo></buildNo>

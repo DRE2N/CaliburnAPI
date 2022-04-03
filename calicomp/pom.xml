@@ -1,10 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon.caliburn</groupId>
-    <artifactId>legacy</artifactId>
+    <artifactId>calicomp</artifactId>
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
-    <name>LegacyIXL</name>
+    <name>CaliComp</name>
     <parent>
         <groupId>de.erethon.caliburn</groupId>
         <artifactId>caliburn-parent</artifactId>
@@ -36,7 +36,6 @@
                         <configuration>
                             <artifactSet>
                                 <includes>
-                                    <include>de.erethon.caliburn:legacy-1_8_R3</include>
                                     <include>net.kyori:*</include>
                                 </includes>
                             </artifactSet>
@@ -52,12 +51,6 @@
             <artifactId>paper-api</artifactId>
             <version>1.18.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon.caliburn</groupId>
-            <artifactId>legacy-1_8_R3</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.kyori</groupId>
@@ -87,12 +80,6 @@
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-serializer-plain</artifactId>
             <version>4.10.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-text-serializer-bungeecord</artifactId>
-            <version>4.1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>

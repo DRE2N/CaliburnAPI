@@ -18,7 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * @author Daniel Saukel
  */
-public class Legacy extends JavaPlugin {
+public class CaliComp extends JavaPlugin {
 
     private static BukkitAudiences adventure;
 

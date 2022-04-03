@@ -1,6 +1,5 @@
 package de.erethon.bedrock.chat;
 
-import de.erethon.Legacy;
 import de.erethon.bedrock.plugin.EPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -13,12 +12,15 @@ import org.bukkit.plugin.Plugin;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+import de.erethon.CaliComp;
+
 /**
  * @author Daniel Saukel, Fyreum
  */
 public class MessageUtil {
 
     private static final boolean paper = Package.getPackage("com.destroystokyo.paper") != null;// PATCH
+    private static final boolean is1_8_8 = Package.getPackage("org.bukkit.craftbukkit.v1_8_R3") != null;// PATCH
     private static final MiniMessage mm = MiniMessage.miniMessage();
     private static final Pattern STRIP_COLOR_PATTERN = Pattern.compile("(?i)&[0-9A-FK-ORX]");
 
@@ -61,7 +63,7 @@ public class MessageUtil {
         if (paper) {
             Bukkit.getConsoleSender().sendMessage(Component.text("[" + plugin.getName() + "] ").append(message));
         } else {
-            Legacy.adventure().sender(Bukkit.getConsoleSender()).sendMessage(Component.text("[" + plugin.getName() + "] ").append(message));
+            CaliComp.adventure().sender(Bukkit.getConsoleSender()).sendMessage(Component.text("[" + plugin.getName() + "] ").append(message));
         }
     }
 
@@ -285,7 +287,7 @@ public class MessageUtil {
         word = replaceLegacyChars(word);
         word = ChatColor.stripColor(word);
         String[] fat = FatLetter.fromString(word);
-        
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             sendCenteredMessage(player, color + fat[0]);
             sendCenteredMessage(player, (color + fat[1]));
@@ -305,7 +307,7 @@ public class MessageUtil {
         word = replaceLegacyChars(word);
         word = ChatColor.stripColor(word);
         String[] fat = FatLetter.fromString(word);
-        
+
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (!filter.test(player)) {
                 continue;
@@ -339,7 +341,7 @@ public class MessageUtil {
         if (paper) {
             sender.sendMessage(message);
         } else {
-            Legacy.adventure().sender(sender).sendMessage(message);
+            CaliComp.adventure().sender(sender).sendMessage(message);
         }
     }
 
@@ -396,7 +398,11 @@ public class MessageUtil {
     public static void sendTitleMessage(Player player, String title, String subtitle, int fadeIn, int show, int fadeOut) {
         title = serialize(parse(title));
         subtitle = serialize(parse(subtitle));
-        player.sendTitle(title, subtitle, fadeIn, show, fadeOut);
+        if (!is1_8_8) {
+            player.sendTitle(title, subtitle, fadeIn, show, fadeOut);
+        } else {
+            Bukkit1_8_8.sendTitle(player, title, subtitle, fadeIn, show, fadeOut);
+        }
     }
 
     /**
@@ -427,7 +433,12 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void sendActionBarMessage(Player player, String message) {
-        sendActionBarMessage(player, parse(message));
+        // PATCH
+        if (!is1_8_8) {
+            sendActionBarMessage(player, parse(message));
+        } else {
+            Bukkit1_8_8.sendActionBar(player, message);
+        }
     }
 
     /**
@@ -441,7 +452,7 @@ public class MessageUtil {
         if (paper) {
             player.sendActionBar(message);
         } else {
-            Legacy.adventure().player(player).sendActionBar(message);
+            CaliComp.adventure().player(player).sendActionBar(message);
         }
     }
 
@@ -527,9 +538,9 @@ public class MessageUtil {
      */
     public static String replaceLegacyChars(String string) {
         for (ChatColor color : ChatColor.values()) {
-            string = string.replace("&" + color.getChar(), "<" + color.name().toLowerCase() + ">");
+            string = string.replaceAll("[&|\u00A7]" + color.getChar(), "<" + color.name().toLowerCase() + ">");// PATCH
         }
         return string;
     }
-    
+
 }
