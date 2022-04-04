@@ -396,8 +396,9 @@ public class MessageUtil {
      * @param fadeOut  the time in ticks it takes for the message to disappear
      */
     public static void sendTitleMessage(Player player, String title, String subtitle, int fadeIn, int show, int fadeOut) {
-        title = serialize(parse(title));
-        subtitle = serialize(parse(subtitle));
+        // PATCH
+        title = ChatColor.translateAlternateColorCodes('&', title);//serialize(parse(title));
+        subtitle = ChatColor.translateAlternateColorCodes('&', subtitle);//serialize(parse(subtitle));
         if (!is1_8_8) {
             player.sendTitle(title, subtitle, fadeIn, show, fadeOut);
         } else {
