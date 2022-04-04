@@ -20,8 +20,6 @@ import de.erethon.caliburn.category.IdentifierType;
 import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
-import de.erethon.caliburn.listener.ItemListener;
-import de.erethon.caliburn.listener.MobListener;
 import de.erethon.caliburn.loottable.LootTable;
 import de.erethon.caliburn.mob.CustomMob;
 import de.erethon.caliburn.mob.ExMob;
@@ -29,7 +27,6 @@ import de.erethon.caliburn.mob.VanillaMob;
 import de.erethon.caliburn.util.ExSerialization;
 import de.erethon.caliburn.util.SimpleSerialization;
 import de.erethon.bedrock.chat.MessageUtil;
-import de.erethon.bedrock.compatibility.CompatibilityHandler;
 import de.erethon.bedrock.compatibility.Version;
 import de.erethon.bedrock.misc.FileUtil;
 import java.io.File;
@@ -38,7 +35,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
@@ -99,13 +95,6 @@ public class CaliburnAPI {
 
         items.addAll(VanillaItem.getLoaded());
         mobs.addAll(VanillaMob.getLoaded());
-
-        Bukkit.getPluginManager().registerEvents(new MobListener(this), plugin);
-        ItemListener il = new ItemListener(this);
-        Bukkit.getPluginManager().registerEvents(il, plugin);
-        if (CompatibilityHandler.getInstance().isSpigot() && Version.isAtLeast(Version.MC1_12_2)) {
-            Bukkit.getPluginManager().registerEvents(il.new Spigot(), plugin);
-        }
 
         ConfigurationSerialization.registerClass(CustomItem.class);
         ConfigurationSerialization.registerClass(CustomMob.class);

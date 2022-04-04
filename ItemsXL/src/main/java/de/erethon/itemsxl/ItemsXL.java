@@ -19,11 +19,14 @@ package de.erethon.itemsxl;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.bedrock.command.ECommandCache;
 import de.erethon.bedrock.compatibility.Internals;
+import de.erethon.bedrock.compatibility.Version;
 import de.erethon.bedrock.plugin.EPlugin;
 import de.erethon.bedrock.plugin.EPluginSettings;
 import de.erethon.itemsxl.command.*;
 import de.erethon.itemsxl.config.IConfig;
 import de.erethon.itemsxl.item.ItemBoxListener;
+import de.erethon.itemsxl.listener.ItemListener;
+import de.erethon.itemsxl.listener.MobListener;
 import de.erethon.vignette.api.VignetteAPI;
 import java.io.File;
 import org.bukkit.ChatColor;
@@ -57,6 +60,12 @@ public class ItemsXL extends EPlugin {
         loadICommandCache();
 
         manager.registerEvents(new ItemBoxListener(this), this);
+        manager.registerEvents(new MobListener(api), this);
+        ItemListener il = new ItemListener(api);
+        manager.registerEvents(il, this);
+        if (compat.isSpigot() && Version.isAtLeast(Version.MC1_12_2)) {
+            manager.registerEvents(il.new Spigot(), this);
+        }
     }
 
     /**
