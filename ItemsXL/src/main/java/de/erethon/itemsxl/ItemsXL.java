@@ -18,6 +18,7 @@ package de.erethon.itemsxl;
 
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.bedrock.command.ECommandCache;
+import de.erethon.bedrock.compatibility.CompatibilityHandler;
 import de.erethon.bedrock.compatibility.Internals;
 import de.erethon.bedrock.compatibility.Version;
 import de.erethon.bedrock.plugin.EPlugin;
@@ -29,6 +30,7 @@ import de.erethon.itemsxl.listener.ItemListener;
 import de.erethon.itemsxl.listener.MobListener;
 import de.erethon.vignette.api.VignetteAPI;
 import java.io.File;
+import java.util.logging.Level;
 import org.bukkit.ChatColor;
 
 /**
@@ -36,6 +38,7 @@ import org.bukkit.ChatColor;
  */
 public class ItemsXL extends EPlugin {
 
+    private static ItemsXL instance;
     private CaliburnAPI api;
 
     private IConfig iConfig;
@@ -52,7 +55,13 @@ public class ItemsXL extends EPlugin {
 
     @Override
     public void onEnable() {
+        if ((!CompatibilityHandler.getInstance().isPaper() || Version.isAtMost(Version.MC1_18_1)) && !getServer().getPluginManager().isPluginEnabled("CaliComp")) {
+            getLogger().log(Level.SEVERE, "ItemsXL requires CaliComp to run with all Spigot versions or Paper versions up to MC 1.18.1.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
         super.onEnable();
+        instance = this;
 
         VignetteAPI.init(this);
         loadIConfig();
@@ -66,6 +75,13 @@ public class ItemsXL extends EPlugin {
         if (compat.isSpigot() && Version.isAtLeast(Version.MC1_12_2)) {
             manager.registerEvents(il.new Spigot(), this);
         }
+    }
+
+    /**
+     * @return the plugin instance
+     */
+    public static ItemsXL getInstance() {
+        return instance;
     }
 
     /**

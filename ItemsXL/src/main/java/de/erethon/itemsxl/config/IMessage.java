@@ -16,7 +16,10 @@
  */
 package de.erethon.itemsxl.config;
 
+import de.erethon.bedrock.chat.MessageUtil;
 import de.erethon.bedrock.config.Message;
+import de.erethon.bedrock.config.MessageHandler;
+import de.erethon.itemsxl.ItemsXL;
 
 /**
  * @author Daniel Saukel
@@ -74,6 +77,16 @@ public enum IMessage implements Message {
     @Override
     public String getPath() {
         return path;
+    }
+
+    @Override
+    public MessageHandler getMessageHandler() {
+        return ItemsXL.getInstance().getMessageHandler();
+    }
+
+    @Override
+    public void debug() {
+        MessageUtil.log(ItemsXL.getInstance(), getMessage());
     }
 
 }

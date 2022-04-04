@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon.caliburn</groupId>
     <artifactId>caliburn-parent</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
     <packaging>pom</packaging>
     <name>Caliburn</name>
     <modules>
