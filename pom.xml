@@ -1,77 +1,34 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.erethon</groupId>
-    <artifactId>caliburn</artifactId>
-    <version>1.0.3</version>
-    <packaging>jar</packaging>
-    <name>CaliburnAPI</name>
-    <url>https://dre2n.github.io</url>
-    <description>An API to manage, create and (de-) serialize custom items and mobs.</description>
+    <groupId>de.erethon.caliburn</groupId>
+    <artifactId>caliburn-parent</artifactId>
+    <version>1.1</version>
+    <packaging>pom</packaging>
+    <name>Caliburn</name>
+    <modules>
+        <module>api</module>
+        <module>ItemsXL</module>
+        <module>calicomp</module>
+        <module>badrock</module>
+        <module>badrock-1_8_R3</module>
+    </modules>
     <properties>
+        <buildNo></buildNo>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>de.erethon.commons:commons-dist</include>
-                                    <include>de.erethon:headlib</include>
-                                </includes>
-                            </artifactSet>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.2.0</version>
-                <configuration>
-                    <excludePackageNames>de.erethon.caliburn.listener</excludePackageNames>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>javadoc</goal>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
     <dependencies>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.14.4-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon.commons</groupId>
-            <artifactId>commons-dist</artifactId>
-            <version>6.3.3</version>
+            <groupId>de.erethon</groupId>
+            <artifactId>bedrock</artifactId>
+            <version>1.2.1</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon</groupId>
             <artifactId>headlib</artifactId>
-            <version>3.0.9</version>
+            <version>3.0.10</version>
             <scope>compile</scope>
         </dependency>
         <!-- From Minecraft -->
@@ -84,11 +41,15 @@
     </dependencies>
     <repositories>
         <repository>
-            <id>spigot-repo</id>
+            <id>spigot</id>
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
         <repository>
-            <id>dre-repo</id>
+            <id>paper</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>erethon</id>
             <url>https://erethon.de/repo/</url>
         </repository>
     </repositories>

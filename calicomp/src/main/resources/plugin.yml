@@ -1,0 +1,7 @@
+name: CaliComp
+main: de.erethon.CaliComp
+version: ${project.version}
+author: Daniel Saukel
+description: "Spigot and backward compatibility for ItemsXL"
+api-version: 1.13
+loadbefore: [ItemsXL]
