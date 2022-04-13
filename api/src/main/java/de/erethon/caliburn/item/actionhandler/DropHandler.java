@@ -14,9 +14,8 @@
  */
 package de.erethon.caliburn.item.actionhandler;
 
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.erethon.caliburn.item.CustomAttribute;
+import org.bukkit.event.player.PlayerDropItemEvent;
 
 /**
  * Fired when the item is dropped.
@@ -44,10 +43,9 @@ public interface DropHandler {
     }
 
     /**
-     * @param itemInstance the ItemStack involved in this action
-     * @param dropped      the dropped item entity
-     * @param player       the player who holds the item
+     * @param attributeInstance the attribute instance that sets the handler
+     * @param event             the underlying Bukkit event
      */
-    void onDrop(ItemStack itemInstance, Item dropped, Player player);
+    void onDrop(CustomAttribute.Instance attributeInstance, PlayerDropItemEvent event);
 
 }

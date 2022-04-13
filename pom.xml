@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.erethon.caliburn</groupId>
     <artifactId>caliburn-parent</artifactId>
-    <version>1.1</version>
+    <version>2.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>Caliburn</name>
     <modules>
@@ -11,6 +11,7 @@
         <module>calicomp</module>
         <module>badrock</module>
         <module>badrock-1_8_R3</module>
+        <module>example</module>
     </modules>
     <properties>
         <buildNo></buildNo>

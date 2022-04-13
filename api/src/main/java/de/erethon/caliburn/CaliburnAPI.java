@@ -29,6 +29,7 @@ import de.erethon.caliburn.util.SimpleSerialization;
 import de.erethon.bedrock.chat.MessageUtil;
 import de.erethon.bedrock.compatibility.Version;
 import de.erethon.bedrock.misc.FileUtil;
+import de.erethon.caliburn.item.TrackedItemStack;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +37,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import org.bukkit.ChatColor;
-import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -44,6 +44,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Entity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
+import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
@@ -58,6 +59,7 @@ public class CaliburnAPI {
 
     private boolean isAtLeast1_14 = Version.isAtLeast(Version.MC1_14);
 
+    public static final String NAMESPACE = "caliburn";
     public static final String META_ID_KEY = "caliburnID";
 
     private String identifierPrefix;
@@ -413,7 +415,7 @@ public class CaliburnAPI {
                 }
             case PERSISTENT_DATA_CONTAINER:
                 if (isAtLeast1_14 && item.hasItemMeta()) {
-                    return item.getItemMeta().getPersistentDataContainer().getOrDefault(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, null);
+                    return item.getItemMeta().getPersistentDataContainer().getOrDefault(CustomItem.ID, PersistentDataType.STRING, null);
                 } else {
                     return null;
                 }
@@ -470,6 +472,50 @@ public class CaliburnAPI {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns true if the given ItemStack has {@link TrackedItemStack} data; false if not.
+     *
+     * @param itemStack the ItemStack
+     * @return true if the given ItemStack has {@link TrackedItemStack} data; false if not
+     */
+    public boolean hasStackData(ItemStack itemStack) {
+        return getStackData(itemStack) != null;
+    }
+
+    private Long getStackData(ItemStack itemStack) {
+        if (itemStack == null || !itemStack.hasItemMeta()) {
+            return null;
+        }
+        PersistentDataContainer container = itemStack.getItemMeta().getPersistentDataContainer();
+        return container.get(TrackedItemStack.DATA_KEY, PersistentDataType.LONG);
+    }
+
+    /**
+     * Wraps the given ItemStack in a TrackedItemStack.
+     *
+     * @param itemStack the ItemStack
+     * @return a new or cached instance of TrackedItemStack that wraps the given ItemStack
+     */
+    public TrackedItemStack wrap(ItemStack itemStack) {
+        ExItem exItem = getExItem(itemStack);
+        if (exItem instanceof CustomItem) {
+            return wrap((CustomItem) exItem, itemStack);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Wraps the given ItemStack in a TrackedItemStack.
+     *
+     * @param customItem the type of the ItemStack
+     * @param itemStack  the ItemStack
+     * @return a new or cached instance of TrackedItemStack that wraps the given ItemStack
+     */
+    public TrackedItemStack wrap(CustomItem customItem, ItemStack itemStack) {
+        return new TrackedItemStack(this, customItem, itemStack);
     }
 
     /* Item categories */
@@ -549,12 +595,12 @@ public class CaliburnAPI {
     }
 
     /**
-     * Returns the ID of the {@link ExMob} that the given Entity is an instance of. If there is no {@link CustomMob} registered, the {@link VanillaMob} of
-     * the entity's type is used.
+     * Returns the ID of the {@link ExMob} that the given Entity is an instance of. If there is no {@link CustomMob} registered, the {@link VanillaMob} of the
+     * entity's type is used.
      *
      * @param entity the Entity
-     * @return the ID of the {@link ExMob} that the given Entity is an instance of. If there is no {@link CustomMob} registered, the {@link VanillaMob} of
-     *         the entity's type is used
+     * @return the ID of the {@link ExMob} that the given Entity is an instance of. If there is no {@link CustomMob} registered, the {@link VanillaMob} of the
+     *         entity's type is used
      */
     public ExMob getExMob(Entity entity) {
         for (IdentifierType idType : IdentifierType.MOB_PRIORITY) {
@@ -591,7 +637,7 @@ public class CaliburnAPI {
                 return null;
             case PERSISTENT_DATA_CONTAINER:
                 if (isAtLeast1_14) {
-                    return entity.getPersistentDataContainer().getOrDefault(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, null);
+                    return entity.getPersistentDataContainer().getOrDefault(CustomItem.ID, PersistentDataType.STRING, null);
                 } else {
                     return null;
                 }

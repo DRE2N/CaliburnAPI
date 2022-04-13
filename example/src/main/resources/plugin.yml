@@ -1,0 +1,11 @@
+name: ExamplePlugin
+main: de.erethon.caliburn.exampleplugin.ExamplePlugin
+version: ${project.version}${buildNo}
+author: Daniel Saukel
+description: "Example plugin for Caliburn v${project.parent.version}."
+website: ${project.url}
+commands:
+  giveexample:
+    description: "Gives example items."
+    aliases: [givex]
+api-version: 1.13

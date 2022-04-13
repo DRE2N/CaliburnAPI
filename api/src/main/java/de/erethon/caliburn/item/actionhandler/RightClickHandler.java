@@ -14,8 +14,8 @@
  */
 package de.erethon.caliburn.item.actionhandler;
 
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
+import de.erethon.caliburn.item.CustomAttribute;
+import org.bukkit.event.player.PlayerInteractEvent;
 
 /**
  * Fired when the playery performs a right click with the item in his hand.
@@ -45,9 +45,9 @@ public interface RightClickHandler {
     }
 
     /**
-     * @param itemInstance the ItemStack involved in this action
-     * @param player       the player who holds the item
+     * @param attributeInstance the attribute instance that sets the handler
+     * @param event             the underlying Bukkit event
      */
-    void onRightClick(ItemStack itemInstance, Player player);
+    void onRightClick(CustomAttribute.Instance attributeInstance, PlayerInteractEvent event);
 
 }

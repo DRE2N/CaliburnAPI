@@ -21,6 +21,7 @@ import de.erethon.caliburn.item.CustomItem;
 import de.erethon.caliburn.item.ExItem;
 import de.erethon.caliburn.item.VanillaItem;
 import de.erethon.bedrock.compatibility.Version;
+import de.erethon.caliburn.item.CustomAttribute;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -83,8 +84,17 @@ public class ItemListener implements Listener {
         if (!(exItem instanceof CustomItem)) {
             return;
         }
-        if (((CustomItem) exItem).hasHitHandler()) {
-            ((CustomItem) exItem).getHitHandler().onHit(weapon, player, event.getEntity(), event.getDamage());
+        for (CustomAttribute.Instance attribute : ((CustomItem) exItem).getStaticAttributes()) {
+            if (attribute.getType().hasHitHandler()) {
+                attribute.getType().getHitHandler().onHit(attribute, weapon, player, event);
+            }
+        }
+        if (api.hasStackData(weapon)) {
+            for (CustomAttribute.Instance attribute : api.wrap(weapon).getDynamicAttributes()) {
+                if (attribute.getType().hasHitHandler()) {
+                    attribute.getType().getHitHandler().onHit(attribute, weapon, player, event);
+                }
+            }
         }
     }
 
@@ -103,9 +113,17 @@ public class ItemListener implements Listener {
         if (!(exItem instanceof CustomItem)) {
             return;
         }
-
-        if (((CustomItem) exItem).hasRightClickHandler()) {
-            ((CustomItem) exItem).getRightClickHandler().onRightClick(stack, event.getPlayer());
+        for (CustomAttribute.Instance attribute : ((CustomItem) exItem).getStaticAttributes()) {
+            if (attribute.getType().hasRightClickHandler()) {
+                attribute.getType().getRightClickHandler().onRightClick(attribute, event);
+            }
+        }
+        if (api.hasStackData(stack)) {
+            for (CustomAttribute.Instance attribute : api.wrap(stack).getDynamicAttributes()) {
+                if (attribute.getType().hasRightClickHandler()) {
+                    attribute.getType().getRightClickHandler().onRightClick(attribute, event);
+                }
+            }
         }
     }
 
@@ -121,14 +139,21 @@ public class ItemListener implements Listener {
         if (!(exItem instanceof CustomItem)) {
             return;
         }
-
-        if (((CustomItem) exItem).hasDropHandler()) {
-            ((CustomItem) exItem).getDropHandler().onDrop(stack, entity, event.getPlayer());
+        for (CustomAttribute.Instance attribute : ((CustomItem) exItem).getStaticAttributes()) {
+            if (attribute.getType().hasDropHandler()) {
+                attribute.getType().getDropHandler().onDrop(attribute, event);
+            }
+        }
+        if (api.hasStackData(stack)) {
+            for (CustomAttribute.Instance attribute : api.wrap(stack).getDynamicAttributes()) {
+                if (attribute.getType().hasDropHandler()) {
+                    attribute.getType().getDropHandler().onDrop(attribute, event);
+                }
+            }
         }
     }
 
     public class Spigot implements Listener {
-
         @EventHandler
         public void onPlayerItemDamage(PlayerItemDamageEvent event) {
             ItemStack tool = event.getPlayer().getInventory().getItemInHand();
@@ -137,11 +162,19 @@ public class ItemListener implements Listener {
                 return;
             }
             boolean broken = tool.getDurability() + event.getDamage() >= tool.getType().getMaxDurability();
-            if (((CustomItem) exItem).hasDamageHandler()) {
-                ((CustomItem) exItem).getDamageHandler().onDamage(tool, event.getPlayer(), broken);
+            for (CustomAttribute.Instance attribute : ((CustomItem) exItem).getStaticAttributes()) {
+                if (attribute.getType().hasDamageHandler()) {
+                    attribute.getType().getDamageHandler().onDamage(attribute, tool, broken, event);
+                }
+            }
+            if (api.hasStackData(tool)) {
+                for (CustomAttribute.Instance attribute : api.wrap(tool).getDynamicAttributes()) {
+                    if (attribute.getType().hasDamageHandler()) {
+                        attribute.getType().getDamageHandler().onDamage(attribute, tool, broken, event);
+                    }
+                }
             }
         }
-
     }
 
 }

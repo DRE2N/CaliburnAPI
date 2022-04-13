@@ -17,10 +17,6 @@ package de.erethon.caliburn.item;
 import com.google.common.collect.Multimap;
 import de.erethon.caliburn.CaliburnAPI;
 import de.erethon.caliburn.category.IdentifierType;
-import de.erethon.caliburn.item.actionhandler.DamageHandler;
-import de.erethon.caliburn.item.actionhandler.DropHandler;
-import de.erethon.caliburn.item.actionhandler.HitHandler;
-import de.erethon.caliburn.item.actionhandler.RightClickHandler;
 import de.erethon.caliburn.util.StringUtil;
 import de.erethon.bedrock.misc.EnumUtil;
 import de.erethon.headlib.HeadLib;
@@ -50,16 +46,16 @@ import org.bukkit.persistence.PersistentDataType;
  */
 public class CustomItem extends ExItem {
 
+    public static final NamespacedKey ID = new NamespacedKey(CaliburnAPI.NAMESPACE, "id");
+
     /**
      * The ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
      */
     protected ItemMeta meta;
     private String name;
 
-    private DamageHandler damageHandler;
-    private DropHandler dropHandler;
-    private HitHandler hitHandler;
-    private RightClickHandler rightClickHandler;
+    private List<CustomAttribute.Instance> staticAttributes = new ArrayList<>();
+    private long updateTimestamp;
 
     private String skullOwner, textureValue;
     private String nbt;
@@ -134,21 +130,9 @@ public class CustomItem extends ExItem {
             deserialized.meta = Bukkit.getItemFactory().getItemMeta(deserialized.getMaterial());
         }
 
-        Object damageHandler = args.get("damageHandler");
-        if (damageHandler instanceof String) {
-            deserialized.setDamageHandler(DamageHandler.create((String) damageHandler));
-        }
-        Object dropHandler = args.get("dropHandler");
-        if (dropHandler instanceof String) {
-            deserialized.setDropHandler(DropHandler.create((String) dropHandler));
-        }
-        Object hitHandler = args.get("hitHandler");
-        if (hitHandler instanceof String) {
-            deserialized.setHitHandler(HitHandler.create((String) hitHandler));
-        }
-        Object rightClickHandler = args.get("rightClickHandler");
-        if (rightClickHandler instanceof String) {
-            deserialized.setRightClickHandler(RightClickHandler.create((String) rightClickHandler));
+        Object updateTimestamp = args.get("updateTimestamp");
+        if (updateTimestamp instanceof Number) {
+            deserialized.updateTimestamp = ((Number) updateTimestamp).longValue();
         }
 
         Object skullOwner = args.get("skullOwner"), textureValue = args.get("textureValue");
@@ -184,6 +168,15 @@ public class CustomItem extends ExItem {
         } else {
             return name;
         }
+    }
+
+    /**
+     * Sets the display name of the item.
+     *
+     * @param name the display name to set
+     */
+    public void setName(String name) {
+        getMeta().setDisplayName(name);
     }
 
     /**
@@ -349,6 +342,78 @@ public class CustomItem extends ExItem {
     }
 
     /**
+     * Returns the custom model data value.
+     *
+     * @return the custom model data value
+     */
+    public Integer getCustomModelData() {
+        return meta.getCustomModelData();
+    }
+
+    /**
+     * Sets the custom model data value.
+     *
+     * @param data the custmo model data value
+     */
+    public void setCustomModelData(Integer data) {
+        meta.setCustomModelData(data);
+    }
+
+    /**
+     * Returns a copy of the list of attributes.
+     *
+     * @return a copy of the list of attributes
+     */
+    public List<CustomAttribute.Instance> getStaticAttributes() {
+        return new ArrayList<>(staticAttributes);
+    }
+
+    /**
+     * Adds the given attribute.
+     *
+     * @param attribute the attribute
+     */
+    public void addAttribute(CustomAttribute.Instance attribute) {
+        staticAttributes.add(attribute);
+    }
+
+    /**
+     * Adds an attribute of the given type with the given value.
+     *
+     * @param <V>   the type of the attribute's value
+     * @param type  the attribute type
+     * @param value the value
+     */
+    public <V> void addAttribute(CustomAttribute<V> type, V value) {
+        addAttribute(type.instantiate(value));
+    }
+
+    /**
+     * Removes the given attribute.
+     *
+     * @param attribute the attribute
+     */
+    public void removeAttribute(CustomAttribute.Instance attribute) {
+        staticAttributes.remove(attribute);
+    }
+
+    /**
+     * Returns a timestamp that was added when the item was changed.
+     *
+     * @return a timestamp that was added when the item was changed
+     */
+    public long getUpdateTimestamp() {
+        return updateTimestamp;
+    }
+
+    /**
+     * Sets the update timestamp to the current time.
+     */
+    public void setUpdateTimestamp() {
+        updateTimestamp = System.currentTimeMillis();
+    }
+
+    /**
      * Returns the skull owner UUID String.
      *
      * @return the skull owner UUID String
@@ -375,115 +440,6 @@ public class CustomItem extends ExItem {
     public void setSkullTexture(String skullOwner, String textureValue) {
         this.skullOwner = skullOwner;
         this.textureValue = textureValue;
-    }
-
-    /* Events */
-    /**
-     * Returns if the custom item has a DamageHandler.
-     *
-     * @return if the custom item has a DamageHandler
-     */
-    public boolean hasDamageHandler() {
-        return damageHandler != null;
-    }
-
-    /**
-     * Returns the DamageHandler.
-     *
-     * @return the DamageHandler
-     */
-    public DamageHandler getDamageHandler() {
-        return damageHandler;
-    }
-
-    /**
-     * Sets the DamageHandler.
-     *
-     * @param handler the handler to set
-     */
-    public void setDamageHandler(DamageHandler handler) {
-        damageHandler = handler;
-    }
-
-    /**
-     * Returns if the custom item has a DropHandler.
-     *
-     * @return if the custom item has a DropHandler
-     */
-    public boolean hasDropHandler() {
-        return dropHandler != null;
-    }
-
-    /**
-     * Returns the DropHandler.
-     *
-     * @return the DropHandler
-     */
-    public DropHandler getDropHandler() {
-        return dropHandler;
-    }
-
-    /**
-     * Sets the DropHandler.
-     *
-     * @param handler the handler to set
-     */
-    public void setDropHandler(DropHandler handler) {
-        dropHandler = handler;
-    }
-
-    /**
-     * Returns if the custom item has a HitHandler.
-     *
-     * @return if the custom item has a HitHandler
-     */
-    public boolean hasHitHandler() {
-        return hitHandler != null;
-    }
-
-    /**
-     * Returns the HitHandler.
-     *
-     * @return the HitHandler
-     */
-    public HitHandler getHitHandler() {
-        return hitHandler;
-    }
-
-    /**
-     * Sets the HitHandler.
-     *
-     * @param handler the handler to set
-     */
-    public void setHitHandler(HitHandler handler) {
-        hitHandler = handler;
-    }
-
-    /**
-     * Returns if the custom item has a RightClickHandler.
-     *
-     * @return if the custom item has a RightClickHandler
-     */
-    public boolean hasRightClickHandler() {
-        return rightClickHandler != null;
-    }
-
-    /**
-     * Returns the RightClickHandler.
-     *
-     * @return the RightClickHandler
-     */
-    public RightClickHandler getRightClickHandler() {
-        return rightClickHandler;
-    }
-
-    /**
-     * Sets the RightClickHandler.
-     *
-     * @param handler the handler to set
-     */
-    public void setRightClickHandler(RightClickHandler handler) {
-        rightClickHandler = handler;
     }
 
     /* Actions */
@@ -527,19 +483,8 @@ public class CustomItem extends ExItem {
         config.put("material", base.getId());
         config.put("idType", idType.toString());
         config.put("meta", meta);
+        config.put("updateTimestamp", updateTimestamp);
 
-        if (damageHandler != null) {
-            config.put("damageHandler", damageHandler.getClass().getName());
-        }
-        if (dropHandler != null) {
-            config.put("dropHandler", dropHandler.getClass().getName());
-        }
-        if (hitHandler != null) {
-            config.put("hitHandler", hitHandler.getClass().getName());
-        }
-        if (rightClickHandler != null) {
-            config.put("rightClickHandler", rightClickHandler.getClass().getName());
-        }
         if (skullOwner != null) {
             config.put("skullOwner", skullOwner);
         }
@@ -558,6 +503,11 @@ public class CustomItem extends ExItem {
     @Override
     public ItemStack toItemStack(int amount) {
         ItemStack itemStack = base.toItemStack(amount);
+        apply(itemStack);
+        return itemStack;
+    }
+
+    public void apply(ItemStack itemStack) {
         itemStack.setItemMeta(meta.clone());
         if (data != Short.MIN_VALUE) {
             itemStack.setDurability(data);
@@ -581,11 +531,9 @@ public class CustomItem extends ExItem {
             itemStack.setItemMeta(meta);
         } else if (idType == IdentifierType.PERSISTENT_DATA_CONTAINER) {
             ItemMeta meta = itemStack.getItemMeta();
-            meta.getPersistentDataContainer().set(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, id);
+            meta.getPersistentDataContainer().set(ID, PersistentDataType.STRING, id);
             itemStack.setItemMeta(meta);
         }
-
-        return itemStack;
     }
 
 }

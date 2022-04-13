@@ -14,8 +14,9 @@
  */
 package de.erethon.caliburn.item.actionhandler;
 
-import org.bukkit.entity.Entity;
+import de.erethon.caliburn.item.CustomAttribute;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -44,11 +45,11 @@ public interface HitHandler {
     }
 
     /**
-     * @param itemInstance the ItemStack involved in this action
-     * @param player       the player who holds the item
-     * @param attacked     the entity that was hit by this item
-     * @param damage       the damage caused with this item
+     * @param attributeInstance the attribute instance that sets the handler
+     * @param weapon            the ItemStack involved in this action
+     * @param damager           the player who holds the item
+     * @param event             the underlying Bukkit event
      */
-    void onHit(ItemStack itemInstance, Player player, Entity attacked, double damage);
+    void onHit(CustomAttribute.Instance attributeInstance, ItemStack weapon, Player damager, EntityDamageByEntityEvent event);
 
 }
