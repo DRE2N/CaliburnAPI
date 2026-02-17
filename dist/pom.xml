@@ -25,6 +25,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>de.erethon.commons:*</include>
+                                    <include>de.erethon.vignette:vignette-*</include>
                                     <include>org.bstats:bstats-base</include>
                                     <include>org.bstats:bstats-bukkit</include>
                                     <include>org.inventivetalent.spiget-update</include>
@@ -45,6 +46,8 @@
                                     <shadedPattern>de.erethon.commons.kyori</shadedPattern>
                                 </relocation>
                             </relocations>
+                                </includes>
+                            </artifactSet>
                         </configuration>
                     </execution>
                 </executions>
@@ -91,6 +94,21 @@
             <groupId>de.erethon.commons</groupId>
             <artifactId>compatibility</artifactId>
             <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.vignette</groupId>
+            <artifactId>vignette-api-core</artifactId>
+            <version>${moduleVersion.core}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.vignette</groupId>
+            <artifactId>vignette-api-inventory</artifactId>
+            <version>${moduleVersion.inventory}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.vignette</groupId>
+            <artifactId>vignette-internal-inventory</artifactId>
+            <version>${moduleVersion.inventory}</version>
         </dependency>
     </dependencies>
 </project>
