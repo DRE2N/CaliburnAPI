@@ -1,55 +1,53 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.erethon.commons</groupId>
-    <artifactId>commons-parent</artifactId>
-    <version>6.3.3</version>
+    <groupId>de.erethon.xlib</groupId>
+    <artifactId>xlib-parent</artifactId>
+    <version>7.0-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>DRECommons</name>
+    <name>XLib</name>
     <url>https://dre2n.github.io</url>
-    <description>Shared code between DungeonsXL, ItemsXL, Holographic Menus and other Bukkit plugins by DRE2N.</description>
+    <description>Shared code between XL plugins.</description>
     <modules>
         <module>api</module>
-        <module>ItemsXL</module>
-        <module>calicomp</module>
-        <module>badrock</module>
-        <module>badrock-1_8_R3</module>
+        <module>runtime</module>
+        <module>spigot/1_8_R1</module>
+        <module>spigot/1_8_R2</module>
+        <module>spigot/1_8_R3</module>
+        <module>spigot/1_9_R1</module>
+        <module>spigot/1_9_R2</module>
+        <module>spigot/1_10_R1</module>
+        <module>spigot/1_11_R1</module>
+        <module>spigot/1_12_R1</module>
+        <module>spigot/1_13_R1</module>
+        <module>spigot/1_13_R2</module>
+        <module>spigot/1_14_R1</module>
+        <module>spigot/1_15_R1</module>
+        <module>spigot/1_16_R1</module>
+        <module>spigot/1_16_R2</module>
+        <module>spigot/1_16_R3</module>
+        <module>spigot/1_17_R1</module>
+        <module>spigot/1_18_R1</module>
+        <module>spigot/1_18_R2</module>
         <module>example</module>
     </modules>
     <properties>
         <buildNo></buildNo>
-        <skipTests>true</skipTests>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <spigotVersion>1.18.2-R0.1-SNAPSHOT</spigotVersion>
     </properties>
-    <modules>
-        <module>core</module>
-        <module>craftbukkit_1_10_R1</module>
-        <module>craftbukkit_1_9_R2</module>
-        <module>craftbukkit_1_9_R1</module>
-        <module>craftbukkit_1_8_R3</module>
-        <module>craftbukkit_1_8_R2</module>
-        <module>craftbukkit_1_8_R1</module>
-        <module>compatibility</module>
-        <module>dist</module>
-    </modules>
     <dependencies>
         <dependency>
             <groupId>org.bstats</groupId>
-            <artifactId>bstats-base</artifactId>
-            <version>2.2.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>2.2.1</version>
+            <version>3.0.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.inventivetalent.spiget-update</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.4.1</version>
+            <version>1.4.6-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -61,69 +59,22 @@
         <dependency>
             <groupId>net.kyori</groupId>
             <artifactId>adventure-text-serializer-bungeecord</artifactId>
-            <version>4.0.0-SNAPSHOT</version>
+            <version>4.0.0</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>net.milkbowl.vault</groupId>
-            <artifactId>VaultAPI</artifactId>
-            <version>1.7</version>
-            <scope>provided</scope>
         </dependency>
     </dependencies>
     <repositories>
-        <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
-            <id>inventivetalent-repo</id>
-            <url>https://repo.inventivetalent.org/content/groups/public/</url>
-        </repository>
         <repository>
             <id>codemc</id>
             <url>https://repo.codemc.org/repository/maven-public/</url>
         </repository>
         <repository>
-            <id>dre-repo</id>
-            <url>https://erethon.de/repo</url>
-        </repository>
-    </repositories>
-</project>
-=======
-    <dependencies>
-        <dependency>
-            <groupId>de.erethon</groupId>
-            <artifactId>bedrock</artifactId>
-            <version>1.2.1</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon</groupId>
-            <artifactId>headlib</artifactId>
-            <version>3.0.10</version>
-            <scope>compile</scope>
-        </dependency>
-        <!-- From Minecraft -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>31.0.1-jre</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
-    <repositories>
-        <repository>
-            <id>spigot</id>
-            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
-        </repository>
-        <repository>
             <id>paper</id>
-            <url>https://papermc.io/repo/repository/maven-public/</url>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
         </repository>
         <repository>
-            <id>erethon</id>
-            <url>https://erethon.de/repo/</url>
+            <id>inventivetalent-repo</id>
+            <url>https://repo.inventivetalent.org/content/groups/public/</url>
         </repository>
     </repositories>
 </project>

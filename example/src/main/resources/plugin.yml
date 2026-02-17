@@ -1,13 +1,14 @@
-name: ${project.name}
-main: de.erethon.vignette.example.Example
-version: ${project.version}
-api-version: 1.13
+name: ExamplePlugin
+main: de.erethon.xlib.exampleplugin.ExamplePlugin
+version: ${project.version}${buildNo}
 author: Daniel Saukel
-description: ${project.description}
+description: "Example plugin for XLib v${project.parent.version}."
+website: ${project.url}
 commands:
-  test:
-    description: Opens the test menu.
   giveexample:
     description: "Gives example items."
     aliases: [givex]
+  guiexample:
+    description: "Opens example menu."
+    aliases: [guix]
 api-version: 1.13

@@ -1,58 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>de.erethon.caliburn</groupId>
-    <artifactId>caliburn-api</artifactId>
+    <groupId>de.erethon.xlib</groupId>
+    <artifactId>xlib-api</artifactId>
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
-    <name>CaliburnAPI</name>
-    <url>https://dre2n.github.io</url>
-    <description>An API to manage, create and (de-) serialize custom items and mobs.</description>
     <parent>
-        <groupId>de.erethon.caliburn</groupId>
-        <artifactId>caliburn-parent</artifactId>
-        <version>2.0-SNAPSHOT</version>
+        <groupId>de.erethon.xlib</groupId>
+        <artifactId>xlib-parent</artifactId>
+        <version>7.0-SNAPSHOT</version>
     </parent>
     <build>
         <finalName>${project.artifactId}-${project.version}${buildNo}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.3.0</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>de.erethon.caliburn:badrock</include>
-                                    <include>de.erethon:bedrock</include>
-                                    <include>de.erethon:headlib</include>
-                                </includes>
-                            </artifactSet>
-                            <filters>
-                                <filter>
-                                    <artifact>de.erethon:bedrock</artifact>
-                                    <excludes>
-                                        <exclude>de/erethon/bedrock/chat/MessageUtil.class</exclude>
-                                        <exclude>de/erethon/bedrock/config/MessageHandler.class</exclude>
-                                    </excludes>
-                                </filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.2</version>
-                <configuration>
-                    <excludePackageNames>de.erethon.caliburn.listener</excludePackageNames>
-                </configuration>
+                <version>3.12.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -70,20 +33,37 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.2-R0.1-SNAPSHOT</version>
+            <version>${spigotVersion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.erethon.caliburn</groupId>
-            <artifactId>badrock</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>compile</scope>
+            <groupId>me.clip</groupId>
+            <artifactId>placeholderapi</artifactId>
+            <version>2.12.2</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>de.erethon.caliburn</groupId>
-            <artifactId>calicomp</artifactId>
-            <version>${project.parent.version}</version>
-            <scope>compile</scope>
+            <groupId>net.milkbowl.vault</groupId>
+            <artifactId>VaultAPI</artifactId>
+            <version>1.7</version>
+            <scope>provided</scope>
+        </dependency>
+        <!-- From Minecraft -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
+    <repositories>
+        <repository>
+            <id>spigot</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>placeholderapi</id>
+            <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
+        </repository>
+    </repositories>
 </project>

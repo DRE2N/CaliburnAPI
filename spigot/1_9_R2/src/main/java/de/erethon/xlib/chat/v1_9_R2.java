@@ -1,0 +1,45 @@
+/*
+ * Copyright (C) 2015-2026 Daniel Saukel.
+ *
+ * This library is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU Lesser General Public License as published by the Free Software
+ * Foundation, either version 3 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+ * PARTICULAR PURPOSE. See the GNULesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License along with
+ * this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+package de.erethon.xlib.chat;
+
+import net.minecraft.server.v1_9_R2.IChatBaseComponent;
+import net.minecraft.server.v1_9_R2.IChatBaseComponent.ChatSerializer;
+import net.minecraft.server.v1_9_R2.PacketPlayOutTitle;
+import net.minecraft.server.v1_9_R2.PacketPlayOutTitle.EnumTitleAction;
+import net.minecraft.server.v1_9_R2.PlayerConnection;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
+import org.bukkit.entity.Player;
+
+/**
+ * @author Daniel Saukel
+ */
+class v1_9_R2 extends InternalsProvider {
+
+    @Override
+    void sendTitle(Player player, String title, String subtitle, int fadeIn, int show, int fadeOut) {
+        IChatBaseComponent subtitleComponent = ChatSerializer.a("{\"text\": \"" + subtitle + "\"}");
+        IChatBaseComponent titleComponent = ChatSerializer.a("{\"text\": \"" + title + "\"}");
+
+        PacketPlayOutTitle subtitlePacket = new PacketPlayOutTitle(EnumTitleAction.SUBTITLE, subtitleComponent);
+        PacketPlayOutTitle titlePacket = new PacketPlayOutTitle(EnumTitleAction.TITLE, titleComponent);
+        PacketPlayOutTitle timesPacket = new PacketPlayOutTitle(fadeIn, show, fadeOut);
+
+        PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+        connection.sendPacket(subtitlePacket);
+        connection.sendPacket(titlePacket);
+        connection.sendPacket(timesPacket);
+    }
+
+}

@@ -1,0 +1,16 @@
+name: XLib-Runtime
+main: de.erethon.itemsxl.ItemsXL
+version: ${project.version}${buildNo}
+author: Daniel Saukel
+description: "Implementation of XLib v${project.parent.version}."
+website: ${project.url}
+commands:
+  itemsxl:
+    description: ItemsXL core command.
+    aliases: [ixl]
+  givehead:
+    description: Gives a head to a player.
+    aliases: [headlib,gh]
+    permission: headlib.give
+    usage: "Usage: /<command> ([player name (=sender)]) (head:[head name]) (uuid:[owner UUID]) (textureValue:[texture value]) (amount:[amount]) (name and lore...)"
+api-version: 1.13
