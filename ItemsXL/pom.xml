@@ -1,22 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>vignette-example</artifactId>
+    <groupId>de.erethon.caliburn</groupId>
+    <artifactId>itemsxl</artifactId>
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
+    <name>ItemsXL</name>
+    <url>https://dre2n.github.io</url>
+    <description>A plugin to create and (de-) serialize custom items and mobs.</description>
     <parent>
-        <groupId>de.erethon.vignette</groupId>
-        <artifactId>vignette-parent</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>de.erethon.caliburn</groupId>
+        <artifactId>caliburn-parent</artifactId>
+        <version>2.0-SNAPSHOT</version>
     </parent>
     <build>
+        <finalName>${project.artifactId}-${project.version}${buildNo}</finalName>
         <resources>
             <resource>
                 <targetPath>.</targetPath>
                 <filtering>true</filtering>
-                <directory>src/main/resources/</directory>
+                <directory>${basedir}/src/main/resources/</directory>
                 <includes>
                     <include>plugin.yml</include>
+                    <include>languages/*</include>
                 </includes>
             </resource>
         </resources>
@@ -24,7 +29,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>3.3.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -35,8 +40,15 @@
                             <artifactSet>
                                 <includes>
                                     <include>de.erethon.vignette:vignette-dist</include>
+                                    <include>de.erethon.caliburn:caliburn-api</include>
                                 </includes>
                             </artifactSet>
+                            <relocations>
+                                <relocation>
+                                    <pattern>de.erethon.vignette</pattern>
+                                    <shadedPattern>de.erethon.itemsxl.util.vignette</shadedPattern>
+                                </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -45,9 +57,10 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>de.erethon.vignette</groupId>
-            <artifactId>vignette-dist</artifactId>
-            <version>${moduleVersion.dist}</version>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.18.2-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>de.erethon.caliburn</groupId>
@@ -56,10 +69,16 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot-api</artifactId>
-            <version>1.18.2-R0.1-SNAPSHOT</version>
+            <groupId>de.erethon.caliburn</groupId>
+            <artifactId>calicomp</artifactId>
+            <version>${project.parent.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.vignette</groupId>
+            <artifactId>vignette-dist</artifactId>
+            <version>1.0-SNAPSHOT-24</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

@@ -7,6 +7,14 @@
     <name>DRECommons</name>
     <url>https://dre2n.github.io</url>
     <description>Shared code between DungeonsXL, ItemsXL, Holographic Menus and other Bukkit plugins by DRE2N.</description>
+    <modules>
+        <module>api</module>
+        <module>ItemsXL</module>
+        <module>calicomp</module>
+        <module>badrock</module>
+        <module>badrock-1_8_R3</module>
+        <module>example</module>
+    </modules>
     <properties>
         <buildNo></buildNo>
         <skipTests>true</skipTests>
@@ -79,6 +87,43 @@
         <repository>
             <id>dre-repo</id>
             <url>https://erethon.de/repo</url>
+        </repository>
+    </repositories>
+</project>
+=======
+    <dependencies>
+        <dependency>
+            <groupId>de.erethon</groupId>
+            <artifactId>bedrock</artifactId>
+            <version>1.2.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon</groupId>
+            <artifactId>headlib</artifactId>
+            <version>3.0.10</version>
+            <scope>compile</scope>
+        </dependency>
+        <!-- From Minecraft -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>31.0.1-jre</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>spigot</id>
+            <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
+        </repository>
+        <repository>
+            <id>paper</id>
+            <url>https://papermc.io/repo/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>erethon</id>
+            <url>https://erethon.de/repo/</url>
         </repository>
     </repositories>
 </project>

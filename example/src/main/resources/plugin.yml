@@ -7,3 +7,7 @@ description: ${project.description}
 commands:
   test:
     description: Opens the test menu.
+  giveexample:
+    description: "Gives example items."
+    aliases: [givex]
+api-version: 1.13
