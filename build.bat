@@ -1,2 +1,2 @@
-java -jar mvnbt.jar
+java -jar mvnbt.jar --goal install
 pause
