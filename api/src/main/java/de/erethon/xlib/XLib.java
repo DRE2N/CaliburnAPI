@@ -96,7 +96,7 @@ public class XLib {
         instance = this;
 
         this.identifierPrefix = identifierPrefix;
-        dataFolder = new File(plugin.getDataFolder().getParentFile(), "Caliburn");
+        dataFolder = plugin.getDataFolder();
 
         items.addAll(VanillaItem.getLoaded());
         mobs.addAll(VanillaMob.getLoaded());
@@ -169,7 +169,7 @@ public class XLib {
             try {
                 mob = CustomMob.deserialize(config.getValues(false));
             } catch (Exception exception) {
-                MessageUtil.log("[Caliburn] The custom mob file \"" + file.getName() + "\"is invalid:");
+                MessageUtil.log("[XLib] The custom mob file \"" + file.getName() + "\"is invalid:");
                 exception.printStackTrace();
                 continue;
             }
@@ -209,7 +209,7 @@ public class XLib {
             try {
                 item = CustomItem.deserialize(config.getValues(false));
             } catch (Exception exception) {
-                MessageUtil.log("[Caliburn] The custom item file \"" + file.getName() + "\"is invalid:");
+                MessageUtil.log("[XLib] The custom item file \"" + file.getName() + "\"is invalid:");
                 exception.printStackTrace();
                 continue;
             }

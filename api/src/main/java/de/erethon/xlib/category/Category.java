@@ -403,7 +403,7 @@ public class Category<T extends Categorizable> extends Categorizable {
     public static final Category<ExMob> IMPACT_PROJECTILES = new Category<>("impact_projectiles", Category.ARROW_MOBS, VanillaMob.SNOWBALL, VanillaMob.FIREBALL, VanillaMob.SMALL_FIREBALL,
             VanillaMob.EGG, VanillaMob.TRIDENT, VanillaMob.DRAGON_FIREBALL, VanillaMob.WITHER_SKULL);
 
-    // Caliburn
+    // XLib
     public static final Category<ExItem> CHESTS = new Category<>("chests", VanillaItem.CHEST, VanillaItem.TRAPPED_CHEST, VanillaItem.ENDER_CHEST, Category.SHULKER_BOXES);
 
     static {

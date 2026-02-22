@@ -1387,7 +1387,7 @@ public class VanillaItem extends ExItem {
             }
         }
 
-        StringBuilder sb = new StringBuilder("&c[WARNING] Caliburn lacks a built-in representation of the following materials: ");
+        StringBuilder sb = new StringBuilder("&c[WARNING] XLib lacks a built-in representation of the following materials: ");
         boolean send = false, first = true;
         bukkitMats:
         for (Material bukkit : Material.values()) {
@@ -1410,7 +1410,7 @@ public class VanillaItem extends ExItem {
             MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
         }
 
-        sb = new StringBuilder("&c[WARNING] Caliburn has a representation of the following materials that do not exist in Bukkit: ");
+        sb = new StringBuilder("&c[WARNING] XLib has a representation of the following materials that do not exist in Bukkit: ");
         send = false;
         first = true;
         for (VanillaItem vi : VALUES) {

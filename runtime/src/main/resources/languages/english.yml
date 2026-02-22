@@ -11,9 +11,9 @@ command:
     title: "&9Right-click an item to set its chance."
   main:
     compatibility: "&eInternals: &o[&v1]"
-    help: "&7Type in &o/ixl help&r&7 for further information."
+    help: "&7Type in &o/xlib help&r&7 for further information."
     loaded: "&eItems loaded: &o[&v1] (custom) &e| &o[&v2] (vanilla)"
-    welcome: "&7Welcome to &4Items&fXL"
+    welcome: "&7Welcome to &4XL&fib"
   open:
     success: "&7You opened the box. You found the item &o&v1&7!"
   registerItem:
@@ -21,9 +21,9 @@ command:
   registerMob:
     success: "&7Successfully registered the mob &o&v1&7."
   reload:
-    success: "&7Successfully reloaded ItemsXL."
+    success: "&7Successfully reloaded XLib."
   serialize:
-    success: "&7Successfully serialized item. Have a look at the &oItemsXL/serialized.yml&r&7 file."
+    success: "&7Successfully serialized item. Have a look at the &oXLib/serialized.yml&r&7 file."
 error:
   coordsNotNumeric: "&cCoordinates must be numeric."
   invalidIDType: "&c&o&v1 &cis not a valid ID type."
@@ -37,18 +37,18 @@ error:
   noPlayerCommand: "&cThe command &o&v1&r&c is not a player command!"
   vanillaFeature: "&cYou cannot override Vanilla features."
 help:
-  give: "&7Give an item to a player. Usage: &o/ixl give [player=you] [id] ([amount=1]) (box)"
-  help: "&7Show command help. Usage: &o/ixl help [page]"
-  info: "&7Show information about an item. Usage: &o/ixl info [item]"
-  list: "&7List all custom items. Usage: &o/ixl list [page]"
-  lootTable: "&7Creates a new or edits an existing loot table. Usage: &o/ixl lootTable [name] ([-delete,d])"
+  give: "&7Give an item to a player. Usage: &o/xlib give [player=you] [id] ([amount=1]) (box)"
+  help: "&7Show command help. Usage: &o/xlib help [page]"
+  info: "&7Show information about an item. Usage: &o/xlib info [item]"
+  list: "&7List all custom items. Usage: &o/xlib list [page]"
+  lootTable: "&7Creates a new or edits an existing loot table. Usage: &o/xlib lootTable [name] ([-delete,d])"
   main: "&7General status information."
   open: "&7Open the item box in your hand."
-  registerItem: "&7Registers an item as a Caliburn item. Usage: &o/ixl ri [ID] [ID Type]"
-  registerMob: "&7Registers a mob as a Caliburn mob. Usage: &o/ixl rm [ID] [ID Type]"
-  reload: "&7Reload all configs and data. Usage: &o/ixl reload"
-  serialize: "&7Serialize the item stack in your hand. Usage: &o/ixl serialize ([simple])"
-  summon: "&7Summons a mob. Usage: &o: /ixl summon [mob] ([world x y z yaw pitch])"
+  registerItem: "&7Registers an item as a Caliburn item. Usage: &o/xlib ri [ID] [ID Type]"
+  registerMob: "&7Registers a mob as a Caliburn mob. Usage: &o/xlib rm [ID] [ID Type]"
+  reload: "&7Reload all configs and data. Usage: &o/xlib reload"
+  serialize: "&7Serialize the item stack in your hand. Usage: &o/xlib serialize ([simple])"
+  summon: "&7Summons a mob. Usage: &o: /xlib summon [mob] ([world x y z yaw pitch])"
 object:
   item: item
   lootTable: "loot table"

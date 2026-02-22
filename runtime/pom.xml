@@ -9,6 +9,9 @@
         <artifactId>xlib-parent</artifactId>
         <version>7.0-SNAPSHOT</version>
     </parent>
+    <properties>
+        <pluginClass>de.erethon.xlib.runtime.XLibRuntime</pluginClass>
+    </properties>
     <build>
         <finalName>${project.artifactId}-${project.version}${buildNo}</finalName>
         <resources>

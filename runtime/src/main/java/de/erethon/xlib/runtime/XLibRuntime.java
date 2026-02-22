@@ -62,10 +62,12 @@ public class XLibRuntime extends DREPlugin {
 
     @Override
     public void onEnable() {
+        setDataFolder(new File(getDataFolder().getParentFile(), "XLib"));
+        loadIConfig();
+        setUpdaterEnabled(iConfig.isUpdaterEnabled());
         super.onEnable();
         instance = this;
 
-        loadIConfig();
         loadAPI();
         loadICommandCache();
         getCommand("givehead").setExecutor(new GiveHeadCommand());

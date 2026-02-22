@@ -52,7 +52,7 @@ public class TrackedItemStack {
 
     /**
      * For internal use. See {@link XLib#wrap(org.bukkit.inventory.ItemStack)} and
-     * {@link XLib#wrap(de.erethon.caliburn.item.CustomItem, org.bukkit.inventory.ItemStack)}
+     * {@link XLib#wrap(de.erethon.xlib.item.CustomItem, org.bukkit.inventory.ItemStack)}
      *
      * @param api     the api instance
      * @param type    the type

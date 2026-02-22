@@ -203,7 +203,7 @@ public class VanillaMob extends ExMob {
             }
         }
 
-        StringBuilder sb = new StringBuilder("&c[WARNING] Caliburn lacks a built-in representation of the following mobs: ");
+        StringBuilder sb = new StringBuilder("&c[WARNING] XLib lacks a built-in representation of the following mobs: ");
         boolean send = false, first = true;
         bukkitMobs:
         for (EntityType bukkit : EntityType.values()) {
@@ -226,7 +226,7 @@ public class VanillaMob extends ExMob {
             MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
         }
 
-        sb = new StringBuilder("&c[WARNING] Caliburn has a representation of the following mobs that do not exist in Bukkit: ");
+        sb = new StringBuilder("&c[WARNING] XLib has a representation of the following mobs that do not exist in Bukkit: ");
         send = false;
         first = true;
         for (VanillaMob vm : VALUES) {

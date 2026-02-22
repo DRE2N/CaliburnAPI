@@ -17,7 +17,6 @@ package de.erethon.xlib.plugin;
 import de.erethon.xlib.chat.MessageUtil;
 import de.erethon.xlib.command.DRECommandCache;
 import de.erethon.xlib.compatibility.CompatibilityHandler;
-import de.erethon.xlib.config.CommonConfig;
 import de.erethon.xlib.config.MessageHandler;
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +56,7 @@ public abstract class DREPlugin extends JavaPlugin {
 
     protected MessageHandler messageHandler;
     private DRECommandCache commands;
+    private boolean updaterEnabled;
 
     @Override
     public void onEnable() {
@@ -72,7 +72,7 @@ public abstract class DREPlugin extends JavaPlugin {
             metrics = new Metrics(this, settings.getBStatsResourceId());
         }
 
-        if (settings.isSpigotMCResource() && CommonConfig.getInstance().isUpdaterEnabled()) {
+        if (settings.isSpigotMCResource() && isUpdaterEnabled()) {
             SpigetUpdate updater = new SpigetUpdate(this, settings.getSpigotMCResourceId());
             updater.setVersionComparator(settings.getVersionComparator());
             updater.checkForUpdate(new UpdateCallback() {
@@ -284,6 +284,24 @@ public abstract class DREPlugin extends JavaPlugin {
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException exception) {
             MessageUtil.log(this, "&cError: Could not set data folder!");
         }
+    }
+
+    /**
+     * Returns if Spiget updater is enabled.
+     *
+     * @return if Spiget updater is enabled
+     */
+    public boolean isUpdaterEnabled() {
+        return updaterEnabled;
+    }
+
+    /**
+     * Sets Spiget updater enabled or disabled.
+     *
+     * @param enabled if Spiget updater should be enabled
+     */
+    protected void setUpdaterEnabled(boolean enabled) {
+        updaterEnabled = enabled;
     }
 
 }

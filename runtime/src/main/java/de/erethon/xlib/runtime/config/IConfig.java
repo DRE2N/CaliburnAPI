@@ -26,13 +26,12 @@ public class IConfig extends DREConfig {
 
     private DREPlugin plugin;
 
-    public static final int CONFIG_VERSION = 1;
+    public static final int CONFIG_VERSION = 2;
 
     private String language = "english";
-    private boolean builtInItems = true;
+    private boolean updaterEnabled = true;
     private String identifierPrefix = "&7";
     private String boxName = "&6Mysterious Box";
-    private String advancedWorkbenchName = "&6Advanced Workbench";
 
     public IConfig(DREPlugin plugin, File file) {
         super(file, CONFIG_VERSION);
@@ -52,10 +51,12 @@ public class IConfig extends DREConfig {
     }
 
     /**
-     * @return whether or not the built-in items should be loaded
+     * Returns if Spiget updater is enabled.
+     *
+     * @return if Spiget updater is enabled
      */
-    public boolean areBuiltInItemsEnabled() {
-        return builtInItems;
+    public boolean isUpdaterEnabled() {
+        return updaterEnabled;
     }
 
     /**
@@ -72,29 +73,19 @@ public class IConfig extends DREConfig {
         return ChatColor.translateAlternateColorCodes('&', boxName);
     }
 
-    /**
-     * @return the advancedWorkbenchName
-     */
-    public String getAdvancedWorkbenchName() {
-        return ChatColor.translateAlternateColorCodes('&', advancedWorkbenchName);
-    }
-
     @Override
     public void initialize() {
         if (!config.contains("language")) {
             config.set("language", language);
         }
-        if (!config.contains("builtInItems")) {
-            config.set("builtInItems", builtInItems);
+        if (!config.contains("updaterEnabled")) {
+            config.set("updaterEnabled", updaterEnabled);
         }
         if (!config.contains("identifierPrefix")) {
             config.set("identifierPrefix", identifierPrefix);
         }
         if (!config.contains("boxNames")) {
             config.set("boxName", boxName);
-        }
-        if (!config.contains("advancedWorkbenchName")) {
-            config.set("advancedWorkbenchName", advancedWorkbenchName);
         }
 
         save();
@@ -104,10 +95,9 @@ public class IConfig extends DREConfig {
     public void load() {
         language = config.getString("language", language);
         plugin.getMessageHandler().setDefaultLanguage(language);
-        builtInItems = config.getBoolean("builtInItems", builtInItems);
+        updaterEnabled = config.getBoolean("updaterEnabled", updaterEnabled);
         identifierPrefix = config.getString("identifierPrefix", identifierPrefix);
         boxName = config.getString("boxName", boxName);
-        advancedWorkbenchName = config.getString("advancedWorkbenchName", advancedWorkbenchName);
     }
 
 }

@@ -1,13 +1,13 @@
 name: XLib-Runtime
-main: de.erethon.itemsxl.ItemsXL
+main: ${pluginClass}
 version: ${project.version}${buildNo}
 author: Daniel Saukel
-description: "Implementation of XLib v${project.parent.version}."
+description: "${project.parent.description}"
 website: ${project.url}
 commands:
-  itemsxl:
-    description: ItemsXL core command.
-    aliases: [ixl]
+  xlib:
+    description: XLib core command.
+    aliases: [itemsxl, ixl]
   givehead:
     description: Gives a head to a player.
     aliases: [headlib,gh]
