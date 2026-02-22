@@ -40,7 +40,7 @@
                             <artifactSet>
                                 <includes>
                                     <include>de.erethon.xlib:*</include>
-                                    <include>org.bstats:bstats-bukkit</include>
+                                    <include>org.bstats:bstats-*</include>
                                     <include>org.inventivetalent.spiget-update</include>
                                     <include>net.kyori:*</include>
                                 </includes>
