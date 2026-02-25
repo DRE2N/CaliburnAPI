@@ -197,5 +197,10 @@
             <artifactId>xlib-spigot_1_20_R3</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-paper-api</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 </project>
