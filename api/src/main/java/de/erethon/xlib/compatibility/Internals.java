@@ -17,7 +17,6 @@ package de.erethon.xlib.compatibility;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
-import org.bukkit.Bukkit;
 
 /**
  * This enumeration represents package versions.
@@ -27,80 +26,92 @@ import org.bukkit.Bukkit;
 public enum Internals {
 
     /**
-     * Represents upcoming CraftBukkit versions.
+     * Represents Paper versions as of Minecraft 1.21.5.
      * <br>
-     * toString() returns the actual internals version instead of "NEW"
+     * This is the default version.
      */
-    NEW(true),
-    v1_21_R6(true),
-    v1_21_R5(true),
-    v1_21_R4(true),
-    v1_21_R3(true),
-    v1_21_R2(true),
-    v1_21_R1(true),
-    v1_20_R4(true),
-    v1_20_R3(true),
-    v1_20_R2(true),
-    v1_20_R1(true),
-    v1_19_R3(true),
-    v1_19_R2(true),
-    v1_19_R1(true),
-    v1_18_R1(true),
-    v1_17_R1(true),
-    v1_16_R3(true),
-    v1_16_R2(true),
-    v1_16_R1(true),
-    v1_15_R1(true),
-    v1_14_R1(true),
-    v1_13_R2(true),
-    v1_13_R1(true),
-    v1_12_R1(true),
-    v1_11_R1(true),
-    v1_10_R1(true),
-    v1_9_R2(true),
-    v1_9_R1(true),
-    v1_8_R3(true),
-    v1_8_R2(true),
-    v1_8_R1(true),
-    v1_7_R4(true),
-    v1_7_R3(true),
-    v1_7_R2(true),
-    v1_7_R1(true),
-    v1_6_R3(true),
-    v1_6_R2(true),
-    v1_6_R1(true),
-    v1_5_R3(true),
-    v1_5_R2(true),
-    v1_5_R1(true),
-    v1_4_R1(true),
+    PAPER(false, false),
+    SPIGOT_v1_21_R7(false, true),
+    SPIGOT_v1_21_R6(false, true),
+    SPIGOT_v1_21_R5(false, true),
+    SPIGOT_v1_21_R4(false, true),
+    v1_21_R3(false, true),// PAPER / SPIGOT DEVIDE
+    v1_21_R2(false, true),
+    v1_21_R1(false, true),
+    v1_20_R4(false, true),
+    v1_20_R3(false, true),
+    v1_20_R2(false, true),
+    v1_20_R1(false, true),
+    v1_19_R3(false, true),
+    v1_19_R2(false, true),
+    v1_19_R1(false, true),
+    v1_18_R1(false, true),
+    v1_17_R1(false, true),// No more relocated NMS
+    v1_16_R3(true, true),
+    v1_16_R2(true, true),
+    v1_16_R1(true, true),
+    v1_15_R1(true, true),
+    v1_14_R1(true, true),
+    v1_13_R2(true, true),
+    v1_13_R1(true, true),
+    v1_12_R1(true, true),
+    v1_11_R1(true, true),
+    v1_10_R1(true, true),
+    v1_9_R2(true, true),
+    v1_9_R1(true, true),
+    v1_8_R3(true, true),
+    v1_8_R2(true, true),
+    v1_8_R1(true, true),
+    v1_7_R4(true, true),
+    v1_7_R3(true, true),
+    v1_7_R2(true, true),
+    v1_7_R1(true, true),
+    v1_6_R3(true, true),
+    v1_6_R2(true, true),
+    v1_6_R1(true, true),
+    v1_5_R3(true, true),
+    v1_5_R2(true, true),
+    v1_5_R1(true, true),
+    v1_4_R1(true, true),
     /**
      * Represents internals that are older than CraftBukkit 1.4.7, which introduced the current package version system.
      */
-    OUTDATED(true),
+    OUTDATED(false, false),
     /**
      * Represents an implementation other than CraftBukkit.
      */
-    UNKNOWN(false);
+    UNKNOWN(false, false);
 
-    private boolean craftBukkitInternals;
+    private boolean nmsRelocations;
+    private boolean obcRelocations;
 
-    Internals(boolean craftBukkitInternals) {
-        this.craftBukkitInternals = craftBukkitInternals;
+    Internals(boolean nmsRelocations, boolean obcRelocations) {
+        this.nmsRelocations = nmsRelocations;
+        this.obcRelocations = obcRelocations;
     }
 
     /**
-     * Returns if the server uses CraftBukkit internals
+     * Returns true if net.minecraft.server packages are relocated to net.minecraft.server.{@link #toString()} on this server, false if not.
      *
-     * @return true if the server uses CraftBukkit internals
+     * @return true if net.minecraft.server packages are relocated to net.minecraft.server.{@link #toString()} on this server, false if not.
      */
-    public boolean useCraftBukkitInternals() {
-        return craftBukkitInternals;
+    public boolean hasNMSRelocations() {
+        return nmsRelocations;
+    }
+
+    /**
+     * Returns true if org.bukkit.craftbukkit packages are relocated to org.bukkit.craftbukkit.{@link #toString()} on this server, false if not.
+     *
+     * @return true if org.bukkit.craftbukkit packages are relocated to org.bukkit.craftbukkit.{@link #toString()} on this server, false if not.
+     */
+    public boolean hasOBCRelocations() {
+        return obcRelocations;
     }
 
     @Override
     public String toString() {
-        if (this == NEW) {
-            return Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+        if (name().startsWith("SPIGOT_")) {
+            return name().replace("SPIGOT_", "");
         } else {
             return name();
         }

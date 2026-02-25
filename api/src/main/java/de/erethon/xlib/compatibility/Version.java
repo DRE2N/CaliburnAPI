@@ -30,15 +30,16 @@ public enum Version {
     /**
      * Represents upcoming versions.
      * <p>
-     * getCraftBukkitInternals() might return a known package version or NEW.
+     * {@link #getCraftBukkitInternals()} returns {@link Internals#PAPER}.
      */
-    NEW(true, true, true, Internals.NEW),
-    MC1_21_10(true, true, true, v1_21_R6),
-    MC1_21_9(true, true, true, v1_21_R6),
-    MC1_21_8(true, true, true, v1_21_R5),
-    MC1_21_7(true, true, true, v1_21_R5),
-    MC1_21_6(true, true, true, v1_21_R5),
-    MC1_21_5(true, true, true, v1_21_R4),
+    NEW(true, true, true, PAPER),
+    MC1_21_11(true, true, true, SPIGOT_v1_21_R7),
+    MC1_21_10(true, true, true, SPIGOT_v1_21_R6),
+    MC1_21_9(true, true, true, SPIGOT_v1_21_R6),
+    MC1_21_8(true, true, true, SPIGOT_v1_21_R5),
+    MC1_21_7(true, true, true, SPIGOT_v1_21_R5),
+    MC1_21_6(true, true, true, SPIGOT_v1_21_R5),
+    MC1_21_5(true, true, true, SPIGOT_v1_21_R4),
     MC1_21_4(true, true, true, v1_21_R3),// PAPER / SPIGOT DEVIDE
     MC1_21_3(true, true, true, v1_21_R2),
     MC1_21_2(true, true, true, v1_21_R2),
@@ -164,15 +165,10 @@ public enum Version {
      * @return the package version that CraftBukkit uses for this Minecraft version
      */
     public Internals getCraftBukkitInternals() {
-        if (this == NEW) {
-            try {
-                return Internals.valueOf(Internals.NEW.toString());
-            } catch (IllegalArgumentException exception) {
-                return Internals.NEW;
-            }
-        } else {
-            return craftBukkitInternals;
+        if (isAtLeast(MC1_21_5) && CompatibilityHandler.getInstance().isPaper()) {
+            return PAPER;
         }
+        return craftBukkitInternals;
     }
 
     @Override

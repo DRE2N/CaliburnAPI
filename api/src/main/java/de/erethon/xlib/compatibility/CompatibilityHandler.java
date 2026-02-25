@@ -76,9 +76,9 @@ public class CompatibilityHandler {
     }
 
     /**
-     * Returns if the server software implements the PaperSpigot API
+     * Returns if the server software implements the Paper API
      *
-     * @return if the server software implements the PaperSpigot API
+     * @return if the server software implements the Paper API
      */
     public boolean isPaper() {
         return paper;
