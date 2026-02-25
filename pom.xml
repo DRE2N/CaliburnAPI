@@ -35,6 +35,7 @@
         <module>spigot/1_20_R1</module>
         <module>spigot/1_20_R2</module>
         <module>spigot/1_20_R3</module>
+        <module>spigot/paper-api</module>
     </modules>
     <properties>
         <buildNo></buildNo>

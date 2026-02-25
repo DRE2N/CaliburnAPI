@@ -14,6 +14,8 @@
  */
 package de.erethon.xlib.item;
 
+import de.erethon.xlib.compatibility.CompatibilityHandler;
+import de.erethon.xlib.compatibility.Internals;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -480,12 +482,17 @@ public enum CustomHead {
 
     static {
         String packageName = CustomHead.class.getPackage().getName();
-        String internalsName = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+        CompatibilityHandler compat = CompatibilityHandler.getInstance();
+        Internals packageVersion = compat.getInternals();
+        String className = "PaperAPIProvider";
+        if (packageVersion.hasOBCRelocations()) {
+            className = packageName + "." + packageVersion;
+        }
         try {
-            internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).getDeclaredConstructor().newInstance();
+            internals = (InternalsProvider) Class.forName(className).getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException
                 | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException exception) {
-            Bukkit.getLogger().log(Level.SEVERE, "HeadLib could not find a valid implementation for {0}.", internalsName);
+            Bukkit.getLogger().log(Level.SEVERE, "XLib could not find a valid implementation for {0}.", packageVersion);
         }
         if (internals == null) {
             internals = new InternalsProvider() {
