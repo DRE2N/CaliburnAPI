@@ -14,7 +14,6 @@
  */
 package de.erethon.xlib.item;
 
-import de.erethon.xlib.compatibility.CompatibilityHandler;
 import de.erethon.xlib.compatibility.Version;
 import org.bukkit.inventory.ItemStack;
 
@@ -47,7 +46,7 @@ public class OldBlockItem extends VanillaItem {
 
     @Override
     public ItemStack toItemStack(int amount) {
-        if (!CompatibilityHandler.getInstance().getVersion().useNewMaterials()) {
+        if (!Version.get().useNewMaterials()) {
             return super.toItemStack(amount);
         } else {
             return replacement.toItemStack(amount);

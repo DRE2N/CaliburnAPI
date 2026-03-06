@@ -14,8 +14,7 @@
  */
 package de.erethon.xlib.chat;
 
-import de.erethon.xlib.compatibility.CompatibilityHandler;
-import de.erethon.xlib.compatibility.Internals;
+import de.erethon.xlib.compatibility.Version;
 import de.erethon.xlib.plugin.DREPlugin;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,9 +35,9 @@ import org.bukkit.plugin.Plugin;
  */
 public class MessageUtil {
 
-    private static final boolean is1_9 = Internals.isAtLeast(Internals.v1_9_R1);
-    private static final boolean is1_11 = Internals.isAtLeast(Internals.v1_11_R1);
-    private static final boolean is1_16 = Internals.isAtLeast(Internals.v1_16_R1);
+    private static final boolean is1_9 = Version.isAtLeast(Version.MC1_9);
+    private static final boolean is1_11 = Version.isAtLeast(Version.MC1_11);
+    private static final boolean is1_16 = Version.isAtLeast(Version.MC1_16);
 
     private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[a-fA-F0-9]{6}");
 
@@ -47,7 +46,7 @@ public class MessageUtil {
     static {
         if (!is1_11) {
             String packageName = MessageUtil.class.getPackage().getName();
-            String internalsName = CompatibilityHandler.getInstance().getInternals().toString();
+            String internalsName = Version.get().getRelocationTarget();
             try {
                 internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).newInstance();
             } catch (ClassNotFoundException | IllegalAccessException | InstantiationException exception) {

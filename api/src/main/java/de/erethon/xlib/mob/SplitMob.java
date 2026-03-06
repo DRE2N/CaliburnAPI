@@ -14,7 +14,6 @@
  */
 package de.erethon.xlib.mob;
 
-import de.erethon.xlib.compatibility.CompatibilityHandler;
 import de.erethon.xlib.compatibility.Version;
 import java.util.Random;
 import org.bukkit.Location;
@@ -67,7 +66,7 @@ public class SplitMob extends VanillaMob {
     @Override
     public Entity toEntity(Location location) {
         Entity entity = super.toEntity(location);
-        if (!CompatibilityHandler.getInstance().getVersion().useNewMobNames()) {
+        if (Version.get().useNewMobNames()) {
             if (ELDER_GUARDIAN.getId1_13().equals(getId1_13())) {
                 ((Guardian) entity).setElder(true);
             } else if (WITHER_SKELETON.getId1_13().equals(getId1_13())) {

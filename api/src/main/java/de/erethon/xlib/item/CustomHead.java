@@ -14,8 +14,8 @@
  */
 package de.erethon.xlib.item;
 
-import de.erethon.xlib.compatibility.CompatibilityHandler;
-import de.erethon.xlib.compatibility.Internals;
+import de.erethon.xlib.compatibility.RuntimeType;
+import de.erethon.xlib.compatibility.Version;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -481,18 +481,14 @@ public enum CustomHead {
     static InternalsProvider internals;
 
     static {
-        String packageName = CustomHead.class.getPackage().getName();
-        CompatibilityHandler compat = CompatibilityHandler.getInstance();
-        Internals packageVersion = compat.getInternals();
-        String className = "PaperAPIProvider";
-        if (packageVersion.hasOBCRelocations()) {
-            className = packageName + "." + packageVersion;
-        }
+        String className = CustomHead.class.getPackage().getName() + "."
+                + (RuntimeType.get() == RuntimeType.PAPER
+                ? "PaperAPIProvider" : Version.get().getRelocationTarget());
         try {
             internals = (InternalsProvider) Class.forName(className).getDeclaredConstructor().newInstance();
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException
                 | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException exception) {
-            Bukkit.getLogger().log(Level.SEVERE, "XLib could not find a valid implementation for {0}.", packageVersion);
+            Bukkit.getLogger().log(Level.SEVERE, "XLib could not find a valid implementation for {0}.", className);
         }
         if (internals == null) {
             internals = new InternalsProvider() {
@@ -500,14 +496,17 @@ public enum CustomHead {
                 public ItemStack newPlayerHead(int amount) {
                     return new ItemStack(Material.PLAYER_HEAD, amount);
                 }
+
                 @Override
                 public String getTextureValue(ItemStack itemStack) {
                     return "";
                 }
+
                 @Override
                 public ItemStack setSkullOwner(ItemStack itemStack, Object compound) {
                     return itemStack.clone();
                 }
+
                 @Override
                 public Object createOwnerCompound(String id, String textureValue) {
                     return null;

@@ -15,12 +15,11 @@
 package de.erethon.xlib.item;
 
 import de.erethon.xlib.category.IdentifierType;
-import de.erethon.xlib.util.StringUtil;
 import de.erethon.xlib.chat.MessageUtil;
-import de.erethon.xlib.compatibility.CompatibilityHandler;
 import de.erethon.xlib.compatibility.Version;
 import static de.erethon.xlib.compatibility.Version.*;
 import de.erethon.xlib.util.EnumUtil;
+import de.erethon.xlib.util.StringUtil;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -1524,7 +1523,7 @@ public class VanillaItem extends ExItem {
         this.id1_14 = id1_14;
         this.numeric = numeric;
         this.data = data;
-        if (CompatibilityHandler.getInstance().getVersion().useNewMaterials()) {
+        if (Version.get().useNewMaterials()) {
             if (Version.isAtMost(Version.MC1_13_2)) {
                 id = id1_13;
             } else {
@@ -1605,7 +1604,7 @@ public class VanillaItem extends ExItem {
      * @return the internal ID. The enum name in 1.13+; the numeric ID and the data value if it isn't 0 separated with a ":" before 1.13
      */
     public String getInternalId() {
-        if (CompatibilityHandler.getInstance().getVersion().useNewMaterials()) {
+        if (Version.get().useNewMaterials()) {
             return getId();
         } else {
             return getOldNameAndData();
@@ -1689,7 +1688,7 @@ public class VanillaItem extends ExItem {
         if (!isAvailable()) {
             return new ItemStack(Material.AIR);
         }
-        if (CompatibilityHandler.getInstance().getVersion().useNewMaterials()) {
+        if (Version.get().useNewMaterials()) {
             return new ItemStack(getMaterial(), amount);
         } else {
             return new ItemStack(getMaterial(), amount, data);

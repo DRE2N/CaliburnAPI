@@ -16,21 +16,19 @@ package de.erethon.xlib.mob;
 
 import de.erethon.xlib.XLib;
 import de.erethon.xlib.category.IdentifierType;
+import de.erethon.xlib.compatibility.Version;
 import de.erethon.xlib.loottable.LootTable;
 import de.erethon.xlib.mob.actionhandler.AttackHandler;
 import de.erethon.xlib.mob.actionhandler.DamageHandler;
 import de.erethon.xlib.mob.actionhandler.DeathHandler;
 import de.erethon.xlib.mob.actionhandler.InteractHandler;
-import de.erethon.xlib.util.StringUtil;
-import de.erethon.xlib.compatibility.CompatibilityHandler;
-import de.erethon.xlib.compatibility.Version;
 import de.erethon.xlib.util.EnumUtil;
+import de.erethon.xlib.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -47,8 +45,6 @@ import org.bukkit.potion.PotionEffect;
  * @author Daniel Saukel
  */
 public class CustomMob extends ExMob {
-
-    private static Set<Version> higher = Version.andHigher(CompatibilityHandler.getInstance().getVersion());
 
     /* Entity */
     private String displayName;
@@ -86,15 +82,15 @@ public class CustomMob extends ExMob {
         displayName = entity.getCustomName();
         name = StringUtil.formatId(id);
         customNameVisible = entity.isCustomNameVisible();
-        if (!higher.contains(Version.MC1_8_9)) {// 1.9+
+        if (Version.isAtLeast(Version.MC1_9)) {
             glowing = entity.isGlowing();
             invulnerable = entity.isInvulnerable();
             silent = entity.isSilent();
-            if (!higher.contains(Version.MC1_9_4)) {
+            if (Version.isAtLeast(Version.MC1_10)) {
                 gravity = entity.hasGravity();
-                if (!higher.contains(Version.MC1_10_2)) {
+                if (Version.isAtLeast(Version.MC1_11)) {
                     entity.getPassengers().forEach(e -> passengers.add(api.getExMob(e).getId()));
-                    if (!higher.contains(Version.MC1_12_2)) {
+                    if (Version.isAtLeast(Version.MC1_13)) {
                         persistent = entity.isPersistent();
                     }
                 }
@@ -107,7 +103,7 @@ public class CustomMob extends ExMob {
             equipment = new LootTable(api, id + "_loot");
             equipment.readEntityEquipment(living.getEquipment());
             removeWhenFarAway = living.getRemoveWhenFarAway();
-            if (!higher.contains(Version.MC1_8_9)) {
+            if (Version.isAtLeast(Version.MC1_9)) {
                 ai = living.hasAI();
                 collidable = living.isCollidable();
             }
@@ -795,7 +791,7 @@ public class CustomMob extends ExMob {
         if (isCustomNameVisible() != null) {
             entity.setCustomNameVisible(isCustomNameVisible());
         }
-        if (!higher.contains(Version.MC1_8_9)) {// 1.9+
+        if (Version.isAtLeast(Version.MC1_9)) {
             if (isGlowing() != null) {
                 entity.setGlowing(isGlowing());
             }
@@ -805,15 +801,15 @@ public class CustomMob extends ExMob {
             if (isSilent() != null) {
                 entity.setSilent(isSilent());
             }
-            if (!higher.contains(Version.MC1_9_4)) {
+            if (Version.isAtLeast(Version.MC1_10)) {
                 if (hasGravity() != null) {
                     entity.setGravity(hasGravity());
                 }
-                if (!higher.contains(Version.MC1_10_2)) {
+                if (Version.isAtLeast(Version.MC1_11)) {
                     if (getPassengers() != null) {
                         getPassengers().forEach(p -> entity.addPassenger(api.getExMob(p).toEntity(location)));
                     }
-                    if (!higher.contains(Version.MC1_12_2)) {
+                    if (Version.isAtLeast(Version.MC1_13)) {
                         if (isPersistent() != null) {
                             entity.setPersistent(isPersistent());
                         }
@@ -843,7 +839,7 @@ public class CustomMob extends ExMob {
         if (getRemoveWhenFarAway() != null) {
             living.setRemoveWhenFarAway(getRemoveWhenFarAway());
         }
-        if (!higher.contains(Version.MC1_8_9)) {
+        if (Version.isAtLeast(Version.MC1_9)) {
             if (hasAI() != null) {
                 living.setAI(hasAI());
             }
