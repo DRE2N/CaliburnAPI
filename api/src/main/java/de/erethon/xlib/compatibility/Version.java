@@ -184,10 +184,11 @@ public enum Version {
         if (running == null) {
             try {
                 if (Package.getPackage("org.bukkit.craftbukkit") != null) {
-                    String versionString = Bukkit.getServer().getVersion().split("\\(MC: ")[1].split("\\)")[0];
+                    String versionString = Bukkit.getServer().getVersion().split("\\(MC: ")[1].split("\\)")[0].split(" ")[0];
                     for (Version version : Version.values()) {
                         if (version.toString().equals(versionString)) {
                             running = version;
+                            return running;
                         }
                     }
 
@@ -196,6 +197,7 @@ public enum Version {
                     for (Version version : Version.values()) {
                         if (version.name().replaceAll("_", ".").equals(versionString)) {
                             running = version;
+                            return running;
                         }
                     }
                 }
