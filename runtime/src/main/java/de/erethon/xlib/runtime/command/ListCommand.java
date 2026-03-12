@@ -16,12 +16,12 @@ package de.erethon.xlib.runtime.command;
 
 import de.erethon.xlib.XLib;
 import de.erethon.xlib.category.Categorizable;
+import de.erethon.xlib.chat.MessageUtil;
+import de.erethon.xlib.command.DRECommand;
 import de.erethon.xlib.item.ExItem;
 import de.erethon.xlib.item.VanillaItem;
 import de.erethon.xlib.loottable.LootTable;
 import de.erethon.xlib.mob.VanillaMob;
-import de.erethon.xlib.chat.MessageUtil;
-import de.erethon.xlib.command.DRECommand;
 import de.erethon.xlib.runtime.XLibRuntime;
 import de.erethon.xlib.runtime.config.IMessage;
 import de.erethon.xlib.util.NumberUtil;
@@ -35,9 +35,11 @@ import org.bukkit.command.CommandSender;
  */
 public class ListCommand extends DRECommand {
 
+    private XLibRuntime plugin;
     private XLib api;
 
     public ListCommand(XLibRuntime plugin) {
+        this.plugin = plugin;
         api = plugin.getAPI();
         setCommand("list");
         setMinArgs(0);
@@ -92,7 +94,7 @@ public class ListCommand extends DRECommand {
             }
         }
 
-        MessageUtil.sendPluginTag(sender, XLibRuntime.getInstance());
+        MessageUtil.sendPluginTag(sender, plugin);
         MessageUtil.sendCenteredMessage(sender, "&4&l[ &6" + min + "-" + max + " &4/&6 " + send + " &4|&6 " + page + " &4&l]");
         toSend.forEach(o -> MessageUtil.sendMessage(sender, "&b" + getId(o) + "&7 | &e" + o.getClass().getSimpleName()
                 + ((o instanceof ExItem) ? "&7 | &e" + ((ExItem) o).getMaterial() : "")));

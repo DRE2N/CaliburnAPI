@@ -14,10 +14,10 @@
  */
 package de.erethon.xlib.runtime.config;
 
-import de.erethon.xlib.runtime.XLibRuntime;
 import de.erethon.xlib.chat.MessageUtil;
 import de.erethon.xlib.config.Message;
 import de.erethon.xlib.config.MessageHandler;
+import de.erethon.xlib.runtime.XLibRuntime;
 
 /**
  * @author Daniel Saukel
@@ -79,12 +79,12 @@ public enum IMessage implements Message {
 
     @Override
     public MessageHandler getMessageHandler() {
-        return XLibRuntime.getInstance().getMessageHandler();
+        return XLibRuntime.getInstance().getInitializer().getMessageHandler();
     }
 
     @Override
     public void debug() {
-        MessageUtil.log(XLibRuntime.getInstance(), getMessage());
+        MessageUtil.log(getMessage());
     }
 
 }

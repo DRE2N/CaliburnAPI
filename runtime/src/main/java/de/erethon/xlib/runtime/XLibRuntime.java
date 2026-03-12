@@ -15,71 +15,81 @@
 package de.erethon.xlib.runtime;
 
 import de.erethon.xlib.XLib;
-import de.erethon.xlib.runtime.command.ListCommand;
-import de.erethon.xlib.runtime.command.SerializeCommand;
-import de.erethon.xlib.runtime.command.OpenCommand;
-import de.erethon.xlib.runtime.command.ReloadCommand;
-import de.erethon.xlib.runtime.command.HelpCommand;
-import de.erethon.xlib.runtime.command.RegisterMobCommand;
-import de.erethon.xlib.runtime.command.RegisterItemCommand;
-import de.erethon.xlib.runtime.command.GiveCommand;
-import de.erethon.xlib.runtime.command.MainCommand;
-import de.erethon.xlib.runtime.command.LootTableCommand;
-import de.erethon.xlib.runtime.command.SummonCommand;
-import de.erethon.xlib.runtime.command.GiveHeadCommand;
-import de.erethon.xlib.runtime.config.IConfig;
-import de.erethon.xlib.command.DRECommandCache;
-import de.erethon.xlib.compatibility.Internals;
+import de.erethon.xlib.command.DRECommandRegistry;
 import de.erethon.xlib.compatibility.Version;
+import de.erethon.xlib.config.CommonMessage;
+import de.erethon.xlib.plugin.PluginInit;
+import de.erethon.xlib.plugin.PluginMeta;
+import de.erethon.xlib.runtime.command.GiveCommand;
+import de.erethon.xlib.runtime.command.GiveHeadCommand;
+import de.erethon.xlib.runtime.command.HelpCommand;
+import de.erethon.xlib.runtime.command.ListCommand;
+import de.erethon.xlib.runtime.command.LootTableCommand;
+import de.erethon.xlib.runtime.command.MainCommand;
+import de.erethon.xlib.runtime.command.OpenCommand;
+import de.erethon.xlib.runtime.command.RegisterItemCommand;
+import de.erethon.xlib.runtime.command.RegisterMobCommand;
+import de.erethon.xlib.runtime.command.ReloadCommand;
+import de.erethon.xlib.runtime.command.SerializeCommand;
+import de.erethon.xlib.runtime.command.SummonCommand;
+import de.erethon.xlib.runtime.config.IConfig;
+import de.erethon.xlib.runtime.listener.InventoryListener;
 import de.erethon.xlib.runtime.listener.ItemBoxListener;
 import de.erethon.xlib.runtime.listener.ItemListener;
 import de.erethon.xlib.runtime.listener.MobListener;
-import de.erethon.xlib.plugin.DREPlugin;
-import de.erethon.xlib.plugin.DREPluginSettings;
-import de.erethon.xlib.runtime.listener.InventoryListener;
 import java.io.File;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.java.JavaPlugin;
+import org.inventivetalent.update.spiget.comparator.VersionComparator;
 
 /**
  * @author Daniel Saukel
  */
-public class XLibRuntime extends DREPlugin {
+public class XLibRuntime extends JavaPlugin {
 
+    /**
+     * Meta information about this project.
+     */
+    public static final PluginMeta META = new PluginMeta.Builder("XLib-Runtime")
+            .minVersion(Version.MC1_8)
+            .paperState(PluginMeta.State.NOT_SUPPORTED)
+            .spigotState(PluginMeta.State.SUPPORTED)
+            .economyState(PluginMeta.State.SUPPORTED)
+            .permissionsState(PluginMeta.State.SUPPORTED)
+            .spigotMCResourceId(14472)
+            .bStatsResourceId(1041)
+            .versionComparator(VersionComparator.SEM_VER_SNAPSHOT)
+            .build();
+
+    public File dataFolder;
     private static XLibRuntime instance;
     private XLib api;
+    private PluginInit init;
 
     private IConfig iConfig;
-    private DRECommandCache iCommands;
-
-    public XLibRuntime() {
-        settings = DREPluginSettings.builder()
-                .internals(Internals.INDEPENDENT)
-                .metrics(true)
-                .bStatsResourceId(1041)
-                .spigotMCResourceId(14472)
-                .build();
-    }
 
     @Override
     public void onEnable() {
-        setDataFolder(new File(getDataFolder().getParentFile(), "XLib"));
-        loadIConfig();
-        setUpdaterEnabled(iConfig.isUpdaterEnabled());
-        super.onEnable();
         instance = this;
-
+        dataFolder = new File(getDataFolder().getParentFile(), "XLib");
+        loadIConfig();
         loadAPI();
-        loadICommandCache();
+        init = new PluginInit(this, api, META);
+        init.setDataFolder(dataFolder);
+        init.getMessageHandler().setDefaultLanguage(iConfig.getLanguage());
+        CommonMessage.messageHandler = init.getMessageHandler();
+        init.init(loadCommandRegistry(), iConfig.isUpdaterEnabled());
+
         getCommand("givehead").setExecutor(new GiveHeadCommand());
 
-        manager.registerEvents(new ItemBoxListener(this), this);
-        manager.registerEvents(new MobListener(api), this);
+        getServer().getPluginManager().registerEvents(new ItemBoxListener(this), this);
+        getServer().getPluginManager().registerEvents(new MobListener(api), this);
         ItemListener il = new ItemListener(api);
-        manager.registerEvents(il, this);
-        if (compat.isSpigot() && Version.isAtLeast(Version.MC1_12_2)) {
-            manager.registerEvents(il.new Spigot(), this);
+        getServer().getPluginManager().registerEvents(il, this);
+        if (Version.isAtLeast(Version.MC1_12_2)) {
+            getServer().getPluginManager().registerEvents(il.new Spigot(), this);
         }
-        manager.registerEvents(new InventoryListener(api), this);
+        getServer().getPluginManager().registerEvents(new InventoryListener(api), this);
     }
 
     /**
@@ -87,6 +97,10 @@ public class XLibRuntime extends DREPlugin {
      */
     public static XLibRuntime getInstance() {
         return instance;
+    }
+
+    public PluginInit getInitializer() {
+        return init;
     }
 
     /**
@@ -100,19 +114,16 @@ public class XLibRuntime extends DREPlugin {
      * load / reload a new instance of IConfig
      */
     public void loadIConfig() {
-        iConfig = new IConfig(this, new File(getDataFolder(), "config.yml"));
-    }
-
-    @Override
-    public DRECommandCache getCommandCache() {
-        return iCommands;
+        iConfig = new IConfig(new File(dataFolder, "config.yml"));
     }
 
     /**
-     * load / reload a new instance of ECommandCache
+     * load / reload a new instance of command registry
+     *
+     * @return the loaded registry
      */
-    public void loadICommandCache() {
-        iCommands = new DRECommandCache(
+    public DRECommandRegistry loadCommandRegistry() {
+        DRECommandRegistry iCommands = new DRECommandRegistry(
                 "itemsxl",
                 this,
                 new HelpCommand(this),
@@ -127,8 +138,7 @@ public class XLibRuntime extends DREPlugin {
                 new SerializeCommand(this),
                 new SummonCommand(this)
         );
-
-        iCommands.register(this);
+        return iCommands;
     }
 
     /**
@@ -142,7 +152,7 @@ public class XLibRuntime extends DREPlugin {
      * load / reload a new instance of XLib
      */
     public void loadAPI() {
-        api = new XLib(this, ChatColor.translateAlternateColorCodes('&', iConfig.getIdentifierPrefix()));
+        api = XLib.init(dataFolder, ChatColor.translateAlternateColorCodes('&', iConfig.getIdentifierPrefix()));
         api.loadDataFiles();
         api.finishInitialization();
     }

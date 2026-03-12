@@ -42,7 +42,7 @@ public class HelpCommand extends DRECommand {
 
     @Override
     public void onExecute(String[] args, CommandSender sender) {
-        Set<DRECommand> commandList = plugin.getCommandCache().getCommands();
+        Set<DRECommand> commandList = plugin.getInitializer().getCommandRegistry().getCommands();
         Set<DRECommand> toSend = new HashSet<>();
 
         int page = 1;

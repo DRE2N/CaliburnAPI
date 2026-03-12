@@ -16,24 +16,23 @@ package de.erethon.xlib.command;
 
 import de.erethon.xlib.chat.MessageUtil;
 import de.erethon.xlib.config.CommonMessage;
-import de.erethon.xlib.plugin.DREPlugin;
+import de.erethon.xlib.plugin.PluginInit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 /**
- * The default CommandExecutor for all DRECommandCache.
+ * The default CommandExecutor for all DRECommandRegistries.
  *
  * @author Frank Baumann, Daniel Saukel, Fyreum
  */
 public class DRECommandExecutor implements CommandExecutor {
 
-    protected DREPlugin plugin;
+    protected PluginInit init;
 
-    public DRECommandExecutor(DREPlugin plugin) {
-        this.plugin = plugin;
+    public DRECommandExecutor(PluginInit init) {
+        this.init = init;
     }
 
     @Override
@@ -41,7 +40,7 @@ public class DRECommandExecutor implements CommandExecutor {
         DRECommand command;
 
         if (args.length > 0) {
-            command = plugin.getCommandCache().getCommand(args[0]);
+            command = init.getCommandRegistry().getCommand(args[0]);
 
             if (command != null) {
                 if (sender instanceof Player) {
@@ -73,7 +72,7 @@ public class DRECommandExecutor implements CommandExecutor {
             }
         }
 
-        command = plugin.getCommandCache().getCommand("main");
+        command = init.getCommandRegistry().getCommand("main");
         if (command != null) {
             String[] argsCopy = new String[args.length + 1];
             argsCopy[0] = "main";

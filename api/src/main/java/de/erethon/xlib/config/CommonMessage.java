@@ -14,8 +14,6 @@
  */
 package de.erethon.xlib.config;
 
-import de.erethon.xlib.plugin.DREPlugin;
-
 /**
  * Messages used by this library.
  *
@@ -27,6 +25,8 @@ public enum CommonMessage implements Message {
     CMD_NO_CONSOLE_COMMAND("cmd.noConsoleCommand"),
     CMD_NO_PERMISSION("cmd.noPermission"),
     CMD_NO_PLAYER_COMMAND("cmd.noPlayerCommand");
+
+    public static MessageHandler messageHandler;
 
     private String path;
 
@@ -41,7 +41,7 @@ public enum CommonMessage implements Message {
 
     @Override
     public MessageHandler getMessageHandler() {
-        return DREPlugin.getInstance().getMessageHandler();
+        return messageHandler;
     }
 
 }

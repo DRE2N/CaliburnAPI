@@ -15,11 +15,11 @@
 package de.erethon.xlib.runtime.command;
 
 import de.erethon.xlib.XLib;
-import de.erethon.xlib.item.CustomItem;
-import de.erethon.xlib.item.VanillaItem;
 import de.erethon.xlib.chat.MessageUtil;
 import de.erethon.xlib.command.DRECommand;
 import de.erethon.xlib.compatibility.Version;
+import de.erethon.xlib.item.CustomItem;
+import de.erethon.xlib.item.VanillaItem;
 import de.erethon.xlib.runtime.XLibRuntime;
 import de.erethon.xlib.runtime.config.IMessage;
 import java.util.Collection;
@@ -50,9 +50,9 @@ public class ReloadCommand extends DRECommand {
         Collection<CustomItem> ci = api.getCustomItems();
         Collection<VanillaItem> vi = VanillaItem.getLoaded();
 
-        plugin.reloadMessageHandler();
+        plugin.getInitializer().reloadMessageHandler();
         plugin.loadIConfig();
-        plugin.loadICommandCache();
+        plugin.loadCommandRegistry();
         plugin.getAPI().reload();
 
         MessageUtil.sendPluginTag(sender, plugin);

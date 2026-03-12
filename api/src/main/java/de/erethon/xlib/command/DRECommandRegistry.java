@@ -14,48 +14,47 @@
  */
 package de.erethon.xlib.command;
 
-import de.erethon.xlib.plugin.DREPlugin;
+import de.erethon.xlib.plugin.PluginInit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 /**
- * Note that DRE2N plugins are usually designed to have just one instance of DRECommandCache.
- * One instance of DRECommandCache represents one command and contains all of its subcommands.
+ * Note that DRE2N plugins are usually designed to have just one instance of DRECommandRegistry.
+ * One instance of DRECommandRegistry represents one command and contains all of its subcommands.
  *
  * @author Daniel Saukel, Fyreum
  */
-public class DRECommandCache extends CommandCache implements TabCompleter {
+public class DRECommandRegistry extends CommandCache implements TabCompleter {
 
     private final String label;
     private final CommandExecutor executor;
     private boolean tabCompletion = true;
 
-    public DRECommandCache(String label, DREPlugin plugin, Set<DRECommand> commands) {
+    public DRECommandRegistry(String label, PluginInit plugin, Set<DRECommand> commands) {
         super(commands);
         this.label = label;
         this.executor = new DRECommandExecutor(plugin);
     }
 
-    public DRECommandCache(String label, DREPlugin plugin, DRECommand... commands) {
+    public DRECommandRegistry(String label, PluginInit plugin, DRECommand... commands) {
         super(commands);
         this.label = label;
         this.executor = new DRECommandExecutor(plugin);
     }
 
-    public DRECommandCache(String label, CommandExecutor executor, Set<DRECommand> commands) {
+    public DRECommandRegistry(String label, CommandExecutor executor, Set<DRECommand> commands) {
         super(commands);
         this.label = label;
         this.executor = executor;
     }
 
-    public DRECommandCache(String label, CommandExecutor executor, DRECommand... commands) {
+    public DRECommandRegistry(String label, CommandExecutor executor, DRECommand... commands) {
         super(commands);
         this.label = label;
         this.executor = executor;

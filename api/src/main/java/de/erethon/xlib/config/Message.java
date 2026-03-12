@@ -15,7 +15,6 @@
 package de.erethon.xlib.config;
 
 import de.erethon.xlib.chat.MessageUtil;
-import de.erethon.xlib.plugin.DREPlugin;
 
 /**
  * @author Daniel Saukel
@@ -34,9 +33,7 @@ public interface Message {
      *
      * @return the MessageHandler loaded by the plugin.
      */
-    default MessageHandler getMessageHandler() {
-        return DREPlugin.getInstance().getMessageHandler();
-    }
+    MessageHandler getMessageHandler();
 
     /**
      * Returns the formatted message String.
@@ -65,7 +62,7 @@ public interface Message {
      * Sends the message to the console.
      */
     default void debug() {
-        MessageUtil.log(DREPlugin.getInstance(), getMessage());
+        MessageUtil.log(getMessage());
     }
 
 }

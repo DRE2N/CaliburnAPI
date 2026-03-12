@@ -15,7 +15,6 @@
 package de.erethon.xlib.chat;
 
 import de.erethon.xlib.compatibility.Version;
-import de.erethon.xlib.plugin.DREPlugin;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -61,7 +60,7 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void log(String message) {
-        log(DREPlugin.getInstance(), message);
+        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
     }
 
     /**
@@ -71,7 +70,17 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void log(Plugin plugin, String message) {
-        Bukkit.getConsoleSender().sendMessage("[" + plugin.getName() + "] " + ChatColor.translateAlternateColorCodes('&', message));
+        log(plugin.getName(), message);
+    }
+
+    /**
+     * Logs a message to the console. Supports color codes.
+     *
+     * @param pluginName the name of the logging plugin
+     * @param message    the message String
+     */
+    public static void log(String pluginName, String message) {
+        Bukkit.getConsoleSender().sendMessage("[" + pluginName + "] " + ChatColor.translateAlternateColorCodes('&', message));
     }
 
     /**

@@ -15,7 +15,6 @@
 package de.erethon.xlib.runtime.config;
 
 import de.erethon.xlib.config.DREConfig;
-import de.erethon.xlib.plugin.DREPlugin;
 import java.io.File;
 import org.bukkit.ChatColor;
 
@@ -24,8 +23,6 @@ import org.bukkit.ChatColor;
  */
 public class IConfig extends DREConfig {
 
-    private DREPlugin plugin;
-
     public static final int CONFIG_VERSION = 2;
 
     private String language = "english";
@@ -33,9 +30,8 @@ public class IConfig extends DREConfig {
     private String identifierPrefix = "&7";
     private String boxName = "&6Mysterious Box";
 
-    public IConfig(DREPlugin plugin, File file) {
+    public IConfig(File file) {
         super(file, CONFIG_VERSION);
-        this.plugin = plugin;
 
         if (initialize) {
             initialize();
@@ -94,7 +90,6 @@ public class IConfig extends DREConfig {
     @Override
     public void load() {
         language = config.getString("language", language);
-        plugin.getMessageHandler().setDefaultLanguage(language);
         updaterEnabled = config.getBoolean("updaterEnabled", updaterEnabled);
         identifierPrefix = config.getString("identifierPrefix", identifierPrefix);
         boxName = config.getString("boxName", boxName);

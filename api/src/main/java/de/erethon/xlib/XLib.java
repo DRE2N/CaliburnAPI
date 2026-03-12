@@ -17,26 +17,29 @@ package de.erethon.xlib;
 import de.erethon.xlib.category.Categorizable;
 import de.erethon.xlib.category.Category;
 import de.erethon.xlib.category.IdentifierType;
+import de.erethon.xlib.chat.MessageUtil;
+import de.erethon.xlib.compatibility.Version;
+import de.erethon.xlib.gui.GUI;
 import de.erethon.xlib.item.CustomItem;
 import de.erethon.xlib.item.ExItem;
+import de.erethon.xlib.item.TrackedItemStack;
 import de.erethon.xlib.item.VanillaItem;
 import de.erethon.xlib.loottable.LootTable;
 import de.erethon.xlib.mob.CustomMob;
 import de.erethon.xlib.mob.ExMob;
 import de.erethon.xlib.mob.VanillaMob;
 import de.erethon.xlib.util.ExSerialization;
-import de.erethon.xlib.util.SimpleSerialization;
-import de.erethon.xlib.chat.MessageUtil;
-import de.erethon.xlib.compatibility.Version;
-import de.erethon.xlib.gui.GUI;
 import de.erethon.xlib.util.FileUtil;
-import de.erethon.xlib.item.TrackedItemStack;
+import de.erethon.xlib.util.SimpleSerialization;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import net.milkbowl.vault.economy.Economy;
+import net.milkbowl.vault.permission.Permission;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -47,7 +50,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.RegisteredServiceProvider;
 
 /**
  * The main class of the API. It contains methods for initialization and most important getter methods.
@@ -62,6 +65,11 @@ public class XLib {
 
     public static final String NAMESPACE = "caliburn";
     public static final String META_ID_KEY = "caliburnID";
+
+    private boolean vault;
+    private boolean placeholderAPI;
+    private Economy economyProvider;
+    private Permission permissionProvider;
 
     private String identifierPrefix;
     private File dataFolder;
@@ -78,25 +86,37 @@ public class XLib {
     private List<GUI> guiCache = new ArrayList<>();
 
     /**
-     * Initializes the singleton instance with the default identifier prefix.
+     * Initializes or returns the XLib singleton instance.
      *
-     * @param plugin the plugin
+     * @param dataFolder the folder where XLib data and configuration is stored
+     * @return a new or the existing XLib instance.
      */
-    public XLib(Plugin plugin) {
-        this(plugin, ChatColor.GRAY.toString());
+    public static XLib init(File dataFolder) {
+        return init(dataFolder, ChatColor.GRAY.toString());
     }
 
     /**
-     * Initializes the singleton instance.
+     * Initializes or returns the singleton instance.
      *
-     * @param plugin           the plugin
+     * @param dataFolder       the folder where XLib data and configuration is stored
      * @param identifierPrefix the prefix that is put before identifiers in some contexts, e.g. a color code before the first lore line.
+     * @return a new or the existing XLib instance.
      */
-    public XLib(Plugin plugin, String identifierPrefix) {
-        instance = this;
+    public static XLib init(File dataFolder, String identifierPrefix) {
+        if (instance == null) {
+            instance = new XLib(dataFolder, ChatColor.GRAY.toString());
+        }
+        return instance;
+    }
 
+    private XLib(File dataFolder, String identifierPrefix) {
+        this.dataFolder = dataFolder;
         this.identifierPrefix = identifierPrefix;
-        dataFolder = plugin.getDataFolder();
+
+        vault = Bukkit.getPluginManager().isPluginEnabled("Vault");
+        loadEconomyProvider();
+        loadPermissionProvider();
+        placeholderAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
 
         items.addAll(VanillaItem.getLoaded());
         mobs.addAll(VanillaMob.getLoaded());
@@ -128,6 +148,93 @@ public class XLib {
         lootTables.clear();
         loadDataFiles();
         finishInitialization();
+    }
+
+    /**
+     * Returns if Vault is running on this server.
+     *
+     * @return if Vault is running on this server
+     */
+    public boolean isVaultEnabled() {
+        return vault;
+    }
+
+    /**
+     * Returns the loaded instance of Vault's {@link Economy} provider.
+     *
+     * @return the loaded instance of Vault's {@link Economy} provider
+     */
+    public Economy getEconomyProvider() {
+        return economyProvider;
+    }
+
+    /**
+     * Load / reload a new instance of Vault's {@link Economy} provider
+     */
+    public void loadEconomyProvider() {
+        if (!isVaultEnabled()) {
+            return;
+        }
+        try {
+            RegisteredServiceProvider<Economy> economy = Bukkit.getServicesManager().getRegistration(Economy.class);
+            if (economy != null) {
+                economyProvider = economy.getProvider();
+            }
+
+        } catch (NoClassDefFoundError error) {
+        }
+    }
+
+    /**
+     * Returns the loaded instance of Vault's {@link Permission} provider.
+     *
+     * @return the loaded instance of Vault's {@link Permission} provider
+     */
+    public Permission getPermissionProvider() {
+        return permissionProvider;
+    }
+
+    /**
+     * Load / reload a new instance of Vault's {@link Permission} provider
+     */
+    public void loadPermissionProvider() {
+        if (!isVaultEnabled()) {
+            return;
+        }
+        try {
+            RegisteredServiceProvider<Permission> permission = Bukkit.getServicesManager().getRegistration(Permission.class);
+            if (permission != null) {
+                permissionProvider = permission.getProvider();
+            }
+
+        } catch (NoClassDefFoundError error) {
+        }
+    }
+
+    /**
+     * @param group the group to be checked
+     * @return if the group exists
+     */
+    public boolean isGroupEnabled(String group) {
+        if (!isVaultEnabled()) {
+            return false;
+        }
+        for (String anyGroup : permissionProvider.getGroups()) {
+            if (anyGroup.equalsIgnoreCase(group)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns if PlaceholderAPI is enabled.
+     *
+     * @return if PlaceholderAPI is enabled
+     */
+    public boolean isPlaceholderAPIEnabled() {
+        return placeholderAPI;
     }
 
     /**
