@@ -33,5 +33,9 @@ public enum RuntimeTrait {
     /**
      * At runtime, this implementation is based on the Mojang server with official Mojang mappings or no obfuscation.
      */
-    MAPPINGS_MOJANG
+    MAPPINGS_MOJANG,
+    /**
+     * The server implements the Paper API.
+     */
+    PAPER_API
 }

@@ -41,7 +41,7 @@ public enum RuntimeType {
     /**
      * Paper 1.20.5 and higher.
      */
-    PAPER(MAPPINGS_MOJANG);
+    PAPER(PAPER_API, MAPPINGS_MOJANG);
 
     private static RuntimeType running;
 
