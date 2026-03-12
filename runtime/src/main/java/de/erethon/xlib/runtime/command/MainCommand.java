@@ -15,12 +15,12 @@
 package de.erethon.xlib.runtime.command;
 
 import de.erethon.xlib.XLib;
-import de.erethon.xlib.item.CustomItem;
-import de.erethon.xlib.item.VanillaItem;
 import static de.erethon.xlib.chat.FatLetter.*;
 import de.erethon.xlib.chat.MessageUtil;
 import de.erethon.xlib.command.DRECommand;
-import de.erethon.xlib.compatibility.CompatibilityHandler;
+import de.erethon.xlib.compatibility.Version;
+import de.erethon.xlib.item.CustomItem;
+import de.erethon.xlib.item.VanillaItem;
 import de.erethon.xlib.runtime.XLibRuntime;
 import de.erethon.xlib.runtime.config.IMessage;
 import java.util.Collection;
@@ -54,7 +54,7 @@ public class MainCommand extends DRECommand {
         MessageUtil.sendCenteredMessage(sender, "&b&l######## " + IMessage.COMMAND_MAIN_WELCOME.getMessage() + " &7v" + plugin.getDescription().getVersion() + " &b&l########");
         MessageUtil.sendCenteredMessage(sender, "&b&o" + plugin.getDescription().getDescription());
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(ci.size()), String.valueOf(vi.size())));
-        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(CompatibilityHandler.getInstance().getInternals().toString()));
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(Version.get().toString()));
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_HELP.getMessage());
         MessageUtil.sendCenteredMessage(sender, "&7\u00a92015-2026 Daniel Saukel; licensed under LGPLv3.");
     }

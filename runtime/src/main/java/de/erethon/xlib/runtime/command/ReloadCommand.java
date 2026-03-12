@@ -19,7 +19,7 @@ import de.erethon.xlib.item.CustomItem;
 import de.erethon.xlib.item.VanillaItem;
 import de.erethon.xlib.chat.MessageUtil;
 import de.erethon.xlib.command.DRECommand;
-import de.erethon.xlib.compatibility.CompatibilityHandler;
+import de.erethon.xlib.compatibility.Version;
 import de.erethon.xlib.runtime.XLibRuntime;
 import de.erethon.xlib.runtime.config.IMessage;
 import java.util.Collection;
@@ -58,7 +58,7 @@ public class ReloadCommand extends DRECommand {
         MessageUtil.sendPluginTag(sender, plugin);
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_RELOAD_SUCCESS.getMessage());
         MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_LOADED.getMessage(String.valueOf(ci.size()), String.valueOf(vi.size())));
-        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(String.valueOf(CompatibilityHandler.getInstance().getInternals())));
+        MessageUtil.sendCenteredMessage(sender, IMessage.COMMAND_MAIN_COMPATIBILITY.getMessage(Version.get().toString()));
     }
 
 }
