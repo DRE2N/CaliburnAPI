@@ -42,7 +42,6 @@ public class PluginInit {
     private PluginMeta meta;
     private DRECommandRegistry commands;
     private MessageHandler messageHandler;
-    //private boolean updaterEnabled;
 
     public PluginInit(JavaPlugin plugin, XLib xlib, PluginMeta meta) {
         this.plugin = plugin;
@@ -57,8 +56,7 @@ public class PluginInit {
      * @param updaterEnabled if Spiget updater is enabled
      */
     public void init(DRECommandRegistry commands, boolean updaterEnabled) {
-        this.commands = commands;
-        commands.register(plugin);
+        setCommandRegistry(commands);
 
         if (meta.isMetricsEnabled()) {
             new Metrics(plugin, meta.getBStatsResourceId());
@@ -198,20 +196,4 @@ public class PluginInit {
         }
     }
 
-    /**
-     * Returns if Spiget updater is enabled.
-     *
-     * @return if Spiget updater is enabled
-     */
-    /*public boolean isUpdaterEnabled() {
-        return updaterEnabled;
-    }*/
-    /**
-     * Sets Spiget updater enabled or disabled.
-     *
-     * @param enabled if Spiget updater should be enabled
-     */
-    /*public void setUpdaterEnabled(boolean enabled) {
-        updaterEnabled = enabled;
-    }*/
 }

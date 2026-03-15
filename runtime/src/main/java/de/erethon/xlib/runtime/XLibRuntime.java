@@ -73,7 +73,8 @@ public class XLibRuntime extends JavaPlugin {
         instance = this;
         dataFolder = new File(getDataFolder().getParentFile(), "XLib");
         loadIConfig();
-        loadAPI();
+        api = XLib.init(dataFolder, ChatColor.translateAlternateColorCodes('&', iConfig.getIdentifierPrefix()));
+        api.loadDataFiles();
         init = new PluginInit(this, api, META);
         init.setDataFolder(dataFolder);
         init.getMessageHandler().setDefaultLanguage(iConfig.getLanguage());
@@ -123,9 +124,9 @@ public class XLibRuntime extends JavaPlugin {
      * @return the loaded registry
      */
     public DRECommandRegistry loadCommandRegistry() {
-        DRECommandRegistry iCommands = new DRECommandRegistry(
-                "itemsxl",
-                this,
+        return new DRECommandRegistry(
+                "xlib",
+                init,
                 new HelpCommand(this),
                 new GiveCommand(this),
                 new ListCommand(this),
@@ -138,7 +139,6 @@ public class XLibRuntime extends JavaPlugin {
                 new SerializeCommand(this),
                 new SummonCommand(this)
         );
-        return iCommands;
     }
 
     /**
@@ -146,15 +146,6 @@ public class XLibRuntime extends JavaPlugin {
      */
     public XLib getAPI() {
         return api;
-    }
-
-    /**
-     * load / reload a new instance of XLib
-     */
-    public void loadAPI() {
-        api = XLib.init(dataFolder, ChatColor.translateAlternateColorCodes('&', iConfig.getIdentifierPrefix()));
-        api.loadDataFiles();
-        api.finishInitialization();
     }
 
 }

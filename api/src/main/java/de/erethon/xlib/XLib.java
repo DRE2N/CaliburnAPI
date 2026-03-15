@@ -147,7 +147,6 @@ public class XLib {
         mobCategories.clear();
         lootTables.clear();
         loadDataFiles();
-        finishInitialization();
     }
 
     /**
@@ -355,12 +354,8 @@ public class XLib {
         FileUtil.getFilesForFolder(ltDir).forEach(f -> lootTables.add(
                 LootTable.deserialize(YamlConfiguration.loadConfiguration(f).getValues(false)).name(f.getName().replace(".yml", "")))
         );
-    }
 
-    /**
-     * Supposed to be called after all items, mobs and categories are loaded. Makes items and mobs load their damage modifiers.
-     */
-    public void finishInitialization() {
+        // Makes items and mobs load their damage modifiers.
         items.forEach(i -> i.load(this));
         mobs.forEach(m -> m.load(this));
     }
