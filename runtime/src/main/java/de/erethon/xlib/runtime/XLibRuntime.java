@@ -37,10 +37,10 @@ import de.erethon.xlib.runtime.listener.InventoryListener;
 import de.erethon.xlib.runtime.listener.ItemBoxListener;
 import de.erethon.xlib.runtime.listener.ItemListener;
 import de.erethon.xlib.runtime.listener.MobListener;
+import de.erethon.xlib.spiget.comparator.VersionComparator;
 import java.io.File;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.inventivetalent.update.spiget.comparator.VersionComparator;
 
 /**
  * @author Daniel Saukel
