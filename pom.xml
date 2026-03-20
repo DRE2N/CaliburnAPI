@@ -37,6 +37,7 @@
         <module>spigot/1_20_R3</module>
         <module>spigot/1_20_R4</module>
         <module>spigot/paper-api</module>
+        <module>spigot/spiget-patch</module>
     </modules>
     <properties>
         <buildNo></buildNo>

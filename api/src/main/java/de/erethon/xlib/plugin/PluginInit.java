@@ -17,6 +17,7 @@ package de.erethon.xlib.plugin;
 import de.erethon.xlib.XLib;
 import de.erethon.xlib.chat.MessageUtil;
 import de.erethon.xlib.command.DRECommandRegistry;
+import de.erethon.xlib.compatibility.Version;
 import de.erethon.xlib.config.MessageHandler;
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.inventivetalent.update.spiget.SpigetUpdate;
 import org.inventivetalent.update.spiget.UpdateCallback;
@@ -63,19 +65,32 @@ public class PluginInit {
         }
 
         if (meta.isSpigotMCResource() && updaterEnabled) {
-            SpigetUpdate updater = new SpigetUpdate(plugin, meta.getSpigotMCResourceId());
-            updater.setVersionComparator(meta.getVersionComparator());
-            updater.checkForUpdate(new UpdateCallback() {
-                @Override
-                public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
-                    MessageUtil.log(plugin, "A new version of " + plugin.getName() + " is available (" + newVersion + "). Download it here: " + downloadUrl);
+            try {
+                SpigetUpdate updater;
+                if (Version.isAtLeast(Version.MC1_18)) {
+                    updater = new SpigetUpdate(plugin, meta.getSpigotMCResourceId());
+                } else {
+                    updater = (SpigetUpdate) Class.forName(SpigetUpdate.class.getName() + "Legacy")
+                            .getConstructor(Plugin.class, int.class)
+                            .newInstance(plugin, meta.getSpigotMCResourceId());
                 }
+                updater.setVersionComparator(meta.getVersionComparator());
+                updater.checkForUpdate(new UpdateCallback() {
+                    @Override
+                    public void updateAvailable(String newVersion, String downloadUrl, boolean hasDirectDownload) {
+                        MessageUtil.log(plugin, "A new version of " + plugin.getName() + " is available (" + newVersion + "). Download it here: " + downloadUrl);
+                    }
 
-                @Override
-                public void upToDate() {
-                    MessageUtil.log(plugin, "The plugin is up to date.");
-                }
-            });
+                    @Override
+                    public void upToDate() {
+                        MessageUtil.log(plugin, "The plugin is up to date.");
+                    }
+                });
+            } catch (Exception exception) {
+                MessageUtil.log(plugin, "Error: Could not initialize Spiget updater:");
+                exception.printStackTrace();
+                return;
+            }
         }
 
         meta.printToConsole(xlib);

@@ -1,0 +1,1 @@
+This module consists of code mostly copied from the [Spiget-Update](https://github.com/InventivetalentDev/Spiget-Update) project by Haylee Schäfer, licensed under the terms of the [MIT license](LICENSE).

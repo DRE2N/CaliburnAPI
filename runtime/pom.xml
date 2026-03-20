@@ -190,5 +190,10 @@
             <artifactId>xlib-paper-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spiget-patch</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
     </dependencies>
 </project>
