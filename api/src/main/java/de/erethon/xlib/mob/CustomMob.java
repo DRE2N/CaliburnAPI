@@ -822,7 +822,7 @@ public class CustomMob extends ExMob {
             entity.setCustomName(api.getIdentifierPrefix() + id);
         } else if (idType == IdentifierType.METADATA) {
             entity.setMetadata(XLib.META_ID_KEY, new FixedMetadataValue(JavaPlugin.getProvidingPlugin(XLib.class), "caliburnID"));
-        } else if (idType == IdentifierType.PERSISTENT_DATA_CONTAINER) {
+        } else if (idType == IdentifierType.PERSISTENT_DATA_CONTAINER && Version.isAtLeast(Version.MC1_14)) {
             entity.getPersistentDataContainer().set(new NamespacedKey("caliburn", "id"), PersistentDataType.STRING, id);
         }
 

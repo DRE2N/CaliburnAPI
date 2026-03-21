@@ -28,6 +28,8 @@ import org.bukkit.persistence.PersistentDataType;
  * Wraps an {@link org.bukkit.inventory.ItemStack} to add stack-specific custom item data, in contrast to {@link CustomItem} that wraps
  * {@link org.bukkit.Material} to add custom mechanics all item stacks of a type share. Each TrackedItemStack is uniquely identified by its
  * {@link #getDataKey() data key}.
+ * <p>
+ * Requires 1.14+.
  *
  * @author Daniel Saukel
  */

@@ -17,8 +17,9 @@ package de.erethon.xlib.item;
 import com.google.common.collect.Multimap;
 import de.erethon.xlib.XLib;
 import de.erethon.xlib.category.IdentifierType;
-import de.erethon.xlib.util.StringUtil;
+import de.erethon.xlib.compatibility.Version;
 import de.erethon.xlib.util.EnumUtil;
+import de.erethon.xlib.util.StringUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,7 +46,9 @@ import org.bukkit.persistence.PersistentDataType;
  */
 public class CustomItem extends ExItem {
 
-    public static final NamespacedKey ID = new NamespacedKey(XLib.NAMESPACE, "id");
+    public static class Constants {
+        public static final NamespacedKey ID = new NamespacedKey(XLib.NAMESPACE, "id");
+    }
 
     /**
      * The ItemMeta that will be applied to an {@link org.bukkit.inventory.ItemStack} created from this CustomItem.
@@ -69,7 +72,12 @@ public class CustomItem extends ExItem {
         name = StringUtil.formatId(id);
 
         setBase(VanillaItem.get(item.getType()));
-        meta = item.getItemMeta();
+
+        if (item.hasItemMeta()) {
+            meta = item.getItemMeta();
+        } else {
+            meta = Bukkit.getItemFactory().getItemMeta(item.getType());
+        }
         if (meta instanceof SkullMeta) {
             OfflinePlayer owner = ((SkullMeta) meta).getOwningPlayer();
             if (owner != null) {
@@ -87,6 +95,7 @@ public class CustomItem extends ExItem {
         this.id = id;
         name = StringUtil.formatId(id);
         setBase(base);
+        meta = Bukkit.getItemFactory().getItemMeta(base.getMaterial());
         raw = serialize();
     }
 
@@ -150,6 +159,47 @@ public class CustomItem extends ExItem {
         }
 
         return deserialized;
+    }
+
+    public $ $ = Version.isAtLeast(Version.MC1_13_2) ? new $() : null;
+
+    public class $ {
+
+        /**
+         * Returns the attribute modifiers
+         *
+         * @return the attributes
+         */
+        public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
+            return meta.getAttributeModifiers();
+        }
+
+        /**
+         * @param attribute the attribute
+         * @param modifier  the attribute modifier
+         */
+        public void addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+            meta.addAttributeModifier(attribute, modifier);
+        }
+
+        /**
+         * Removes all modifiers of the given attribute.
+         *
+         * @param attribute the attribute
+         */
+        public void removeAttributeModifier(Attribute attribute) {
+            meta.removeAttributeModifier(attribute);
+        }
+
+        /**
+         * Removes a specific modifier of the given attribute.
+         *
+         * @param attribute the attribute
+         * @param modifier  the attribute modifier
+         */
+        public void removeAttributeModifier(Attribute attribute, AttributeModifier modifier) {
+            meta.removeAttributeModifier(attribute, modifier);
+        }
     }
 
     @Override
@@ -302,41 +352,14 @@ public class CustomItem extends ExItem {
     }
 
     /**
-     * @return the attributes
-     */
-    /*public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
-        return meta.getAttributeModifiers();
-    }*/
-    /**
-     * @param attribute the attribute
-     * @param modifier  the attribute modifier
-     */
-    /*public void addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
-        meta.addAttributeModifier(attribute, modifier);
-    }*/
-    /**
-     * Removes all modifiers of the given attribute.
-     *
-     * @param attribute the attribute
-     */
-    /*public void removeAttributeModifier(Attribute attribute) {
-        meta.removeAttributeModifier(attribute);
-    }*/
-    /**
-     * Removes a specific modifier of the given attribute.
-     *
-     * @param attribute the attribute
-     * @param modifier  the attribute modifier
-     */
-    /*public void removeAttributeModifier(Attribute attribute, AttributeModifier modifier) {
-        meta.removeAttributeModifier(attribute);
-    }*/
-    /**
      * Removes a modifier from the given slot.
      *
      * @param slot the equipment slot
      */
     public void removeAttributeModifier(EquipmentSlot slot) {
+        if (!Version.isAtLeast(Version.MC1_13_2)) {
+            return;
+        }
         meta.removeAttributeModifier(slot);
     }
 
@@ -346,6 +369,9 @@ public class CustomItem extends ExItem {
      * @return the custom model data value
      */
     public Integer getCustomModelData() {
+        if (!Version.isAtLeast(Version.MC1_14)) {
+            return null;
+        }
         return meta.getCustomModelData();
     }
 
@@ -355,6 +381,9 @@ public class CustomItem extends ExItem {
      * @param data the custmo model data value
      */
     public void setCustomModelData(Integer data) {
+        if (!Version.isAtLeast(Version.MC1_14)) {
+            return;
+        }
         meta.setCustomModelData(data);
     }
 
@@ -528,9 +557,9 @@ public class CustomItem extends ExItem {
             lore.add(0, api.getIdentifierPrefix() + id);
             meta.setLore(lore);
             itemStack.setItemMeta(meta);
-        } else if (idType == IdentifierType.PERSISTENT_DATA_CONTAINER) {
+        } else if (idType == IdentifierType.PERSISTENT_DATA_CONTAINER && Version.isAtLeast(Version.MC1_14)) {
             ItemMeta meta = itemStack.getItemMeta();
-            meta.getPersistentDataContainer().set(ID, PersistentDataType.STRING, id);
+            meta.getPersistentDataContainer().set(Constants.ID, PersistentDataType.STRING, id);
             itemStack.setItemMeta(meta);
         }
     }

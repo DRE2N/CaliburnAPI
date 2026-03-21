@@ -520,7 +520,7 @@ public class XLib {
                 }
             case PERSISTENT_DATA_CONTAINER:
                 if (isAtLeast1_14 && item.hasItemMeta()) {
-                    return item.getItemMeta().getPersistentDataContainer().getOrDefault(CustomItem.ID, PersistentDataType.STRING, null);
+                    return item.getItemMeta().getPersistentDataContainer().getOrDefault(CustomItem.Constants.ID, PersistentDataType.STRING, null);
                 } else {
                     return null;
                 }
@@ -590,7 +590,7 @@ public class XLib {
     }
 
     private Long getStackData(ItemStack itemStack) {
-        if (itemStack == null || !itemStack.hasItemMeta()) {
+        if (!isAtLeast1_14 || itemStack == null || !itemStack.hasItemMeta()) {
             return null;
         }
         PersistentDataContainer container = itemStack.getItemMeta().getPersistentDataContainer();
@@ -742,7 +742,7 @@ public class XLib {
                 return null;
             case PERSISTENT_DATA_CONTAINER:
                 if (isAtLeast1_14) {
-                    return entity.getPersistentDataContainer().getOrDefault(CustomItem.ID, PersistentDataType.STRING, null);
+                    return entity.getPersistentDataContainer().getOrDefault(CustomItem.Constants.ID, PersistentDataType.STRING, null);
                 } else {
                     return null;
                 }
