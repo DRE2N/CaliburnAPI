@@ -62,16 +62,6 @@
         </dependency>
         <dependency>
             <groupId>de.erethon.xlib</groupId>
-            <artifactId>xlib-spigot_1_8_R1</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon.xlib</groupId>
-            <artifactId>xlib-spigot_1_8_R2</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>de.erethon.xlib</groupId>
             <artifactId>xlib-spigot_1_8_R3</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

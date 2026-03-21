@@ -50,7 +50,7 @@ public class PluginMeta {
     public static class Builder {
 
         private String name;
-        private Version minVersion = Version.MC1_8;
+        private Version minVersion = Version.MC1_8_8;
         private State paperState = SUPPORTED;
         private State spigotState = SUPPORTED;
         private State economyState = SUPPORTED;
