@@ -16,6 +16,7 @@ package de.erethon.xlib.exampleplugin;
 
 import de.erethon.xlib.XLib;
 import de.erethon.xlib.category.IdentifierType;
+import de.erethon.xlib.compatibility.Version;
 import de.erethon.xlib.gui.GUI;
 import de.erethon.xlib.gui.InventoryGUI;
 import de.erethon.xlib.gui.Paginated;
@@ -56,8 +57,7 @@ public class ExamplePlugin extends JavaPlugin {
     XLib api;
 
     static final String LEGENDARY = ChatColor.GOLD + "legendary";
-    
-    
+
     public static final InventoryGUI[] GUI = new InventoryGUI[]{
         new SingleInventoryGUI("Title"),
         new PaginatedInventoryGUI(ChatColor.DARK_RED + "Subsidiary title / pagination Test"),
@@ -86,7 +86,7 @@ public class ExamplePlugin extends JavaPlugin {
         GUI[1].setLayout(new PaginatedFlowInventoryLayout((PaginatedInventoryGUI) GUI[1], 9, PaginatedInventoryLayout.PaginationButtonPosition.CENTER));
         GUI[1].add(new InventoryButton(Material.MINECART, ChatColor.GOLD + "This is a button", ChatColor.GOLD + "with multiple", ChatColor.GOLD + "lines of text"));
         GUI[1].add(new InventoryButtonBuilder()
-                .icon(Material.CLOCK)
+                .icon(Material.getMaterial(Version.isAtLeast(Version.MC1_13) ? "CLOCK" : "WATCH"))
                 .lines("This item is stealable")
                 .stealable(true)
                 .build()
@@ -204,6 +204,9 @@ public class ExamplePlugin extends JavaPlugin {
                 meta.setLore(lore);
                 wrapped.setItemMeta(meta);
             });
+            if (!Version.isAtLeast(Version.MC1_10_2)) {
+                return rarity;
+            }
             rarity.setHitHandler((a, w, d, e) -> {
                 if (!a.getValue().equals(LEGENDARY)) {
                     return;
@@ -211,11 +214,12 @@ public class ExamplePlugin extends JavaPlugin {
                 Location location = e.getEntity().getLocation();
                 World world = location.getWorld();
                 double r = 0f, g = 1f, b = 0f;
-                world.spawnParticle(Particle.REDSTONE, location.clone().add(0, 2, 0), 0, r, g, b);
-                world.spawnParticle(Particle.REDSTONE, location.clone().add(1, 1.75, 0), 0, r, g, b);
-                world.spawnParticle(Particle.REDSTONE, location.clone().add(0, 1.5, 1), 0, r, g, b);
-                world.spawnParticle(Particle.REDSTONE, location.clone().add(-1, 1.25, 0), 0, r, g, b);
-                world.spawnParticle(Particle.REDSTONE, location.clone().add(0, 1, -1), 0, r, g, b);
+                Particle type = Particle.valueOf(Version.isAtLeast(Version.MC1_21) ? "DUST" : "REDSTONE");
+                world.spawnParticle(type, location.clone().add(0, 2, 0), 0, r, g, b);
+                world.spawnParticle(type, location.clone().add(1, 1.75, 0), 0, r, g, b);
+                world.spawnParticle(type, location.clone().add(0, 1.5, 1), 0, r, g, b);
+                world.spawnParticle(type, location.clone().add(-1, 1.25, 0), 0, r, g, b);
+                world.spawnParticle(type, location.clone().add(0, 1, -1), 0, r, g, b);
             });
         }
         return rarity;
@@ -257,9 +261,13 @@ public class ExamplePlugin extends JavaPlugin {
 
         if (command.getName().equals("giveexample")) {
             ItemStack item = legendarySword().toItemStack();
-            TrackedItemStack tracked = api.wrap(legendarySword(), item);
-            tracked.addAttribute(chicken(), null);
-            ((Player) sender).getInventory().addItem(item);
+            if (Version.isAtLeast(Version.MC1_14)) {
+                TrackedItemStack tracked = api.wrap(legendarySword(), item);
+                tracked.addAttribute(chicken(), null);
+                ((Player) sender).getInventory().addItem(tracked.getWrapped());
+            } else {
+                ((Player) sender).getInventory().addItem(item);
+            }
 
         } else if (command.getName().equals("guiexample")) {
             GUI gui = GUI[0];

@@ -4,6 +4,7 @@ version: ${project.version}${buildNo}
 author: Daniel Saukel
 description: "Example plugin for XLib v${project.parent.version}."
 website: ${project.url}
+depend: [XLib-Runtime]
 commands:
   giveexample:
     description: "Gives example items."
