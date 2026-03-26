@@ -82,7 +82,7 @@ public enum Version {
     MC1_21_9(true, true, "v1_21_R6"),
     MC1_21_10(true, true, "v1_21_R6"),
     MC1_21_11(true, true, "v1_21_R7"),
-    MC26_1(true, true, "UNKNOWN"),
+    MC26_1(true, true, ""),
     NEW(true, true, "");
 
     private boolean newMobNames;

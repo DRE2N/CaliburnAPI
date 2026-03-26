@@ -33,11 +33,8 @@ public enum RuntimeType {
     SPECIAL_SOURCE(OBC_RELOCATIONS, MAPPINGS_CRAFTBUKKIT),
     /**
      * Spigot 26.1 and higher.
-     *
-     * @deprecated future version
      */
-    @Deprecated
-    SPIGOT(OBC_RELOCATIONS, MAPPINGS_MOJANG),
+    SPIGOT(MAPPINGS_MOJANG),
     /**
      * Paper 1.20.5 and higher.
      */
