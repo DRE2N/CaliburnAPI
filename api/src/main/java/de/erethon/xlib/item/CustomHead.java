@@ -14,15 +14,12 @@
  */
 package de.erethon.xlib.item;
 
-import de.erethon.xlib.compatibility.RuntimeType;
+import de.erethon.xlib.compatibility.RuntimeSpecificLoader;
 import de.erethon.xlib.compatibility.Version;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Level;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -478,42 +475,27 @@ public enum CustomHead {
 
     }
 
-    static InternalsProvider internals;
-
-    static {
-        String className = CustomHead.class.getPackage().getName() + "."
-                + (RuntimeType.get() == RuntimeType.PAPER
-                ? "PaperAPIProvider" : Version.get().getRelocationTarget());
-        try {
-            internals = (InternalsProvider) Class.forName(className).getDeclaredConstructor().newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException
-                | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException exception) {
-            Bukkit.getLogger().log(Level.SEVERE, "XLib could not find a valid implementation for {0}.", className);
+    static InternalsProvider internals = RuntimeSpecificLoader.loadImplementation(InternalsProvider.class, Version.MC1_21, Version.MC1_20_6, new InternalsProvider() {
+        @Override
+        public ItemStack newPlayerHead(int amount) {
+            return new ItemStack(Material.PLAYER_HEAD, amount);
         }
-        if (internals == null) {
-            internals = new InternalsProvider() {
-                @Override
-                public ItemStack newPlayerHead(int amount) {
-                    return new ItemStack(Material.PLAYER_HEAD, amount);
-                }
 
-                @Override
-                public String getTextureValue(ItemStack itemStack) {
-                    return "";
-                }
-
-                @Override
-                public ItemStack setSkullOwner(ItemStack itemStack, Object compound) {
-                    return itemStack.clone();
-                }
-
-                @Override
-                public Object createOwnerCompound(String id, String textureValue) {
-                    return null;
-                }
-            };
+        @Override
+        public String getTextureValue(ItemStack itemStack) {
+            return "";
         }
-    }
+
+        @Override
+        public ItemStack setSkullOwner(ItemStack itemStack, Object compound) {
+            return itemStack.clone();
+        }
+
+        @Override
+        public Object createOwnerCompound(String id, String textureValue) {
+            return null;
+        }
+    });
 
     /**
      * Creates a new generic player head item stack.
