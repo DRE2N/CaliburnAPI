@@ -14,12 +14,6 @@
  */
 package de.erethon.xlib.chat;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
-
 /**
  * @author SirSpoodles, Daniel Saukel
  */
@@ -133,21 +127,21 @@ public enum DefaultFontInfo {
     /**
      * @return the char
      */
-    public char getCharacter() {
+    private char getCharacter() {
         return character;
     }
 
     /**
      * @return the amount of pixels
      */
-    public int getLength() {
+    private int getLength() {
         return length;
     }
 
     /**
      * @return the amount of pixels if the symbol is printed out boldly
      */
-    public int getBoldLength() {
+    private int getBoldLength() {
         if (this == DefaultFontInfo.SPACE) {
             return getLength();
         }
@@ -157,11 +151,7 @@ public enum DefaultFontInfo {
     /* Statics */
     private final static int CENTER_PX = 154;
 
-    /**
-     * @param c the char
-     * @return the pixel length of the char
-     */
-    public static DefaultFontInfo getDefaultFontInfo(char c) {
+    private static DefaultFontInfo getDefaultFontInfo(char c) {
         for (DefaultFontInfo dFI : DefaultFontInfo.values()) {
             if (dFI.getCharacter() == c) {
                 return dFI;
@@ -171,32 +161,15 @@ public enum DefaultFontInfo {
     }
 
     /**
-     * Method to add spaces to a String to show up in the middle of the chat
+     * Generates string of enough spaces to center the given message. Uses legacy color codes for determining bold text width.
+     *
+     * @param message the message to center
+     * @return an empty string if message is null or empty; the spaces string if not
      */
-    public static String center(String message) {
-        return getCenterSpaces(message) + ChatColor.translateAlternateColorCodes('&', message);
-    }
-
-    /**
-     * Method to add spaces to BaseComponents to show up in the middle of the chat
-     */
-    public static BaseComponent[] center(BaseComponent... message) {
-        String legacy = new String();
-        for (BaseComponent component : message) {
-            legacy += component.toLegacyText();
-        }
-        TextComponent spaces = new TextComponent(getCenterSpaces(legacy));
-        ArrayList<BaseComponent> list = new ArrayList<>(Arrays.asList(message));
-        list.add(0, spaces);
-        return list.toArray(new BaseComponent[]{});
-    }
-
     public static String getCenterSpaces(String message) {
         if (message == null || message.isEmpty()) {
             return "";
         }
-
-        message = ChatColor.translateAlternateColorCodes('&', message);
 
         int messagePxSize = 0;
         boolean previousCode = false;
@@ -208,12 +181,7 @@ public enum DefaultFontInfo {
 
             } else if (previousCode == true) {
                 previousCode = false;
-                if (c == 'l' || c == 'L') {
-                    isBold = true;
-
-                } else {
-                    isBold = false;
-                }
+                isBold = c == 'l' || c == 'L';
 
             } else {
                 DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);

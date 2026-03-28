@@ -52,7 +52,7 @@ public class XLibRuntime extends JavaPlugin {
      */
     public static final PluginMeta META = new PluginMeta.Builder("XLib-Runtime")
             .minVersion(Version.MC1_8_8)
-            .paperState(PluginMeta.State.NOT_SUPPORTED)
+            .paperState(PluginMeta.State.SUPPORTED)
             .spigotState(PluginMeta.State.SUPPORTED)
             .economyState(PluginMeta.State.SUPPORTED)
             .permissionsState(PluginMeta.State.SUPPORTED)

@@ -39,6 +39,8 @@ import org.inventivetalent.update.spiget.UpdateCallback;
  */
 public class PluginInit {
 
+    public static final String XL_DEV_MODE = "XLDevMode";
+
     private JavaPlugin plugin;
     private XLib xlib;
     private PluginMeta meta;
@@ -94,6 +96,15 @@ public class PluginInit {
         }
 
         meta.printToConsole(xlib);
+    }
+
+    /**
+     * Returns if the server jar has been started with the XLDevMode flag.
+     *
+     * @return if the server jar has been started with the XLDevMode flag
+     */
+    public boolean isXLDevMode() {
+        return System.getProperty(XL_DEV_MODE) != null;
     }
 
     /**

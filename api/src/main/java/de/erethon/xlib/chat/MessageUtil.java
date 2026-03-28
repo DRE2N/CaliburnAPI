@@ -14,17 +14,12 @@
  */
 package de.erethon.xlib.chat;
 
+import de.erethon.xlib.compatibility.RuntimeSpecificLoader;
 import de.erethon.xlib.compatibility.Version;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.serializer.bungeecord.BungeeComponentSerializer;
-import net.md_5.bungee.api.ChatColor;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.TextComponent;
-import net.md_5.bungee.chat.ComponentSerializer;
+import de.erethon.xlib.plugin.PluginInit;
+import java.util.function.Predicate;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -34,25 +29,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class MessageUtil {
 
-    private static final boolean is1_9 = Version.isAtLeast(Version.MC1_9);
-    private static final boolean is1_11 = Version.isAtLeast(Version.MC1_11);
-    private static final boolean is1_16 = Version.isAtLeast(Version.MC1_16);
-
-    private static final Pattern HEX_COLOR_PATTERN = Pattern.compile("#[a-fA-F0-9]{6}");
-
-    static InternalsProvider internals;
-
-    static {
-        if (!is1_11) {
-            String packageName = MessageUtil.class.getPackage().getName();
-            String internalsName = Version.get().getRelocationTarget();
-            try {
-                internals = (InternalsProvider) Class.forName(packageName + "." + internalsName).newInstance();
-            } catch (ClassNotFoundException | IllegalAccessException | InstantiationException exception) {
-                MessageUtil.log(ChatColor.DARK_RED + "MessageUtil could not find a valid implementation for " + internalsName + ".");
-            }
-        }
-    }
+    static InternalsProvider internals = RuntimeSpecificLoader.loadImplementation(InternalsProvider.class, Version.MC1_10_2, Version.MC1_18_2, new InternalsProvider());
 
     /**
      * Logs a message to the console. Supports color codes.
@@ -60,7 +37,7 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void log(String message) {
-        Bukkit.getConsoleSender().sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+        internals.log(message);
     }
 
     /**
@@ -80,7 +57,54 @@ public class MessageUtil {
      * @param message    the message String
      */
     public static void log(String pluginName, String message) {
-        Bukkit.getConsoleSender().sendMessage("[" + pluginName + "] " + ChatColor.translateAlternateColorCodes('&', message));
+        log("[" + pluginName + "] " + message);
+    }
+
+    /**
+     * {@link #log(java.lang.String)}s the message if {@link PluginInit#isXLDevMode()}.
+     *
+     * @param message the message to log
+     */
+    public static void debug(String message) {
+        if (System.getProperty(PluginInit.XL_DEV_MODE) != null) {
+            log(message);
+        }
+    }
+
+    /**
+     * {@link #log(org.bukkit.plugin.Plugin, java.lang.String)}s the message if {@link PluginInit#isXLDevMode()}.
+     *
+     * @param plugin  the logging plugin
+     * @param message the message to log
+     */
+    public static void debug(Plugin plugin, String message) {
+        debug(plugin.getName(), message);
+    }
+
+    /**
+     * {@link #log(java.lang.String, java.lang.String)}s the message if {@link PluginInit#isXLDevMode()}.
+     *
+     * @param pluginName the name of the logging plugin
+     * @param message    the message to log
+     */
+    public static void debug(String pluginName, String message) {
+        if (System.getProperty(PluginInit.XL_DEV_MODE) != null) {
+            log(pluginName, message);
+        }
+    }
+
+    /**
+     * Throws an {@link java.lang.AssertionError#AssertionError(java.lang.String)} with the given message if the given predicate is satisfied.
+     *
+     * @param <T>       the predicate type
+     * @param message   the error message
+     * @param t         the object to test
+     * @param predicate the predicate
+     */
+    public static <T> void assertTrue(String message, T t, Predicate<T> predicate) {
+        if (System.getProperty(PluginInit.XL_DEV_MODE) != null && !predicate.test(t)) {
+            throw new AssertionError(message);
+        }
     }
 
     /**
@@ -89,16 +113,7 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void broadcastMessage(String message) {
-        broadcastMessage(parse(message));
-    }
-
-    /**
-     * Broadcasts BaseComponents to all players.
-     *
-     * @param message the message components
-     */
-    public static void broadcastMessage(BaseComponent... message) {
-        Bukkit.getOnlinePlayers().forEach(p -> sendMessage(p, message));
+        internals.broadcastMessage(message);
     }
 
     /**
@@ -107,26 +122,7 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void broadcastCenteredMessage(String message) {
-        broadcastCenteredMessage(parse(message));
-    }
-
-    /**
-     * Broadcasts a perfectly centered BaseComponent message to all players.
-     *
-     * @param message the message components
-     */
-    public static void broadcastCenteredMessage(BaseComponent... message) {
-        broadcastMessage(DefaultFontInfo.center(message));
-    }
-
-    /**
-     * Broadcasts the plugin name formatted to a player (or another sender), for example as a headline.
-     *
-     * @param sender the sender
-     * @param plugin the plugin
-     */
-    public static void broadcastPluginTag(CommandSender sender, Plugin plugin) {
-        broadcastCenteredMessage("&4&l[ &6" + plugin.getDescription().getName() + " &4&l]");
+        internals.broadcastCenteredMessage(message);
     }
 
     /**
@@ -171,22 +167,12 @@ public class MessageUtil {
     }
 
     /**
-     * Broadcasts an action bar message.
-     *
-     * @param message the message components
-     */
-    public static void broadcastActionBarMessage(BaseComponent[] message) {
-        Bukkit.getOnlinePlayers().forEach(p -> sendActionBarMessage(p, message));
-    }
-
-    /**
      * Broadcasts a fat message Does not support color codes.
      *
      * @param color the color of the message
      * @param word  the word to send
      */
     public static void broadcastFatMessage(ChatColor color, String word) {
-        word = ChatColor.translateAlternateColorCodes('&', word);
         word = ChatColor.stripColor(word);
         String[] fat = FatLetter.fromString(word);
         for (Player player : Bukkit.getOnlinePlayers()) {
@@ -205,21 +191,7 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void sendMessage(CommandSender sender, String message) {
-        sendMessage(sender, parse(message));
-    }
-
-    /**
-     * Sends a BaseComponent message to a specific player (or another CommandSender).
-     *
-     * @param sender  the sender
-     * @param message the message String
-     */
-    public static void sendMessage(CommandSender sender, BaseComponent... message) {
-        if (sender instanceof Player) {
-            ((Player) sender).spigot().sendMessage(message);
-        } else {
-            sender.sendMessage(BaseComponent.toPlainText(message));
-        }
+        internals.sendMessage(sender, message);
     }
 
     /**
@@ -229,17 +201,7 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void sendCenteredMessage(CommandSender sender, String message) {
-        sendCenteredMessage(sender, parse(message));
-    }
-
-    /**
-     * Sends a perfectly centered BaseComponent message to a specific player (or another CommandSender).
-     *
-     * @param sender  the sender
-     * @param message the message components
-     */
-    public static void sendCenteredMessage(CommandSender sender, BaseComponent... message) {
-        sendMessage(sender, DefaultFontInfo.center(message));
+        internals.sendCenteredMessage(sender, message);
     }
 
     /**
@@ -263,13 +225,7 @@ public class MessageUtil {
      * @param fadeOut  the time in ticks it takes for the message to disappear
      */
     public static void sendTitleMessage(Player player, String title, String subtitle, int fadeIn, int show, int fadeOut) {
-        title = TextComponent.toLegacyText(parse(title));
-        subtitle = TextComponent.toLegacyText(parse(subtitle));
-        if (is1_11) {
-            player.sendTitle(title, subtitle, fadeIn, show, fadeOut);
-        } else {
-            internals.sendTitle(player, title, subtitle, fadeIn, show, fadeOut);
-        }
+        internals.sendTitle(player, title, subtitle, fadeIn, show, fadeOut);
     }
 
     /**
@@ -300,21 +256,7 @@ public class MessageUtil {
      * @param message the message String
      */
     public static void sendActionBarMessage(Player player, String message) {
-        sendActionBarMessage(player, parse(message));
-    }
-
-    /**
-     * Sends an action bar message.
-     *
-     * @param player  the player who will receive the message
-     * @param message the message components
-     */
-    public static void sendActionBarMessage(Player player, BaseComponent[] message) {
-        if (is1_9) {
-            player.spigot().sendMessage(ChatMessageType.ACTION_BAR, message);
-        } else {
-            internals.sendActionBar(player, ComponentSerializer.toString(message));
-        }
+        internals.sendActionBar(player, message);
     }
 
     /**
@@ -325,7 +267,6 @@ public class MessageUtil {
      * @param word   the word to send
      */
     public static void sendFatMessage(Player player, ChatColor color, String word) {
-        word = ChatColor.translateAlternateColorCodes('&', word);
         word = ChatColor.stripColor(word);
         String[] fat = FatLetter.fromString(word);
         sendCenteredMessage(player, color + fat[0]);
@@ -333,41 +274,6 @@ public class MessageUtil {
         sendCenteredMessage(player, color + fat[2]);
         sendCenteredMessage(player, color + fat[3]);
         sendCenteredMessage(player, color + fat[4]);
-    }
-
-    /**
-     * Parses the string.
-     * <p>
-     * Translates color codes and in 1.16+ MiniMessage tags.
-     *
-     * @param string the String to parse
-     * @return the parsed BaseComponents
-     */
-    public static BaseComponent[] parse(String string) {
-        string = ChatColor.translateAlternateColorCodes('&', string);
-        // This is necessary until we do a full update to adventure-text
-        return is1_16 ? BungeeComponentSerializer.get().serialize(MiniMessage.get().parse(string)) : TextComponent.fromLegacyText(string);
-
-    }
-
-    /**
-     * Colors the string.
-     * <p>
-     * Translates color codes and in 1.16+ hex color as well.
-     *
-     * @param string the String to parse
-     * @return the colored string
-     */
-    public static String color(String string) {
-        if (is1_16) {
-            Matcher match = HEX_COLOR_PATTERN.matcher(string);
-            while (match.find()) {
-                String color = string.substring(match.start(), match.end());
-                string = string.replace(color, ChatColor.of(color) + "");
-                match = HEX_COLOR_PATTERN.matcher(string);
-            }
-        }
-        return ChatColor.translateAlternateColorCodes('&', string);
     }
 
 }

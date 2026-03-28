@@ -42,7 +42,6 @@
                                 <includes>
                                     <include>org.bstats:bstats-*</include>
                                     <include>org.inventivetalent.spiget-update</include>
-                                    <include>net.kyori:*</include>
                                 </includes>
                             </artifactSet>
                             <relocations>
@@ -53,10 +52,6 @@
                                 <relocation>
                                     <pattern>org.inventivetalent.update.spiget</pattern>
                                     <shadedPattern>de.erethon.xlib.spiget</shadedPattern>
-                                </relocation>
-                                <relocation>
-                                    <pattern>net.kyori</pattern>
-                                    <shadedPattern>de.erethon.xlib.kyori</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
