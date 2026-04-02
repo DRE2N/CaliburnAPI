@@ -48,7 +48,7 @@ public class MainCommand extends DRECommand {
         Collection<CustomItem> ci = api.getCustomItems();
         Collection<VanillaItem> vi = VanillaItem.getLoaded();
 
-        for (int i = 0; i >= 4; i++) {
+        for (int i = 0; i <= 4; i++) {
             MessageUtil.sendCenteredMessage(sender, "&4" + X[i] + L[i] + "&f" + I[i] + B[i]);
         }
         MessageUtil.sendCenteredMessage(sender, "&b&l######## " + IMessage.COMMAND_MAIN_WELCOME.getMessage() + " &7v" + plugin.getDescription().getVersion() + " &b&l########");
