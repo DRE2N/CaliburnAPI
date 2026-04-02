@@ -1403,7 +1403,7 @@ public class VanillaItem extends ExItem {
             }
             sb.append(bukkit.name());
             send = true;
-            VALUES.add(new VanillaItem(NEW, bukkit.name()));
+            VALUES.add(new VanillaItem(UNKNOWN, bukkit.name()));
         }
         if (send) {
             MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
@@ -1491,15 +1491,15 @@ public class VanillaItem extends ExItem {
     }
 
     protected VanillaItem(Version firstVersion, String id1_8, String id1_13, int numeric, short data) {
-        this(firstVersion, Version.NEW, id1_8, id1_13, numeric, data);
+        this(firstVersion, Version.UNKNOWN, id1_8, id1_13, numeric, data);
     }
 
     protected VanillaItem(Version firstVersion, String id1_8, String id1_13, String id1_14, int numeric, short data) {
-        this(firstVersion, Version.NEW, id1_8, id1_13, id1_14, numeric, data);
+        this(firstVersion, Version.UNKNOWN, id1_8, id1_13, id1_14, numeric, data);
     }
 
     protected VanillaItem(Version firstVersion, String id1_13) {
-        this(firstVersion, Version.NEW, id1_13);
+        this(firstVersion, Version.UNKNOWN, id1_13);
     }
 
     protected VanillaItem(Version firstVersion, Version lastVersion, String id1_13) {

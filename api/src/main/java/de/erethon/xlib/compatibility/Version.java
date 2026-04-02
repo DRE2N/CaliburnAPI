@@ -30,64 +30,84 @@ public enum Version {
     MC1_10(false, false, "v1_10_R1"),
     MC1_10_1(false, false, "UNKNOWN"),
     MC1_10_2(false, false, "v1_10_R1"),
-    MC1_11(true, false, "v1_11_R1"),
-    MC1_11_1(true, false, "v1_11_R1"),
-    MC1_11_2(true, false, "v1_11_R1"),
-    MC1_12(true, false, "v1_12_R1"),
-    MC1_12_1(true, false, "v1_12_R1"),
-    MC1_12_2(true, false, "v1_12_R1"),
-    MC1_13(true, true, "v1_13_R1"),
-    MC1_13_1(true, true, "v1_13_R2"),
-    MC1_13_2(true, true, "v1_13_R2"),
-    MC1_14(true, true, "v1_14_R1"),
-    MC1_14_1(true, true, "v1_14_R1"),
-    MC1_14_2(true, true, "v1_14_R1"),
-    MC1_14_3(true, true, "v1_14_R1"),
-    MC1_14_4(true, true, "v1_14_R1"),
-    MC1_15(true, true, "v1_15_R1"),
-    MC1_15_1(true, true, "v1_15_R1"),
-    MC1_15_2(true, true, "v1_15_R1"),
-    MC1_16(true, true, "v1_16_R1"),
-    MC1_16_1(true, true, "v1_16_R1"),
-    MC1_16_2(true, true, "v1_16_R2"),
-    MC1_16_3(true, true, "v1_16_R2"),
-    MC1_16_4(true, true, "v1_16_R3"),
-    MC1_16_5(true, true, "v1_16_R3"),
-    MC1_17(true, true, "v1_17_R1"),
-    MC1_17_1(true, true, "v1_17_R1"),
-    MC1_18(true, true, "v1_18_R1"),
-    MC1_18_1(true, true, "v1_18_R1"),
-    MC1_18_2(true, true, "v1_18_R1"),
-    MC1_19(true, true, "v1_19_R1"),
-    MC1_19_1(true, true, "v1_19_R1"),
-    MC1_19_2(true, true, "v1_19_R1"),
-    MC1_19_3(true, true, "v1_19_R2"),
-    MC1_19_4(true, true, "v1_19_R3"),
-    MC1_20(true, true, "v1_20_R1"),
-    MC1_20_1(true, true, "v1_20_R1"),
-    MC1_20_2(true, true, "v1_20_R2"),
-    MC1_20_3(true, true, "v1_20_R3"),
-    MC1_20_4(true, true, "v1_20_R3"),
-    MC1_20_5(true, true, "v1_20_R4"),
-    MC1_20_6(true, true, "v1_20_R4"),
-    MC1_21(true, true, "v1_21_R1"),
-    MC1_21_1(true, true, "v1_21_R1"),
-    MC1_21_2(true, true, "v1_21_R2"),
-    MC1_21_3(true, true, "v1_21_R2"),
-    MC1_21_4(true, true, "v1_21_R3"),
-    MC1_21_5(true, true, "v1_21_R4"),
-    MC1_21_6(true, true, "v1_21_R5"),
-    MC1_21_7(true, true, "v1_21_R5"),
-    MC1_21_8(true, true, "v1_21_R5"),
-    MC1_21_9(true, true, "v1_21_R6"),
-    MC1_21_10(true, true, "v1_21_R6"),
-    MC1_21_11(true, true, "v1_21_R7"),
-    MC26_1(true, true, ""),
-    NEW(true, true, "");
+    MC1_11(false, "v1_11_R1"),
+    MC1_11_1(false, "v1_11_R1"),
+    MC1_11_2(false, "v1_11_R1"),
+    MC1_12(false, "v1_12_R1"),
+    MC1_12_1(false, "v1_12_R1"),
+    MC1_12_2(false, "v1_12_R1"),
+    MC1_13("v1_13_R1"),
+    MC1_13_1("v1_13_R2"),
+    MC1_13_2("v1_13_R2"),
+    MC1_14("v1_14_R1"),
+    MC1_14_1("v1_14_R1"),
+    MC1_14_2("v1_14_R1"),
+    MC1_14_3("v1_14_R1"),
+    MC1_14_4("v1_14_R1"),
+    MC1_15("v1_15_R1"),
+    MC1_15_1("v1_15_R1"),
+    MC1_15_2("v1_15_R1"),
+    MC1_16("v1_16_R1"),
+    MC1_16_1("v1_16_R1"),
+    MC1_16_2("v1_16_R2"),
+    MC1_16_3("v1_16_R2"),
+    MC1_16_4("v1_16_R3"),
+    MC1_16_5("v1_16_R3"),
+    MC1_17("v1_17_R1"),
+    MC1_17_1("v1_17_R1"),
+    MC1_18("v1_18_R1"),
+    MC1_18_1("v1_18_R1"),
+    MC1_18_2("v1_18_R1"),
+    MC1_19("v1_19_R1"),
+    MC1_19_1("v1_19_R1"),
+    MC1_19_2("v1_19_R1"),
+    MC1_19_3("v1_19_R2"),
+    MC1_19_4("v1_19_R3"),
+    MC1_20("v1_20_R1"),
+    MC1_20_1("v1_20_R1"),
+    MC1_20_2("v1_20_R2"),
+    MC1_20_3("v1_20_R3"),
+    MC1_20_4("v1_20_R3"),
+    MC1_20_5("v1_20_R4"),
+    MC1_20_6("v1_20_R4"),
+    MC1_21("v1_21_R1"),
+    MC1_21_1("v1_21_R1"),
+    MC1_21_2("v1_21_R2"),
+    MC1_21_3("v1_21_R2"),
+    MC1_21_4("v1_21_R3"),
+    MC1_21_5("v1_21_R4"),
+    MC1_21_6("v1_21_R5"),
+    MC1_21_7("v1_21_R5"),
+    MC1_21_8("v1_21_R5"),
+    MC1_21_9("v1_21_R6"),
+    MC1_21_10("v1_21_R6"),
+    MC1_21_11("v1_21_R7"),
+    MC26_1,
+    /**
+     * New versions only supported by XLib through forward compatibility mechanisms or outdated version older than 1.8.8.
+     */
+    UNKNOWN;
+
+    /**
+     * The latest version supported by XLib without forward compatibility mechanisms.
+     */
+    public static final Version LATEST_SUPPORTED = Version.values()[Version.values().length - 2];
 
     private boolean newMobNames;
     private boolean newMaterials;
     private String relocationTarget;
+
+    Version() {
+        this("");
+    }
+
+    Version(String relocationTarget) {
+        this(true, relocationTarget);
+    }
+
+    Version(boolean newMaterials, String relocationTarget) {
+        this(true, newMaterials, relocationTarget);
+    }
 
     Version(boolean newMobNames, boolean newMaterials, String relocationTarget) {
         this.newMobNames = newMobNames;
@@ -145,28 +165,11 @@ public enum Version {
     public static Version get() {
         if (running == null) {
             try {
-                if (Package.getPackage("org.bukkit.craftbukkit") != null) {
-                    String versionString = Bukkit.getServer().getVersion().split("\\(MC: ")[1].split("\\)")[0].split(" ")[0];
-                    for (Version version : Version.values()) {
-                        if (version.toString().equals(versionString)) {
-                            running = version;
-                            return running;
-                        }
-                    }
-
-                } else if (Package.getPackage("net.glowstone") != null) {
-                    String versionString = Bukkit.getServer().getVersion().split("-")[2];
-                    for (Version version : Version.values()) {
-                        if (version.name().replaceAll("_", ".").equals(versionString)) {
-                            running = version;
-                            return running;
-                        }
-                    }
-                }
-
-            } catch (ArrayIndexOutOfBoundsException exception) {
+                String versionString = Bukkit.getBukkitVersion().split("-")[0];
+                running = Version.valueOf("MC" + versionString.replace(".", "_"));
+            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException exception) {
+                running = UNKNOWN;
             }
-            running = NEW;
         }
         return running;
     }

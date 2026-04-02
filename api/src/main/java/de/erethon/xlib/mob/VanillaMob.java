@@ -220,7 +220,7 @@ public class VanillaMob extends ExMob {
             }
             sb.append(bukkit.name());
             send = true;
-            VALUES.add(new VanillaMob(NEW, bukkit.name().toLowerCase(), bukkit.name()));
+            VALUES.add(new VanillaMob(Version.UNKNOWN, bukkit.name().toLowerCase(), bukkit.name()));
         }
         if (send) {
             MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
@@ -296,11 +296,11 @@ public class VanillaMob extends ExMob {
     }
 
     protected VanillaMob(Version firstVersion, String id1_18, String id1_13, String bukkit, int numeric) {
-        this(firstVersion, Version.NEW, id1_18, id1_13, id1_13, bukkit, numeric);
+        this(firstVersion, Version.UNKNOWN, id1_18, id1_13, id1_13, bukkit, numeric);
     }
 
     protected VanillaMob(Version firstVersion, String id1_8, String id1_11, String id1_13, String bukkit, int numeric) {
-        this(firstVersion, Version.NEW, id1_8, id1_11, id1_13, bukkit, numeric);
+        this(firstVersion, Version.UNKNOWN, id1_8, id1_11, id1_13, bukkit, numeric);
     }
 
     protected VanillaMob(Version firstVersion, Version lastVersion, String id1_13, String bukkit) {
