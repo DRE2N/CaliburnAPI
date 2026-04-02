@@ -83,6 +83,7 @@ public enum Version {
     MC1_21_10("v1_21_R6"),
     MC1_21_11("v1_21_R7"),
     MC26_1,
+    MC26_1_1,
     /**
      * New versions only supported by XLib through forward compatibility mechanisms or outdated version older than 1.8.8.
      */
