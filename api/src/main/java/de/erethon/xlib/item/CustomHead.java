@@ -475,7 +475,7 @@ public enum CustomHead {
 
     }
 
-    static InternalsProvider internals = RuntimeSpecificLoader.loadImplementation(InternalsProvider.class, Version.MC1_21, Version.MC1_20_6, new InternalsProvider() {
+    static InternalsProvider internals = RuntimeSpecificLoader.loadImplementation(InternalsProvider.class, Version.MC1_21, Version.LATEST_SUPPORTED, new InternalsProvider() {
         @Override
         public ItemStack newPlayerHead(int amount) {
             return new ItemStack(Material.PLAYER_HEAD, amount);

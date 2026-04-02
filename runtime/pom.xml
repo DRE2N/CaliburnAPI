@@ -177,6 +177,46 @@
         </dependency>
         <dependency>
             <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spigot_1_21_R1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spigot_1_21_R2</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spigot_1_21_R3</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spigot_1_21_R4</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spigot_1_21_R5</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spigot_1_21_R6</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spigot_1_21_R7</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
+            <artifactId>xlib-spigot_26_1_1</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.erethon.xlib</groupId>
             <artifactId>xlib-paper-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

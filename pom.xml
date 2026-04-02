@@ -33,6 +33,14 @@
         <module>spigot/1_20_R2</module>
         <module>spigot/1_20_R3</module>
         <module>spigot/1_20_R4</module>
+        <module>spigot/1_21_R1</module>
+        <module>spigot/1_21_R2</module>
+        <module>spigot/1_21_R3</module>
+        <module>spigot/1_21_R4</module>
+        <module>spigot/1_21_R5</module>
+        <module>spigot/1_21_R6</module>
+        <module>spigot/1_21_R7</module>
+        <module>spigot/26_1_1</module>
         <module>spigot/paper-api</module>
         <module>spigot/spiget-patch</module>
         <module>example</module>
