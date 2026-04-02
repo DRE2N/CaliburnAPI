@@ -35,25 +35,52 @@ public class RuntimeSpecificLoader {
      * @return an instance of T that fits the current runtime best
      */
     public static <T> T loadImplementation(Class<T> superclass, Version preferPaperMinimum, Version preferNMSMaximum, T fallback) {
-        String className = superclass.getPackage().getName() + ".";
-        if (Version.isAtLeast(preferPaperMinimum) && RuntimeType.get() == RuntimeType.PAPER) {
-            className += "PaperAPIProvider";
+        String namespace = superclass.getPackage().getName() + ".";
+        Class implementationClass = null;
+        if (Version.isAtLeast(preferPaperMinimum) && RuntimeType.get().hasTrait(RuntimeTrait.PAPER_API)) {
+            implementationClass = getClass(namespace, "PaperAPIProvider", false);
+
         } else if (Version.isAtMost(preferNMSMaximum)) {
-            className += Version.get().getRelocationTarget();
+            if (RuntimeType.get().hasTrait(RuntimeTrait.OBC_RELOCATIONS)) {
+                implementationClass = getClass(namespace, Version.get().getRelocationTarget(), false);
+
+            } else {
+                for (int i = Version.get().ordinal(); i > Version.MC1_21_11.ordinal(); i--) {
+                    implementationClass = getClass(namespace, Version.values()[i].name(), true);
+                    if (implementationClass != null) {
+                        break;
+                    }
+                }
+            }
+
         } else if (fallback != null) {
             return fallback;
-        } else {
+        }
+
+        if (implementationClass == null) {
             throw new RuntimeException("XLib is not supported on this server.");
         }
+
         try {
-            Constructor constructor = Class.forName(className).getDeclaredConstructor();
+            Constructor constructor = implementationClass.getDeclaredConstructor();
             constructor.setAccessible(true);
             return (T) constructor.newInstance();
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | ClassCastException
-                | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException exception) {
-            Bukkit.getLogger().log(Level.SEVERE, "XLib could not find a valid implementation for {0}", className);
+        } catch (InstantiationException | IllegalAccessException | ClassCastException | NoSuchMethodException | SecurityException | IllegalArgumentException
+                | InvocationTargetException exception) {
+            Bukkit.getLogger().log(Level.SEVERE, "XLib could not find a valid implementation for {0}", RuntimeType.get() + "/" + Version.get());
             exception.printStackTrace();
             return fallback;
+        }
+    }
+
+    private static Class getClass(String namespace, String name, boolean silent) {
+        try {
+            return Class.forName(namespace + name);
+        } catch (ClassNotFoundException exception) {
+            if (!silent) {
+                Bukkit.getLogger().log(Level.SEVERE, "XLib couldn't find a implementation for {0}", name);
+            }
+            return null;
         }
     }
 
