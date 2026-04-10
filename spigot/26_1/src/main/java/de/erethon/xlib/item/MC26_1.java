@@ -31,7 +31,7 @@ import org.bukkit.inventory.ItemStack;
 /**
  * @author Daniel Saukel
  */
-class MC26_1_1 implements InternalsProvider {
+class MC26_1 implements InternalsProvider {
 
     @Override
     public ItemStack newPlayerHead(int amount) {

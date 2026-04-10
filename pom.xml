@@ -40,7 +40,7 @@
         <module>spigot/1_21_R5</module>
         <module>spigot/1_21_R6</module>
         <module>spigot/1_21_R7</module>
-        <module>spigot/26_1_1</module>
+        <module>spigot/26_1</module>
         <module>spigot/paper-api</module>
         <module>spigot/spiget-patch</module>
         <module>example</module>
