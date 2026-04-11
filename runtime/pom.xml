@@ -212,7 +212,7 @@
         </dependency>
         <dependency>
             <groupId>de.erethon.xlib</groupId>
-            <artifactId>xlib-spigot_26_1_1</artifactId>
+            <artifactId>xlib-spigot_26_1</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
