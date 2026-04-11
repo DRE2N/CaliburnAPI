@@ -47,7 +47,7 @@ class v1_21_R6 implements InternalsProvider {
         }
 
         ResolvableProfile profile = nmsStack.get(DataComponents.PROFILE);
-        if (profile == null || profile.partialProfile()== null) {
+        if (profile == null || profile.partialProfile() == null) {
             return null;
         }
 
