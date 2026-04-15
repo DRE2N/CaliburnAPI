@@ -73,7 +73,7 @@ class v1_17_R1 implements InternalsProvider {
     @Override
     public NBTTagCompound createOwnerCompound(String id, String textureValue) {
         NBTTagCompound skullOwner = new NBTTagCompound();
-        skullOwner.a("Id", UUID.fromString(id));
+        skullOwner./*set*/a("Id", UUID.fromString(id));
         NBTTagCompound properties = new NBTTagCompound();
         NBTTagList textures = new NBTTagList();
         NBTTagCompound value = new NBTTagCompound();

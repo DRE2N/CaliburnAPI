@@ -16,9 +16,9 @@ package de.erethon.xlib.item;
 
 import de.erethon.xlib.item.CustomHead.InternalsProvider;
 import java.util.UUID;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
@@ -37,27 +37,27 @@ class v1_20_R3 implements InternalsProvider {
     public String getTextureValue(ItemStack item) {
         net.minecraft.world.item.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 
-        CompoundTag tag = nmsStack.getTag();
+        NBTTagCompound tag = nmsStack./*getTag*/v();
         if (tag == null) {
             return null;
         }
 
-        CompoundTag skullOwner = tag.getCompound("SkullOwner");
+        NBTTagCompound skullOwner = tag./*getCompound*/p("SkullOwner");
         if (skullOwner == null) {
             return null;
         }
-        CompoundTag properties = skullOwner.getCompound("Properties");
+        NBTTagCompound properties = skullOwner./*getCompound*/p("Properties");
         if (properties == null) {
             return null;
         }
-        ListTag textures = properties.getList("textures", 10);
+        NBTTagList textures = properties./*getList*/c("textures", 10);
         if (textures == null) {
             return null;
-        }
+    }
 
-        for (Tag base : textures) {
-            if (base instanceof CompoundTag && ((CompoundTag) base).contains("Value", 8)) {
-                return ((CompoundTag) base).getString("Value");
+        for (NBTBase base : textures) {
+            if (base instanceof NBTTagCompound && ((NBTTagCompound) base)./*hasKeyOfType*/b("Value", 8)) {
+                return ((NBTTagCompound) base)./*getString*/l("Value");
             }
         }
         return null;
@@ -66,21 +66,21 @@ class v1_20_R3 implements InternalsProvider {
     @Override
     public ItemStack setSkullOwner(ItemStack item, Object compound) {
         net.minecraft.world.item.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
-        nmsStack.getOrCreateTag().put("SkullOwner", (Tag) compound);
+        nmsStack./*getOrCreate*/w()./*set*/a("SkullOwner", (NBTBase) compound);
         return CraftItemStack.asBukkitCopy(nmsStack);
     }
 
     @Override
-    public CompoundTag createOwnerCompound(String id, String textureValue) {
-        CompoundTag skullOwner = new CompoundTag();
-        skullOwner.putUUID("Id", UUID.fromString(id));
-        CompoundTag properties = new CompoundTag();
-        ListTag textures = new ListTag();
-        CompoundTag value = new CompoundTag();
-        value.putString("Value", textureValue);
+    public NBTTagCompound createOwnerCompound(String id, String textureValue) {
+        NBTTagCompound skullOwner = new NBTTagCompound();
+        skullOwner./*set*/a("Id", UUID.fromString(id));
+        NBTTagCompound properties = new NBTTagCompound();
+        NBTTagList textures = new NBTTagList();
+        NBTTagCompound value = new NBTTagCompound();
+        value./*set*/a("Value", textureValue);
         textures.add(value);
-        properties.put("textures", textures);
-        skullOwner.put("Properties", properties);
+        properties./*set*/a("textures", textures);
+        skullOwner./*set*/a("Properties", properties);
         return skullOwner;
     }
 

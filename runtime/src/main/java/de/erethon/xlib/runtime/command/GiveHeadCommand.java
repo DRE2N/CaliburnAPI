@@ -97,6 +97,10 @@ public class GiveHeadCommand implements CommandExecutor {
             } else if (arg.startsWith("TEXTUREVALUE:")) {
                 textureValue = arg.replace("TEXTUREVALUE:", "");
 
+            } else if (arg.startsWith("GET")) {
+                sender.sendMessage(CustomHead.getTextureValue(((Player) sender).getItemInHand()));
+                return true;
+
             } else if (displayName == null) {
                 displayName = ChatColor.translateAlternateColorCodes('&', arg);
 

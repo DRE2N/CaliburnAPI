@@ -42,16 +42,16 @@ class v1_21_R7 implements InternalsProvider {
     public String getTextureValue(ItemStack item) {
         net.minecraft.world.item.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 
-        if (!nmsStack.has(DataComponents.PROFILE)) {
+        if (!nmsStack.c(DataComponents./*PROFILE*/ar)) {
             return null;
         }
 
-        ResolvableProfile profile = nmsStack.get(DataComponents.PROFILE);
-        if (profile == null || profile.partialProfile() == null) {
+        ResolvableProfile profile = nmsStack./*get*/a(DataComponents./*PROFILE*/ar);
+        if (profile == null || profile./*partialProfile*/b() == null) {
             return null;
         }
 
-        Collection<Property> properties = profile.partialProfile().properties().get("textures");
+        Collection<Property> properties = profile./*partialProfile*/b().properties().get("textures");
         if (properties == null || properties.isEmpty()) {
             return null;
         }
@@ -62,7 +62,7 @@ class v1_21_R7 implements InternalsProvider {
     @Override
     public ItemStack setSkullOwner(ItemStack item, Object compound) {
         net.minecraft.world.item.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
-        nmsStack.set(DataComponents.PROFILE, (ResolvableProfile) compound);
+        nmsStack./*set*/a(DataComponents./*PROFILE*/ar, (ResolvableProfile) compound);
         return CraftItemStack.asBukkitCopy(nmsStack);
     }
 
@@ -72,7 +72,7 @@ class v1_21_R7 implements InternalsProvider {
         Multimap<String, Property> properties = LinkedListMultimap.create();
         properties.put("textures", new Property("textures", textureValue));
         GameProfile gameProfile = new GameProfile(uuid, "XLib", new PropertyMap(properties));
-        return ResolvableProfile.createResolved(gameProfile);
+        return ResolvableProfile./*createResolved*/a(gameProfile);
     }
 
 }

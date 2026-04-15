@@ -39,16 +39,16 @@ class v1_21_R1 implements InternalsProvider {
     public String getTextureValue(ItemStack item) {
         net.minecraft.world.item.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
 
-        if (!nmsStack.has(DataComponents.PROFILE)) {
+        if (!nmsStack./*has*/b(DataComponents./*PROFILE*/W)) {
             return null;
         }
 
-        ResolvableProfile profile = nmsStack.get(DataComponents.PROFILE);
-        if (profile == null || profile.gameProfile() == null) {
+        ResolvableProfile profile = nmsStack./*get*/a(DataComponents./*PROFILE*/W);
+        if (profile == null || profile./*gameProfile*/f() == null) {
             return null;
         }
 
-        Collection<Property> properties = profile.gameProfile().getProperties().get("textures");
+        Collection<Property> properties = profile./*gameProfile*/f().getProperties().get("textures");
         if (properties == null || properties.isEmpty()) {
             return null;
         }
@@ -59,7 +59,7 @@ class v1_21_R1 implements InternalsProvider {
     @Override
     public ItemStack setSkullOwner(ItemStack item, Object compound) {
         net.minecraft.world.item.ItemStack nmsStack = CraftItemStack.asNMSCopy(item);
-        nmsStack.set(DataComponents.PROFILE, (ResolvableProfile) compound);
+        nmsStack./*set*/a(DataComponents./*PROFILE*/W, (ResolvableProfile) compound);
         return CraftItemStack.asBukkitCopy(nmsStack);
     }
 
