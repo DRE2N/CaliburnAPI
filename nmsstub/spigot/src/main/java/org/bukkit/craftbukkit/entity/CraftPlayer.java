@@ -1,16 +1,12 @@
 package org.bukkit.craftbukkit.entity;
 
-import net.minecraft.server.PlayerConnection;
+import net.minecraft.server.EntityPlayer;
 import org.bukkit.entity.Player;
 
 public abstract class CraftPlayer implements Player {
 
-    public Handle getHandle() {
+    public EntityPlayer getHandle() {
         throw new UnsupportedOperationException();
-    }
-
-    public static class Handle {
-        public PlayerConnection playerConnection;
     }
 
 }

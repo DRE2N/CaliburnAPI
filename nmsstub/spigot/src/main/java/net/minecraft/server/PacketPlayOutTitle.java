@@ -1,6 +1,6 @@
 package net.minecraft.server;
 
-public class PacketPlayOutTitle {
+public class PacketPlayOutTitle implements Packet {
 
     public enum EnumTitleAction {
         TITLE, SUBTITLE
