@@ -30,7 +30,7 @@ class v1_8_R3 extends InternalsProvider {
 
     @Override
     void sendActionBar(Player player, String message) {
-        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a(message), (byte) 2));
+        ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a("\"" + message + "\""), (byte) 2));
     }
 
     @Override
