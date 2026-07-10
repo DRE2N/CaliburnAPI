@@ -85,6 +85,7 @@ public enum Version {
     MC26_1,
     MC26_1_1,
     MC26_1_2,
+    MC26_2,
     /**
      * New versions only supported by XLib through forward compatibility mechanisms or outdated version older than 1.8.8.
      */

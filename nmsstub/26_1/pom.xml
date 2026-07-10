@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.spigotmc</groupId>
     <artifactId>spigot</artifactId>
-    <version>26.1.2-R0.1-SNAPSHOT</version>
+    <version>26.2-R0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <parent>
         <groupId>de.erethon.nmsstub</groupId>
