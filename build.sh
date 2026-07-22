@@ -48,7 +48,7 @@ compile() {
     echo "║             Compiling...             ║"
     echo "╚══════════════════════════════════════╝"
     echo
-    java -jar mvnbt.jar --goal install
+    java -jar mvnbt.jar --goal install --version 3.9.16
     echo
     echo "XLib compilation finished."
     echo
@@ -62,7 +62,7 @@ install_stubs() {
     echo "║   Installing dependencies stubs...   ║"
     echo "╚══════════════════════════════════════╝"
     echo
-    java -jar mvnbt.jar --dir nmsstub --goal install
+    java -jar mvnbt.jar --dir nmsstub --goal install --version 3.9.16
     echo
     echo "Dependency stub installation finished."
     install_stubs_done

@@ -44,7 +44,7 @@ echo ╔════════════════════════
 echo ║             Compiling...             ║
 echo ╚══════════════════════════════════════╝
 echo.
-java -jar mvnbt.jar --goal install
+java -jar mvnbt.jar --goal install --version 3.9.16
 echo.
 XLib compilation finished.
 echo.
@@ -57,7 +57,7 @@ echo ╔════════════════════════
 echo ║   Installing dependencies stubs...   ║
 echo ╚══════════════════════════════════════╝
 echo.
-java -jar mvnbt.jar --dir nmsstub --goal install
+java -jar mvnbt.jar --dir nmsstub --goal install --version 3.9.16
 echo.
 Dependency stub installation finished.
 
