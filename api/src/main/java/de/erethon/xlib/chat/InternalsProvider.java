@@ -52,11 +52,11 @@ class InternalsProvider {
     }
 
     void sendActionBar(Player player, String message) {
-        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+        player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(parse(message)));
     }
 
     void sendTitle(Player player, String title, String subtitle, int fadeIn, int show, int fadeOut) {
-        player.sendTitle(title, subtitle, fadeIn, show, fadeOut);
+        player.sendTitle(parse(title), parse(subtitle), fadeIn, show, fadeOut);
     }
 
     String parse(String string) {
