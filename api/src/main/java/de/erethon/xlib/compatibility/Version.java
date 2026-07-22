@@ -167,6 +167,14 @@ public enum Version {
      */
     public static Version get() {
         if (running == null) {
+            // Paper 26.1.1 format
+            try {
+                String versionString = Bukkit.getBukkitVersion().split("\\.build")[0];
+                running = Version.valueOf("MC" + versionString.replace(".", "_"));
+                return running;
+            } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException exception) {
+            }
+            // Spigot and Paper until 1.21.11 format
             try {
                 String versionString = Bukkit.getBukkitVersion().split("-")[0];
                 running = Version.valueOf("MC" + versionString.replace(".", "_"));
