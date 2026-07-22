@@ -223,14 +223,14 @@ public class VanillaMob extends ExMob {
             VALUES.add(new VanillaMob(Version.UNKNOWN, bukkit.name().toLowerCase(), bukkit.name()));
         }
         if (send) {
-            MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
+            MessageUtil.debug(sb.append(". Please update your implementation if possible.").toString());
         }
 
         sb = new StringBuilder("&c[WARNING] XLib has a representation of the following mobs that do not exist in Bukkit: ");
         send = false;
         first = true;
         for (VanillaMob vm : VALUES) {
-            if (EnumUtil.isValidEnum(EntityType.class, vm.getName()) && vm.isAvailable()) {
+            if (!EnumUtil.isValidEnum(EntityType.class, vm.getName()) && vm.isAvailable()) {
                 if (!first) {
                     sb.append(", ");
                 } else {
@@ -246,7 +246,7 @@ public class VanillaMob extends ExMob {
             }
         }
         if (send) {
-            MessageUtil.log(sb.toString());
+            MessageUtil.debug(sb.toString());
         }
     }
 

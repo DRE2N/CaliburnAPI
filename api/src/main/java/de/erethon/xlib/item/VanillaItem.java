@@ -1406,7 +1406,7 @@ public class VanillaItem extends ExItem {
             VALUES.add(new VanillaItem(UNKNOWN, bukkit.name()));
         }
         if (send) {
-            MessageUtil.log(sb.append(". Please update your implementation if possible.").toString());
+            MessageUtil.debug(sb.append(". Please update your implementation if possible.").toString());
         }
 
         sb = new StringBuilder("&c[WARNING] XLib has a representation of the following materials that do not exist in Bukkit: ");
@@ -1429,7 +1429,7 @@ public class VanillaItem extends ExItem {
             }
         }
         if (send) {
-            MessageUtil.log(sb.toString());
+            MessageUtil.debug(sb.toString());
         }
     }
 
