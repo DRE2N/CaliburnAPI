@@ -29,6 +29,9 @@ class v1_9_R2 extends InternalsProvider {
 
     @Override
     void sendTitle(Player player, String title, String subtitle, int fadeIn, int show, int fadeOut) {
+        subtitle = parse(subtitle);
+        title = parse(title);
+
         IChatBaseComponent subtitleComponent = ChatSerializer.a("{\"text\": \"" + subtitle + "\"}");
         IChatBaseComponent titleComponent = ChatSerializer.a("{\"text\": \"" + title + "\"}");
 

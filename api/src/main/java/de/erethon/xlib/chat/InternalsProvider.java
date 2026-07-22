@@ -59,7 +59,7 @@ class InternalsProvider {
         player.sendTitle(title, subtitle, fadeIn, show, fadeOut);
     }
 
-    private String parse(String string) {
+    String parse(String string) {
         if (Version.isAtLeast(Version.MC1_16)) {
             Matcher match = HEX_COLOR_PATTERN.matcher(string);
             while (match.find()) {
@@ -71,7 +71,7 @@ class InternalsProvider {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
-    private String center(String string) {
+    String center(String string) {
         string = parse(string);
         return DefaultFontInfo.getCenterSpaces(string) + string;
     }

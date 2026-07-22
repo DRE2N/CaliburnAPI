@@ -30,11 +30,15 @@ class v1_8_R3 extends InternalsProvider {
 
     @Override
     void sendActionBar(Player player, String message) {
+        message = parse(message);
         ((CraftPlayer) player).getHandle().playerConnection.sendPacket(new PacketPlayOutChat(ChatSerializer.a("\"" + message + "\""), (byte) 2));
     }
 
     @Override
     void sendTitle(Player player, String title, String subtitle, int fadeIn, int show, int fadeOut) {
+        subtitle = parse(subtitle);
+        title = parse(title);
+
         IChatBaseComponent subtitleComponent = ChatSerializer.a("{\"text\": \"" + subtitle + "\"}");
         IChatBaseComponent titleComponent = ChatSerializer.a("{\"text\": \"" + title + "\"}");
 

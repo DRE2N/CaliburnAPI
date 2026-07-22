@@ -32,40 +32,40 @@ class PaperAPIProvider extends InternalsProvider {
 
     @Override
     void log(String message) {
-        Bukkit.getConsoleSender().sendMessage(parse(message));
+        Bukkit.getConsoleSender().sendMessage(miniParse(message));
     }
 
     @Override
     void broadcastMessage(String message) {
-        Bukkit.broadcast(parse(message));
+        Bukkit.broadcast(miniParse(message));
     }
 
     @Override
     void broadcastCenteredMessage(String message) {
-        Bukkit.broadcast(center(message));
+        Bukkit.broadcast(miniCenter(message));
     }
 
     @Override
     void sendMessage(CommandSender sender, String message) {
-        sender.sendMessage(parse(message));
+        sender.sendMessage(miniParse(message));
     }
 
     @Override
     void sendCenteredMessage(CommandSender sender, String message) {
-        sender.sendMessage(center(message));
+        sender.sendMessage(miniCenter(message));
     }
 
     @Override
     void sendActionBar(Player player, String message) {
-        player.sendActionBar(parse(message));
+        player.sendActionBar(miniParse(message));
     }
 
     @Override
     void sendTitle(Player player, String title, String subtitle, int fadeIn, int show, int fadeOut) {
-        player.showTitle(Title.title(parse(title), parse(subtitle), fadeIn, show, fadeOut));
+        player.showTitle(Title.title(miniParse(title), miniParse(subtitle), fadeIn, show, fadeOut));
     }
 
-    private Component parse(String string) {
+    Component miniParse(String string) {
         String colorCoded = ChatColor.translateAlternateColorCodes('&', string);
         if (string.equals(ChatColor.stripColor(colorCoded))) {
             return mm.deserialize(string);
@@ -74,8 +74,8 @@ class PaperAPIProvider extends InternalsProvider {
         }
     }
 
-    private Component center(String string) {
-        Component parsed = parse(string);
+    Component miniCenter(String string) {
+        Component miniParsed = miniParse(string);
         String stripped = mm.stripTags(string
                 .replace("<bold>", ChatColor.BOLD.toString())
                 .replace("<b>", ChatColor.BOLD.toString())
@@ -83,7 +83,7 @@ class PaperAPIProvider extends InternalsProvider {
                 .replace("</b>", ChatColor.RESET.toString())
         );
         String spaces = DefaultFontInfo.getCenterSpaces(stripped);
-        return parse(spaces).append(parsed);
+        return miniParse(spaces).append(miniParsed);
     }
 
 }
