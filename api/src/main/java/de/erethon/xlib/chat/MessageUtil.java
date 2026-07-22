@@ -29,7 +29,7 @@ import org.bukkit.plugin.Plugin;
  */
 public class MessageUtil {
 
-    static InternalsProvider internals = RuntimeSpecificLoader.loadImplementation(InternalsProvider.class, Version.MC1_10_2, Version.MC1_18_2, new InternalsProvider());
+    static InternalsProvider internals = RuntimeSpecificLoader.loadImplementation(InternalsProvider.class, Version.MC1_21_6, Version.MC1_10_2, new InternalsProvider());
 
     /**
      * Logs a message to the console. Supports color codes.
