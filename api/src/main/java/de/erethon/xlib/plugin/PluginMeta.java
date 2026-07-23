@@ -51,6 +51,7 @@ public class PluginMeta {
 
         private String name;
         private Version minVersion = Version.MC1_8_8;
+        private Version maxVersion = Version.LATEST_SUPPORTED;
         private State paperState = SUPPORTED;
         private State spigotState = SUPPORTED;
         private State economyState = SUPPORTED;
@@ -65,6 +66,11 @@ public class PluginMeta {
 
         public Builder minVersion(Version minVersion) {
             this.minVersion = minVersion;
+            return this;
+        }
+
+        public Builder maxVersion(Version maxVersion) {
+            this.maxVersion = maxVersion;
             return this;
         }
 
@@ -104,12 +110,13 @@ public class PluginMeta {
         }
 
         public PluginMeta build() {
-            return new PluginMeta(name, minVersion, paperState, spigotState, economyState, permissionsState, spigotMCResourceId, bStatsResourceId, versionComparator);
+            return new PluginMeta(name, minVersion, maxVersion, paperState, spigotState, economyState, permissionsState, spigotMCResourceId, bStatsResourceId, versionComparator);
         }
     }
 
     private String name;
     private Version minVersion;
+    private Version maxVersion;
     private State paperState;
     private State spigotState;
     private State economyState;
@@ -118,10 +125,11 @@ public class PluginMeta {
     private int bStatsResourceId;
     private VersionComparator versionComparator;
 
-    private PluginMeta(String name, Version minVersion, State paperState, State spigotState, State economyState, State permissionsState,
+    private PluginMeta(String name, Version minVersion, Version maxVersion, State paperState, State spigotState, State economyState, State permissionsState,
             int spigotMCResourceId, int bStatsResourceId, VersionComparator versionComparator) {
         this.name = name;
         this.minVersion = minVersion;
+        this.maxVersion = maxVersion;
         this.paperState = paperState;
         this.spigotState = spigotState;
         this.economyState = economyState;
@@ -147,6 +155,15 @@ public class PluginMeta {
      */
     public Version getMinVersion() {
         return minVersion;
+    }
+
+    /**
+     * Returns the maximum supported version to run this plugin.
+     *
+     * @return the maximum supported version to run this plugin
+     */
+    public Version getMaxVersion() {
+        return maxVersion;
     }
 
     /**
@@ -252,8 +269,14 @@ public class PluginMeta {
         }
         MessageUtil.log("&fServer: [" + server + "&f]");
 
-        String version = (Version.isAtLeast(minVersion) ? "&a" : "&4") + Version.get();
-        if (!Version.isAtMost(Version.values()[Version.values().length - 2])) {
+        String version = "";
+        if (Version.isAtLeast(minVersion) && Version.isAtMost(maxVersion)) {
+            version += "&a";
+        } else {
+            version += "&4";
+        }
+        version += Version.get();
+        if (Version.get() == Version.UNKNOWN) {
             version += " &4(possibly works through forward compatibility)";
         }
         MessageUtil.log("&fMinecraft version: [" + version + "&f]");
