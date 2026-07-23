@@ -21,10 +21,10 @@ package de.erethon.xlib.config;
  */
 public enum CommonMessage implements Message {
 
-    CMD_DOES_NOT_EXIST("cmd.doesNotExist"),
-    CMD_NO_CONSOLE_COMMAND("cmd.noConsoleCommand"),
-    CMD_NO_PERMISSION("cmd.noPermission"),
-    CMD_NO_PLAYER_COMMAND("cmd.noPlayerCommand");
+    CMD_DOES_NOT_EXIST("command.doesNotExist"),
+    CMD_NO_CONSOLE_COMMAND("command.noConsoleCommand"),
+    CMD_NO_PERMISSION("command.noPermission"),
+    CMD_NO_PLAYER_COMMAND("command.noPlayerCommand");
 
     public static MessageHandler messageHandler;
 
