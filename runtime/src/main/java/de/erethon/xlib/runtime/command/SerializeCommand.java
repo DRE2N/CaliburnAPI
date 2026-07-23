@@ -44,6 +44,7 @@ public class SerializeCommand extends DRECommand {
         setMinArgs(0);
         setMaxArgs(1);
         setHelp(IMessage.HELP_SERIALIZE.getMessage());
+        setPermission("ixl.serialize");
         setPlayerCommand(true);
         setConsoleCommand(true);
     }
