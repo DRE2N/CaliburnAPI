@@ -62,7 +62,7 @@ public class CustomAttribute<V> {
          * Applies the attribute to an item stack.
          *
          * @see Applicator
-         * @see CustomAttribute#apply(Instance, TrackedItemStack)
+         * @see CustomAttribute#apply(CustomAttribute.Instance, TrackedItemStack)
          * @param itemStack the ItemStack
          */
         public void apply(TrackedItemStack itemStack) {
@@ -71,7 +71,7 @@ public class CustomAttribute<V> {
     }
 
     /**
-     * Specifies what happens on {@link #apply(Instance, TrackedItemStack) application}.
+     * Specifies what happens on {@link #apply(CustomAttribute.Instance, TrackedItemStack) application}.
      */
     @FunctionalInterface
     public interface Applicator {
@@ -86,7 +86,7 @@ public class CustomAttribute<V> {
     private RightClickHandler rightClickHandler;
 
     /**
-     * @param applicator specifies what happens on {@link #apply(Instance, TrackedItemStack) application}
+     * @param applicator specifies what happens on {@link #apply(CustomAttribute.Instance, TrackedItemStack) application}
      */
     public CustomAttribute(Applicator applicator) {
         if (applicator == null) {
