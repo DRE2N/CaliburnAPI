@@ -13,8 +13,8 @@ echo ║  [3] License                         ║
 echo ║  [0] Quit                            ║
 echo ╚══════════════════════════════════════╝
 echo.
-echo XLib dynamically links with proprietary Mojang binaries.
-echo These are not provided automatically for compilation.
+echo XLib dynamically links with proprietary Mojang binaries
+echo which may not be provided automatically for compilation.
 echo You can either install them manually through BuildTools
 echo or compile XLib with stubs that provide the needed signatures
 echo at compile time. Compiling with stubs makes no difference
